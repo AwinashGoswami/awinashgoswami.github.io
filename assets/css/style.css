@@ -976,9 +976,10 @@ section {
 
 .contact .php-email-form input,
 .contact .php-email-form textarea {
-  border-radius: 0;
+  border-radius: 10px;
   box-shadow: none;
   font-size: 14px;
+
 }
 
 .contact .php-email-form input {
