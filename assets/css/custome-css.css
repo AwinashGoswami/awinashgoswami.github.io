@@ -10,3 +10,40 @@
     color: #fff;
 
 }
+
+
+/* Scrollbar Track */
+::-webkit-scrollbar {
+    width: 12px;
+    /* Set the width of the scrollbar */
+}
+
+/* Scrollbar Thumb */
+::-webkit-scrollbar-thumb {
+    background-color: #45505b;
+    /* Color of the thumb */
+    border-radius: 6px;
+    /* Rounded corners of the thumb */
+}
+
+/* Scrollbar Track when hovering over it */
+::-webkit-scrollbar-track:hover {
+    background-color: #888;
+}
+
+/* Scrollbar Thumb when hovering over it */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #333;
+}
+
+/* Scrollbar Button (arrows) */
+::-webkit-scrollbar-button {
+    display: none;
+    /* Hide the scrollbar buttons */
+}
+
+/* Scrollbar Corner (between vertical and horizontal scrollbar) */
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+    /* Background color of the scrollbar corner */
+}
