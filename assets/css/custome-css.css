@@ -49,3 +49,16 @@
 }
 
 
+@media (max-width: 768px) {
+    #about_para {
+        font-size: 1em !important;
+    }
+}
+
+@media (max-width: 425px) {
+    #about_para {
+        font-size: 0.9em !important;
+        padding: 0;
+        margin: auto;
+    }
+}
