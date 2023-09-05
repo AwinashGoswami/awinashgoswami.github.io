@@ -53,6 +53,21 @@
     #about_para {
         font-size: 1em !important;
     }
+
+    .resume-item p,
+    li,
+    h5,
+    .resume-title {
+        font-size: 1em !important;
+    }
+
+    .section-title h2 {
+        font-size: 1.7em !important;
+    }
+
+    #footer h3 {
+        font-size: 2.4em !important;
+    }
 }
 
 @media (max-width: 425px) {
@@ -60,5 +75,20 @@
         font-size: 0.9em !important;
         padding: 0;
         margin: auto;
+    }
+
+    .resume-item p,
+    li,
+    h5,
+    .resume-title {
+        font-size: 0.9em !important;
+    }
+
+    .section-title h2 {
+        font-size: 1.5em !important;
+    }
+
+    #footer h3 {
+        font-size: 1.6em !important;
     }
 }
