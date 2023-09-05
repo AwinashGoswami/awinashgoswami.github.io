@@ -73,8 +73,8 @@
 @media (max-width: 425px) {
     #about_para {
         font-size: 0.9em !important;
-        padding: 0;
-        margin: auto;
+        padding: 0 !important;
+        margin: auto !important;
     }
 
     .resume-item p,
