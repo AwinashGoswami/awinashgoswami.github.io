@@ -123,7 +123,7 @@
 .main-timeline .timeline:before,
 .main-timeline .timeline:after {
     content: '';
-    background-color: #DA2677;
+    background-color: #284E93;
     height: 25px;
     width: 25px;
     border-radius: 50%;
@@ -140,7 +140,7 @@
 
 .main-timeline .timeline-content {
     color: #fff;
-    background: linear-gradient(#D02578, #DA2677);
+    background: linear-gradient(#284E93, #284E93);
     min-height: 130px;
     padding: 0 0 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -164,7 +164,7 @@
 }
 
 .main-timeline .title {
-    color: #DA2677;
+    color: #284E93;
     background-color: #fff;
     font-size: 21px;
     font-weight: 600;
