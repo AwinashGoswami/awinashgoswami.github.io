@@ -176,11 +176,12 @@
 }
 
 .main-timeline .description {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 300;
     letter-spacing: 1px;
     line-height: 30px;
     margin: 20px 80px 0 20px;
+
 }
 
 .main-timeline .timeline:nth-child(even) {
