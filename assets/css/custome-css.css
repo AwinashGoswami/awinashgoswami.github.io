@@ -176,10 +176,10 @@
 }
 
 .main-timeline .description {
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 300;
     letter-spacing: 1px;
-    line-height: 20px;
+    line-height: 30px;
     margin: 20px 80px 0 20px;
 }
 
@@ -294,3 +294,5 @@
         margin: 20px 20px 0 20px;
     }
 }
+
+
