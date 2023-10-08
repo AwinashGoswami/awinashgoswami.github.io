@@ -107,10 +107,34 @@ h6 {
 /*--------------------------------------------------------------
 # Disable aos animation delay on mobile devices
 --------------------------------------------------------------*/
+
+@media screen and (max-width: 425px) {
+
+  #hero_img, #about_img {
+    width: 270px;
+    height: auto;
+  }
+
+  #about_para {
+    font-size: 14px;
+  }
+
+  #period{
+    font-size: 14px;
+  }
+
+  .resume-item, ul, li {
+    font-size: 14px;
+  }
+
+}
+
+
 @media screen and (max-width: 768px) {
   [data-aos-delay] {
     transition-delay: 0 !important;
   }
+
 }
 
 /*--------------------------------------------------------------
