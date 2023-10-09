@@ -169,12 +169,25 @@ h6 {
     border-right: 1px solid #e6e9ec;
     left: -300px;
   }
+
+
 }
 
 @media (min-width: 991px) {
   #main {
     margin-left: 100px;
   }
+
+  #about_para{
+    font-size: 17px !important;
+  }
+
+  #about_img{
+    margin-left: 18px;
+    width: 350px;
+    height: auto;
+  }
+
 
   /* .skill_icon {
     width: 100px !important;
