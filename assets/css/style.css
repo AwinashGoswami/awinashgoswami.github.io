@@ -110,7 +110,8 @@ h6 {
 
 @media screen and (max-width: 425px) {
 
-  #hero_img, #about_img {
+  #hero_img,
+  #about_img {
     width: 270px;
     height: auto;
   }
@@ -119,13 +120,23 @@ h6 {
     font-size: 14px;
   }
 
-  #period{
+  #period {
     font-size: 14px;
   }
 
-  .resume-item, ul, li {
+  .resume-item,
+  ul,
+  li {
     font-size: 14px;
   }
+
+  .skill_icon {
+    width: 100px !important;
+    height: auto;
+    padding: 15px;
+    margin: 2px;
+  }
+
 
 }
 
@@ -164,6 +175,15 @@ h6 {
   #main {
     margin-left: 100px;
   }
+
+  /* .skill_icon {
+    width: 100px !important;
+    height: auto;
+    padding: 15px;
+    margin: 2px;
+  } */
+
+  
 }
 
 /*--------------------------------------------------------------
