@@ -56,9 +56,11 @@
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
+
   <section id="hero" class="d-flex flex-column justify-content-center">
     <div class="container" data-aos="zoom-in" data-aos-delay="100">
       <div class="row">
+
         <div class="col-lg-5">
           <div class="d-flex justify-content-center flex-column" style="margin-top: 42%;">
             <div>
@@ -100,7 +102,7 @@
 
         <div class="row">
           <div class="col-lg-4 d-flex justify-content-center">
-            <img src="assets/img/profile-img.png" id="about_img" class="img-fluid" style="border: 2px solid white; border-radius: 50%;">
+            <img src="assets/img/dev4.png" id="about_img">
           </div>
           <div class="col-lg-8 pt-4 pt-lg-0 content " style="margin-top: 3%;">
             <p class="fst-italic px-5 text-center h5" style="line-height: 2;" id="about_para">
@@ -213,6 +215,10 @@
 
     <!-- ======= Portfolio Section ======= -->
     <section id="portfolio" class="portfolio section-bg">
+
+      <!-- Modal -->
+
+
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -231,35 +237,121 @@
         </div>
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-          <div class="col-lg-4 col-md-6 portfolio-item NextJS">
+
+          <!-- Awi Resume Modal Launch -->
+          <div class="col-lg-4 col-md-6 portfolio-item NextJS" data-bs-toggle="modal" data-bs-target="#awi_resume"
+            style="cursor: pointer;">
             <div class="portfolio-wrap rounded-5">
               <img src="assets/img/portfolio/portfolio-details/awi-resume/awi-1.png" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>Awinash Resume</h4>
                 <p>HTML & CSS</p>
-                <div class="portfolio-links">
-                  <a href="awi-resume.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Awi Resume Modal Close -->
+          <div class="modal fade" id="awi_resume" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: 700;">Resume</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <section id="portfolio-details" class="portfolio-details">
+                    <div class="container">
+                      <div class="row gy-4">
+                        <div class="col-lg-8 col-md-12 col-sm-12">
+                          <div class="portfolio-details-slider swiper">
+                            <div class="swiper-wrapper align-items-center">
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/awi-resume/awi-1.png" alt="">
+                              </div>
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/awi-resume/awi-2.png" alt="">
+                              </div>
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/awi-resume/awi-3.png" alt="">
+                              </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                          This website is my personal project, crafted and built using HTML, CSS, and Bootstrap.
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 portfolio-item NextJS">
+          <!-- YourStage.live Modal Launch -->
+          <div class="col-lg-4 col-md-6 portfolio-item NextJS" data-bs-toggle="modal" data-bs-target="#ysl"
+            style="cursor: pointer;">
             <div class="portfolio-wrap rounded-5">
               <img src="assets/img/portfolio/portfolio-details/ysl/ysl-nextjs-1.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>YourStage.Live</h4>
                 <p>NextJS</p>
-                <div class="portfolio-links">
-                  <a href="ysl.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- YourStage.live Modal Close -->
+          <div class="modal fade" id="ysl" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: 700;">YourStage Live</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <section id="portfolio-details" class="portfolio-details">
+                    <div class="container">
+
+                      <div class="row gy-4">
+
+                        <div class="col-lg-8 col-md-12 col-sm-12">
+                          <div class="portfolio-details-slider swiper">
+                            <div class="swiper-wrapper align-items-center">
+
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/ysl/ysl-nextjs-2.jpg" alt="">
+                              </div>
+
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/ysl/ysl-nextjs-3.jpg" alt="">
+                              </div>
+
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/ysl/ysl-nextjs-4.jpg" alt="">
+                              </div>
+
+                            </div>
+                            <div class="swiper-pagination"></div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                          I completed this project using Next.js, with a primary focus on the UI development aspect. I
+                          successfully converted a Figma design into a fully functional Next.js application,
+                          meticulously ensuring a seamless and visually appealing user experience.
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 portfolio-item NextJS">
+
+          <!-- NextJS Blog Modal Launch -->
+          <div class="col-lg-4 col-md-6 portfolio-item NextJS" data-bs-toggle="modal" data-bs-target="#nextjs-blog"
+            style="cursor: pointer;">
             <div class="portfolio-wrap rounded-5">
               <img src="assets/img/portfolio/portfolio-details/blog-nextjs/blog-nextjs-1.png" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -273,30 +365,180 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 portfolio-item Django">
+          <!-- NextJS Blog Modal Close -->
+          <div class="modal fade" id="nextjs-blog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: 700;">NextJS Blog</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <section id="portfolio-details" class="portfolio-details">
+                    <div class="container">
+
+                      <div class="row gy-4">
+
+                        <div class="col-lg-8 col-md-12 col-sm-12">
+                          <div class="portfolio-details-slider swiper">
+                            <div class="swiper-wrapper align-items-center">
+
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/blog-nextjs/blog-nextjs-1.png" alt="">
+                              </div>
+
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/blog-nextjs/blog-nextjs-2.png" alt="">
+                              </div>
+
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/blog-nextjs/blog-nextjs-3.png" alt="">
+                              </div>
+
+                            </div>
+                            <div class="swiper-pagination"></div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                          The project was developed in NextJS.
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ecommerce-Django Modal Launch -->
+          <div class="col-lg-4 col-md-6 portfolio-item Django" data-bs-toggle="modal" data-bs-target="#ecommerce-django"
+            style="cursor: pointer;">
             <div class="portfolio-wrap rounded-5">
               <img src="assets/img/portfolio/portfolio-details/ecomm-django/ecommerce-django-1.png" class="img-fluid"
                 alt="">
               <div class="portfolio-info">
                 <h4>Ecommerce</h4>
                 <p>Django</p>
-                <div class="portfolio-links">
-                  <a href="ecommerce-django.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ecommerce-Django Modal Close -->
+          <div class="modal fade" id="ecommerce-django" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: 700;">Ecommerce-Django</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <section id="portfolio-details" class="portfolio-details">
+                    <div class="container">
+
+                      <div class="row gy-4">
+                        <div class="col-lg-8 col-md-12">
+                          <div class="portfolio-details-slider swiper">
+                            <div class="swiper-wrapper align-items-center">
+
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/ecomm-django/ecommerce-django-1.png"
+                                  alt="">
+                              </div>
+
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/ecomm-django/ecommerce-django-2.png"
+                                  alt="">
+                              </div>
+
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/ecomm-django/ecommerce-django-3.png"
+                                  alt="">
+                              </div>
+
+                            </div>
+                            <div class="swiper-pagination"></div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                          This project was meticulously crafted using Django, featuring an array of essential
+                          functionalities crucial for an e-commerce platform. Among its notable components are robust
+                          authentication and a fully functional shopping cart system, catering to the comprehensive
+                          requirements of an e-commerce website.
+                        </div>
+                      </div>
+                      <div class="row">
+
+                      </div>
+
+                    </div>
+                  </section>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 portfolio-item MERN">
+
+          <!-- SBS Modal Launch -->
+          <div class="col-lg-4 col-md-6 portfolio-item MERN" data-bs-toggle="modal" data-bs-target="#sbs"
+            style="cursor: pointer;">
             <div class="portfolio-wrap rounded-5">
               <img src="assets/img/portfolio/portfolio-details/sbs/sbs-mern-1.png" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>School Billing System</h4>
                 <p>MERN</p>
-                <div class="portfolio-links">
-                  <a href="sbs-mern.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="sbs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: 700;">School Billing System
+                  </h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <section id="portfolio-details" class="portfolio-details">
+                    <div class="container">
+
+                      <div class="row gy-4">
+
+                        <div class="col-lg-8 col-md-12 col-sm-12">
+                          <div class="portfolio-details-slider swiper">
+                            <div class="swiper-wrapper align-items-center">
+
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/sbs/sbs-mern-1.png" alt="">
+                              </div>
+
+                              <div class="swiper-slide">
+                                <img src="assets/img/portfolio/portfolio-details/sbs/sbs-mern-2.png" alt="">
+                              </div>
+
+                            </div>
+                            <div class="swiper-pagination"></div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                          <p>
+                            This project was expertly crafted using the MERN Stack, encompassing an extensive range of
+                            functionalities vital for its purpose.
+                          </p>
+                          <p>
+                            Notably, it boasts a comprehensive authentication and
+                            authorization system, a versatile CRUD (Create, Read, Update, Delete) system for managing
+                            classes, students, fees, and ledgers.
+                          </p>
+                          <p>
+                            Furthermore, it provides a dynamic dashboard to offer
+                            users a seamless and intuitive experience while interacting with the platform.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               </div>
             </div>
