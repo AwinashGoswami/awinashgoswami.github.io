@@ -1327,3 +1327,9 @@ section {
   background: #fff;
   border: 2px solid #1f5297;
 }
+
+.book_img{
+  width: 250px;
+  height: auto;
+  margin: 0 3px;
+}
