@@ -29,32 +29,40 @@
 
   <!-- Custom Styles -->
   <style>
-    .project-img {
-      max-height: 100%;
-      width: 100%;
-      object-fit: contain;
+    .hover-shadow {
+      transition: box-shadow 0.3s ease;
     }
 
-    @media (max-width: 768px) {
+    .hover-shadow:hover {
+      box-shadow: 0 10px 20px rgba(16, 18, 48, 0.2);
+    }
+
+    .project-card {
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .project-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (min-width: 768px) {
       .project-img {
-        max-height: 250px;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border-top-right-radius: 0;
       }
     }
 
-    .skills-used {
-      padding-left: 0;
-      list-style: none;
-    }
-
-    .skills-used li {
-      display: flex;
-      align-items: center;
-      margin-bottom: 8px;
-      font-size: 16px;
-    }
-
-    .list-inline-item>i {
-      font-size: 72px;
+    @media (max-width: 767.98px) {
+      .project-img {
+        height: 200px;
+        border-radius: 15px 15px 0 0;
+      }
     }
   </style>
 </head>
@@ -80,10 +88,10 @@
           <a class="nav-link js-scroll-trigger" href="#experience">Experience</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#skills">Skills</a>
+          <a class="nav-link js-scroll-trigger" href="#projects">Projects</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#projects">Projects</a>
+          <a class="nav-link js-scroll-trigger" href="#skills">Skills</a>
         </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="#education">Education</a>
@@ -217,6 +225,179 @@
 
     </section>
 
+    <!-- Projects Content  -->
+    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="projects">
+      <div class="my-auto">
+        <h2 class="mb-5">Projects</h2>
+        <div class="container-fluid">
+          <div class="row g-4">
+
+            <!-- Project 1 -->
+            <div class="col-md-6 mt-3">
+              <a href="https://github.com/AwinashGoswami/todo-nestjs" target="_blank" class="text-dark"
+                style="text-decoration: none;">
+                <div class="card project-card h-100 hover-shadow">
+                  <div class="row g-0 flex-column flex-md-row h-100">
+                    <div class="col-md-4">
+                      <img src="./img/projects/project-1.png" class="project-img" alt="Project Image">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title fw-bold text-uppercase">
+                          Todo App Nest.js
+                        </h5>
+                        <p class="card-text">
+                          This is a simple Todo Practice application built with Nest.js, showcasing the use of
+                          TypeScript,
+                          PostgreSQL, and JWT for authentication...
+                        </p>
+                        <div class="mt-3 d-flex flex-wrap" style="gap: 4px;">
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">Nest.js</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">TypeORM</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">Postgres</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">JWT</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">Swagger</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">RBAC</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+
+            <!-- Project 2 -->
+            <div class="col-md-6 mt-3">
+              <a href="https://github.com/AwinashGoswami/school-billing-system-mern" target="_blank" class="text-dark"
+                style="text-decoration: none;">
+                <div class="card project-card h-100 hover-shadow">
+                  <div class="row g-0 flex-column flex-md-row h-100">
+                    <div class="col-md-4">
+                      <img src="./img/projects/project-2.jpg" class="project-img" alt="Project Image">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title fw-bold text-uppercase">
+                          School Billing System
+                        </h5>
+                        <p class="card-text">
+                          Built a MERN-based school billing system to automate fee management, reporting, and
+                          notifications for educational institutions. </p>
+                        <div class="mt-3 d-flex flex-wrap" style="gap: 4px;">
+                          <span class="bg-primary px-3 py-1 rounded text-white"
+                            style="font-size: 13px;">Express.js</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">MongoDB</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">JWT Auth</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">Docker</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">Cron Job</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white"
+                            style="font-size: 13px;">Middleware</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="col-md-6 mt-3">
+              <a href="https://ncs.nayatel.com/" target="_blank" class="text-dark" style="text-decoration: none;">
+                <div class="card project-card h-100 hover-shadow">
+                  <div class="row g-0 flex-column flex-md-row h-100">
+                    <div class="col-md-4">
+                      <img src="./img/projects/project-3.png" class="project-img" alt="Project Image">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title fw-bold text-uppercase">
+                          Nayatel Cloud Portal
+                        </h5>
+                        <p class="card-text">
+                          Developed the OpenStack-based backend for Nayatel’s Cloud Portal, enabling customers to create
+                          virtual instances, choose compute flavors, assign floating IPs, and manage network
+                          configurations.
+                        </p>
+                        <div class="mt-3 d-flex flex-wrap" style="gap: 4px;">
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">Django</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">MySQL</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white"
+                            style="font-size: 13px;">OpenStack</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="col-md-6 mt-3">
+              <a href="https://cloud.nayatel.com/" target="_blank" class="text-dark" style="text-decoration: none;">
+                <div class="card project-card h-100 hover-shadow">
+                  <div class="row g-0 flex-column flex-md-row h-100">
+                    <div class="col-md-4">
+                      <img src="./img/projects/project-4.png" class="project-img" alt="Project Image">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title fw-bold text-uppercase">
+                          Nayatel Cloud Website
+                        </h5>
+                        <p class="card-text">
+                          Designed the Nayatel Services API, authentication module, and configurable service plans for
+                          the Cloud Website, facilitating seamless access to IaaS, domain registration, web hosting,
+                          NMAIL, and web backup.
+                        </p>
+                        <div class="mt-3 d-flex flex-wrap" style="gap: 4px;">
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">Django</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">MySQL</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="col-md-6 mt-3">
+              <a href="https://matlay.com/" target="_blank" class="text-dark" style="text-decoration: none;">
+                <div class="card project-card h-100 hover-shadow">
+                  <div class="row g-0 flex-column flex-md-row h-100">
+                    <div class="col-md-4">
+                      <img src="./img/projects/project-5.png" class="project-img" alt="Project Image">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title fw-bold text-uppercase">
+                          Matlay Cloud
+                        </h5>
+                        <p class="card-text">
+                          Developed and maintained the backend for Matlay, an e-commerce platform, ensuring high
+                          performance and reliability for online transactions.
+                        </p>
+                        <div class="mt-3 d-flex flex-wrap" style="gap: 4px;">
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">Django</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white" style="font-size: 13px;">MySQL</span>
+                          <span class="bg-primary px-3 py-1 rounded text-white"
+                            style="font-size: 13px;">OpenStack</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+
+            <!-- Add more projects below -->
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Skills Content -->
     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="skills">
       <div class="my-auto">
@@ -280,270 +461,6 @@
         </ul>
       </div>
     </section>
-
-    <!-- Projects Content  -->
-    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="projects">
-      <div class="my-auto">
-        <h2 class="mb-5">Projects</h2>
-        <div class="container-fluid">
-          <div class="row justify-content-center">
-
-            <!-- Project 1 -->
-            <div class="col-lg-3 col-md-6 mb-4">
-              <a href="#" data-toggle="modal" data-target="#projectLightboxModal" data-slide-to="0"
-                style="text-decoration: none;">
-                <div class="card h-100">
-                  <img src="img/projects/project-1.png" class="card-img-top" alt="Project 1">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <a href="https://github.com/AwinashGoswami/todo-nestjs" target="_blank">Todo App Nest.js</a>
-                    </h5>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- Project 2 -->
-            <div class="col-lg-3 col-md-6 mb-4">
-              <a href="#" data-toggle="modal" data-target="#projectLightboxModal" data-slide-to="1"
-                style="text-decoration: none;">
-                <div class="card h-100">
-                  <img src="img/projects/project-2.png" class="card-img-top" alt="Project 4">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <a href="https://github.com/AwinashGoswami/school-billing-system-mern" target="_blank">
-                        School Billing System
-                      </a>
-                    </h5>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="col-lg-3 col-md-6 mb-4">
-              <a href="#" data-toggle="modal" data-target="#projectLightboxModal" data-slide-to="2"
-                style="text-decoration: none;">
-                <div class="card h-100">
-                  <img src="img/projects/project-3.png" class="card-img-top" alt="Project 1">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <a href="ncs.nayatel.com" target="_blank">Nayatel Cloud Portal</a>
-                    </h5>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- Project 4 -->
-            <div class="col-lg-3 col-md-6 mb-4">
-              <a href="#" data-toggle="modal" data-target="#projectLightboxModal" data-slide-to="3"
-                style="text-decoration: none;">
-                <div class="card h-100">
-                  <img src="img/projects/project-4.png" class="card-img-top" alt="Project 2">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <a href="https://cloud.nayatel.com/" target="_blank">Nayatel Cloud Website</a>
-                    </h5>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- Project 5 -->
-            <div class="col-lg-3 col-md-6 mb-4">
-              <a href="#" data-toggle="modal" data-target="#projectLightboxModal" data-slide-to="4"
-                style="text-decoration: none;">
-                <div class="card h-100">
-                  <img src="img/projects/project-5.png" class="card-img-top" alt="Project 3">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <a href="https://matlay.com/" target="_blank">Matlay Cloud</a>
-                    </h5>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Project Lightbox Modal with Carousel -->
-    <div class="modal fade" id="projectLightboxModal" tabindex="-1" role="dialog"
-      aria-labelledby="projectLightboxModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body p-0">
-            <div id="projectCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-              <div class="carousel-inner">
-
-                <!-- Slide 1 -->
-                <div class="carousel-item">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col-md-6 d-flex align-items-center justify-content-center p-3"
-                      style="background-color: #f8f9fa;">
-                      <img src="img/projects/project-1.png" class="img-fluid project-img" alt="Project 1">
-                    </div>
-                    <div class="col-md-6 p-4">
-                      <h5>Todo App Nest.js</h5>
-                      <p>
-                        This is a simple Todo Practice application built with Nest.js, showcasing the use of TypeScript,
-                        PostgreSQL, and JWT for authentication. It includes features like user registration, login,
-                        and CRUD operations for todos.
-                      </p>
-                      <h4>Tools & Features </h4>
-                      <ul class="skills-used">
-                        <li>✅ Nest.js</li>
-                        <li>✅ TypeORM</li>
-                        <li>✅ Postgres</li>
-                        <li>✅ JWT - Local Strategy</li>
-                        <li>✅ RBAC Implemented</li>
-                        <li>✅ Swagger</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Slide 2 -->
-                <div class="carousel-item">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col-md-6 d-flex align-items-center justify-content-center p-3"
-                      style="background-color: #f8f9fa;">
-                      <img src="img/projects/project-2.png" class="img-fluid project-img" alt="Project 2">
-                    </div>
-                    <div class="col-md-6 p-4">
-                      <h5>School Billing System</h5>
-                      <p>
-                        Built a MERN-based school billing system to automate fee management, reporting, and
-                        notifications
-                        for educational institutions.
-                      </p>
-                      <h4>Tools & Features </h4>
-                      <ul class="skills-used">
-                        <li>✅ Express.js</li>
-                        <li>✅ MongoDB</li>
-                        <li>✅ JWT Auth</li>
-                        <li>✅ Docker</li>
-                        <li>✅ Cron Job</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Slide 3 -->
-                <div class="carousel-item">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col-md-6 d-flex align-items-center justify-content-center p-3"
-                      style="background-color: #f8f9fa;">
-                      <img src="img/projects/project-3.png" class="img-fluid project-img" alt="Project 3">
-                    </div>
-                    <div class="col-md-6 p-4">
-                      <h5>Nayatel Cloud Portal</h5>
-                      <p>
-                        Developed the OpenStack-based backend for Nayatel’s Cloud Portal, enabling customers to create
-                        virtual instances, choose compute flavors, assign floating IPs, and manage network
-                        configurations.
-                      </p>
-                      <h4>Tools & Features </h4>
-                      <ul class="skills-used">
-                        <li>✅ Django</li>
-                        <li>✅ MySQL</li>
-                        <li>✅ OpenStack</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Slide 4 -->
-                <div class="carousel-item">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col-md-6 d-flex align-items-center justify-content-center p-3"
-                      style="background-color: #f8f9fa;">
-                      <img src="img/projects/project-4.png" class="img-fluid project-img" alt="Project 4">
-                    </div>
-                    <div class="col-md-6 p-4">
-                      <h5>Nayatel Cloud Website</h5>
-                      <p>
-                        Designed the Nayatel Services API, authentication module, and configurable service plans for the
-                        Cloud Website, facilitating seamless access to IaaS, domain registration, web hosting, NMAIL,
-                        and
-                        web backup.
-                      </p>
-                      <h4>Tools & Features </h4>
-                      <ul class="skills-used">
-                        <li>✅ Django</li>
-                        <li>✅ MySQL</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Slide 5 -->
-                <div class="carousel-item">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col-md-6 d-flex align-items-center justify-content-center p-3"
-                      style="background-color: #f8f9fa;">
-                      <img src="img/projects/project-5.png" class="img-fluid project-img" alt="Project 5">
-                    </div>
-                    <div class="col-md-6 p-4">
-                      <h5>Matlay</h5>
-                      <p>
-                        Developed and maintained the backend for Matlay, an e-commerce platform, ensuring high
-                        performance
-                        and reliability for online transactions.
-                      </p>
-                      <h4>Tools & Features </h4>
-                      <ul class="skills-used">
-                        <li>✅ Django</li>
-                        <li>✅ MySQL</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Carousel controls -->
-              <a class="carousel-control-prev" href="#projectCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#projectCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="modal-footer border-0">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      // Jump to correct slide when card is clicked
-      document.querySelectorAll('[data-target="#projectLightboxModal"]').forEach(function (el) {
-        el.addEventListener('click', function () {
-          var slideTo = el.getAttribute('data-slide-to');
-          if (slideTo !== null) {
-            // Remove 'active' from all slides
-            document.querySelectorAll('#projectCarousel .carousel-item').forEach(function (item) {
-              item.classList.remove('active');
-            });
-            // Add 'active' to the selected slide
-            var slides = document.querySelectorAll('#projectCarousel .carousel-item');
-            var idx = parseInt(slideTo);
-            if (slides[idx]) {
-              slides[idx].classList.add('active');
-            }
-          }
-        });
-      });
-    </script>
-
 
     <!-- Education Content -->
     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="education">
