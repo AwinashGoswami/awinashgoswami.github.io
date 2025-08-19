@@ -589,7 +589,7 @@ button:focus,
 .skills-list-center {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 5px;
     justify-content: flex-start;
     /* Default: left on large screens */
 }
