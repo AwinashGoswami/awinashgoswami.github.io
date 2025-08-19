@@ -50,6 +50,20 @@
             transition: box-shadow 0.2s;
         }
 
+        .skills-list-center {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-start;
+            /* Default: left on large screens */
+        }
+
+        @media (max-width: 767.98px) {
+            .skills-list-center {
+                justify-content: center;
+                /* Center only on small screens */
+            }
+        }
     </style>
 </head>
 
@@ -274,7 +288,7 @@
                             <!-- .row -->
 
                             <div>
-                                <ul class="list-inline list-icons">
+                                <ul class="list-inline list-icons skills-list-center">
                                     <li class="list-inline-item text-center skill-pill">
                                         <i class="devicon-nodejs-plain colored devicon-font-size"></i>
                                         <div style="font-size:12px;">Node.js</div>
@@ -299,13 +313,15 @@
                                         <i class="devicon-git-plain colored devicon-font-size"></i>
                                         <div style="font-size:12px;">Git</div>
                                     </li>
-
                                     <li class="list-inline-item text-center skill-pill">
                                         <i class="devicon-postman-plain colored devicon-font-size"></i>
                                         <div style="font-size:12px;">Postman</div>
                                     </li>
+
                                 </ul>
                             </div>
+
+
                         </div>
                     </section>
 
