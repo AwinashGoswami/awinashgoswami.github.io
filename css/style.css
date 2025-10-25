@@ -591,9 +591,27 @@ button:focus,
     padding: 12px 18px 6px 18px;
     margin: 2px 2px 4px 0;
     background: #fff;
-    min-width: 90px;
-    display: inline-block;
+    min-width: 75px;
     transition: box-shadow 0.2s;
+    flex: 1;
+}
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    list-style: none;
+    padding: 0;
+}
+
+@media (max-width: 767.98px) {
+    .skills-list {
+        justify-content: center;
+    }
+
+    .skill-pill {
+        flex: 0 0 calc((100% - 8px) / 3);
+    }
 }
 
 .skills-list-center {
