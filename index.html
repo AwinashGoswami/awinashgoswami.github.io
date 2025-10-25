@@ -18,7 +18,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
 
   <!-- Bootstrap -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Style CSS -->
   <link href="css/style.css" rel="stylesheet">
@@ -26,6 +26,7 @@
   <!-- Devicons -->
   <link href="vendor/devicons/css/devicons.min.css" rel="stylesheet">
   <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,7 +53,7 @@
       <div class="left-col-block blocks">
         <header class="header theiaStickySidebar">
           <div class="profile-img" style="border: 1px solid #bebece;">
-            <img src="img/profile.png" class="img-responsive" alt="" />
+            <img src="img/profile.png" class="img-fluid" alt="" />
           </div>
           <div class="content">
             <h1>Awinash</h1>
@@ -114,93 +115,116 @@
                   </div>
                 </div>
               </div>
-              <!--.row-->
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="content-item">
-                    <small>Feb 2024 - Mar 2025</small>
-                    <h3>Software Engineer</h3>
-                    <h4>Nayatel</h4>
-                    <p>Islamabad, Pakistan</p>
-                    <ul style="list-style-type:circle;">
-                      <li>
-                        <i>
-                          Developed OpenStack-based backend for Nayatel’s Cloud Portal
-                          serving 10,000+ customers, enabling scalable virtual instances,
-                          floating IPs, and automated network configurations.
-                        </i>
-                      </li>
-                      <li>
-                        <i>
-                          Optimized Nayatel Cloud APIs, reducing response latency
-                          by 30% and improving scalability for 1000+ concurrent users.
-                        </i>
-                      </li>
-                      <li>
-                        <i>
-                          Designed authentication module and subscription APIs supporting web
-                          hosting, NMail, and backup services.
-                        </i>
-                      </li>
-                      <li>
-                        <i>
-                          Enhanced customer experience by automating service provisioning and
-                          scaling.
-                        </i>
-                      </li>
-                    </ul>
+
+
+              <!-- new code start -->
+              <div class="experience-section">
+
+                <!-- Tabs -->
+                <ul class="nav nav-tabs" id="experienceTabs" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="nayatel-tab" data-bs-toggle="tab" data-bs-target="#nayatel"
+                      type="button" role="tab">Nayatel</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="SIBA-tab" data-bs-toggle="tab" data-bs-target="#SIBA" type="button"
+                      role="tab">SIBA</button>
+                  </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="experienceTabsContent">
+                  <!-- Nayatel -->
+                  <div class="tab-pane fade show active" id="nayatel" role="tabpanel">
+                    <div class="job">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="job-title">Software Engineer - <a href="https://www.nayatel.com/" target="_blank">Nayatel</a>
+                        </div>
+                        <div class="job-duration">Feb 2024 - Mar 2025</div>
+                      </div>
+
+                      <ul style="list-style-type:circle; padding-left: 25px; padding-top: 25px;">
+                        <li>
+                          <i>
+                            Developed OpenStack-based backend for Nayatel’s Cloud Portal
+                            serving 10,000+ customers, enabling scalable virtual instances,
+                            floating IPs, and automated network configurations.
+                          </i>
+                        </li>
+                        <li>
+                          <i>
+                            Optimized Nayatel Cloud APIs, reducing response latency
+                            by 30% and improving scalability for 1000+ concurrent users.
+                          </i>
+                        </li>
+                        <li>
+                          <i>
+                            Designed authentication module and subscription APIs supporting web
+                            hosting, NMail, and backup services.
+                          </i>
+                        </li>
+                        <li>
+                          <i>
+                            Enhanced customer experience by automating service provisioning and
+                            scaling.
+                          </i>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="job">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="job-title">Junior Software Engineer <a href="https://www.nayatel.com/" target="_blank">Nayatel</a>
+                        </div>
+                        <div class="job-duration">Feb 2023 - Feb 2024</div>
+                      </div>
+
+                      <ul style="list-style-type:circle; padding-left: 25px; padding-top: 25px;">
+                        <li>
+                          <i>
+                            Automated customer support by developing a WhatsApp chatbot, reducing response times by 40%.
+                          </i>
+                        </li>
+                        <li>
+                          <i>
+                            Optimized Cloud APIs reducing latency by 30%.
+                          </i>
+                        </li>
+                        <li>
+                          <i>
+                            Built Cloud Customer Data Verification Module to improve accuracy and monitoring.
+                          </i>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                  <!-- .experience-item -->
-                  <div class="content-item">
-                    <small>Feb 2023 - Feb 2024</small>
-                    <h3>Jr. Software Engineer</h3>
-                    <h4>Nayatel</h4>
-                    <p>Islamabad, Pakistan</p>
-                    <ul style="list-style-type: circle;">
-                      <li>
-                        <i>
-                          Automated customer support by developing a WhatsApp chatbot,
-                          reducing response times by 40%.
-                        </i>
-                      </li>
-                      <li>
-                        <i>
-                          Optimized Cloud APIs reducing latency by 30%.
-                        </i>
-                      </li>
-                      <li>
-                        <i>
-                          Built Cloud Customer Data Verification Module to improve accuracy
-                          and monitoring.
-                        </i>
-                      </li>
-                    </ul>
+
+                  <!-- SIBA -->
+                  <div class="tab-pane fade" id="SIBA" role="tabpanel">
+                    <div class="job">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="job-title">CS Instructor - <a href="https://www.iba-suk.edu.pk/" target="_blank">SIBA</a>
+                        </div>
+                        <div class="job-duration">Oct 2019 - Feb 2022</div>
+                      </div>
+
+                      <ul style="list-style-type:circle; padding-left: 25px; padding-top: 25px;">
+                        <li>
+                          <i>
+                            Delivered hands-on coding sessions on web development for 150+ students.
+                          </i>
+                        </li>
+                        <li>
+                          <i>
+                            Mentored final-year projects, improving project delivery success rate by 20%.
+                          </i>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                  <!-- .experience-item -->
-                  <div class="content-item">
-                    <small>Oct 2019 - Feb 2022</small>
-                    <h3>CS Instructor</h3>
-                    <h4>Sukkur IBA</h4>
-                    <p>Sukkur, Pakistan</p>
-                    <ul style="list-style-type: circle;">
-                      <li>
-                        <i>
-                          Delivered hands-on coding sessions on web development for 150+
-                          students.
-                        </i>
-                      </li>
-                      <li>
-                        <i>
-                          Mentored final-year projects, improving project delivery success
-                          rate by 20%.
-                        </i>
-                      </li>
-                    </ul>
-                  </div>
-                  <!-- .experience-item -->
                 </div>
               </div>
-              <!--.row-->
+              <!-- New code ends -->
             </div>
             <!-- .container-fluid -->
           </section>
@@ -393,9 +417,10 @@
   <script src="js/jquery-2.1.4.min.js"></script>
 
   <!-- Bootstrap -->
-  <script src="js/bootstrap.min.js"></script>
   <script src="js/theia-sticky-sidebar.js"></script>
   <script src="js/scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

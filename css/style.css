@@ -274,6 +274,16 @@ button:focus,
 
 .header .profile-img {
     margin-bottom: 50px;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.header .profile-img img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .header .content-wrapper {}
@@ -601,3 +611,65 @@ button:focus,
     }
 
 }
+
+
+/* New experience */
+ .experience-section {
+      max-width: 800px;
+      /* margin: 80px auto; */
+    }
+
+    .experience-section h2 {
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
+
+    .tab-content {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      padding: 25px;
+    }
+
+    .nav-tabs {
+      border-bottom: none;
+      justify-content: start;
+      margin-bottom: 15px;
+    }
+
+    .nav-tabs .nav-link {
+      color: #6c757d;
+      border: none;
+      background: none;
+      font-weight: 500;
+    }
+
+    .nav-tabs .nav-link.active {
+      color: #0d6efd;
+      border-bottom: 2px solid #0d6efd;
+    }
+
+    .job-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 10px;
+      padding-top: 25px;
+    }
+
+    .job-duration {
+      float: right;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .job-company {
+      color: #0d6efd;
+      font-weight: 500;
+    }
+
+    .tab-pane p {
+      margin-top: 8px;
+      color: #444;
+      line-height: 1.6;
+    }
