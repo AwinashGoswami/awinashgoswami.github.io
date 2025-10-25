@@ -673,3 +673,22 @@ button:focus,
       color: #444;
       line-height: 1.6;
     }
+
+/* Accordion custom styles */
+.accordion-item {
+    box-shadow: none;
+}
+
+.accordion-button {
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.accordion-button:active {
+    box-shadow: none;
+    background-color: transparent;
+}
