@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -55,7 +55,9 @@
       }
 
       .clickable-card {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
         cursor: pointer;
       }
 
@@ -388,75 +390,6 @@
 
                   <!-- Project -->
                   <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingFour">
-                      <button
-                        class="accordion-button bg-light"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseSix"
-                        aria-expanded="true"
-                        aria-controls="collapseSix"
-                      >
-                        LiftShare – Carpooling Android App
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseSix"
-                      class="accordion-collapse collapse"
-                      aria-labelledby="headingSix"
-                      data-bs-parent="#accordionExample"
-                    >
-                      <div class="accordion-body">
-                        <div class="row">
-                          <div class="col-sm-12 col-md-4">
-                            <div class="portfolio-thumb">
-                              <img
-                                src="img/uber-logo.jpg"
-                                width="100%"
-                                height="auto"
-                                style="border-radius: 15px"
-                              />
-                            </div>
-                          </div>
-                          <div class="col-sm-12 col-md-8">
-                            <p>
-                              <i>
-                                Designed and developed an Uber-like carpooling
-                                Android application enabling users to offer,
-                                discover, and book shared-rides using GPS-based
-                                location matching, real-time tracking, and user
-                                authentication.
-                              </i>
-                            </p>
-
-                            <div>
-                              <a
-                                href="https://github.com/AwinashGoswami/school-billing-system-mern"
-                                target="_blank"
-                                style="color: #4c73f3; font-weight: 600"
-                                >Visit Project...</a
-                              >
-                            </div>
-
-                            <div class="d-flex flex-wrap py-2">
-                              <span class="skills-badge py-1 px-2 rounded">
-                                Android
-                              </span>
-                              <span class="skills-badge py-1 px-2 rounded">
-                                Java
-                              </span>
-                              <span class="skills-badge py-1 px-2 rounded">
-                                Firebase
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Project -->
-                  <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
                       <button
                         class="accordion-button bg-light"
@@ -689,12 +622,22 @@
 
                     <ul class="skills-list">
                       <li class="list-inline-item text-center skill-pill">
+                        <img
+                          src="img/excel-logo.png"
+                          alt="Excel"
+                          class="skill-icon"
+                          width="50"
+                        />
+                        <div>Excel</div>
+                      </li>
+
+                      <li class="list-inline-item text-center skill-pill">
                         <i
                           class="devicon-python-plain colored devicon-font-size"
                         ></i>
                         <div>Python</div>
                       </li>
-                      <li class="list-inline-item text-center skill-pill">
+                      <!-- <li class="list-inline-item text-center skill-pill">
                         <i
                           class="devicon-django-plain colored devicon-font-size"
                         ></i>
@@ -711,12 +654,12 @@
                           class="devicon-fastapi-plain colored devicon-font-size"
                         ></i>
                         <div>FastAPI</div>
-                      </li>
+                      </li> -->
                       <li class="list-inline-item text-center skill-pill">
                         <i
-                          class="devicon-postgresql-plain colored devicon-font-size"
+                          class="devicon-pandas-plain colored devicon-font-size"
                         ></i>
-                        <div>Postgres</div>
+                        <div>Pandas</div>
                       </li>
                       <li class="list-inline-item text-center skill-pill">
                         <i
@@ -726,11 +669,36 @@
                       </li>
                       <li class="list-inline-item text-center skill-pill">
                         <i
+                          class="devicon-postgresql-plain colored devicon-font-size"
+                        ></i>
+                        <div>Postgres</div>
+                      </li>
+                      <li class="list-inline-item text-center skill-pill">
+                        <img
+                          src="img/power-bi-icon.svg"
+                          alt="Excel"
+                          class="skill-icon"
+                          width="42"
+                        />
+                        <div>PowerBi</div>
+                      </li>
+                      <li class="list-inline-item text-center skill-pill">
+                        <img
+                          src="img/tableau.svg"
+                          alt="Excel"
+                          class="skill-icon"
+                          width="45"
+                        />
+                        <div>Tableau</div>
+                      </li>
+
+                      <li class="list-inline-item text-center skill-pill">
+                        <i
                           class="devicon-git-plain colored devicon-font-size"
                         ></i>
                         <div>Git</div>
                       </li>
-                      <li class="list-inline-item text-center skill-pill">
+                      <!-- <li class="list-inline-item text-center skill-pill">
                         <i
                           class="devicon-postman-plain colored devicon-font-size"
                         ></i>
@@ -749,7 +717,7 @@
                           class="devicon-docker-plain colored devicon-font-size"
                         ></i>
                         <div>Docker</div>
-                      </li>
+                      </li> -->
                     </ul>
                   </div>
                 </div>
@@ -757,7 +725,7 @@
               </div>
             </section>
 
-                          <!-- 
+            <!-- 
               ======================
               Education Section
               ======================
@@ -785,7 +753,7 @@
               </section>
               -->
 
-                          <!-- 
+            <!-- 
               ======================
               Download CV Section
               ======================
