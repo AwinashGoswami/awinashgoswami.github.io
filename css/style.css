@@ -240,7 +240,7 @@ button:focus,
  * Section Wrapper
  *-------------------*/
 .section-wrapper {
-    padding: 50px;
+    padding: 40px 50px 20px;
     border-bottom: 1px solid #eaeaea;
 }
 
