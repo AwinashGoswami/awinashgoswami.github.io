@@ -9,6 +9,7 @@ $(function () {
   let currentPage    = 'home';
   let currentLevel   = null;
   let loadedPosts    = null;   // populated async from posts.json
+  let loadedGlossary = null;  // populated async from glossary.json
   let fcIndex = 0;
   let fcFlipped = false;
   let quizQuestions = [];
@@ -26,6 +27,7 @@ $(function () {
     .catch(function () { loadedPosts = FALLBACK_POSTS; });
 
   function getPosts() { return loadedPosts || FALLBACK_POSTS; }
+  function getGlossary() { return loadedGlossary || GLOSSARY_TERMS; }
 
   /* ── ROUTING ── */
   function navigate(page, opts) {
@@ -42,6 +44,7 @@ $(function () {
     else if (page === 'cat-concepts') showCatConcepts(currentLevel);
     else if (page === 'tutorial')    showTutorial();
     else if (page === 'blog')        showBlog();
+    else if (page === 'glossary')    showGlossary();
     else if (page === 'blog-post')   showBlogPost(opts.postId);
     else if (page === 'blog-admin')  showBlogAdmin();
     window.scrollTo(0, 0);
@@ -166,9 +169,9 @@ $(function () {
             <h5>${n.title}</h5>
             <p>${n.desc}</p>
             <div class="note-card-actions">
-              <button class="btn-download" data-file="${n.file}" data-title="${n.title}">
-                <i class="bi bi-download me-1"></i>Download PDF
-              </button>
+              <a class="btn-view" href="${n.file}" target="_blank" rel="noopener">
+                <i class="bi bi-eye me-1"></i>View PDF
+              </a>
             </div>
           </div>
         </div>`;
@@ -181,7 +184,7 @@ $(function () {
           <div class="section-header d-flex justify-content-between align-items-start flex-wrap gap-3">
             <div>
               <h2>${meta.label} — Study Notes</h2>
-              <p>Click a PDF to download it, or grab everything at once.</p>
+              <p>Preview each PDF before you download it from the reader.</p>
             </div>
             <button class="btn-download-all" id="btn-download-all"
               data-files="${notes.map(n=>n.file).join('|')}"
@@ -194,32 +197,6 @@ $(function () {
       </div>
     `);
   }
-
-  /* Single PDF download */
-  $(document).on('click', '.btn-download', function () {
-    const btn   = $(this);
-    const file  = btn.data('file');
-    const title = btn.data('title');
-    if (btn.hasClass('downloading') || btn.hasClass('done')) return;
-    btn.addClass('downloading').html('<span class="spinner-border spinner-border-sm me-1"></span>Downloading…');
-    fetch(file)
-      .then(function (r) { return r.ok ? r.blob() : null; })
-      .then(function (blob) {
-        const fileName = file.split('/').pop();
-        if (blob && blob.size > 0) {
-          saveAs(blob, fileName);
-        } else {
-          saveAs(new Blob([buildPlaceholderPdf(title)], { type: 'application/pdf' }), fileName);
-        }
-        btn.removeClass('downloading').addClass('done').html('<i class="bi bi-check-lg me-1"></i>Downloaded');
-        setTimeout(function () { btn.removeClass('done').html('<i class="bi bi-download me-1"></i>Download PDF'); }, 3000);
-      })
-      .catch(function () {
-        saveAs(new Blob([buildPlaceholderPdf(title)], { type: 'application/pdf' }), file.split('/').pop());
-        btn.removeClass('downloading').addClass('done').html('<i class="bi bi-check-lg me-1"></i>Downloaded');
-        setTimeout(function () { btn.removeClass('done').html('<i class="bi bi-download me-1"></i>Download PDF'); }, 3000);
-      });
-  });
 
   /* Download All as ZIP */
   $(document).on('click', '#btn-download-all', function () {
@@ -451,6 +428,67 @@ $(function () {
       </div>
     `);
   }
+
+  function showGlossary() {
+    $('#main-content').html(`
+      <div class="section-wrap">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-9">
+              <div class="section-header">
+                <h2>CS Glossary</h2>
+                <p>Quickly search key computer science terms and definitions.</p>
+              </div>
+              <div class="search-panel mb-4">
+                <input id="glossary-search" type="search" class="form-control" placeholder="Search terms like bit, binary, hexadecimal, MAC address…" autocomplete="off" />
+                <div class="form-text">Start typing to filter glossary entries instantly.</div>
+              </div>
+              <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-3 glossary-toolbar">
+                <div id="glossary-count" class="text-muted">Loading glossary…</div>
+                <button class="btn btn-sm btn-outline-secondary" id="glossary-show-all">Show all terms</button>
+              </div>
+              <div id="glossary-results"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `);
+    const terms = getGlossary();
+    if (!terms || !terms.length) {
+      $('#glossary-count').text('No glossary entries available.');
+      $('#glossary-results').html('<p class="text-muted">Glossary data could not be loaded right now.</p>');
+      return;
+    }
+    renderGlossaryResults(terms, '');
+  }
+
+  function renderGlossaryResults(allTerms, query) {
+    const normalized = String(query || '').trim().toLowerCase();
+    const filtered = allTerms.filter(function (item) {
+      return item.term.toLowerCase().includes(normalized) || item.definition.toLowerCase().includes(normalized);
+    });
+    const countText = normalized ? `${filtered.length} term${filtered.length === 1 ? '' : 's'} matching "${query}"` : `${filtered.length} total term${filtered.length === 1 ? '' : 's'}`;
+    $('#glossary-count').text(countText);
+    if (!filtered.length) {
+      $('#glossary-results').html('<p class="text-muted">No terms found. Try a different keyword.</p>');
+      return;
+    }
+    const items = filtered.map(function (item) {
+      return `<div class="glossary-card mb-3 p-3 rounded-3 border border-2 border-gray bg-white shadow-sm">
+        <h5 class="mb-2">${item.term}</h5>
+        <p class="mb-0">${item.definition}</p>
+      </div>`;
+    }).join('');
+    $('#glossary-results').html(items);
+  }
+
+  $(document).on('input', '#glossary-search', function () {
+    renderGlossaryResults(getGlossary(), $(this).val());
+  });
+
+  $(document).on('click', '#glossary-show-all', function () {
+    $('#glossary-search').val('').trigger('input');
+  });
 
   /* ══════════════════════════════════
      TUTORIAL

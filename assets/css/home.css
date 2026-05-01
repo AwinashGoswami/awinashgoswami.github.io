@@ -156,6 +156,56 @@ body {
 .section-header h2 { font-size: 1.8rem; font-weight: 800; }
 .section-header p { color: var(--text-muted); font-size: .93rem; margin: 0; }
 
+.search-panel {
+  max-width: 100%;
+}
+.search-panel .form-control {
+  border-radius: 14px;
+  border: 1px solid rgba(148,163,184,.25);
+  padding: 1rem 1.15rem;
+  box-shadow: 0 10px 30px rgba(15,23,42,.04);
+}
+.search-panel .form-text {
+  margin-top: .5rem;
+  color: #64748b;
+}
+.glossary-toolbar {
+  gap: 1rem;
+}
+#glossary-results {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+}
+@media (min-width: 992px) {
+  #glossary-results {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.glossary-card {
+  background: var(--white);
+  border: 1px solid rgba(148,163,184,.15);
+  border-radius: 18px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(15,23,42,.04);
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+.glossary-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(59,130,246,.35);
+  box-shadow: 0 20px 40px rgba(15,23,42,.08);
+}
+.glossary-card h5 {
+  margin-bottom: .65rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.glossary-card p {
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin: 0;
+}
+
 /* ─── BREADCRUMB ─── */
 .breadcrumb-custom {
   display: flex; align-items: center; gap: 6px;
@@ -213,15 +263,15 @@ body {
 }
 .note-card h5 { font-weight: 700; margin-bottom: .35rem; font-size: .97rem; }
 .note-card p { color: var(--text-muted); font-size: .86rem; line-height: 1.6; margin-bottom: 1.1rem; flex: 1; }
-.note-card-actions { display: flex; gap: .6rem; }
-.btn-download {
-  background: var(--primary); color: #fff; border: none;
+.note-card-actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+.btn-view {
   padding: .48rem 1rem; border-radius: 7px; font-size: .82rem; font-weight: 600;
-  cursor: pointer; transition: background .2s; flex: 1;
+  cursor: pointer; transition: background .2s, color .2s, border-color .2s; flex: 1; text-align: center; text-decoration: none;
+  background: transparent; color: var(--primary); border: 1px solid var(--primary);
 }
-.btn-download:hover { background: var(--primary-dark); }
-.btn-download.downloading { background: var(--text-muted); cursor: not-allowed; }
-.btn-download.done { background: var(--success); }
+.btn-view:hover {
+  background: var(--primary-light); color: var(--primary-dark);
+}
 
 .btn-download-all {
   background: var(--white); color: var(--primary); border: 1.5px solid var(--primary);
