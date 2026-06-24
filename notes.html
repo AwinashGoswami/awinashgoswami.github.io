@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CS Study Hub — Awinash Goswami</title>
-  <meta name="description" content="Free computer science study resources for students. O Level, A Level, and University notes, flashcards, quizzes, tutorials, and blog." />
+  <title>Notes — CS Study Hub</title>
+  <meta name="description" content="Interactive O Level and A Level computer science notes with a responsive sidebar and rich content area." />
 
   <!-- Bootstrap 5 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
@@ -14,11 +14,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="assets/css/home.css" />
-  <!-- Highlight.js theme + tutorial styles -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css"> -->
-  
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="notes.css" />
 </head>
 <body>
 
@@ -105,35 +102,95 @@
     </div>
   </nav>
 
-  <!-- ══ MAIN CONTENT — Tutorial app inserted here ══ -->
   <div id="main-content">
-  </div>
+  <main class="notes-app">
+    <section class="notes-hero">
+      <div class="container">
 
-  <!-- ══ FOOTER ══ -->
-  <footer>
-    <div class="container">
-      <p class="mb-1" style="font-weight:600;color:#334155;">CS Study Hub</p>
-      <p class="mb-1">Free resources for computer science students &mdash; built with care by a passionate CS teacher.</p>
-      <p class="mb-0" style="font-size:.78rem;">
-        <!-- Admin access: navigate to blog-admin via URL hash or ask your teacher for the link -->
-        <a href="#" data-goto="blog-admin" style="color:inherit;opacity:.4;text-decoration:none;">Admin</a>
-      </p>
-    </div>
-  </footer>
+        <h1>Notes</h1>
+
+
+        <div class="notes-level-cards">
+          <button type="button" class="level-card active" data-level="o-level">
+            <span class="level-dot level-o"></span>
+            <strong>O Level</strong>
+          </button>
+          <button type="button" class="level-card" data-level="a-level">
+            <span class="level-dot level-a"></span>
+            <strong>A Level</strong>
+          </button>
+        </div>
+
+        
+      </div>
+    </section>
+
+    <section class="layout container">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+          <div>
+            <span class="sidebar-badge" id="sidebar-level-badge">O Level</span>
+          </div>
+          <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
+        </div>
+        <div class="sidebar-scroll" id="sidebar-list"></div>
+        
+      </aside>
+
+      <section class="content-area">
+        <div class="content-control">
+          <button class="btn btn-outline-secondary mobile-toggle" id="mobile-sidebar-toggle"><i class="bi bi-list me-2"></i>Topics</button>
+          <div class="content-header">
+            <div>
+              <h2 id="content-title">Decimal number system</h2>
+            </div>
+            <div class="content-actions">
+              <button class="btn btn-secondary" id="prev-topic"><i class="bi bi-chevron-left me-1"></i>Previous</button>
+              <button class="btn btn-primary" id="next-topic">Next<i class="bi bi-chevron-right ms-1"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <article class="topic-panel">
+          <div id="topic-content"></div>
+        </article>
+
+        
+      </section>
+    </section>
+
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  </main>
+  </div>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- JSZip + FileSaver for PDF ZIP download -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-  <!-- App data and logic -->
+  <!-- Site scripts (same as home.html) -->
   <script src="assets/js/data.js"></script>
-  <script src="assets/js/app.js"></script>
-
-  <!-- Tutorial app scripts: highlight.js + sidebar/topic interactions -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script> -->
-
-
+  <script>
+    // lightweight navbar handler for notes.html (avoids loading full SPA)
+    (function(){
+      $(document).on('click', '[data-goto]', function (e) {
+        const href = $(this).attr('href');
+        const page = $(this).data('goto');
+        const level = $(this).data('level');
+        // close mobile navbar if open
+        const nc = document.getElementById('navbarNav');
+        if (nc && nc.classList.contains('show')) bootstrap.Collapse.getOrCreateInstance(nc).hide();
+        // allow real links to navigate
+        if (href && href !== '#') return;
+        e.preventDefault();
+        if (page) {
+          $('[data-navpage]').removeClass('active');
+          $('[data-navpage="' + page + '"]').addClass('active');
+        }
+        if (level && typeof setLevel === 'function') {
+          setLevel(level);
+        }
+      });
+    })();
+  </script>
+  <script src="notes.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,22 @@
+{
+  "Data Representation": {
+    "title": "Data Representation",
+    "content": "<p>Computers store text, images, sound, and numbers as binary patterns. Data representation covers ASCII, Unicode, binary arithmetic, and the different ways to encode information.</p>"
+  },
+  "Decimal number system": {
+    "title": "Decimal Number System",
+    "content": "<p>The decimal number system uses ten digits (0-9). It is the standard system for denoting integer and non-integer numbers. Converting between decimal and binary is a common skill in computer science.</p>"
+  },
+  "Binary number system": {
+    "title": "Binary Number System",
+    "content": "<p>The binary number system uses two digits (0 and 1). It is the base-2 system used internally by digital computers. Practice converting decimal numbers to binary and vice versa.</p>"
+  },
+  "Pseudocode": {
+    "title": "Pseudocode",
+    "content": "<p>Pseudocode is a plain-language description of the steps in an algorithm. It uses structured statements that resemble programming languages but are easier to read and write for planning solutions.</p>"
+  },
+  "Flowchart symbols": {
+    "title": "Flowchart Symbols",
+    "content": "<p>Flowcharts use shapes such as rectangles for processes, diamonds for decisions, and ovals for start/end. Learning these symbols helps you translate pseudocode into visual diagrams.</p>"
+  }
+}

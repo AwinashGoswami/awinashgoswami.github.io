@@ -865,6 +865,8 @@ $(function () {
   }
 
   /* ── INIT ── */
-  navigate('home');
+  if (!window.SKIP_APP_INIT) {
+    navigate('home');
+  }
 
 });
