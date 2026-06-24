@@ -16,6 +16,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <!-- Custom CSS -->
   <link rel="stylesheet" href="assets/css/home.css" />
+  <!-- Highlight.js theme + tutorial styles -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css">
+  <style>
+    /* Tutorial app scoped styles */
+    .tutorial-app :root{--bg:#0f1724;--panel:#0b1220;--muted:#9aa6b2;--accent:#04AA6D;--card:#0e1621;--radius:12px;--sidebar-width:25%;--gap:24px;--max-content-width:980px;--transition:200ms ease}
+    .tutorial-app html,.tutorial-app body{background:transparent}
+    .tutorial-app .app{display:flex;min-height:60vh;gap:var(--gap);}
+    .tutorial-app .sidebar{width:var(--sidebar-width);min-width:240px;max-width:360px;background:linear-gradient(180deg,var(--panel),#071424);box-shadow:0 6px 18px rgba(2,6,23,.6);border-radius:0 16px 16px 0;padding:20px;position:sticky;top:0;height:100vh;overflow:auto}
+    .tutorial-app .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+    .tutorial-app .logo{width:44px;height:44px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#042018}
+    .tutorial-app .hamburger{display:none;background:transparent;border:0;color:var(--muted);font-size:20px}
+    .tutorial-app .topics{list-style:none;padding:0;margin:0}
+    .tutorial-app .section{margin:6px 0;border-radius:8px}
+    .tutorial-app .section > button{width:100%;display:flex;justify-content:space-between;align-items:center;background:transparent;border:0;color:var(--muted);padding:10px 8px;border-radius:8px;cursor:pointer}
+    .tutorial-app .section > button:hover{background:rgba(255,255,255,0.02);color:var(--accent)}
+    .tutorial-app .section > ul{list-style:none;padding:6px 6px 10px 12px;margin:0;display:none}
+    .tutorial-app .section.open > ul{display:block}
+    .tutorial-app .topic{padding:8px;border-radius:6px;color:var(--muted);display:flex;align-items:center;gap:8px;cursor:pointer}
+    .tutorial-app .topic:hover{background:rgba(4,170,109,0.06);color:#e6f9f0}
+    .tutorial-app .topic.active{background:linear-gradient(90deg, rgba(4,170,109,0.08), rgba(4,170,109,0.02));border-left:3px solid var(--accent);padding-left:6px;color:#e6f9f0}
+    .tutorial-app .main{flex:1;padding:36px;display:flex;justify-content:center}
+    .tutorial-app .container{width:100%;max-width:var(--max-content-width)}
+    .tutorial-app .page-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    .tutorial-app .title{font-size:2rem;font-weight:700;margin:0;color:#e6eef6}
+    .tutorial-app .meta{display:flex;gap:8px;align-items:center}
+    .tutorial-app .btn{background:var(--accent);color:#072018;border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600;transition:all var(--transition)}
+    .tutorial-app .btn.secondary{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
+    .tutorial-app .content{display:grid;grid-template-columns:1fr;gap:18px}
+    .tutorial-app .card{background:linear-gradient(180deg,var(--card),#07121b);padding:18px;border-radius:var(--radius);box-shadow:0 6px 20px rgba(2,6,23,.6)}
+    .tutorial-app .description{color:var(--muted);line-height:1.6}
+    .tutorial-app .example{display:flex;flex-direction:column;gap:12px}
+    .tutorial-app .code{background:#071016;padding:12px;border-radius:10px;overflow:auto}
+    .tutorial-app pre{margin:0}
+    .tutorial-app .run-wrap{display:flex;justify-content:flex-end}
+    .tutorial-app .result-frame{width:100%;height:220px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);overflow:hidden}
+    @media (max-width:900px){.tutorial-app .app{flex-direction:column}.tutorial-app .sidebar{position:fixed;left:-100%;top:0;height:100vh;z-index:40;transition:left 240ms ease;width:78%;max-width:360px;border-radius:0 12px 12px 0}.tutorial-app .sidebar.open{left:0}.tutorial-app .hamburger{display:inline-flex}.tutorial-app .main{padding:18px}}
+  </style>
 </head>
 <body>
 
@@ -96,8 +133,67 @@
     </div>
   </nav>
 
-  <!-- ══ MAIN CONTENT — dynamically rendered by app.js ══ -->
-  <div id="main-content"></div>
+  <!-- ══ MAIN CONTENT — Tutorial app inserted here ══ -->
+  <div id="main-content">
+    <div class="tutorial-app">
+      <div class="app">
+        <aside class="sidebar" id="sidebar" aria-label="Tutorial navigation">
+          <div class="brand">
+            <div class="logo">T</div>
+            <div>
+              <h2 style="margin:0;color:#e6eef6">Tutorials</h2>
+              <div style="font-size:.85rem;color:#9aa6b2">Learn modern web</div>
+            </div>
+            <button class="hamburger" id="closeSidebar" aria-label="Close sidebar">✕</button>
+          </div>
+
+          <div class="nav-search">
+            <input id="search" placeholder="Search topics..." style="width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit"> 
+          </div>
+
+          <ul class="topics" id="topics">
+            <!-- JS will populate topics -->
+          </ul>
+
+          <div class="nav-footer" style="color:#9aa6b2;margin-top:14px">Progress: <span id="progress">0/0</span></div>
+        </aside>
+
+        <main class="main">
+          <div class="container">
+            <div class="page-header">
+              <button class="hamburger" id="openSidebar" aria-label="Open sidebar">☰</button>
+              <h1 class="title" id="pageTitle">Welcome to the Tutorial</h1>
+              <div class="meta">
+                <button class="btn secondary" id="prevBtn">◀ Previous</button>
+                <button class="btn" id="nextBtn">Next ▶</button>
+              </div>
+            </div>
+
+            <div class="content">
+              <section class="card">
+                <div class="description" id="topicDesc">Select a topic from the left to view details and examples.</div>
+              </section>
+
+              <section class="card example">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <strong>Example</strong>
+                  <div style="color:var(--muted);font-size:.9rem" id="exampleLang">JS</div>
+                </div>
+
+                <div class="code"><pre><code id="codeBlock" class="language-javascript">// Select a topic to load code...</code></pre></div>
+
+                <div class="run-wrap">
+                  <button class="btn" id="runBtn">Run Example</button>
+                </div>
+
+                <iframe class="result-frame" id="resultFrame" sandbox="allow-scripts"></iframe>
+              </section>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
 
   <!-- ══ FOOTER ══ -->
   <footer>
@@ -120,6 +216,121 @@
   <!-- App data and logic -->
   <script src="assets/js/data.js"></script>
   <script src="assets/js/app.js"></script>
+
+  <!-- Tutorial app scripts: highlight.js + sidebar/topic interactions -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script>
+    (function(){
+      // Topics data (simple demo)
+      const topics = [
+        {id:'intro', title:'Introduction', desc:'Overview of the tutorial platform and learning goals.',lang:'html',code:`<h3>Hello, learner!</h3><p>This is an interactive example. Modify and press Run.</p>`},
+        {id:'html-basics', title:'HTML Basics', desc:'Learn the structure of an HTML document, tags, and elements.',lang:'html',children:[
+          {id:'html-tags',title:'Tags & Elements',desc:'Tags define elements. Example below.',lang:'html',code:`<h2>Tags & Elements</h2><p>Tags wrap content.</p>`},
+          {id:'html-forms',title:'Forms',desc:'Collect user input using forms.',lang:'html',code:`<form><input placeholder="Name"><button>Submit</button></form>`}
+        ]},
+        {id:'css-basics', title:'CSS Basics', desc:'Styling pages, colors, and layout.',lang:'css',children:[
+          {id:'selectors',title:'Selectors',desc:'Select elements using selectors.',lang:'css',code:`body{background:#071022;color:#e6eef6}`},
+          {id:'flexbox',title:'Flexbox',desc:'Layout with flexbox.',lang:'css',code:`.row{display:flex;gap:12px}`}
+        ]},
+        {id:'js-basics', title:'JavaScript Basics', desc:'Add interactivity with JavaScript.',lang:'js',children:[
+          {id:'variables',title:'Variables',desc:'Store values in variables.',lang:'js',code:`const name = 'Student';console.log('Hello',name);`},
+          {id:'dom',title:'DOM Manipulation',desc:'Interact with the page DOM.',lang:'js',code:`document.body.style.background='linear-gradient(180deg,#071022,#04202a)';`}
+        ]}
+      ];
+
+      // Render sidebar
+      const topicsEl = document.getElementById('topics');
+      function mkSection(section){
+        const li = document.createElement('li');li.className='section';
+        const btn = document.createElement('button');btn.innerHTML=`<span>${section.title}</span><span style="opacity:.7">▶</span>`;
+        btn.addEventListener('click',()=>{li.classList.toggle('open')});
+        li.appendChild(btn);
+        const ul = document.createElement('ul');
+        if(section.children && section.children.length){
+          section.children.forEach(s=>ul.appendChild(mkTopic(s)));
+        } else {
+          ul.appendChild(mkTopic(section));
+        }
+        li.appendChild(ul);
+        return li;
+      }
+
+      function mkTopic(t){
+        const li = document.createElement('li');
+        const div = document.createElement('div');div.className='topic';div.tabIndex=0;div.innerText=t.title;div.dataset.id=t.id;div.addEventListener('click',()=>selectTopicById(t.id));
+        li.appendChild(div);return li;
+      }
+
+      topics.forEach(s=>{topicsEl.appendChild(mkSection(s))});
+
+      let flat = [];
+      function flatten(list){list.forEach(it=>{if(it.children){flatten(it.children)} flat.push(it)})}
+      flatten(topics);
+
+      // Navigation logic
+      let currentIndex = -1;
+      function selectTopicById(id){
+        const t = flat.find(x=>x.id===id);
+        if(!t) return;
+        currentIndex = flat.indexOf(t);
+        document.querySelectorAll('.topic').forEach(el=>el.classList.toggle('active', el.dataset.id===id));
+        document.querySelectorAll('.section').forEach(sec=>{
+          const has = sec.querySelector(`[data-id="${id}"]`);
+          sec.classList.toggle('open', !!has);
+        });
+        document.getElementById('pageTitle').innerText = t.title;
+        document.getElementById('topicDesc').innerText = t.desc || '';
+        const codeEl = document.getElementById('codeBlock');
+        const lang = (t.lang==='js'?'javascript':(t.lang==='html'?'html':t.lang||''));
+        document.getElementById('exampleLang').innerText = (t.lang||'').toUpperCase();
+        codeEl.className = lang?('language-'+lang):'';
+        codeEl.textContent = t.code || '// No example for this topic.';
+        hljs.highlightElement(codeEl);
+        updateProgress();
+      }
+
+      document.getElementById('prevBtn').addEventListener('click',()=>{ if(currentIndex>0) selectTopicById(flat[currentIndex-1].id); });
+      document.getElementById('nextBtn').addEventListener('click',()=>{ if(currentIndex<flat.length-1) selectTopicById(flat[currentIndex+1].id); });
+
+      // Run example
+      document.getElementById('runBtn').addEventListener('click',()=>{
+        const code = document.getElementById('codeBlock').textContent;
+        const lang = document.getElementById('exampleLang').innerText.toLowerCase();
+        const frame = document.getElementById('resultFrame');
+        if(lang==='html'){
+          const blob = new Blob([code],{type:'text/html'});frame.src = URL.createObjectURL(blob);
+        } else if(lang==='js' || lang==='javascript'){
+          const html = `<!doctype html><meta charset="utf-8"><style>body{font-family:Inter,Arial;margin:12px;color:#e6eef6;background:linear-gradient(180deg,#071022,#04121a)}</style><script>try{${code}}catch(e){document.body.innerText='Error: '+e}</script>`;
+          const blob = new Blob([html],{type:'text/html'});frame.src = URL.createObjectURL(blob);
+        } else if(lang==='css'){
+          const html = `<!doctype html><meta charset="utf-8"><style>${code}</style><div style='padding:12px;color:#e6eef6'>CSS applied to this demo container</div>`;
+          const blob = new Blob([html],{type:'text/html'});frame.src = URL.createObjectURL(blob);
+        } else {
+          frame.srcdoc = `<pre style="color:#e6eef6">${escapeHtml(code)}</pre>`;
+        }
+      });
+
+      function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+      const openBtn = document.getElementById('openSidebar');
+      const closeBtn = document.getElementById('closeSidebar');
+      const sidebar = document.getElementById('sidebar');
+      openBtn.addEventListener('click',()=>sidebar.classList.toggle('open'));
+      closeBtn.addEventListener('click',()=>sidebar.classList.remove('open'));
+
+      document.getElementById('search').addEventListener('input',e=>{
+        const q = e.target.value.toLowerCase();
+        document.querySelectorAll('.topic').forEach(el=>{
+          const ok = el.innerText.toLowerCase().includes(q);
+          el.style.display = ok ? 'flex' : 'none';
+        });
+      });
+
+      function updateProgress(){ const done = currentIndex>=0 ? currentIndex+1:0; document.getElementById('progress').innerText = `${done}/${flat.length}`; }
+
+      (function init(){ const first = flat.find(x=>x); if(first) selectTopicById(first.id); document.querySelectorAll('pre code').forEach((block)=>hljs.highlightElement(block)); document.addEventListener('click', (e)=>{ if(window.innerWidth<=900 && !sidebar.contains(e.target) && !openBtn.contains(e.target)) sidebar.classList.remove('open'); }); })();
+    })();
+  </script>
 
 </body>
 </html>
