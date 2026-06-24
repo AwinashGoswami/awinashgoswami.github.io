@@ -38,14 +38,13 @@ $(function () {
     $('[data-navpage="' + page + '"]').addClass('active');
     if (page === 'home') showHome();
     else if (page === 'cat-hub') showCatHub(currentLevel);
-    else if (page === 'cat-notes') showCatNotes(currentLevel);
     else if (page === 'cat-fc') showCatFlashcards(currentLevel);
     else if (page === 'cat-quiz') showCatQuiz(currentLevel);
     else if (page === 'cat-concepts') showCatConcepts(currentLevel);
     else if (page === 'tutorial') showTutorial();
     else if (page === 'blog') showBlog();
     else if (page === 'glossary') showGlossary();
-    else if (page === 'notes') showNotesPage();
+    else if (page === 'notes') showNotesPage(currentLevel);
     else if (page === 'blog-post') showBlogPost(opts.postId);
     else if (page === 'blog-admin') showBlogAdmin();
     window.scrollTo(0, 0);
@@ -134,7 +133,7 @@ $(function () {
             </div>
           </div>
           <div class="section-btn-grid">
-            <a href="#" class="section-btn" data-goto="cat-notes" data-level="${level}">
+            <a href="#" class="section-btn" data-goto="notes" data-level="${level}">
               <span class="sb-icon"><i class="bi bi-file-earmark-pdf"></i></span>
               <h4>Study Notes</h4><p>Downloadable PDF guides for every topic</p>
             </a>
@@ -146,10 +145,6 @@ $(function () {
               <span class="sb-icon"><i class="bi bi-patch-question"></i></span>
               <h4>Practice Quiz</h4><p>Multiple-choice questions with instant feedback</p>
             </a>
-            <a href="#" class="section-btn" data-goto="cat-concepts" data-level="${level}">
-              <span class="sb-icon"><i class="bi bi-book"></i></span>
-              <h4>CS Concepts</h4><p>In-depth accordion glossary of key topics</p>
-            </a>
           </div>
         </div>
       </div>
@@ -159,48 +154,8 @@ $(function () {
   /* ══════════════════════════════════
      NOTES
   ═══════════════════════════════════*/
-  function showCatNotes(level) {
-    unloadNotesCss();
-    const meta = CATEGORY_META[level];
-    const notes = CATEGORIES[level].notes;
-    let cards = notes.map(function (n) {
-      return `
-        <div class="col-sm-6 col-lg-4 mb-4">
-          <div class="note-card">
-            <span class="note-tag">${n.tag}</span>
-            <h5>${n.title}</h5>
-            <p>${n.desc}</p>
-            <div class="note-card-actions">
-              <a class="btn-view" href="${n.file}" target="_blank" rel="noopener">
-                <i class="bi bi-eye me-1"></i>View PDF
-              </a>
-            </div>
-          </div>
-        </div>`;
-    }).join('');
-
-    $('#main-content').html(`
-      <div class="section-wrap">
-        <div class="container">
-          ${breadcrumb(level, 'Study Notes')}
-          <div class="section-header d-flex justify-content-between align-items-start flex-wrap gap-3">
-            <div>
-              <h2>${meta.label} — Study Notes</h2>
-              <p>Preview each PDF before you download it from the reader.</p>
-            </div>
-            <button class="btn-download-all" id="btn-download-all"
-              data-files="${notes.map(n => n.file).join('|')}"
-              data-titles="${notes.map(n => n.title).join('|')}">
-              <i class="bi bi-cloud-download me-1"></i>Download All as ZIP
-            </button>
-          </div>
-          <div class="row">${cards}</div>
-        </div>
-      </div>
-    `);
-  }
-
-  function showNotesPage() {
+  function showNotesPage(level) {
+    currentLevel = level || currentLevel || 'o-level';
     loadNotesCss();
     $('#main-content').html(`
       <main class="notes-app">
@@ -251,7 +206,7 @@ $(function () {
       </main>
     `);
     if (typeof initNotesPage === 'function') {
-      initNotesPage();
+      initNotesPage(level);
     }
   }
 

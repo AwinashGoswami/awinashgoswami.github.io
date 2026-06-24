@@ -396,14 +396,11 @@ body {
 footer { background: var(--white); border-top: 1px solid var(--border); padding: 2rem 0; text-align: center; color: var(--text-muted); font-size: .83rem; margin-top: 2rem; }
 
 /* ─── RESPONSIVE ─── */
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .hero { padding: 3rem 0 2.5rem; }
   .hero h1 { font-size: 1.85rem; }
   .flashcard-wrap { height: 240px; }
   .quiz-card { padding: 1.3rem; }
-  .section-btn-grid { grid-template-columns: 1fr 1fr; }
-  .blog-post-content { padding: 1.5rem; }
-}
-@media (max-width: 380px) {
   .section-btn-grid { grid-template-columns: 1fr; }
+  .blog-post-content { padding: 1.5rem; }
 }

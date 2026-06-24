@@ -16,7 +16,7 @@
     "content": "<p>Pseudocode is a plain-language description of the steps in an algorithm. It uses structured statements that resemble programming languages but are easier to read and write for planning solutions.</p>"
   },
   "Flowchart symbols": {
-    "title": "Flowchart Symbols",
+    "title": "Updating",
     "content": "<p>Flowcharts use shapes such as rectangles for processes, diamonds for decisions, and ovals for start/end. Learning these symbols helps you translate pseudocode into visual diagrams.</p>"
   }
 }

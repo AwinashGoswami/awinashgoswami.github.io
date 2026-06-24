@@ -51,7 +51,7 @@ let mobileToggle;
 let closeSidebar;
 let overlay;
 
-function initNotesPage() {
+function initNotesPage(level) {
   sidebar = document.getElementById('sidebar');
   sidebarList = document.getElementById('sidebar-list');
   sidebarBadge = document.getElementById('sidebar-level-badge');
@@ -67,7 +67,7 @@ function initNotesPage() {
   attachLevelCardListeners();
   attachSidebarControls();
   attachTopicNavigation();
-  setLevel(currentLevel);
+  setLevel(level || currentLevel || 'o-level');
 }
 
 function attachNavListeners() {
