@@ -13,7 +13,6 @@ const levels = {
     json: "assets/json/a_level.json",
     sections: [
       {
-        title: "Advanced Concepts",
         topics: ["Data Representation", "Algorithms"],
       },
     ],

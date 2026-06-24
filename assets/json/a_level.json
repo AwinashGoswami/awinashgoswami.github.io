@@ -1,10 +1,10 @@
 {
   "Data Representation": {
     "title": "Data Representation",
-    "content": "<h2>Decimal Number System</h2><p>The decimal system is key for understanding how computers represent numbers and how to convert between bases.</p><h2>Binary Number System</h2><p>The binary system is used by computers internally, with only 0s and 1s to represent information.</p>"
+    "content": "<h2>Decimal Number System</h2><p>The decimal system is key for understanding how computers represent numbers and how to convert between bases.</p><h2>Binary Number System</h2><p>The binary system is used by computers internally, with only 0s and 1s to represent information.</p><h2>Hexadecimal System</h2><p>Hexadecimal is a compact way to write binary data, using 16 symbols from 0 to F. It is often used in programming and computer science to simplify large binary values.</p><h2>Two's Complement</h2><p>Two's complement is the standard method computers use to represent negative integers in binary form, making arithmetic operations easier for CPU circuits.</p>"
   },
   "Algorithms": {
     "title": "Algorithms",
-    "content": "<h2>Pseudocode</h2><p>Pseudocode is a plain-language way to describe an algorithm step by step before writing actual code.</p><h2>Flowchart Symbols</h2><p>Flowchart symbols visually map the flow of an algorithm using shapes for decisions, processes, and start/end points.</p>"
+    "content": "<h2>Pseudocode</h2><p>Pseudocode is a plain-language way to describe an algorithm step by step before writing actual code.</p><h2>Flowchart Symbols</h2><p>Flowchart symbols visually map the flow of an algorithm using shapes for decisions, processes, and start/end points.</p><h2>Algorithm Efficiency</h2><p>Efficiency measures how quickly an algorithm runs and how much memory it uses. Simple comparisons help choose the best approach for a specific problem.</p><h2>Iteration and Conditionals</h2><p>Most algorithms use loops and conditional checks to process data repeatedly and make decisions based on current values.</p>"
   }
 }

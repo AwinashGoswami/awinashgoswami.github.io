@@ -334,12 +334,22 @@ button {
   color: var(--text-mid);
   font-weight: 500;
   transition: transform .18s ease, background .18s ease, color .18s ease;
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
 
 .topic-item:hover {
   background: var(--primary-lighter);
   color: var(--primary);
   transform: translateX(2px);
+}
+
+.topic-item:focus,
+.topic-item:focus-visible,
+.topic-item.active {
+  outline: none;
+  box-shadow: none;
 }
 
 .topic-item.active {

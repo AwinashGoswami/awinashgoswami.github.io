@@ -4,60 +4,68 @@
    ═══════════════════════════════════ */
 
 $(function () {
-
   /* ── STATE ── */
-  let currentPage = 'home';
+  let currentPage = "home";
   let currentLevel = null;
-  let loadedPosts = null;   // populated async from posts.json
-  let loadedGlossary = null;  // populated async from glossary.json
+  let loadedPosts = null; // populated async from posts.json
+  let loadedGlossary = null; // populated async from glossary.json
   let fcIndex = 0;
   let fcFlipped = false;
   let quizQuestions = [];
   let quizIndex = 0;
   let quizScore = 0;
   let quizAnswered = false;
-  const ADMIN_PASS = 'awinashgoswami';
+  const ADMIN_PASS = "awinashgoswami";
 
   /* ── LOAD POSTS from assets/json/posts.json on startup ── */
-  fetch('assets/json/posts.json?v=' + Date.now())
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (data) {
-      loadedPosts = (Array.isArray(data) && data.length) ? data : FALLBACK_POSTS;
+  fetch("assets/json/posts.json?v=" + Date.now())
+    .then(function (r) {
+      return r.ok ? r.json() : null;
     })
-    .catch(function () { loadedPosts = FALLBACK_POSTS; });
+    .then(function (data) {
+      loadedPosts = Array.isArray(data) && data.length ? data : FALLBACK_POSTS;
+    })
+    .catch(function () {
+      loadedPosts = FALLBACK_POSTS;
+    });
 
-  function getPosts() { return loadedPosts || FALLBACK_POSTS; }
-  function getGlossary() { return loadedGlossary || GLOSSARY_TERMS; }
+  function getPosts() {
+    return loadedPosts || FALLBACK_POSTS;
+  }
+  function getGlossary() {
+    return loadedGlossary || GLOSSARY_TERMS;
+  }
 
   /* ── ROUTING ── */
   function navigate(page, opts) {
     opts = opts || {};
     currentPage = page;
     currentLevel = opts.level || null;
-    $('[data-navpage]').removeClass('active');
-    $('[data-navpage="' + page + '"]').addClass('active');
-    if (page === 'home') showHome();
-    else if (page === 'cat-hub') showCatHub(currentLevel);
-    else if (page === 'cat-fc') showCatFlashcards(currentLevel);
-    else if (page === 'cat-quiz') showCatQuiz(currentLevel);
-    else if (page === 'cat-concepts') showCatConcepts(currentLevel);
-    else if (page === 'tutorial') showTutorial();
-    else if (page === 'blog') showBlog();
-    else if (page === 'glossary') showGlossary();
-    else if (page === 'notes') showNotesPage(currentLevel);
-    else if (page === 'blog-post') showBlogPost(opts.postId);
-    else if (page === 'blog-admin') showBlogAdmin();
+    $("[data-navpage]").removeClass("active");
+    $('[data-navpage="' + page + '"]').addClass("active");
+    if (page === "home") showHome();
+    else if (page === "cat-hub") showCatHub(currentLevel);
+    else if (page === "cat-fc") showCatFlashcards(currentLevel);
+    else if (page === "cat-quiz") showCatQuiz(currentLevel);
+    else if (page === "cat-concepts") showCatConcepts(currentLevel);
+    else if (page === "tutorial") showTutorial();
+    else if (page === "blog") showBlog();
+    else if (page === "glossary") showGlossary();
+    else if (page === "notes") showNotesPage(currentLevel);
+    else if (page === "blog-post") showBlogPost(opts.postId);
+    else if (page === "blog-admin") showBlogAdmin();
     window.scrollTo(0, 0);
   }
 
   /* ── NAV CLICKS ── */
-  $(document).on('click', '[data-goto]', function (e) {
+  $(document).on("click", "[data-goto]", function (e) {
     e.preventDefault();
-    const page = $(this).data('goto');
-    const level = $(this).data('level');
-    const postId = $(this).data('postid');
-    const nc = document.getElementById('navbarNav');
-    if (nc && nc.classList.contains('show')) bootstrap.Collapse.getOrCreateInstance(nc).hide();
+    const page = $(this).data("goto");
+    const level = $(this).data("level");
+    const postId = $(this).data("postid");
+    const nc = document.getElementById("navbarNav");
+    if (nc && nc.classList.contains("show"))
+      bootstrap.Collapse.getOrCreateInstance(nc).hide();
     navigate(page, { level: level, postId: postId });
   });
 
@@ -65,7 +73,7 @@ $(function () {
      HOME
   ═══════════════════════════════════*/
   function showHome() {
-    $('#main-content').html(`
+    $("#main-content").html(`
       <section class="hero">
         <div class="container">
           <h1>Master Computer Science<br><span>Without the Burnout</span></h1>
@@ -90,6 +98,7 @@ $(function () {
                 <p>Advanced algorithms, OOP, computer architecture, networks, and databases.</p>
               </div>
             </div>
+
             <div class="col-sm-6 col-md-12 col-lg-4">
               <div class="feature-card" data-goto="cat-hub" data-level="university">
                 <div class="feature-icon"><i class="bi bi-building"></i></div>
@@ -109,7 +118,7 @@ $(function () {
   ═══════════════════════════════════*/
   function showCatHub(level) {
     const meta = CATEGORY_META[level];
-    $('#main-content').html(`
+    $("#main-content").html(`
       <div class="section-wrap">
         <div class="container">
           <div class="breadcrumb-custom">
@@ -145,11 +154,11 @@ $(function () {
      NOTES
   ═══════════════════════════════════*/
   function showNotesPage(level) {
-    currentLevel = level || currentLevel || 'o-level';
-    const levelMeta = CATEGORY_META[currentLevel] || { label: 'O Level' };
-    const levelClass = currentLevel === 'a-level' ? 'level-a' : 'level-o';
+    currentLevel = level || currentLevel || "o-level";
+    const levelMeta = CATEGORY_META[currentLevel] || { label: "O Level" };
+    const levelClass = currentLevel === "a-level" ? "level-a" : "level-o";
     loadNotesCss();
-    $('#main-content').html(`
+    $("#main-content").html(`
       <main class="notes-app">
         <section class="notes-hero">
           <div class="container">
@@ -193,70 +202,118 @@ $(function () {
         <div class="sidebar-overlay" id="sidebar-overlay"></div>
       </main>
     `);
-    if (typeof initNotesPage === 'function') {
+    if (typeof initNotesPage === "function") {
       initNotesPage(level);
     }
   }
 
   function loadNotesCss() {
-    if (!document.getElementById('notes-css')) {
-      const link = document.createElement('link');
-      link.id = 'notes-css';
-      link.rel = 'stylesheet';
-      link.href = 'assets/css/notes.css';
+    if (!document.getElementById("notes-css")) {
+      const link = document.createElement("link");
+      link.id = "notes-css";
+      link.rel = "stylesheet";
+      link.href = "assets/css/notes.css";
       document.head.appendChild(link);
     }
   }
 
   function unloadNotesCss() {
-    const existing = document.getElementById('notes-css');
+    const existing = document.getElementById("notes-css");
     if (existing) {
       existing.parentNode.removeChild(existing);
     }
   }
 
   /* Download All as ZIP */
-  $(document).on('click', '#btn-download-all', function () {
+  $(document).on("click", "#btn-download-all", function () {
     const btn = $(this);
-    const files = btn.data('files').split('|');
-    const titles = btn.data('titles').split('|');
-    btn.html('<span class="spinner-border spinner-border-sm me-1"></span>Preparing ZIP…').prop('disabled', true);
+    const files = btn.data("files").split("|");
+    const titles = btn.data("titles").split("|");
+    btn
+      .html(
+        '<span class="spinner-border spinner-border-sm me-1"></span>Preparing ZIP…',
+      )
+      .prop("disabled", true);
     const zip = new JSZip();
     const fetches = files.map(function (file, i) {
       return fetch(file)
-        .then(function (r) { return r.ok ? r.blob() : null; })
+        .then(function (r) {
+          return r.ok ? r.blob() : null;
+        })
         .then(function (blob) {
           if (blob && blob.size > 0) {
-            return blob.arrayBuffer().then(function (ab) { zip.file(file.split('/').pop(), ab); });
-          } else { zip.file(file.split('/').pop(), buildPlaceholderPdf(titles[i])); }
+            return blob.arrayBuffer().then(function (ab) {
+              zip.file(file.split("/").pop(), ab);
+            });
+          } else {
+            zip.file(file.split("/").pop(), buildPlaceholderPdf(titles[i]));
+          }
         })
-        .catch(function () { zip.file(file.split('/').pop(), buildPlaceholderPdf(titles[i])); });
+        .catch(function () {
+          zip.file(file.split("/").pop(), buildPlaceholderPdf(titles[i]));
+        });
     });
     Promise.all(fetches).then(function () {
-      zip.generateAsync({ type: 'blob' }).then(function (content) {
-        const label = currentLevel ? CATEGORY_META[currentLevel].label : 'CS';
-        saveAs(content, label.replace(/\s+/g, '-').toLowerCase() + '-notes.zip');
-        btn.html('<i class="bi bi-check-lg me-1"></i>Downloaded!').prop('disabled', false);
-        setTimeout(function () { btn.html('<i class="bi bi-cloud-download me-1"></i>Download All as ZIP'); }, 3000);
+      zip.generateAsync({ type: "blob" }).then(function (content) {
+        const label = currentLevel ? CATEGORY_META[currentLevel].label : "CS";
+        saveAs(
+          content,
+          label.replace(/\s+/g, "-").toLowerCase() + "-notes.zip",
+        );
+        btn
+          .html('<i class="bi bi-check-lg me-1"></i>Downloaded!')
+          .prop("disabled", false);
+        setTimeout(function () {
+          btn.html(
+            '<i class="bi bi-cloud-download me-1"></i>Download All as ZIP',
+          );
+        }, 3000);
       });
     });
   });
 
   function buildPlaceholderPdf(title) {
-    const safe = title.replace(/[()\\]/g, ' ');
-    const stream = 'BT\n/F1 20 Tf\n72 780 Td\n(CS Study Hub) Tj\n0 -30 Td\n/F1 13 Tf\n(' + safe + ') Tj\n0 -40 Td\n/F1 10 Tf\n(Placeholder PDF - Add your content here.) Tj\nET\n';
+    const safe = title.replace(/[()\\]/g, " ");
+    const stream =
+      "BT\n/F1 20 Tf\n72 780 Td\n(CS Study Hub) Tj\n0 -30 Td\n/F1 13 Tf\n(" +
+      safe +
+      ") Tj\n0 -40 Td\n/F1 10 Tf\n(Placeholder PDF - Add your content here.) Tj\nET\n";
     const slen = stream.length;
-    const h = '%PDF-1.4\n';
-    const o1 = '1 0 obj\n<</Type /Catalog /Pages 2 0 R>>\nendobj\n';
-    const o2 = '2 0 obj\n<</Type /Pages /Kids [3 0 R] /Count 1>>\nendobj\n';
-    const o3 = '3 0 obj\n<</Type /Page /Parent 2 0 R /MediaBox [0 0 595 842]\n/Contents 4 0 R /Resources <</Font <</F1 5 0 R>>>>>>\nendobj\n';
-    const o4 = '4 0 obj\n<</Length ' + slen + '>>\nstream\n' + stream + 'endstream\nendobj\n';
-    const o5 = '5 0 obj\n<</Type /Font /Subtype /Type1 /BaseFont /Helvetica>>\nendobj\n';
-    let off = h.length, offsets = [];
-    [o1, o2, o3, o4, o5].forEach(function (o) { offsets.push(off); off += o.length; });
-    let xref = 'xref\n0 6\n0000000000 65535 f \n';
-    offsets.forEach(function (o) { xref += String(o).padStart(10, '0') + ' 00000 n \n'; });
-    return h + o1 + o2 + o3 + o4 + o5 + xref + 'trailer\n<</Size 6 /Root 1 0 R>>\nstartxref\n' + off + '\n%%EOF\n';
+    const h = "%PDF-1.4\n";
+    const o1 = "1 0 obj\n<</Type /Catalog /Pages 2 0 R>>\nendobj\n";
+    const o2 = "2 0 obj\n<</Type /Pages /Kids [3 0 R] /Count 1>>\nendobj\n";
+    const o3 =
+      "3 0 obj\n<</Type /Page /Parent 2 0 R /MediaBox [0 0 595 842]\n/Contents 4 0 R /Resources <</Font <</F1 5 0 R>>>>>>\nendobj\n";
+    const o4 =
+      "4 0 obj\n<</Length " +
+      slen +
+      ">>\nstream\n" +
+      stream +
+      "endstream\nendobj\n";
+    const o5 =
+      "5 0 obj\n<</Type /Font /Subtype /Type1 /BaseFont /Helvetica>>\nendobj\n";
+    let off = h.length,
+      offsets = [];
+    [o1, o2, o3, o4, o5].forEach(function (o) {
+      offsets.push(off);
+      off += o.length;
+    });
+    let xref = "xref\n0 6\n0000000000 65535 f \n";
+    offsets.forEach(function (o) {
+      xref += String(o).padStart(10, "0") + " 00000 n \n";
+    });
+    return (
+      h +
+      o1 +
+      o2 +
+      o3 +
+      o4 +
+      o5 +
+      xref +
+      "trailer\n<</Size 6 /Root 1 0 R>>\nstartxref\n" +
+      off +
+      "\n%%EOF\n"
+    );
   }
 
   /* ══════════════════════════════════
@@ -264,11 +321,12 @@ $(function () {
   ═══════════════════════════════════*/
   function showCatFlashcards(level) {
     const meta = CATEGORY_META[level];
-    fcIndex = 0; fcFlipped = false;
-    $('#main-content').html(`
+    fcIndex = 0;
+    fcFlipped = false;
+    $("#main-content").html(`
       <div class="section-wrap">
         <div class="container" style="max-width:640px;">
-          ${breadcrumb(level, 'Flashcards')}
+          ${breadcrumb(level, "Flashcards")}
           <div class="section-header">
             <h2>${meta.label} — Flashcards</h2>
             <p>Click a card to flip it and reveal the answer.</p>
@@ -304,31 +362,48 @@ $(function () {
 
   function renderFlashcard(cards) {
     const c = cards[fcIndex];
-    const pct = ((fcIndex + 1) / cards.length * 100).toFixed(0);
+    const pct = (((fcIndex + 1) / cards.length) * 100).toFixed(0);
     fcFlipped = false;
-    $('#fc-wrap').removeClass('flipped');
-    $('#fc-front-text').text(c.q);
-    $('#fc-back-text').text(c.a);
-    $('#fc-counter').text('Card ' + (fcIndex + 1) + ' of ' + cards.length);
-    $('#fc-progress-bar').css('width', pct + '%');
-    $('#fc-prev').prop('disabled', fcIndex === 0);
-    $('#fc-next').prop('disabled', fcIndex === cards.length - 1);
+    $("#fc-wrap").removeClass("flipped");
+    $("#fc-front-text").text(c.q);
+    $("#fc-back-text").text(c.a);
+    $("#fc-counter").text("Card " + (fcIndex + 1) + " of " + cards.length);
+    $("#fc-progress-bar").css("width", pct + "%");
+    $("#fc-prev").prop("disabled", fcIndex === 0);
+    $("#fc-next").prop("disabled", fcIndex === cards.length - 1);
   }
 
-  $(document).on('click', '#fc-wrap', function () { fcFlipped = !fcFlipped; $(this).toggleClass('flipped', fcFlipped); });
-  $(document).on('click', '#fc-prev', function () { if (fcIndex > 0) { fcIndex--; renderFlashcard(CATEGORIES[currentLevel].flashcards); } });
-  $(document).on('click', '#fc-next', function () { const c = CATEGORIES[currentLevel].flashcards; if (fcIndex < c.length - 1) { fcIndex++; renderFlashcard(c); } });
-  $(document).on('click', '#fc-restart', function () { fcIndex = 0; renderFlashcard(CATEGORIES[currentLevel].flashcards); });
+  $(document).on("click", "#fc-wrap", function () {
+    fcFlipped = !fcFlipped;
+    $(this).toggleClass("flipped", fcFlipped);
+  });
+  $(document).on("click", "#fc-prev", function () {
+    if (fcIndex > 0) {
+      fcIndex--;
+      renderFlashcard(CATEGORIES[currentLevel].flashcards);
+    }
+  });
+  $(document).on("click", "#fc-next", function () {
+    const c = CATEGORIES[currentLevel].flashcards;
+    if (fcIndex < c.length - 1) {
+      fcIndex++;
+      renderFlashcard(c);
+    }
+  });
+  $(document).on("click", "#fc-restart", function () {
+    fcIndex = 0;
+    renderFlashcard(CATEGORIES[currentLevel].flashcards);
+  });
 
   /* ══════════════════════════════════
      QUIZ
   ═══════════════════════════════════*/
   function showCatQuiz(level) {
     const meta = CATEGORY_META[level];
-    $('#main-content').html(`
+    $("#main-content").html(`
       <div class="section-wrap">
         <div class="container">
-          ${breadcrumb(level, 'Quiz')}
+          ${breadcrumb(level, "Quiz")}
           <div class="section-header d-flex justify-content-between align-items-start flex-wrap gap-2">
             <div>
               <h2>${meta.label} — Practice Quiz</h2>
@@ -363,56 +438,101 @@ $(function () {
 
   function shuffle(arr) {
     const a = arr.slice();
-    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; }
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
     return a;
   }
 
   function startQuiz(level) {
     quizQuestions = shuffle(CATEGORIES[level || currentLevel].quiz);
-    quizIndex = 0; quizScore = 0; quizAnswered = false;
-    $('#quiz-result').hide(); $('#quiz-body').show();
+    quizIndex = 0;
+    quizScore = 0;
+    quizAnswered = false;
+    $("#quiz-result").hide();
+    $("#quiz-body").show();
     renderQuestion();
   }
 
   function renderQuestion() {
     const q = quizQuestions[quizIndex];
     quizAnswered = false;
-    $('#quiz-progress-bar').css('width', (quizIndex / quizQuestions.length * 100).toFixed(0) + '%');
-    $('#quiz-q-label').text('Question ' + (quizIndex + 1) + ' of ' + quizQuestions.length);
-    $('#quiz-score-badge').text('Score: ' + quizScore + ' / ' + quizIndex);
-    $('#quiz-question').text(q.q);
-    $('#quiz-feedback').hide().removeClass('correct incorrect').text('');
-    $('#quiz-next').hide();
-    const wrap = $('#quiz-options').empty();
+    $("#quiz-progress-bar").css(
+      "width",
+      ((quizIndex / quizQuestions.length) * 100).toFixed(0) + "%",
+    );
+    $("#quiz-q-label").text(
+      "Question " + (quizIndex + 1) + " of " + quizQuestions.length,
+    );
+    $("#quiz-score-badge").text("Score: " + quizScore + " / " + quizIndex);
+    $("#quiz-question").text(q.q);
+    $("#quiz-feedback").hide().removeClass("correct incorrect").text("");
+    $("#quiz-next").hide();
+    const wrap = $("#quiz-options").empty();
     q.opts.forEach(function (opt, i) {
-      wrap.append('<button class="quiz-option" data-idx="' + i + '">' + String.fromCharCode(65 + i) + '. ' + opt + '</button>');
+      wrap.append(
+        '<button class="quiz-option" data-idx="' +
+          i +
+          '">' +
+          String.fromCharCode(65 + i) +
+          ". " +
+          opt +
+          "</button>",
+      );
     });
   }
 
-  $(document).on('click', '.quiz-option', function () {
+  $(document).on("click", ".quiz-option", function () {
     if (quizAnswered) return;
     quizAnswered = true;
-    const chosen = parseInt($(this).data('idx'));
+    const chosen = parseInt($(this).data("idx"));
     const correct = quizQuestions[quizIndex].ans;
-    $('.quiz-option').prop('disabled', true);
-    if (chosen === correct) { quizScore++; $(this).addClass('correct'); $('#quiz-feedback').addClass('correct').text('Correct!').show(); }
-    else { $(this).addClass('incorrect'); $('[data-idx="' + correct + '"]').addClass('correct'); $('#quiz-feedback').addClass('incorrect').text('Incorrect — correct answer: ' + String.fromCharCode(65 + correct) + '.').show(); }
-    $('#quiz-score-badge').text('Score: ' + quizScore + ' / ' + (quizIndex + 1));
-    $('#quiz-next').show();
+    $(".quiz-option").prop("disabled", true);
+    if (chosen === correct) {
+      quizScore++;
+      $(this).addClass("correct");
+      $("#quiz-feedback").addClass("correct").text("Correct!").show();
+    } else {
+      $(this).addClass("incorrect");
+      $('[data-idx="' + correct + '"]').addClass("correct");
+      $("#quiz-feedback")
+        .addClass("incorrect")
+        .text(
+          "Incorrect — correct answer: " +
+            String.fromCharCode(65 + correct) +
+            ".",
+        )
+        .show();
+    }
+    $("#quiz-score-badge").text(
+      "Score: " + quizScore + " / " + (quizIndex + 1),
+    );
+    $("#quiz-next").show();
   });
 
-  $(document).on('click', '#quiz-next', function () {
+  $(document).on("click", "#quiz-next", function () {
     quizIndex++;
     if (quizIndex >= quizQuestions.length) {
-      const pct = Math.round(quizScore / quizQuestions.length * 100);
-      const msg = pct >= 80 ? 'Excellent work!' : pct >= 60 ? 'Good effort — keep revising!' : 'Keep studying — you\'ve got this!';
-      $('#quiz-result-score').text(quizScore + '/' + quizQuestions.length);
-      $('#quiz-result-pct').text(pct + '% — ' + msg);
-      $('#quiz-body').hide(); $('#quiz-result').show();
-    } else { renderQuestion(); }
+      const pct = Math.round((quizScore / quizQuestions.length) * 100);
+      const msg =
+        pct >= 80
+          ? "Excellent work!"
+          : pct >= 60
+            ? "Good effort — keep revising!"
+            : "Keep studying — you've got this!";
+      $("#quiz-result-score").text(quizScore + "/" + quizQuestions.length);
+      $("#quiz-result-pct").text(pct + "% — " + msg);
+      $("#quiz-body").hide();
+      $("#quiz-result").show();
+    } else {
+      renderQuestion();
+    }
   });
 
-  $(document).on('click', '#quiz-restart-top, #quiz-restart-end', function () { startQuiz(); });
+  $(document).on("click", "#quiz-restart-top, #quiz-restart-end", function () {
+    startQuiz();
+  });
 
   /* ══════════════════════════════════
      CONCEPTS
@@ -420,22 +540,24 @@ $(function () {
   function showCatConcepts(level) {
     const meta = CATEGORY_META[level];
     const concepts = CATEGORIES[level].concepts;
-    let items = concepts.map(function (c, i) {
-      const id = 'concept-' + i + '-' + level;
-      return `<div class="accordion-item">
+    let items = concepts
+      .map(function (c, i) {
+        const id = "concept-" + i + "-" + level;
+        return `<div class="accordion-item">
         <h2 class="accordion-header">
-          <button class="accordion-button ${i === 0 ? '' : 'collapsed'}" type="button"
+          <button class="accordion-button ${i === 0 ? "" : "collapsed"}" type="button"
             data-bs-toggle="collapse" data-bs-target="#${id}">${c.title}</button>
         </h2>
-        <div id="${id}" class="accordion-collapse collapse ${i === 0 ? 'show' : ''}">
+        <div id="${id}" class="accordion-collapse collapse ${i === 0 ? "show" : ""}">
           <div class="accordion-body">${c.body}</div>
         </div>
       </div>`;
-    }).join('');
-    $('#main-content').html(`
+      })
+      .join("");
+    $("#main-content").html(`
       <div class="section-wrap">
         <div class="container" style="max-width:760px;">
-          ${breadcrumb(level, 'Concepts')}
+          ${breadcrumb(level, "Concepts")}
           <div class="section-header">
             <h2>${meta.label} — CS Concepts</h2>
             <p>Click any heading to expand the full explanation.</p>
@@ -447,7 +569,7 @@ $(function () {
   }
 
   function showGlossary() {
-    $('#main-content').html(`
+    $("#main-content").html(`
       <div class="section-wrap">
         <div class="container">
           <div class="row justify-content-center">
@@ -472,39 +594,52 @@ $(function () {
     `);
     const terms = getGlossary();
     if (!terms || !terms.length) {
-      $('#glossary-count').text('No glossary entries available.');
-      $('#glossary-results').html('<p class="text-muted">Glossary data could not be loaded right now.</p>');
+      $("#glossary-count").text("No glossary entries available.");
+      $("#glossary-results").html(
+        '<p class="text-muted">Glossary data could not be loaded right now.</p>',
+      );
       return;
     }
-    renderGlossaryResults(terms, '');
+    renderGlossaryResults(terms, "");
   }
 
   function renderGlossaryResults(allTerms, query) {
-    const normalized = String(query || '').trim().toLowerCase();
+    const normalized = String(query || "")
+      .trim()
+      .toLowerCase();
     const filtered = allTerms.filter(function (item) {
-      return item.term.toLowerCase().includes(normalized) || item.definition.toLowerCase().includes(normalized);
+      return (
+        item.term.toLowerCase().includes(normalized) ||
+        item.definition.toLowerCase().includes(normalized)
+      );
     });
-    const countText = normalized ? `${filtered.length} term${filtered.length === 1 ? '' : 's'} matching "${query}"` : `${filtered.length} total term${filtered.length === 1 ? '' : 's'}`;
-    $('#glossary-count').text(countText);
+    const countText = normalized
+      ? `${filtered.length} term${filtered.length === 1 ? "" : "s"} matching "${query}"`
+      : `${filtered.length} total term${filtered.length === 1 ? "" : "s"}`;
+    $("#glossary-count").text(countText);
     if (!filtered.length) {
-      $('#glossary-results').html('<p class="text-muted">No terms found. Try a different keyword.</p>');
+      $("#glossary-results").html(
+        '<p class="text-muted">No terms found. Try a different keyword.</p>',
+      );
       return;
     }
-    const items = filtered.map(function (item) {
-      return `<div class="glossary-card mb-3 p-3 rounded-3 border border-2 border-gray bg-white shadow-sm">
+    const items = filtered
+      .map(function (item) {
+        return `<div class="glossary-card mb-3 p-3 rounded-3 border border-2 border-gray bg-white shadow-sm">
         <h5 class="mb-2">${item.term}</h5>
         <p class="mb-0">${item.definition}</p>
       </div>`;
-    }).join('');
-    $('#glossary-results').html(items);
+      })
+      .join("");
+    $("#glossary-results").html(items);
   }
 
-  $(document).on('input', '#glossary-search', function () {
+  $(document).on("input", "#glossary-search", function () {
     renderGlossaryResults(getGlossary(), $(this).val());
   });
 
-  $(document).on('click', '#glossary-show-all', function () {
-    $('#glossary-search').val('').trigger('input');
+  $(document).on("click", "#glossary-show-all", function () {
+    $("#glossary-search").val("").trigger("input");
   });
 
   /* ══════════════════════════════════
@@ -524,8 +659,8 @@ $(function () {
           </div>
         </div>
       </div>`;
-    }).join('');
-    $('#main-content').html(`
+    }).join("");
+    $("#main-content").html(`
       <div class="section-wrap">
         <div class="container">
           <div class="section-header">
@@ -543,21 +678,31 @@ $(function () {
   ═══════════════════════════════════*/
   function showBlog() {
     const posts = getPosts();
-    let cards = posts.slice().reverse().map(function (p) {
-      const tags = (p.tags || '').split(',').map(t => `<span class="blog-tag">${t.trim()}</span>`).join('');
-      const excerpt = p.excerpt || p.content.replace(/<[^>]+>/g, '').substring(0, 140) + '…';
-      return `<div class="blog-card" data-goto="blog-post" data-postid="${p.id}">
+    let cards = posts
+      .slice()
+      .reverse()
+      .map(function (p) {
+        const tags = (p.tags || "")
+          .split(",")
+          .map((t) => `<span class="blog-tag">${t.trim()}</span>`)
+          .join("");
+        const excerpt =
+          p.excerpt ||
+          p.content.replace(/<[^>]+>/g, "").substring(0, 140) + "…";
+        return `<div class="blog-card" data-goto="blog-post" data-postid="${p.id}">
         <div class="mb-2">${tags}</div>
         <h4>${p.title}</h4>
         <p>${excerpt}</p>
         <div class="blog-meta">
-          <span><i class="bi bi-person"></i>${p.author || 'CS Teacher'}</span>
-          <span><i class="bi bi-calendar3"></i>${p.date || ''}</span>
+          <span><i class="bi bi-person"></i>${p.author || "CS Teacher"}</span>
+          <span><i class="bi bi-calendar3"></i>${p.date || ""}</span>
         </div>
       </div>`;
-    }).join('');
-    if (!cards) cards = '<p class="text-muted">No posts yet. Check back soon.</p>';
-    $('#main-content').html(`
+      })
+      .join("");
+    if (!cards)
+      cards = '<p class="text-muted">No posts yet. Check back soon.</p>';
+    $("#main-content").html(`
       <div class="section-wrap">
         <div class="container" style="max-width:760px;">
           <div class="section-header">
@@ -571,10 +716,16 @@ $(function () {
   }
 
   function showBlogPost(postId) {
-    const post = getPosts().find(p => p.id == postId);
-    if (!post) { showBlog(); return; }
-    const tags = (post.tags || '').split(',').map(t => `<span class="blog-tag">${t.trim()}</span>`).join('');
-    $('#main-content').html(`
+    const post = getPosts().find((p) => p.id == postId);
+    if (!post) {
+      showBlog();
+      return;
+    }
+    const tags = (post.tags || "")
+      .split(",")
+      .map((t) => `<span class="blog-tag">${t.trim()}</span>`)
+      .join("");
+    $("#main-content").html(`
       <div class="section-wrap">
         <div class="container">
           <div class="breadcrumb-custom">
@@ -584,8 +735,8 @@ $(function () {
             <div class="mb-2">${tags}</div>
             <h1>${post.title}</h1>
             <div class="blog-meta">
-              <span><i class="bi bi-person"></i>${post.author || 'CS Teacher'}</span>
-              <span><i class="bi bi-calendar3"></i>${post.date || ''}</span>
+              <span><i class="bi bi-person"></i>${post.author || "CS Teacher"}</span>
+              <span><i class="bi bi-calendar3"></i>${post.date || ""}</span>
             </div>
             <div class="blog-post-body">${post.content}</div>
             <div class="mt-4">
@@ -603,8 +754,8 @@ $(function () {
      BLOG ADMIN
   ═══════════════════════════════════*/
   function showBlogAdmin() {
-    if (sessionStorage.getItem('cs_admin') !== '1') {
-      $('#main-content').html(`
+    if (sessionStorage.getItem("cs_admin") !== "1") {
+      $("#main-content").html(`
         <div class="section-wrap">
           <div class="container">
             <div class="admin-login">
@@ -623,21 +774,25 @@ $(function () {
     renderAdminPanel();
   }
 
-  $(document).on('click', '#admin-login-btn', function () {
-    if ($('#admin-pass-input').val() === ADMIN_PASS) {
-      sessionStorage.setItem('cs_admin', '1');
+  $(document).on("click", "#admin-login-btn", function () {
+    if ($("#admin-pass-input").val() === ADMIN_PASS) {
+      sessionStorage.setItem("cs_admin", "1");
       renderAdminPanel();
-    } else { $('#admin-pass-error').show(); }
+    } else {
+      $("#admin-pass-error").show();
+    }
   });
-  $(document).on('keydown', '#admin-pass-input', function (e) { if (e.key === 'Enter') $('#admin-login-btn').trigger('click'); });
+  $(document).on("keydown", "#admin-pass-input", function (e) {
+    if (e.key === "Enter") $("#admin-login-btn").trigger("click");
+  });
 
   /* ── GitHub settings helpers ── */
   function ghSettings() {
     return {
-      owner: sessionStorage.getItem('gh_owner') || '',
-      repo: sessionStorage.getItem('gh_repo') || '',
-      branch: sessionStorage.getItem('gh_branch') || 'main',
-      token: sessionStorage.getItem('gh_token') || ''
+      owner: sessionStorage.getItem("gh_owner") || "",
+      repo: sessionStorage.getItem("gh_repo") || "",
+      branch: sessionStorage.getItem("gh_branch") || "main",
+      token: sessionStorage.getItem("gh_token") || "",
     };
   }
   function ghConfigured() {
@@ -648,16 +803,21 @@ $(function () {
   /* ── Publish to GitHub repo via API ── */
   async function publishToGitHub(posts, title) {
     const s = ghSettings();
-    const apiUrl = 'https://api.github.com/repos/' + s.owner + '/' + s.repo + '/contents/assets/json/posts.json';
+    const apiUrl =
+      "https://api.github.com/repos/" +
+      s.owner +
+      "/" +
+      s.repo +
+      "/contents/assets/json/posts.json";
     const headers = {
-      'Authorization': 'Bearer ' + s.token,
-      'Accept': 'application/vnd.github+json',
-      'Content-Type': 'application/json'
+      Authorization: "Bearer " + s.token,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json",
     };
 
     // Get current file SHA (needed for update)
     let sha = null;
-    const getResp = await fetch(apiUrl + '?ref=' + s.branch, { headers });
+    const getResp = await fetch(apiUrl + "?ref=" + s.branch, { headers });
     if (getResp.ok) {
       const data = await getResp.json();
       sha = data.sha;
@@ -667,13 +827,23 @@ $(function () {
     const jsonStr = JSON.stringify(posts, null, 2);
     const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
 
-    const body = { message: 'Blog: ' + title, content: encoded, branch: s.branch };
+    const body = {
+      message: "Blog: " + title,
+      content: encoded,
+      branch: s.branch,
+    };
     if (sha) body.sha = sha;
 
-    const putResp = await fetch(apiUrl, { method: 'PUT', headers, body: JSON.stringify(body) });
+    const putResp = await fetch(apiUrl, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify(body),
+    });
     if (!putResp.ok) {
       const err = await putResp.json();
-      throw new Error(err.message || 'GitHub API error (' + putResp.status + ')');
+      throw new Error(
+        err.message || "GitHub API error (" + putResp.status + ")",
+      );
     }
   }
 
@@ -683,20 +853,28 @@ $(function () {
     const ghConfigured = cfg.owner && cfg.repo && cfg.token;
 
     const postList = posts.length
-      ? posts.slice().reverse().map(p =>
-        `<div class="d-flex justify-content-between align-items-center py-2 border-bottom gap-2">
+      ? posts
+          .slice()
+          .reverse()
+          .map(
+            (p) =>
+              `<div class="d-flex justify-content-between align-items-center py-2 border-bottom gap-2">
           <span style="font-size:.88rem;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.title}</span>
           <button class="btn btn-sm btn-outline-danger flex-shrink-0" data-deleteid="${p.id}"><i class="bi bi-trash"></i></button>
-        </div>`).join('')
+        </div>`,
+          )
+          .join("")
       : '<p class="text-muted" style="font-size:.88rem;">No posts yet.</p>';
 
     const ghBadge = ghConfigured
       ? `<span class="badge bg-success"><i class="bi bi-github me-1"></i>${cfg.owner}/${cfg.repo}</span>`
       : `<span class="badge bg-warning text-dark"><i class="bi bi-exclamation-triangle me-1"></i>GitHub not configured</span>`;
 
-    const ghBtnLabel = ghConfigured ? 'Update GitHub Settings' : 'Connect GitHub Repo';
+    const ghBtnLabel = ghConfigured
+      ? "Update GitHub Settings"
+      : "Connect GitHub Repo";
 
-    $('#main-content').html(`
+    $("#main-content").html(`
       <div class="section-wrap">
         <div class="container">
           <div class="breadcrumb-custom">
@@ -783,32 +961,43 @@ $(function () {
   }
 
   /* Save GitHub settings to sessionStorage */
-  $(document).on('click', '#btn-save-gh', function () {
-    sessionStorage.setItem('gh_owner', $('#gh-owner').val().trim());
-    sessionStorage.setItem('gh_repo', $('#gh-repo').val().trim());
-    sessionStorage.setItem('gh_branch', $('#gh-branch').val().trim() || 'main');
-    sessionStorage.setItem('gh_token', $('#gh-token').val().trim());
-    $('#gh-save-msg').text('Settings saved for this session.').show();
-    setTimeout(function () { $('#gh-save-msg').hide(); }, 3000);
+  $(document).on("click", "#btn-save-gh", function () {
+    sessionStorage.setItem("gh_owner", $("#gh-owner").val().trim());
+    sessionStorage.setItem("gh_repo", $("#gh-repo").val().trim());
+    sessionStorage.setItem("gh_branch", $("#gh-branch").val().trim() || "main");
+    sessionStorage.setItem("gh_token", $("#gh-token").val().trim());
+    $("#gh-save-msg").text("Settings saved for this session.").show();
+    setTimeout(function () {
+      $("#gh-save-msg").hide();
+    }, 3000);
   });
 
   /* Publish post */
-  $(document).on('click', '#btn-publish-post', async function () {
-    const title = $('#post-title').val().trim();
-    const excerpt = $('#post-excerpt').val().trim();
-    const content = $('#post-content').val().trim();
-    const tags = $('#post-tags').val().trim();
+  $(document).on("click", "#btn-publish-post", async function () {
+    const title = $("#post-title").val().trim();
+    const excerpt = $("#post-excerpt").val().trim();
+    const content = $("#post-content").val().trim();
+    const tags = $("#post-tags").val().trim();
 
-    if (!title || !content) { alert('Please fill in at least the title and content.'); return; }
+    if (!title || !content) {
+      alert("Please fill in at least the title and content.");
+      return;
+    }
 
     if (!ghConfigured()) {
-      alert('Please fill in and save your GitHub settings above before publishing.');
+      alert(
+        "Please fill in and save your GitHub settings above before publishing.",
+      );
       return;
     }
 
     const btn = $(this);
-    btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span>Publishing…');
-    $('#post-save-msg').hide();
+    btn
+      .prop("disabled", true)
+      .html(
+        '<span class="spinner-border spinner-border-sm me-1"></span>Publishing…',
+      );
+    $("#post-save-msg").hide();
 
     const newPost = {
       id: Date.now(),
@@ -816,8 +1005,8 @@ $(function () {
       excerpt,
       content,
       tags,
-      author: 'CS Teacher',
-      date: new Date().toISOString().slice(0, 10)
+      author: "CS Teacher",
+      date: new Date().toISOString().slice(0, 10),
     };
 
     const posts = getPosts();
@@ -826,49 +1015,64 @@ $(function () {
     try {
       await publishToGitHub(posts, title);
       loadedPosts = posts;
-      $('#post-title, #post-excerpt, #post-content, #post-tags').val('');
-      $('#post-save-msg')
-        .removeClass('text-danger').addClass('text-success')
-        .html('<i class="bi bi-check-circle me-1"></i>Published! GitHub Pages will update in ~1 minute.')
+      $("#post-title, #post-excerpt, #post-content, #post-tags").val("");
+      $("#post-save-msg")
+        .removeClass("text-danger")
+        .addClass("text-success")
+        .html(
+          '<i class="bi bi-check-circle me-1"></i>Published! GitHub Pages will update in ~1 minute.',
+        )
         .show();
 
       // Refresh post list in panel
-      const listHtml = posts.slice().reverse().map(p =>
-        `<div class="d-flex justify-content-between align-items-center py-2 border-bottom gap-2">
+      const listHtml = posts
+        .slice()
+        .reverse()
+        .map(
+          (p) =>
+            `<div class="d-flex justify-content-between align-items-center py-2 border-bottom gap-2">
           <span style="font-size:.88rem;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.title}</span>
           <button class="btn btn-sm btn-outline-danger flex-shrink-0" data-deleteid="${p.id}"><i class="bi bi-trash"></i></button>
-        </div>`).join('');
-      $('#admin-post-list').html(listHtml);
-
+        </div>`,
+        )
+        .join("");
+      $("#admin-post-list").html(listHtml);
     } catch (err) {
-      $('#post-save-msg')
-        .removeClass('text-success').addClass('text-danger')
+      $("#post-save-msg")
+        .removeClass("text-success")
+        .addClass("text-danger")
         .html('<i class="bi bi-x-circle me-1"></i>Error: ' + err.message)
         .show();
     }
 
-    btn.prop('disabled', false).html('<i class="bi bi-github me-1"></i>Publish to GitHub');
+    btn
+      .prop("disabled", false)
+      .html('<i class="bi bi-github me-1"></i>Publish to GitHub');
   });
 
   /* Delete post — also commits updated posts.json to GitHub */
-  $(document).on('click', '[data-deleteid]', async function () {
-    const id = $(this).data('deleteid');
-    const row = $(this).closest('.d-flex');
-    if (!confirm('Delete this post? This will update your GitHub repo.')) return;
+  $(document).on("click", "[data-deleteid]", async function () {
+    const id = $(this).data("deleteid");
+    const row = $(this).closest(".d-flex");
+    if (!confirm("Delete this post? This will update your GitHub repo."))
+      return;
 
-    const posts = getPosts().filter(p => p.id != id);
+    const posts = getPosts().filter((p) => p.id != id);
     loadedPosts = posts;
     row.remove();
 
     if (ghConfigured()) {
-      try { await publishToGitHub(posts, 'Delete post ' + id); }
-      catch (e) { console.warn('GitHub delete sync failed:', e.message); }
+      try {
+        await publishToGitHub(posts, "Delete post " + id);
+      } catch (e) {
+        console.warn("GitHub delete sync failed:", e.message);
+      }
     }
   });
 
-  $(document).on('click', '#btn-admin-logout', function () {
-    sessionStorage.removeItem('cs_admin');
-    navigate('blog');
+  $(document).on("click", "#btn-admin-logout", function () {
+    sessionStorage.removeItem("cs_admin");
+    navigate("blog");
   });
 
   /* ── UTIL ── */
@@ -883,7 +1087,6 @@ $(function () {
 
   /* ── INIT ── */
   if (!window.SKIP_APP_INIT) {
-    navigate('home');
+    navigate("home");
   }
-
 });
