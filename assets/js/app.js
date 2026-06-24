@@ -68,46 +68,36 @@ $(function () {
     $('#main-content').html(`
       <section class="hero">
         <div class="container">
-          <span class="hero-badge">Free Study Resource</span>
           <h1>Master Computer Science<br><span>Without the Burnout</span></h1>
           <p>A free, carefully curated resource built by a passionate CS teacher. Notes, flashcards, quizzes, tutorials, and blog — everything you need to succeed.</p>
-          <div class="d-flex flex-wrap gap-3 justify-content-center">
-            <a href="#" class="btn-primary-custom" data-goto="cat-hub" data-level="a-level">Browse Resources</a>
-            <a href="#" class="btn-outline-custom" data-goto="tutorial">Watch Tutorials</a>
-          </div>
+
         </div>
       </section>
       <section class="feature-grid">
         <div class="container">
           <div class="row g-4">
-            <div class="col-sm-6 col-lg-3">
+            <div class="col-sm-6 col-md-12 col-lg-4">
               <div class="feature-card" data-goto="cat-hub" data-level="o-level">
                 <div class="feature-icon"><i class="bi bi-mortarboard"></i></div>
                 <h5>O Level</h5>
                 <p>Foundational CS topics — programming basics, number systems, Boolean logic, and more.</p>
               </div>
             </div>
-            <div class="col-sm-6 col-lg-3">
+            <div class="col-sm-6 col-md-12 col-lg-4">
               <div class="feature-card" data-goto="cat-hub" data-level="a-level">
                 <div class="feature-icon"><i class="bi bi-cpu"></i></div>
                 <h5>A Level</h5>
                 <p>Advanced algorithms, OOP, computer architecture, networks, and databases.</p>
               </div>
             </div>
-            <div class="col-sm-6 col-lg-3">
+            <div class="col-sm-6 col-md-12 col-lg-4">
               <div class="feature-card" data-goto="cat-hub" data-level="university">
                 <div class="feature-icon"><i class="bi bi-building"></i></div>
                 <h5>University</h5>
                 <p>Degree-level content — OS, distributed systems, ML, compilers, and advanced theory.</p>
               </div>
             </div>
-            <div class="col-sm-6 col-lg-3">
-              <div class="feature-card" data-goto="tutorial">
-                <div class="feature-icon"><i class="bi bi-play-circle"></i></div>
-                <h5>Tutorials</h5>
-                <p>Curated YouTube video lessons from top CS educators around the world.</p>
-              </div>
-            </div>
+       
           </div>
         </div>
       </section>
@@ -156,6 +146,8 @@ $(function () {
   ═══════════════════════════════════*/
   function showNotesPage(level) {
     currentLevel = level || currentLevel || 'o-level';
+    const levelMeta = CATEGORY_META[currentLevel] || { label: 'O Level' };
+    const levelClass = currentLevel === 'a-level' ? 'level-a' : 'level-o';
     loadNotesCss();
     $('#main-content').html(`
       <main class="notes-app">
@@ -163,14 +155,10 @@ $(function () {
           <div class="container">
             <h1>Notes</h1>
             <div class="notes-level-cards">
-              <button type="button" class="level-card active" data-level="o-level">
-                <span class="level-dot level-o"></span>
-                <strong>O Level</strong>
-              </button>
-              <button type="button" class="level-card" data-level="a-level">
-                <span class="level-dot level-a"></span>
-                <strong>A Level</strong>
-              </button>
+              <div class="notes-level-display">
+                <span class="level-dot ${levelClass}"></span>
+                <strong>${levelMeta.label}</strong>
+              </div>
             </div>
           </div>
         </section>

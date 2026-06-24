@@ -139,11 +139,27 @@ button {
   letter-spacing: -.4px;
 }
 .notes-level-cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  display: flex;
+  justify-content: center;
   margin: 1.5rem auto 2rem;
   max-width: 760px;
+}
+
+.notes-level-display {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .85rem;
+  border: 1px solid rgba(226,232,240,.95);
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 12px 28px rgba(15,23,42,.05);
+}
+
+.notes-level-display strong {
+  font-size: 1.1rem;
+  margin: 0;
 }
 
 .level-card {
