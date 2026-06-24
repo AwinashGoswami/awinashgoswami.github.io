@@ -40,18 +40,29 @@ let currentTopic = '';
 let currentNotes = {};
 let currentTopicList = [];
 
-const sidebar = document.getElementById('sidebar');
-const sidebarList = document.getElementById('sidebar-list');
-const sidebarBadge = document.getElementById('sidebar-level-badge');
-const contentTitle = document.getElementById('content-title');
-const topicContent = document.getElementById('topic-content');
-const prevButton = document.getElementById('prev-topic');
-const nextButton = document.getElementById('next-topic');
-const mobileToggle = document.getElementById('mobile-sidebar-toggle');
-const closeSidebar = document.getElementById('sidebar-close');
-const overlay = document.getElementById('sidebar-overlay');
+let sidebar;
+let sidebarList;
+let sidebarBadge;
+let contentTitle;
+let topicContent;
+let prevButton;
+let nextButton;
+let mobileToggle;
+let closeSidebar;
+let overlay;
 
 function initNotesPage() {
+  sidebar = document.getElementById('sidebar');
+  sidebarList = document.getElementById('sidebar-list');
+  sidebarBadge = document.getElementById('sidebar-level-badge');
+  contentTitle = document.getElementById('content-title');
+  topicContent = document.getElementById('topic-content');
+  prevButton = document.getElementById('prev-topic');
+  nextButton = document.getElementById('next-topic');
+  mobileToggle = document.getElementById('mobile-sidebar-toggle');
+  closeSidebar = document.getElementById('sidebar-close');
+  overlay = document.getElementById('sidebar-overlay');
+
   attachNavListeners();
   attachLevelCardListeners();
   attachSidebarControls();
@@ -337,4 +348,6 @@ window.addEventListener('resize', () => {
   }
 });
 
-initNotesPage();
+if (document.getElementById('sidebar')) {
+  initNotesPage();
+}

@@ -45,6 +45,7 @@ $(function () {
     else if (page === 'tutorial') showTutorial();
     else if (page === 'blog') showBlog();
     else if (page === 'glossary') showGlossary();
+    else if (page === 'notes') showNotesPage();
     else if (page === 'blog-post') showBlogPost(opts.postId);
     else if (page === 'blog-admin') showBlogAdmin();
     window.scrollTo(0, 0);
@@ -159,6 +160,7 @@ $(function () {
      NOTES
   ═══════════════════════════════════*/
   function showCatNotes(level) {
+    unloadNotesCss();
     const meta = CATEGORY_META[level];
     const notes = CATEGORIES[level].notes;
     let cards = notes.map(function (n) {
@@ -196,6 +198,78 @@ $(function () {
         </div>
       </div>
     `);
+  }
+
+  function showNotesPage() {
+    loadNotesCss();
+    $('#main-content').html(`
+      <main class="notes-app">
+        <section class="notes-hero">
+          <div class="container">
+            <h1>Notes</h1>
+            <div class="notes-level-cards">
+              <button type="button" class="level-card active" data-level="o-level">
+                <span class="level-dot level-o"></span>
+                <strong>O Level</strong>
+              </button>
+              <button type="button" class="level-card" data-level="a-level">
+                <span class="level-dot level-a"></span>
+                <strong>A Level</strong>
+              </button>
+            </div>
+          </div>
+        </section>
+        <section class="layout container">
+          <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+              <div>
+                <span class="sidebar-badge" id="sidebar-level-badge">O Level</span>
+              </div>
+              <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
+            </div>
+            <div class="sidebar-scroll" id="sidebar-list"></div>
+          </aside>
+          <section class="content-area">
+            <div class="content-control">
+              <button class="btn btn-outline-secondary mobile-toggle" id="mobile-sidebar-toggle"><i class="bi bi-list me-2"></i>Topics</button>
+              <div class="content-header">
+                <div>
+                  <h2 id="content-title">Decimal number system</h2>
+                </div>
+                <div class="content-actions">
+                  <button class="btn btn-secondary" id="prev-topic"><i class="bi bi-chevron-left me-1"></i>Previous</button>
+                  <button class="btn btn-primary" id="next-topic">Next<i class="bi bi-chevron-right ms-1"></i></button>
+                </div>
+              </div>
+            </div>
+            <article class="topic-panel">
+              <div id="topic-content"></div>
+            </article>
+          </section>
+        </section>
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+      </main>
+    `);
+    if (typeof initNotesPage === 'function') {
+      initNotesPage();
+    }
+  }
+
+  function loadNotesCss() {
+    if (!document.getElementById('notes-css')) {
+      const link = document.createElement('link');
+      link.id = 'notes-css';
+      link.rel = 'stylesheet';
+      link.href = 'notes.css';
+      document.head.appendChild(link);
+    }
+  }
+
+  function unloadNotesCss() {
+    const existing = document.getElementById('notes-css');
+    if (existing) {
+      existing.parentNode.removeChild(existing);
+    }
   }
 
   /* Download All as ZIP */
