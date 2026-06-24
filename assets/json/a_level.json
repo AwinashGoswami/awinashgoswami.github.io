@@ -1,0 +1,10 @@
+{
+  "Data Representation": {
+    "title": "Data Representation",
+    "content": "<h2>Decimal Number System</h2><p>The decimal system is key for understanding how computers represent numbers and how to convert between bases.</p><h2>Binary Number System</h2><p>The binary system is used by computers internally, with only 0s and 1s to represent information.</p>"
+  },
+  "Algorithms": {
+    "title": "Algorithms",
+    "content": "<h2>Pseudocode</h2><p>Pseudocode is a plain-language way to describe an algorithm step by step before writing actual code.</p><h2>Flowchart Symbols</h2><p>Flowchart symbols visually map the flow of an algorithm using shapes for decisions, processes, and start/end points.</p>"
+  }
+}

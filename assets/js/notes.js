@@ -1,54 +1,20 @@
 const levels = {
   "o-level": {
     title: "O Level",
-    json: "o_level.json",
+    json: "assets/json/o_level.json",
     sections: [
       {
-        title: "Core Topics",
-        topics: [
-          {
-            title: "Data Representation",
-            children: [
-              "Decimal number system",
-              "Binary number system",
-              "Hexadecimal System",
-              "Two's Complement",
-              "ASCII",
-              "Unicode",
-              "Images",
-              "Data Storage",
-              "Lossy Compression",
-              "Lossless Compression"
-            ],
-          }
-        ],
-      },
-      {
-        title: "Exam Support",
-        topics: [],
+        topics: ["Data Representation"],
       },
     ],
   },
   "a-level": {
     title: "A Level",
-    json: "a_level.json",
+    json: "assets/json/a_level.json",
     sections: [
       {
         title: "Advanced Concepts",
-        topics: [
-          {
-            title: "Data Representation",
-            children: ["Decimal number system", "Binary number system"],
-          },
-          {
-            title: "Algorithms",
-            children: ["Pseudocode", "Flowchart symbols"],
-          },
-        ],
-      },
-      {
-        title: "Revision Tools",
-        topics: [],
+        topics: ["Data Representation", "Algorithms"],
       },
     ],
   },
@@ -196,90 +162,52 @@ function buildSidebar(sections) {
   currentTopicList = [];
 
   sections.forEach((section) => {
-    const group = document.createElement("div");
-    group.className = "group open";
+    if (!section.topics || !section.topics.length) {
+      return;
+    }
 
-    // Do not show section.title - render topics directly for a cleaner hierarchy
-    const topicList = document.createElement("nav");
-    topicList.className = "topic-list";
+    const group = document.createElement("div");
+    group.className = "group";
+
+    if (section.title) {
+      const sectionHeading = document.createElement("div");
+      sectionHeading.className = "sidebar-section-title";
+      sectionHeading.textContent = section.title;
+      group.appendChild(sectionHeading);
+    }
 
     section.topics.forEach((topic) => {
-      // support two formats: string or { title, children: [] }
       if (typeof topic === "string") {
-        currentTopicList.push(topic);
-        const item = document.createElement("button");
-        item.type = "button";
-        item.className = "topic-item";
-        item.innerHTML = topic;
-        item.dataset.topic = topic;
-        item.addEventListener("click", () => {
-          currentTopic = topic;
-          renderTopic();
-          if (window.innerWidth < 900) hideMobileSidebar();
-        });
-        topicList.appendChild(item);
+        addTopicItem(topic, group);
       } else if (typeof topic === "object" && topic.title) {
-        // render as W3Schools-like anchor + overview block
-        const anchor = document.createElement("a");
-        anchor.href = "#";
-        anchor.className = "topic-anchor";
-        anchor.innerHTML = `<span class="topic-title"><strong>${topic.title}</strong></span><span class="w3s-accordion"><i class="bi bi-chevron-down"></i></span>`;
-
-        const overview = document.createElement("div");
-        overview.className = "tut_overview overview_body";
-        overview.style.display = "none";
+        const heading = document.createElement("div");
+        heading.className = "sidebar-section-title";
+        heading.textContent = topic.title;
+        group.appendChild(heading);
 
         (topic.children || []).forEach((child) => {
-          currentTopicList.push(child);
-          const link = document.createElement("a");
-          link.href = "#";
-          link.className = "sub-link";
-          link.innerText = child;
-          link.dataset.topic = child;
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            currentTopic = child;
-            renderTopic();
-            if (window.innerWidth < 900) hideMobileSidebar();
-          });
-          overview.appendChild(link);
+          addTopicItem(child, group);
         });
-
-        // toggle overview display when anchor clicked
-        anchor.addEventListener("click", (e) => {
-          e.preventDefault();
-          // collapse all other overviews first
-          document.querySelectorAll(".tut_overview").forEach((ov) => {
-            if (ov !== overview) {
-              ov.style.display = "none";
-              const a = ov.previousElementSibling;
-              if (a && a.classList) a.classList.remove("active");
-              const ic =
-                a && a.querySelector && a.querySelector(".w3s-accordion i");
-              if (ic) ic.style.transform = "";
-            }
-          });
-
-          const open = anchor.classList.toggle("active");
-          if (open) {
-            overview.style.display = "block";
-            const ic = anchor.querySelector(".w3s-accordion i");
-            if (ic) ic.style.transform = "rotate(180deg)";
-          } else {
-            overview.style.display = "none";
-            const ic = anchor.querySelector(".w3s-accordion i");
-            if (ic) ic.style.transform = "";
-          }
-        });
-
-        topicList.appendChild(anchor);
-        topicList.appendChild(overview);
       }
     });
 
-    group.appendChild(topicList);
     sidebarList.appendChild(group);
   });
+}
+
+function addTopicItem(topic, container) {
+  currentTopicList.push(topic);
+  const item = document.createElement("button");
+  item.type = "button";
+  item.className = "topic-item";
+  item.textContent = topic;
+  item.dataset.topic = topic;
+  item.addEventListener("click", () => {
+    currentTopic = topic;
+    renderTopic();
+    if (window.innerWidth < 900) hideMobileSidebar();
+  });
+  container.appendChild(item);
 }
 
 async function fetchNotes(path) {
@@ -309,43 +237,23 @@ function renderTopic() {
     item.classList.toggle("active", item.dataset.topic === currentTopic);
   });
 
-  // handle sub-link active state and auto-expand parent overview
-  document.querySelectorAll(".tut_overview").forEach((overview) => {
-    const links = overview.querySelectorAll(".sub-link");
-    let found = false;
-    links.forEach((link) => {
-      const isActive = link.dataset.topic === currentTopic;
-      link.classList.toggle("active", isActive);
-      if (isActive) found = true;
-    });
-    const anchor = overview.previousElementSibling; // the anchor before overview
-    if (found) {
-      overview.style.display = "block";
-      if (anchor && anchor.classList) anchor.classList.add("active");
-      const ic =
-        anchor &&
-        anchor.querySelector &&
-        anchor.querySelector(".w3s-accordion i");
-      if (ic) ic.style.transform = "rotate(180deg)";
-    } else {
-      overview.style.display = "none";
-      if (anchor && anchor.classList) anchor.classList.remove("active");
-      const ic =
-        anchor &&
-        anchor.querySelector &&
-        anchor.querySelector(".w3s-accordion i");
-      if (ic) ic.style.transform = "";
-    }
-  });
-
   const topicData = currentNotes[currentTopic] || {
     title: currentTopic,
-    content:
-      "<p>Content is being prepared for this topic. Check back soon for fresh notes and exam tips.</p>",
+    sections: [],
   };
 
   contentTitle.textContent = topicData.title;
-  topicContent.innerHTML = topicData.content;
+
+  if (Array.isArray(topicData.sections) && topicData.sections.length) {
+    topicContent.innerHTML = topicData.sections
+      .map((section) => `<h3>${section.title}</h3><p>${section.content}</p>`)
+      .join("");
+  } else if (topicData.content) {
+    topicContent.innerHTML = topicData.content;
+  } else {
+    topicContent.innerHTML =
+      "<p>Content is being prepared for this topic. Check back soon for fresh notes and exam tips.</p>";
+  }
   updateNavigationButtons();
 }
 

@@ -310,5 +310,5 @@ const GLOSSARY_TERMS = [
 
 /* ── FALLBACK POSTS (shown only if posts.json cannot be fetched) ── */
 const FALLBACK_POSTS = [
-  { id: 1, title: 'Welcome to CS Study Hub', excerpt: 'Posts are loaded from posts.json — add your own via the Admin panel.', content: '<p>Welcome! Use the Admin panel to publish posts. They will be committed to your GitHub repo and visible to all visitors.</p>', tags: 'General', author: 'CS Teacher', date: '2025-05-01' }
+  { id: 1, title: 'Welcome to CS Study Hub', excerpt: 'Posts are loaded from assets/json/posts.json — add your own via the Admin panel.', content: '<p>Welcome! Use the Admin panel to publish posts. They will be committed to your GitHub repo and visible to all visitors.</p>', tags: 'General', author: 'CS Teacher', date: '2025-05-01' }
 ];

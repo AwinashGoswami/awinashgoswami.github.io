@@ -18,8 +18,8 @@ $(function () {
   let quizAnswered = false;
   const ADMIN_PASS = 'awinashgoswami';
 
-  /* ── LOAD POSTS from posts.json on startup ── */
-  fetch('posts.json?v=' + Date.now())
+  /* ── LOAD POSTS from assets/json/posts.json on startup ── */
+  fetch('assets/json/posts.json?v=' + Date.now())
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (data) {
       loadedPosts = (Array.isArray(data) && data.length) ? data : FALLBACK_POSTS;
@@ -203,7 +203,7 @@ $(function () {
       const link = document.createElement('link');
       link.id = 'notes-css';
       link.rel = 'stylesheet';
-      link.href = 'notes.css';
+      link.href = 'assets/css/notes.css';
       document.head.appendChild(link);
     }
   }
@@ -648,7 +648,7 @@ $(function () {
   /* ── Publish to GitHub repo via API ── */
   async function publishToGitHub(posts, title) {
     const s = ghSettings();
-    const apiUrl = 'https://api.github.com/repos/' + s.owner + '/' + s.repo + '/contents/posts.json';
+    const apiUrl = 'https://api.github.com/repos/' + s.owner + '/' + s.repo + '/contents/assets/json/posts.json';
     const headers = {
       'Authorization': 'Bearer ' + s.token,
       'Accept': 'application/vnd.github+json',
@@ -710,7 +710,7 @@ $(function () {
               ${ghBadge}
             </div>
             <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:1rem;">
-              Posts are saved as <code>posts.json</code> in your GitHub repo so every visitor sees them.
+              Posts are saved as <code>assets/json/posts.json</code> in your GitHub repo so every visitor sees them.
               Enter your repo details and a <a href="https://github.com/settings/tokens/new?scopes=repo&description=CS+Study+Hub" target="_blank">Personal Access Token</a>
               (scopes: <code>repo</code>). These are stored only in this browser session — never committed to code.
             </p>
