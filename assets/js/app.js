@@ -6,9 +6,9 @@
 $(function () {
 
   /* ── STATE ── */
-  let currentPage    = 'home';
-  let currentLevel   = null;
-  let loadedPosts    = null;   // populated async from posts.json
+  let currentPage = 'home';
+  let currentLevel = null;
+  let loadedPosts = null;   // populated async from posts.json
   let loadedGlossary = null;  // populated async from glossary.json
   let fcIndex = 0;
   let fcFlipped = false;
@@ -32,29 +32,29 @@ $(function () {
   /* ── ROUTING ── */
   function navigate(page, opts) {
     opts = opts || {};
-    currentPage  = page;
+    currentPage = page;
     currentLevel = opts.level || null;
     $('[data-navpage]').removeClass('active');
     $('[data-navpage="' + page + '"]').addClass('active');
-    if (page === 'home')             showHome();
-    else if (page === 'cat-hub')     showCatHub(currentLevel);
-    else if (page === 'cat-notes')   showCatNotes(currentLevel);
-    else if (page === 'cat-fc')      showCatFlashcards(currentLevel);
-    else if (page === 'cat-quiz')    showCatQuiz(currentLevel);
+    if (page === 'home') showHome();
+    else if (page === 'cat-hub') showCatHub(currentLevel);
+    else if (page === 'cat-notes') showCatNotes(currentLevel);
+    else if (page === 'cat-fc') showCatFlashcards(currentLevel);
+    else if (page === 'cat-quiz') showCatQuiz(currentLevel);
     else if (page === 'cat-concepts') showCatConcepts(currentLevel);
-    else if (page === 'tutorial')    showTutorial();
-    else if (page === 'blog')        showBlog();
-    else if (page === 'glossary')    showGlossary();
-    else if (page === 'blog-post')   showBlogPost(opts.postId);
-    else if (page === 'blog-admin')  showBlogAdmin();
+    else if (page === 'tutorial') showTutorial();
+    else if (page === 'blog') showBlog();
+    else if (page === 'glossary') showGlossary();
+    else if (page === 'blog-post') showBlogPost(opts.postId);
+    else if (page === 'blog-admin') showBlogAdmin();
     window.scrollTo(0, 0);
   }
 
   /* ── NAV CLICKS ── */
   $(document).on('click', '[data-goto]', function (e) {
     e.preventDefault();
-    const page   = $(this).data('goto');
-    const level  = $(this).data('level');
+    const page = $(this).data('goto');
+    const level = $(this).data('level');
     const postId = $(this).data('postid');
     const nc = document.getElementById('navbarNav');
     if (nc && nc.classList.contains('show')) bootstrap.Collapse.getOrCreateInstance(nc).hide();
@@ -159,7 +159,7 @@ $(function () {
      NOTES
   ═══════════════════════════════════*/
   function showCatNotes(level) {
-    const meta  = CATEGORY_META[level];
+    const meta = CATEGORY_META[level];
     const notes = CATEGORIES[level].notes;
     let cards = notes.map(function (n) {
       return `
@@ -187,8 +187,8 @@ $(function () {
               <p>Preview each PDF before you download it from the reader.</p>
             </div>
             <button class="btn-download-all" id="btn-download-all"
-              data-files="${notes.map(n=>n.file).join('|')}"
-              data-titles="${notes.map(n=>n.title).join('|')}">
+              data-files="${notes.map(n => n.file).join('|')}"
+              data-titles="${notes.map(n => n.title).join('|')}">
               <i class="bi bi-cloud-download me-1"></i>Download All as ZIP
             </button>
           </div>
@@ -200,8 +200,8 @@ $(function () {
 
   /* Download All as ZIP */
   $(document).on('click', '#btn-download-all', function () {
-    const btn    = $(this);
-    const files  = btn.data('files').split('|');
+    const btn = $(this);
+    const files = btn.data('files').split('|');
     const titles = btn.data('titles').split('|');
     btn.html('<span class="spinner-border spinner-border-sm me-1"></span>Preparing ZIP…').prop('disabled', true);
     const zip = new JSZip();
@@ -226,7 +226,7 @@ $(function () {
   });
 
   function buildPlaceholderPdf(title) {
-    const safe  = title.replace(/[()\\]/g, ' ');
+    const safe = title.replace(/[()\\]/g, ' ');
     const stream = 'BT\n/F1 20 Tf\n72 780 Td\n(CS Study Hub) Tj\n0 -30 Td\n/F1 13 Tf\n(' + safe + ') Tj\n0 -40 Td\n/F1 10 Tf\n(Placeholder PDF - Add your content here.) Tj\nET\n';
     const slen = stream.length;
     const h = '%PDF-1.4\n';
@@ -236,9 +236,9 @@ $(function () {
     const o4 = '4 0 obj\n<</Length ' + slen + '>>\nstream\n' + stream + 'endstream\nendobj\n';
     const o5 = '5 0 obj\n<</Type /Font /Subtype /Type1 /BaseFont /Helvetica>>\nendobj\n';
     let off = h.length, offsets = [];
-    [o1,o2,o3,o4,o5].forEach(function(o){ offsets.push(off); off += o.length; });
+    [o1, o2, o3, o4, o5].forEach(function (o) { offsets.push(off); off += o.length; });
     let xref = 'xref\n0 6\n0000000000 65535 f \n';
-    offsets.forEach(function(o){ xref += String(o).padStart(10,'0') + ' 00000 n \n'; });
+    offsets.forEach(function (o) { xref += String(o).padStart(10, '0') + ' 00000 n \n'; });
     return h + o1 + o2 + o3 + o4 + o5 + xref + 'trailer\n<</Size 6 /Root 1 0 R>>\nstartxref\n' + off + '\n%%EOF\n';
   }
 
@@ -246,7 +246,7 @@ $(function () {
      FLASHCARDS
   ═══════════════════════════════════*/
   function showCatFlashcards(level) {
-    const meta  = CATEGORY_META[level];
+    const meta = CATEGORY_META[level];
     fcIndex = 0; fcFlipped = false;
     $('#main-content').html(`
       <div class="section-wrap">
@@ -286,7 +286,7 @@ $(function () {
   }
 
   function renderFlashcard(cards) {
-    const c   = cards[fcIndex];
+    const c = cards[fcIndex];
     const pct = ((fcIndex + 1) / cards.length * 100).toFixed(0);
     fcFlipped = false;
     $('#fc-wrap').removeClass('flipped');
@@ -346,7 +346,7 @@ $(function () {
 
   function shuffle(arr) {
     const a = arr.slice();
-    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i+1)); [a[i], a[j]] = [a[j], a[i]]; }
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; }
     return a;
   }
 
@@ -358,7 +358,7 @@ $(function () {
   }
 
   function renderQuestion() {
-    const q   = quizQuestions[quizIndex];
+    const q = quizQuestions[quizIndex];
     quizAnswered = false;
     $('#quiz-progress-bar').css('width', (quizIndex / quizQuestions.length * 100).toFixed(0) + '%');
     $('#quiz-q-label').text('Question ' + (quizIndex + 1) + ' of ' + quizQuestions.length);
@@ -368,18 +368,18 @@ $(function () {
     $('#quiz-next').hide();
     const wrap = $('#quiz-options').empty();
     q.opts.forEach(function (opt, i) {
-      wrap.append('<button class="quiz-option" data-idx="' + i + '">' + String.fromCharCode(65+i) + '. ' + opt + '</button>');
+      wrap.append('<button class="quiz-option" data-idx="' + i + '">' + String.fromCharCode(65 + i) + '. ' + opt + '</button>');
     });
   }
 
   $(document).on('click', '.quiz-option', function () {
     if (quizAnswered) return;
     quizAnswered = true;
-    const chosen  = parseInt($(this).data('idx'));
+    const chosen = parseInt($(this).data('idx'));
     const correct = quizQuestions[quizIndex].ans;
     $('.quiz-option').prop('disabled', true);
     if (chosen === correct) { quizScore++; $(this).addClass('correct'); $('#quiz-feedback').addClass('correct').text('Correct!').show(); }
-    else { $(this).addClass('incorrect'); $('[data-idx="' + correct + '"]').addClass('correct'); $('#quiz-feedback').addClass('incorrect').text('Incorrect — correct answer: ' + String.fromCharCode(65+correct) + '.').show(); }
+    else { $(this).addClass('incorrect'); $('[data-idx="' + correct + '"]').addClass('correct'); $('#quiz-feedback').addClass('incorrect').text('Incorrect — correct answer: ' + String.fromCharCode(65 + correct) + '.').show(); }
     $('#quiz-score-badge').text('Score: ' + quizScore + ' / ' + (quizIndex + 1));
     $('#quiz-next').show();
   });
@@ -401,16 +401,16 @@ $(function () {
      CONCEPTS
   ═══════════════════════════════════*/
   function showCatConcepts(level) {
-    const meta     = CATEGORY_META[level];
+    const meta = CATEGORY_META[level];
     const concepts = CATEGORIES[level].concepts;
     let items = concepts.map(function (c, i) {
       const id = 'concept-' + i + '-' + level;
       return `<div class="accordion-item">
         <h2 class="accordion-header">
-          <button class="accordion-button ${i===0?'':'collapsed'}" type="button"
+          <button class="accordion-button ${i === 0 ? '' : 'collapsed'}" type="button"
             data-bs-toggle="collapse" data-bs-target="#${id}">${c.title}</button>
         </h2>
-        <div id="${id}" class="accordion-collapse collapse ${i===0?'show':''}">
+        <div id="${id}" class="accordion-collapse collapse ${i === 0 ? 'show' : ''}">
           <div class="accordion-body">${c.body}</div>
         </div>
       </div>`;
@@ -527,8 +527,8 @@ $(function () {
   function showBlog() {
     const posts = getPosts();
     let cards = posts.slice().reverse().map(function (p) {
-      const tags    = (p.tags || '').split(',').map(t => `<span class="blog-tag">${t.trim()}</span>`).join('');
-      const excerpt = p.excerpt || p.content.replace(/<[^>]+>/g,'').substring(0, 140) + '…';
+      const tags = (p.tags || '').split(',').map(t => `<span class="blog-tag">${t.trim()}</span>`).join('');
+      const excerpt = p.excerpt || p.content.replace(/<[^>]+>/g, '').substring(0, 140) + '…';
       return `<div class="blog-card" data-goto="blog-post" data-postid="${p.id}">
         <div class="mb-2">${tags}</div>
         <h4>${p.title}</h4>
@@ -617,10 +617,10 @@ $(function () {
   /* ── GitHub settings helpers ── */
   function ghSettings() {
     return {
-      owner:  sessionStorage.getItem('gh_owner')  || '',
-      repo:   sessionStorage.getItem('gh_repo')   || '',
+      owner: sessionStorage.getItem('gh_owner') || '',
+      repo: sessionStorage.getItem('gh_repo') || '',
       branch: sessionStorage.getItem('gh_branch') || 'main',
-      token:  sessionStorage.getItem('gh_token')  || ''
+      token: sessionStorage.getItem('gh_token') || ''
     };
   }
   function ghConfigured() {
@@ -634,8 +634,8 @@ $(function () {
     const apiUrl = 'https://api.github.com/repos/' + s.owner + '/' + s.repo + '/contents/posts.json';
     const headers = {
       'Authorization': 'Bearer ' + s.token,
-      'Accept':        'application/vnd.github+json',
-      'Content-Type':  'application/json'
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json'
     };
 
     // Get current file SHA (needed for update)
@@ -647,8 +647,8 @@ $(function () {
     }
 
     // Encode JSON as base64 (handle Unicode)
-    const jsonStr  = JSON.stringify(posts, null, 2);
-    const encoded  = btoa(unescape(encodeURIComponent(jsonStr)));
+    const jsonStr = JSON.stringify(posts, null, 2);
+    const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
 
     const body = { message: 'Blog: ' + title, content: encoded, branch: s.branch };
     if (sha) body.sha = sha;
@@ -662,7 +662,7 @@ $(function () {
 
   function renderAdminPanel() {
     const posts = getPosts();
-    const cfg   = ghSettings();
+    const cfg = ghSettings();
     const ghConfigured = cfg.owner && cfg.repo && cfg.token;
 
     const postList = posts.length
@@ -767,20 +767,20 @@ $(function () {
 
   /* Save GitHub settings to sessionStorage */
   $(document).on('click', '#btn-save-gh', function () {
-    sessionStorage.setItem('gh_owner',  $('#gh-owner').val().trim());
-    sessionStorage.setItem('gh_repo',   $('#gh-repo').val().trim());
+    sessionStorage.setItem('gh_owner', $('#gh-owner').val().trim());
+    sessionStorage.setItem('gh_repo', $('#gh-repo').val().trim());
     sessionStorage.setItem('gh_branch', $('#gh-branch').val().trim() || 'main');
-    sessionStorage.setItem('gh_token',  $('#gh-token').val().trim());
+    sessionStorage.setItem('gh_token', $('#gh-token').val().trim());
     $('#gh-save-msg').text('Settings saved for this session.').show();
     setTimeout(function () { $('#gh-save-msg').hide(); }, 3000);
   });
 
   /* Publish post */
   $(document).on('click', '#btn-publish-post', async function () {
-    const title   = $('#post-title').val().trim();
+    const title = $('#post-title').val().trim();
     const excerpt = $('#post-excerpt').val().trim();
     const content = $('#post-content').val().trim();
-    const tags    = $('#post-tags').val().trim();
+    const tags = $('#post-tags').val().trim();
 
     if (!title || !content) { alert('Please fill in at least the title and content.'); return; }
 
@@ -794,13 +794,13 @@ $(function () {
     $('#post-save-msg').hide();
 
     const newPost = {
-      id:      Date.now(),
+      id: Date.now(),
       title,
       excerpt,
       content,
       tags,
-      author:  'CS Teacher',
-      date:    new Date().toISOString().slice(0, 10)
+      author: 'CS Teacher',
+      date: new Date().toISOString().slice(0, 10)
     };
 
     const posts = getPosts();
@@ -835,7 +835,7 @@ $(function () {
 
   /* Delete post — also commits updated posts.json to GitHub */
   $(document).on('click', '[data-deleteid]', async function () {
-    const id  = $(this).data('deleteid');
+    const id = $(this).data('deleteid');
     const row = $(this).closest('.d-flex');
     if (!confirm('Delete this post? This will update your GitHub repo.')) return;
 
