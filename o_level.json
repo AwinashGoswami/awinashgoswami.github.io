@@ -5,18 +5,42 @@
   },
   "Decimal number system": {
     "title": "Decimal Number System",
-    "content": "<p>The decimal number system uses ten digits (0-9). It is the standard system for denoting integer and non-integer numbers. Converting between decimal and binary is a common skill in computer science.</p>"
+    "content": "<p>The denary number system, also known as the decimal system or base-10 system, is the most commonly used number system in everyday life. It consists of ten digits, ranging from 0 to 9. Examples of denary numbers include 458, 2398, 9870, and 1254. This system forms the foundation of our daily numerical calculations and is the most intuitive for human understanding.</p>"
   },
   "Binary number system": {
     "title": "Binary Number System",
-    "content": "<p>The binary number system uses two digits (0 and 1). It is the base-2 system used internally by digital computers. Practice converting decimal numbers to binary and vice versa.</p>"
+    "content": "<p>The binary number system, also referred to as base-2, forms the fundamental building block of all computer systems. It consists of only two digits: 0 and 1. Computers contain millions of switches that can only exist in one of two states: ON or OFF. In binary representation, 1 represents an ON state while 0 represents an OFF state. Examples of binary numbers include 10, 101, 11011, and 111000001.</p>"
   },
-  "Pseudocode": {
-    "title": "Pseudocode",
-    "content": "<p>Pseudocode is a plain-language description of the steps in an algorithm. It uses structured statements that resemble programming languages but are easier to read and write for planning solutions.</p>"
+  "Hexadecimal System": {
+    "title": "Hexadecimal System",
+    "content": "<p>The hexadecimal system is a base-16 number system that provides a more human-friendly way to represent binary data. One hexadecimal digit replaces four binary digits, making complex binary numbers significantly more compact. For instance, the binary number 1101001010101111 can be represented as D2AF in hexadecimal.</p>"
   },
-  "Flowchart symbols": {
-    "title": "Flowchart Symbols",
-    "content": "<p>Flowcharts use shapes such as rectangles for processes, diamonds for decisions, and ovals for start/end. Learning these symbols helps you translate pseudocode into visual diagrams.</p>"
+  "Two's Complement": {
+    "title": "Two's Complement",
+    "content": "<p>Two's complement is the method employed by computers to represent negative binary numbers. Since computers cannot process negative signs, this special system enables the representation of negative values.</p>"
+  },
+  "ASCII": {
+    "title": "ASCII",
+    "content": "<p>ASCII (American Standard Code for Information Interchange) is a character encoding standard that supports English characters. The extended ASCII version provides additional characters, but the standard remains limited to English alphabets.</p>"
+  },
+  "Unicode": {
+    "title": "Unicode",
+    "content": "<p>Unicode emerged as a universal character set that includes virtually every language in the world. This system uses up to 4 bytes (32 bits) per character and can store thousands of characters. Notably, the first 128 characters of Unicode are exactly identical to ASCII, ensuring backward compatibility. Unicode supports diverse languages including English, Russian, Chinese, and Arabic, making it the preferred character encoding system for modern computing.</p>"
+  },
+  "Images": {
+    "title": "Images",
+    "content": "<p>Computers utilize two types of images: bitmap and vector. Bitmap images consist of pixels (picture elements), where each pixel stores colour information. This pixel-based representation forms the foundation of most digital photography and raster graphics.</p>"
+  },
+  "Data Storage": {
+    "title": "Data Storage",
+    "content": "<p>A bit represents the basic unit of computing memory storage, containing either a 1 or 0. One byte consists of 8 bits, while a 4-bit number is called a nibble. Storage capacity is measured using multiples of bytes, with prefixes such as kilo, mega, and giga. The binary-based system uses powers of 2 rather than the decimal-based SI system.</p>"
+  },
+  "Lossy Compression": {
+    "title": "Lossy Compression",
+    "content": "<p>Lossy compression removes unnecessary data from a file, resulting in a significantly smaller file size at the cost of permanent quality loss. The original file cannot be reconstructed after lossy compression.</p>"
+  },
+  "Lossless Compression": {
+    "title": "Lossless Compression",
+    "content": "<p>Lossless compression preserves all data without any loss of detail, making it suitable for situations where data integrity is critical. Run Length Encoding (RLE) is a lossless compression method that finds repeated identical data and represents it more efficiently.</p>"
   }
 }
