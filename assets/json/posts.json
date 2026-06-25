@@ -7,23 +7,5 @@
     "tags": "Study Tips, Exams",
     "author": "CS Teacher",
     "date": "2025-04-15"
-  },
-  {
-    "id": 2,
-    "title": "Understanding Recursion Once and For All",
-    "excerpt": "Recursion confuses almost every student at first. Here is a clear, step-by-step explanation with real examples.",
-    "content": "<h2>What is Recursion?</h2><p>A recursive function is one that calls itself. Every recursive solution has two parts: a <strong>base case</strong> (the stopping condition) and a <strong>recursive case</strong> (where the function calls itself with a simpler input).</p><h2>The Classic Example: Factorial</h2><p>factorial(5) = 5 x factorial(4)<br>factorial(4) = 4 x factorial(3)<br>...<br>factorial(1) = 1 (base case)</p><p>The call stack unwinds once it hits the base case, computing the result back up.</p><h2>Why Does It Matter?</h2><p>Recursion is essential for: tree traversal, graph search (DFS), divide-and-conquer algorithms (merge sort, quick sort), and dynamic programming. Iterative solutions exist for most problems but recursion often produces cleaner, more readable code.</p><h2>Common Mistakes</h2><p>1. Forgetting the base case — causes infinite recursion and a stack overflow.<br>2. Base case never reached — wrong condition.<br>3. Not moving towards the base case with each call.</p>",
-    "tags": "Algorithms, Programming",
-    "author": "CS Teacher",
-    "date": "2025-04-22"
-  },
-  {
-    "id": 3,
-    "title": "Why Every Student Should Learn SQL",
-    "excerpt": "SQL is one of the most valuable skills in computer science. Here is why you should prioritise learning it.",
-    "content": "<h2>SQL is Everywhere</h2><p>Almost every application — from mobile apps to enterprise software — uses a database. SQL (Structured Query Language) is the standard way to interact with relational databases, and it has changed very little in 50 years.</p><h2>It is Not Hard to Start</h2><p>A basic SELECT query is readable even without training: SELECT name FROM students WHERE grade = 'A'. Start with SELECT, INSERT, UPDATE, DELETE — the four core operations — before moving to JOINs and subqueries.</p><h2>It Teaches Logical Thinking</h2><p>Writing SQL queries exercises the same logical thinking required for algorithms and problem solving. Thinking in sets rather than loops is a valuable shift in perspective.</p><h2>Exam Relevance</h2><p>SQL appears in O Level, A Level, and university CS exams. Questions typically ask you to write SELECT queries with WHERE clauses, JOIN two tables, or use GROUP BY with aggregate functions like COUNT, SUM, AVG.</p>",
-    "tags": "Databases, SQL",
-    "author": "CS Teacher",
-    "date": "2025-05-01"
   }
 ]

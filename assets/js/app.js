@@ -84,6 +84,8 @@ $(function () {
       <section class="feature-grid">
         <div class="container">
           <div class="row g-4">
+
+          <!-- O Level -->
             <div class="col-sm-6 col-md-12 col-lg-4">
               <div class="feature-card" data-goto="cat-hub" data-level="o-level">
                 <div class="feature-icon"><i class="bi bi-mortarboard"></i></div>
@@ -91,6 +93,9 @@ $(function () {
                 <p>Foundational CS topics — programming basics, number systems, Boolean logic, and more.</p>
               </div>
             </div>
+
+          <!-- A Level -->
+          <!-- 
             <div class="col-sm-6 col-md-12 col-lg-4">
               <div class="feature-card" data-goto="cat-hub" data-level="a-level">
                 <div class="feature-icon"><i class="bi bi-cpu"></i></div>
@@ -98,7 +103,10 @@ $(function () {
                 <p>Advanced algorithms, OOP, computer architecture, networks, and databases.</p>
               </div>
             </div>
+          -->
 
+          <!-- University Level -->
+          <!--
             <div class="col-sm-6 col-md-12 col-lg-4">
               <div class="feature-card" data-goto="cat-hub" data-level="university">
                 <div class="feature-icon"><i class="bi bi-building"></i></div>
@@ -106,7 +114,7 @@ $(function () {
                 <p>Degree-level content — OS, distributed systems, ML, compilers, and advanced theory.</p>
               </div>
             </div>
-       
+          -->
           </div>
         </div>
       </section>

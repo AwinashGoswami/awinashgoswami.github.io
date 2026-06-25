@@ -30,7 +30,13 @@ body {
   font-family: 'Inter', sans-serif;
   background-color: var(--bg);
   color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+}
+
+#main-content {
+  flex: 1;
 }
 
 /* ─── NAVBAR ─── */
@@ -393,7 +399,15 @@ body {
 .admin-login h4 { font-weight: 700; margin-bottom: 1.25rem; }
 
 /* ─── FOOTER ─── */
-footer { background: var(--white); border-top: 1px solid var(--border); padding: 2rem 0; text-align: center; color: var(--text-muted); font-size: .83rem; margin-top: 2rem; }
+footer {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: .83rem;
+  margin-top: auto;
+}
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {

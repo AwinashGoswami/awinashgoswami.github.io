@@ -337,6 +337,7 @@ button {
   outline: none;
   box-shadow: none;
   border: none;
+  cursor: pointer;
 }
 
 .topic-item:hover {
@@ -346,8 +347,7 @@ button {
 }
 
 .topic-item:focus,
-.topic-item:focus-visible,
-.topic-item.active {
+.topic-item:focus-visible {
   outline: none;
   box-shadow: none;
 }
