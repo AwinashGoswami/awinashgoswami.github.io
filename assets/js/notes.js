@@ -4,7 +4,18 @@ const levels = {
     json: "assets/json/o_level.json",
     sections: [
       {
-        topics: ["Ch#1: Data Representation"],
+        topics: [
+          "Data Representation",
+          "Data Transmission",
+          "Hardware",
+          "Software",
+          "The Internet and It's Use",
+          "Automated and Emerging Technologies",
+          "Algorithms Design and Problem Solving",
+          "Programming",
+          "Databases",
+          "Boolean Logic",
+        ],
       },
     ],
   },
@@ -34,6 +45,7 @@ let nextButton;
 let mobileToggle;
 let closeSidebar;
 let overlay;
+let notesBreadcrumb;
 
 function initNotesPage(level) {
   sidebar = document.getElementById("sidebar");
@@ -46,6 +58,7 @@ function initNotesPage(level) {
   mobileToggle = document.getElementById("mobile-sidebar-toggle");
   closeSidebar = document.getElementById("sidebar-close");
   overlay = document.getElementById("sidebar-overlay");
+  notesBreadcrumb = document.getElementById("notes-breadcrumb");
 
   attachNavListeners();
   attachLevelCardListeners();
@@ -222,7 +235,29 @@ async function fetchNotes(path) {
   }
 }
 
+function updateBreadcrumb() {
+  if (!notesBreadcrumb) return;
+  const levelLabel =
+    levels[currentLevel] && levels[currentLevel].title
+      ? levels[currentLevel].title
+      : currentLevel;
+  const topicLabel = currentTopic || "";
+  notesBreadcrumb.innerHTML =
+    '<div class="breadcrumb-custom">' +
+    '<a href="#" data-goto="home">Home</a><span>/</span>' +
+    '<a href="#" data-goto="cat-hub" data-level="' +
+    currentLevel +
+    '">' +
+    levelLabel +
+    "</a><span>/</span>" +
+    "<strong>" +
+    topicLabel +
+    "</strong>" +
+    "</div>";
+}
+
 function renderTopic() {
+  updateBreadcrumb();
   if (!currentTopicList.length) {
     return;
   }
@@ -251,7 +286,7 @@ function renderTopic() {
     topicContent.innerHTML = topicData.content;
   } else {
     topicContent.innerHTML =
-      "<p>Content is being prepared for this topic. Check back soon for fresh notes and exam tips.</p>";
+      "<p>Content is being prepared for this topic. Check back soon for fresh notes.</p>";
   }
   updateNavigationButtons();
 }

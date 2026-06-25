@@ -95,26 +95,23 @@ $(function () {
             </div>
 
           <!-- A Level -->
-          <!-- 
-            <div class="col-sm-6 col-md-12 col-lg-4">
-              <div class="feature-card" data-goto="cat-hub" data-level="a-level">
-                <div class="feature-icon"><i class="bi bi-cpu"></i></div>
-                <h5>A Level</h5>
-                <p>Advanced algorithms, OOP, computer architecture, networks, and databases.</p>
-              </div>
+          <div class="col-sm-6 col-md-12 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon"><i class="bi bi-cpu"></i></div>
+              <h5>A Level</h5>
+              <p>Coming Soon...</p>
             </div>
-          -->
+          </div>
 
           <!-- University Level -->
-          <!--
-            <div class="col-sm-6 col-md-12 col-lg-4">
-              <div class="feature-card" data-goto="cat-hub" data-level="university">
-                <div class="feature-icon"><i class="bi bi-building"></i></div>
-                <h5>University</h5>
-                <p>Degree-level content — OS, distributed systems, ML, compilers, and advanced theory.</p>
-              </div>
+          <div class="col-sm-6 col-md-12 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon"><i class="bi bi-building"></i></div>
+              <h5>University</h5>
+              <p>Coming Soon...</p>
             </div>
-          -->
+          </div>
+
           </div>
         </div>
       </section>
@@ -173,13 +170,13 @@ $(function () {
             <h1>Notes</h1>
             <div class="notes-level-cards">
               <div class="notes-level-display">
-                <span class="level-dot ${levelClass}"></span>
+                <span class="${levelClass}"></span>
                 <strong>${levelMeta.label}</strong>
               </div>
             </div>
           </div>
         </section>
-        <section class="layout container">
+          <section class="layout container">
           <aside class="sidebar" id="sidebar">
             <div class="sidebar-top">
               <div>
@@ -202,6 +199,7 @@ $(function () {
                 </div>
               </div>
             </div>
+            <div class="content-breadcrumb" id="notes-breadcrumb"></div>
             <article class="topic-panel">
               <div id="topic-content"></div>
             </article>
