@@ -137,7 +137,10 @@ $(function () {
             </div>
           </div>
           <div class="section-btn-grid">
-            <a href="#" class="section-btn" data-goto="notes" data-level="${level}">
+
+
+           
+          <a href="#" class="section-btn" data-goto="notes" data-level="${level}">
               <span class="sb-icon"><i class="bi bi-file-earmark-pdf"></i></span>
               <h4>Study Notes</h4><p>Downloadable PDF guides for every topic</p>
             </a>
@@ -145,15 +148,38 @@ $(function () {
               <span class="sb-icon"><i class="bi bi-layers"></i></span>
               <h4>Flashcards</h4><p>Interactive flip cards for quick revision</p>
             </a>
-            <a href="#" class="section-btn" data-goto="cat-quiz" data-level="${level}">
+          <a href="#" class="section-btn" data-goto="cat-quiz" data-level="${level}">
               <span class="sb-icon"><i class="bi bi-patch-question"></i></span>
               <h4>Practice Quiz</h4><p>Multiple-choice questions with instant feedback</p>
             </a>
+
+            <!-- Tutorials playlist (dynamic per standard) -->
+            <a href="" class="section-btn" target="_blank" rel="noopener noreferrer" id="tutorials-card-${level}" data-tutorials-level="${level}">
+              <span class="sb-icon"><i class="bi bi-youtube"></i></span>
+              <h4>Tutorials</h4>
+              <p>Video playlist for quick learning</p>
+            </a>
+
           </div>
+
         </div>
       </div>
     `);
+
+    // Set Tutorials playlist link per selected standard
+    const tutorialsCard = document.getElementById("tutorials-card-" + level);
+    if (tutorialsCard) {
+      const playlist =
+        typeof TUTORIAL_PLAYLISTS !== "undefined" ? TUTORIAL_PLAYLISTS[level] : "";
+      if (playlist) {
+        tutorialsCard.setAttribute("href", playlist);
+        tutorialsCard.style.display = "block";
+      } else {
+        tutorialsCard.style.display = "none";
+      }
+    }
   }
+
 
   /* ══════════════════════════════════
      NOTES

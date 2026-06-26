@@ -1045,7 +1045,14 @@ const CATEGORIES = {
   },
 };
 
-/* ── TUTORIALS ── */
+/* ── TUTORIAL PLAYLIST LINKS (per standard) ── */
+const TUTORIAL_PLAYLISTS = {
+  "o-level": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
+  "a-level": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
+  university: "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
+};
+
+/* ── Video tutorial cards (still optional; used in the separate Tutorials page) ── */
 const TUTORIALS = [
   {
     videoId: "f4NVQUKk8m8",
@@ -1054,8 +1061,9 @@ const TUTORIALS = [
     tag: "Fundamentals",
     tagColor: "#dbeafe",
     tagText: "#1d4ed8",
-  }
+  },
 ];
+
 
 const GLOSSARY_TERMS = [
   {
