@@ -335,7 +335,7 @@ function buildPdfViewerUrl(pdfUrl) {
 
   try {
     const absoluteUrl = new URL(pdfUrl, window.location.href).href;
-    return "https://docs.google.com/viewer?embedded=true&url=" + encodeURIComponent(absoluteUrl);
+    return "https://mozilla.github.io/pdf.js/web/viewer.html?file=" + encodeURIComponent(absoluteUrl);
   } catch (error) {
     return pdfUrl;
   }
