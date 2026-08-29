@@ -323,6 +323,24 @@ function resolveTopicPdfUrl(topic, topicData) {
   return "";
 }
 
+function isMobileDevice() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+    window.matchMedia("(pointer: coarse)").matches;
+}
+
+function buildPdfViewerUrl(pdfUrl) {
+  if (!pdfUrl) {
+    return "";
+  }
+
+  try {
+    const absoluteUrl = new URL(pdfUrl, window.location.href).href;
+    return "https://docs.google.com/viewer?embedded=true&url=" + encodeURIComponent(absoluteUrl);
+  } catch (error) {
+    return pdfUrl;
+  }
+}
+
 function renderTopic() {
   updateBreadcrumb();
 
@@ -351,7 +369,8 @@ function renderTopic() {
   const pdfUrl = resolveTopicPdfUrl(currentTopic, topicData);
 
   if (pdfUrl) {
-    topicContent.innerHTML = "<div class=\"pdf-embed-wrap\"><iframe class=\"pdf-embed-frame\" src=\"" + pdfUrl + "\" title=\"" + (topicData.title || currentTopic) + " PDF\" loading=\"lazy\" allow=\"fullscreen\"></iframe></div>";
+    const viewerUrl = isMobileDevice() ? buildPdfViewerUrl(pdfUrl) : pdfUrl;
+    topicContent.innerHTML = "<div class=\"pdf-embed-wrap\"><iframe class=\"pdf-embed-frame\" src=\"" + viewerUrl + "\" title=\"" + (topicData.title || currentTopic) + " PDF\" loading=\"lazy\" allow=\"fullscreen\"></iframe></div>";
   } else {
     const friendlyTitle = topicData.title || currentTopic || "This topic";
     topicContent.innerHTML = "<div class=\"topic-unavailable\"><h3>PDF not available yet</h3><p>" + friendlyTitle + " is currently being prepared. Please check back soon for the study notes.</p></div>";
