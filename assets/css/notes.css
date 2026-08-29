@@ -491,6 +491,42 @@ button {
   margin-bottom: 1.75rem;
 }
 
+.pdf-embed-wrap {
+  width: 100%;
+  min-height: 700px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(226,232,240,.9);
+  background: #f8fafc;
+}
+
+.pdf-embed-frame {
+  width: 100%;
+  min-height: 700px;
+  border: 0;
+  display: block;
+  background: #ffffff;
+}
+
+.topic-unavailable {
+  background: #f8fafc;
+  border: 1px dashed rgba(148, 163, 184, 0.9);
+  border-radius: 18px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--text-mid);
+}
+
+.topic-unavailable h3 {
+  margin: 0 0 .75rem;
+  color: var(--text-dark);
+}
+
+.topic-unavailable p {
+  margin: 0;
+  line-height: 1.7;
+}
+
 .topic-panel p,
 .topic-panel ul,
 .topic-panel ol,

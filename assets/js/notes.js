@@ -81,7 +81,6 @@ function attachNavListeners() {
 
   document.querySelectorAll(".nav-link").forEach((link) => {
     link.addEventListener("click", (event) => {
-      // only prevent default for placeholder links (href="#") when not a level selector
       const href = link.getAttribute("href");
       if (href === "#" && !link.dataset.level) {
         event.preventDefault();
@@ -102,33 +101,44 @@ function attachLevelCardListeners() {
 }
 
 function attachSidebarControls() {
-  mobileToggle.addEventListener("click", () => {
-    sidebar.classList.add("open");
-    overlay.classList.add("active");
-  });
+  if (mobileToggle) {
+    mobileToggle.addEventListener("click", () => {
+      sidebar.classList.add("open");
+      overlay.classList.add("active");
+    });
+  }
 
-  closeSidebar.addEventListener("click", () => {
-    hideMobileSidebar();
-  });
+  if (closeSidebar) {
+    closeSidebar.addEventListener("click", () => {
+      hideMobileSidebar();
+    });
+  }
 
-  overlay.addEventListener("click", () => {
-    hideMobileSidebar();
-  });
+  if (overlay) {
+    overlay.addEventListener("click", () => {
+      hideMobileSidebar();
+    });
+  }
 }
 
 function hideMobileSidebar() {
+  if (!sidebar || !overlay) return;
   sidebar.classList.remove("open");
   overlay.classList.remove("active");
 }
 
 function attachTopicNavigation() {
-  prevButton.addEventListener("click", () => {
-    navigateTopic(-1);
-  });
+  if (prevButton) {
+    prevButton.addEventListener("click", () => {
+      navigateTopic(-1);
+    });
+  }
 
-  nextButton.addEventListener("click", () => {
-    navigateTopic(1);
-  });
+  if (nextButton) {
+    nextButton.addEventListener("click", () => {
+      navigateTopic(1);
+    });
+  }
 }
 
 function setLevel(levelKey) {
@@ -139,10 +149,14 @@ function setLevel(levelKey) {
   currentLevel = levelKey;
   const levelConfig = levels[levelKey];
 
-  sidebarBadge.textContent = levelConfig.title;
+  if (sidebarBadge) {
+    sidebarBadge.textContent = levelConfig.title;
+  }
+
   highlightLevelNav(levelKey);
   highlightLevelCard(levelKey);
   buildSidebar(levelConfig.sections);
+
   fetchNotes(levelConfig.json).then(() => {
     if (!currentTopic || !currentTopicList.includes(currentTopic)) {
       currentTopic = currentTopicList[0] || "";
@@ -170,6 +184,7 @@ function highlightLevelNav(levelKey) {
 }
 
 function buildSidebar(sections) {
+  if (!sidebarList) return;
   sidebarList.innerHTML = "";
   currentTopicList = [];
 
@@ -242,6 +257,7 @@ function updateBreadcrumb() {
       ? levels[currentLevel].title
       : currentLevel;
   const topicLabel = currentTopic || "";
+
   notesBreadcrumb.innerHTML =
     '<div class="breadcrumb-custom">' +
     '<a href="#" data-goto="home">Home</a><span>/</span>' +
@@ -256,8 +272,60 @@ function updateBreadcrumb() {
     "</div>";
 }
 
+function makePdfDataUrl(title) {
+  const text = String(title || "Study Notes");
+  const safeText = text.replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+  const content = "BT /F1 18 Tf 72 740 Td (" + safeText + ") Tj ET";
+  const objects = [
+    "<< /Type /Catalog /Pages 2 0 R >>",
+    "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
+    "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>",
+    "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
+    "<< /Length " + content.length + " >>\nstream\n" + content + "\nendstream"
+  ];
+
+  let pdf = "%PDF-1.4\n";
+  const offsets = [0];
+
+  objects.forEach((obj, index) => {
+    offsets.push(pdf.length);
+    pdf += (index + 1) + " 0 obj\n" + obj + "\nendobj\n";
+  });
+
+  const xrefOffset = pdf.length;
+  pdf += "xref\n0 " + (objects.length + 1) + "\n";
+  pdf += "0000000000 65535 f \n";
+
+  for (let i = 1; i < offsets.length; i += 1) {
+    pdf += String(offsets[i]).padStart(10, "0") + " 00000 n \n";
+  }
+
+  pdf += "trailer\n<< /Size " + (objects.length + 1) + " /Root 1 0 R >>\nstartxref\n" + xrefOffset + "\n%%EOF";
+
+  return "data:application/pdf;base64," + btoa(unescape(encodeURIComponent(pdf)));
+}
+
+function resolveTopicPdfUrl(topic, topicData) {
+  const candidates = [
+    topicData && topicData.pdf,
+    topicData && topicData.pdfUrl,
+    topicData && topicData.file,
+    topicData && topicData.filePath,
+    topicData && topicData.url,
+  ];
+
+  for (const candidate of candidates) {
+    if (typeof candidate === "string" && candidate.toLowerCase().endsWith(".pdf")) {
+      return candidate;
+    }
+  }
+
+  return "";
+}
+
 function renderTopic() {
   updateBreadcrumb();
+
   if (!currentTopicList.length) {
     return;
   }
@@ -276,19 +344,24 @@ function renderTopic() {
     sections: [],
   };
 
-  contentTitle.textContent = topicData.title;
-
-  if (Array.isArray(topicData.sections) && topicData.sections.length) {
-    topicContent.innerHTML = topicData.sections
-      .map((section) => `<h3>${section.title}</h3><p>${section.content}</p>`)
-      .join("");
-  } else if (topicData.content) {
-    topicContent.innerHTML = topicData.content;
-  } else {
-    topicContent.innerHTML =
-      "<p>Content is being prepared for this topic. Check back soon for fresh notes.</p>";
+  if (contentTitle) {
+    contentTitle.textContent = topicData.title || currentTopic;
   }
-  updateNavigationButtons();
+
+  const pdfUrl = resolveTopicPdfUrl(currentTopic, topicData);
+
+  if (pdfUrl) {
+    topicContent.innerHTML = "<div class=\"pdf-embed-wrap\"><iframe class=\"pdf-embed-frame\" src=\"" + pdfUrl + "\" title=\"" + (topicData.title || currentTopic) + " PDF\" loading=\"lazy\" allow=\"fullscreen\"></iframe></div>";
+  } else {
+    const friendlyTitle = topicData.title || currentTopic || "This topic";
+    topicContent.innerHTML = "<div class=\"topic-unavailable\"><h3>PDF not available yet</h3><p>" + friendlyTitle + " is currently being prepared. Please check back soon for the study notes.</p></div>";
+  }
+
+  if (prevButton && nextButton) {
+    const index = currentTopicList.indexOf(currentTopic);
+    prevButton.disabled = index <= 0;
+    nextButton.disabled = index >= currentTopicList.length - 1;
+  }
 }
 
 function navigateTopic(direction) {
@@ -303,12 +376,6 @@ function navigateTopic(direction) {
     currentTopic = currentTopicList[nextIndex];
     renderTopic();
   }
-}
-
-function updateNavigationButtons() {
-  const index = currentTopicList.indexOf(currentTopic);
-  prevButton.disabled = index <= 0;
-  nextButton.disabled = index >= currentTopicList.length - 1;
 }
 
 window.addEventListener("resize", () => {
