@@ -491,6 +491,56 @@ button {
   margin-bottom: 1.75rem;
 }
 
+.pdf-viewer-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.pdf-inline-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-top: 0.8rem;
+}
+
+.pdf-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.2rem;
+  height: 2.2rem;
+  padding: 0 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(226,232,240,.9);
+  background: #ffffff;
+  color: var(--text-mid);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.pdf-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(37,99,235,.12);
+}
+
+.pdf-action-btn.primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
+.pdf-action-btn.icon-only {
+  width: 2.2rem;
+  min-width: 2.2rem;
+  padding: 0;
+  background: #f8fafc;
+  color: var(--text-mid);
+}
+
 .pdf-embed-wrap {
   width: 100%;
   height: clamp(480px, 75vh, 900px);

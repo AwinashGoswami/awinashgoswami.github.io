@@ -328,17 +328,34 @@ function isMobileDevice() {
     window.matchMedia("(pointer: coarse)").matches;
 }
 
-function buildPdfViewerUrl(pdfUrl) {
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function toAbsolutePdfUrl(pdfUrl) {
   if (!pdfUrl) {
     return "";
   }
 
   try {
-    const absoluteUrl = new URL(pdfUrl, window.location.href).href;
-    return "https://mozilla.github.io/pdf.js/web/viewer.html?file=" + encodeURIComponent(absoluteUrl);
+    return new URL(pdfUrl, window.location.href).href;
   } catch (error) {
     return pdfUrl;
   }
+}
+
+function buildPdfViewerUrl(pdfUrl) {
+  const absolutePdfUrl = toAbsolutePdfUrl(pdfUrl);
+  if (!absolutePdfUrl) {
+    return "";
+  }
+
+  return "https://docs.google.com/viewer?embedded=true&url=" + encodeURIComponent(absolutePdfUrl);
 }
 
 function renderTopic() {
@@ -369,11 +386,25 @@ function renderTopic() {
   const pdfUrl = resolveTopicPdfUrl(currentTopic, topicData);
 
   if (pdfUrl) {
+    const pdfTitle = topicData.title || currentTopic || "Study Notes";
+    const absoluteUrl = toAbsolutePdfUrl(pdfUrl);
     const viewerUrl = isMobileDevice() ? buildPdfViewerUrl(pdfUrl) : pdfUrl;
-    topicContent.innerHTML = "<div class=\"pdf-embed-wrap\"><iframe class=\"pdf-embed-frame\" src=\"" + viewerUrl + "\" title=\"" + (topicData.title || currentTopic) + " PDF\" loading=\"lazy\" allow=\"fullscreen\"></iframe></div>";
+    topicContent.innerHTML = [
+      '<div class="pdf-viewer-shell">',
+      '  <div class="pdf-embed-wrap">',
+      '    <iframe class="pdf-embed-frame" src="' + viewerUrl + '" title="' + escapeHtml(pdfTitle) + ' PDF" loading="lazy" allow="fullscreen"></iframe>',
+      '  </div>',
+      '  <div class="pdf-inline-actions">',
+      '    <a class="pdf-action-btn primary" href="' + absoluteUrl + '" target="_blank" rel="noopener noreferrer" aria-label="Open PDF in a new tab" title="Open in new tab">Open</a>',
+      '    <a class="pdf-action-btn icon-only" href="' + absoluteUrl + '" target="_blank" rel="noopener noreferrer" aria-label="Open PDF in a new tab" title="Open in new tab">',
+      '      <i class="fa-solid fa-up-right-from-square"></i>',
+      '    </a>',
+      '  </div>',
+      '</div>'
+    ].join("");
   } else {
     const friendlyTitle = topicData.title || currentTopic || "This topic";
-    topicContent.innerHTML = "<div class=\"topic-unavailable\"><h3>PDF not available yet</h3><p>" + friendlyTitle + " is currently being prepared. Please check back soon for the study notes.</p></div>";
+    topicContent.innerHTML = "<div class=\"topic-unavailable\"><h3>PDF not available yet</h3><p>" + escapeHtml(friendlyTitle) + " is currently being prepared. Please check back soon for the study notes.</p></div>";
   }
 
   if (prevButton && nextButton) {
