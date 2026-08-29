@@ -11871,6 +11871,18 @@ a.theme-btn-on-bg:hover, a.theme-btn-on-bg:focus, a.theme-btn-on-bg:active, .the
   color: #aab4c3;
 }
 
+@media (max-width: 767.98px) {
+  .resume-timeline-item-header .d-flex {
+    display: block !important;
+  }
+
+  .resume-company-name {
+    margin-left: 0 !important;
+    margin-top: 0.25rem;
+    display: block;
+  }
+}
+
 .resume-position-title {
   font-size: 1.125rem;
   color: #434E5E;
@@ -11942,5 +11954,61 @@ padding:10px;
   .resume-header .picture {
     width: 120px;
     border-radius: 4px;
+  }
+
+  .primary-info,
+  .secondary-info {
+    width: 100%;
+    text-align: center;
+  }
+
+  .primary-info {
+    margin: 0 auto;
+  }
+
+  .primary-info ul {
+    display: inline-block;
+    text-align: left;
+    margin: 0 auto;
+  }
+
+  .secondary-info {
+    width: 100%;
+    text-align: center;
+  }
+
+  .secondary-info ul {
+    display: inline-block;
+    margin: 0 auto;
+    padding-left: 0;
+    list-style: none;
+    text-align: left;
+  }
+
+  .secondary-info li {
+    display: block;
+    text-align: center;
+  }
+
+  .primary-info li,
+  .secondary-info li {
+    text-align: center;
+  }
+
+  .primary-info a,
+  .secondary-info a {
+    display: inline-block;
+  }
+
+  .secondary-info a {
+    width: 180px;
+    text-align: left;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .resume-header .row {
+    text-align: center;
   }
 }
