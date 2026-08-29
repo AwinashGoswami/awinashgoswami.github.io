@@ -389,17 +389,23 @@ function renderTopic() {
     const pdfTitle = topicData.title || currentTopic || "Study Notes";
     const absoluteUrl = toAbsolutePdfUrl(pdfUrl);
     const viewerUrl = isMobileDevice() ? buildPdfViewerUrl(pdfUrl) : pdfUrl;
+    const mobileActions = isMobileDevice()
+      ? ""
+      : [
+          '  <div class="pdf-inline-actions">',
+          '    <a class="pdf-action-btn primary" href="' + absoluteUrl + '" target="_blank" rel="noopener noreferrer" aria-label="Open PDF in a new tab" title="Open in new tab">Open</a>',
+          '    <a class="pdf-action-btn icon-only" href="' + absoluteUrl + '" target="_blank" rel="noopener noreferrer" aria-label="Open PDF in a new tab" title="Open in new tab">',
+          '      <i class="fa-solid fa-up-right-from-square"></i>',
+          '    </a>',
+          '  </div>'
+        ].join("");
+
     topicContent.innerHTML = [
       '<div class="pdf-viewer-shell">',
       '  <div class="pdf-embed-wrap">',
       '    <iframe class="pdf-embed-frame" src="' + viewerUrl + '" title="' + escapeHtml(pdfTitle) + ' PDF" loading="lazy" allow="fullscreen"></iframe>',
       '  </div>',
-      '  <div class="pdf-inline-actions">',
-      '    <a class="pdf-action-btn primary" href="' + absoluteUrl + '" target="_blank" rel="noopener noreferrer" aria-label="Open PDF in a new tab" title="Open in new tab">Open</a>',
-      '    <a class="pdf-action-btn icon-only" href="' + absoluteUrl + '" target="_blank" rel="noopener noreferrer" aria-label="Open PDF in a new tab" title="Open in new tab">',
-      '      <i class="fa-solid fa-up-right-from-square"></i>',
-      '    </a>',
-      '  </div>',
+      mobileActions,
       '</div>'
     ].join("");
   } else {
