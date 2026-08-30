@@ -83,6 +83,12 @@ $(function () {
       </section>
       <section class="feature-grid">
         <div class="container">
+          <div class="mb-4 mt-4 text-center">
+            <div class="d-inline-block px-5 py-3 rounded-pill shadow-sm border" style="background:linear-gradient(135deg, #eef4ff, #eafaf5); border-color:#d7e8ff; min-width:240px;">
+              <h2 class="fw-bold text-dark mb-0" style="font-size:2rem; letter-spacing:.04em; text-transform:uppercase;">Academia</h2>
+            </div>
+          </div>
+
           <div class="mb-4 mt-2">
             <h3 class="fw-bold text-dark mb-3">Sindh Board</h3>
             <div class="row g-4">
@@ -190,7 +196,147 @@ $(function () {
               </div>
             </div>
           </div>
-        </div>
+
+          <div class="mb-4 mt-5 text-center">
+            <div class="d-inline-block px-5 py-3 rounded-pill shadow-sm border" style="background:linear-gradient(135deg, #f5f1ff, #fff5eb); border-color:#e7dcff; min-width:240px;">
+              <h2 class="fw-bold text-dark mb-0" style="font-size:2rem; letter-spacing:.04em; text-transform:uppercase;">Skills</h2>
+            </div>
+          </div>
+
+          <div class="mb-4 mt-4">
+            <h3 class="fw-bold text-dark mb-3">Programming</h3>
+            <div class="row g-4">
+              <div class="col-sm-6 col-md-12 col-lg-6">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-code-slash"></i></div>
+                  <h5>C++</h5>
+                  <p>Foundations of logic, OOP, and problem solving.</p>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-6">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-file-earmark-code"></i></div>
+                  <h5>Python</h5>
+                  <p>Clean syntax, automation, scripting, and AI-ready basics.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4 mt-4">
+            <h3 class="fw-bold text-dark mb-3">Front-End</h3>
+            <div class="row g-4">
+              <div class="col-sm-6 col-md-12 col-lg-4">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-filetype-html"></i></div>
+                  <h5>HTML</h5>
+                  <p>Structure and semantic content for web pages.</p>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-4">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-filetype-css"></i></div>
+                  <h5>CSS</h5>
+                  <p>Design, layout, responsiveness, and styling.</p>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-4">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-filetype-js"></i></div>
+                  <h5>JavaScript</h5>
+                  <p>Interactivity, logic, and dynamic client-side behavior.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4 mt-4">
+            <h3 class="fw-bold text-dark mb-3">Server-Side</h3>
+            <div class="row g-4">
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-database-check"></i></div>
+                  <h5>Django</h5>
+                  <p>Full-stack Python web development with clean architecture.</p>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-hdd-rack"></i></div>
+                  <h5>DRF</h5>
+                  <p>REST APIs and backend services with Django.</p>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-node-plus"></i></div>
+                  <h5>Node.js</h5>
+                  <p>JavaScript runtime for APIs, servers, and apps.</p>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-filetype-php"></i></div>
+                  <h5>PHP</h5>
+                  <p>Server-side scripting for dynamic websites and apps.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4 mt-4">
+            <h3 class="fw-bold text-dark mb-3">AI Integration</h3>
+            <div class="row g-4">
+              <div class="col-12">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-robot"></i></div>
+                  <h5>AI Integration</h5>
+                  <p>Building smart features, APIs, and workflow automation with AI tools.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4 mt-4">
+            <h3 class="fw-bold text-dark mb-3">Databases</h3>
+            <div class="row g-4">
+              <div class="col-sm-6 col-md-12 col-lg-6">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-table"></i></div>
+                  <h5>MySQL</h5>
+                  <p>Relational databases for structured and reliable data storage.</p>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-6">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-server"></i></div>
+                  <h5>MongoDB</h5>
+                  <p>NoSQL storage for flexible, scalable document-based data.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4 mt-4">
+            <h3 class="fw-bold text-dark mb-3">Tools</h3>
+            <div class="row g-4">
+              <div class="col-12">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-git"></i></div>
+                  <h5>Git</h5>
+                  <p>Version control for tracking, branching, and collaborating on projects.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
       </section>
     `);
   }
