@@ -83,71 +83,112 @@ $(function () {
       </section>
       <section class="feature-grid">
         <div class="container">
-          <div class="row g-4">
-
-          <!-- 9th Sindh Board -->
-            <div class="col-sm-6 col-md-12 col-lg-4">
-              <div class="feature-card" data-goto="cat-hub" data-level="9th-sindh-board">
-                <div class="feature-icon"><i class="bi bi-book-half"></i></div>
-                <h5>9th Sindh Board</h5>
-                <p>Fundamentals for beginners — logic, coding basics, and classroom-ready practice.</p>
+          <div class="mb-4 mt-2">
+            <h3 class="fw-bold text-dark mb-3">Sindh Board</h3>
+            <div class="row g-4">
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card" data-goto="cat-hub" data-level="9th-sindh-board">
+                  <div class="feature-icon"><i class="bi bi-book-half"></i></div>
+                  <h5>9th Sindh Board</h5>
+                  <p>Fundamentals for beginners — logic, coding basics, and classroom-ready practice.</p>
+                </div>
               </div>
-            </div>
 
-          <!-- 10th Sindh Board -->
-            <div class="col-sm-6 col-md-12 col-lg-4">
-              <div class="feature-card" data-goto="cat-hub" data-level="10th-sindh-board">
-                <div class="feature-icon"><i class="bi bi-book-half"></i></div>
-                <h5>10th Sindh Board</h5>
-                <p>Core concepts, revision help, and topic-by-topic support for board exam prep.</p>
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card" data-goto="cat-hub" data-level="10th-sindh-board">
+                  <div class="feature-icon"><i class="bi bi-book-half"></i></div>
+                  <h5>10th Sindh Board</h5>
+                  <p>Core concepts, revision help, and topic-by-topic support for board exam prep.</p>
+                </div>
               </div>
-            </div>
 
-          <!-- 9th Federal Board -->
-            <div class="col-sm-6 col-md-12 col-lg-4">
-              <div class="feature-card" data-goto="cat-hub" data-level="9th-federal-board">
-                <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
-                <h5>9th Federal Board</h5>
-                <p>Build your base with structured notes, quizzes, and revision cards.</p>
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-book-half"></i></div>
+                  <h5>11th Sindh Board</h5>
+                  <p>Coming Soon...</p>
+                </div>
               </div>
-            </div>
 
-          <!-- 10th Federal Board -->
-            <div class="col-sm-6 col-md-12 col-lg-4">
-              <div class="feature-card" data-goto="cat-hub" data-level="10th-federal-board">
-                <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
-                <h5>10th Federal Board</h5>
-                <p>High-yield topics, revision support, and practice for final board exam success.</p>
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-book-half"></i></div>
+                  <h5>12th Sindh Board</h5>
+                  <p>Coming Soon...</p>
+                </div>
               </div>
-            </div>
-
-          <!-- O Level -->
-          <div class="col-sm-6 col-md-12 col-lg-4">
-            <div class="feature-card">
-              <div class="feature-icon"><i class="bi bi-mortarboard"></i></div>
-              <h5>O Level</h5>
-              <p>Coming Soon...</p>
             </div>
           </div>
 
-          <!-- A Level -->
-          <div class="col-sm-6 col-md-12 col-lg-4">
-            <div class="feature-card">
-              <div class="feature-icon"><i class="bi bi-cpu"></i></div>
-              <h5>A Level</h5>
-              <p>Coming Soon...</p>
+          <div class="mb-4">
+            <h3 class="fw-bold text-dark mb-3">Federal Board</h3>
+            <div class="row g-4">
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card" data-goto="cat-hub" data-level="9th-federal-board">
+                  <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
+                  <h5>9th Federal Board</h5>
+                  <p>Build your base with structured notes, quizzes, and revision cards.</p>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card" data-goto="cat-hub" data-level="10th-federal-board">
+                  <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
+                  <h5>10th Federal Board</h5>
+                  <p>High-yield topics, revision support, and practice for final board exam success.</p>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
+                  <h5>11th Federal Board</h5>
+                  <p>Coming Soon...</p>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
+                  <h5>12th Federal Board</h5>
+                  <p>Coming Soon...</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- University Level -->
-          <div class="col-sm-6 col-md-12 col-lg-4">
-            <div class="feature-card">
-              <div class="feature-icon"><i class="bi bi-building"></i></div>
-              <h5>University</h5>
-              <p>Coming Soon...</p>
+          <div class="mb-4">
+            <h3 class="fw-bold text-dark mb-3">Cambridge</h3>
+            <div class="row g-4">
+              <div class="col-sm-6 col-md-12 col-lg-6">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-mortarboard"></i></div>
+                  <h5>O Level</h5>
+                  <p>Coming Soon...</p>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-6">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-cpu"></i></div>
+                  <h5>A Level</h5>
+                  <p>Coming Soon...</p>
+                </div>
+              </div>
             </div>
           </div>
 
+          <div class="mb-4">
+            <h3 class="fw-bold text-dark mb-3">University</h3>
+            <div class="row g-4">
+              <div class="col-12">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-building"></i></div>
+                  <h5>University</h5>
+                  <p>Coming Soon...</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
