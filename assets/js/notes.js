@@ -19,6 +19,69 @@ const levels = {
       },
     ],
   },
+  "9th-sindh-board": {
+    title: "9th Sindh Board",
+    json: "assets/json/9th_sindh_board.json",
+    sections: [
+      {
+        topics: [
+          "Unit 1",
+          "Unit 2",
+          "Unit 3",
+          "Unit 4",
+          "Unit 5",
+        ],
+      },
+    ],
+  },
+  "10th-sindh-board": {
+    title: "10th Sindh Board",
+    json: "assets/json/10th_sindh_board.json",
+    sections: [
+      {
+        topics: [
+          "Programming Concepts",
+          "Number Systems",
+          "Boolean Logic",
+          "Data Types",
+          "Computer Hardware",
+          "Software and Operating Systems",
+        ],
+      },
+    ],
+  },
+  "9th-federal-board": {
+    title: "9th Federal Board",
+    json: "assets/json/9th_federal_board.json",
+    sections: [
+      {
+        topics: [
+          "Introduction to Computing",
+          "Computer Fundamentals",
+          "Number Systems",
+          "Logic and Flowcharts",
+          "Internet and Communication",
+          "Digital Citizenship",
+        ],
+      },
+    ],
+  },
+  "10th-federal-board": {
+    title: "10th Federal Board",
+    json: "assets/json/10th_federal_board.json",
+    sections: [
+      {
+        topics: [
+          "Programming Fundamentals",
+          "Number Systems and Conversions",
+          "Boolean Algebra",
+          "Data Representation",
+          "Computer System Architecture",
+          "Networking and Security",
+        ],
+      },
+    ],
+  },
   "a-level": {
     title: "A Level",
     json: "assets/json/a_level.json",

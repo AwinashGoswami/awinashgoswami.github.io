@@ -1,0 +1,32 @@
+{
+  "Programming Fundamentals": {
+    "title": "Programming Fundamentals",
+    "content": "<h2>Programming Fundamentals</h2><p>Programming fundamentals include variables, conditions, loops, and functions used to solve problems.</p>",
+    "pdf": "assets/pdfs/10th-federal-board/programming-fundamentals.pdf"
+  },
+  "Number Systems and Conversions": {
+    "title": "Number Systems and Conversions",
+    "content": "<h2>Number Systems and Conversions</h2><p>Students learn how to convert between binary, decimal, and hexadecimal values.</p>",
+    "pdf": "assets/pdfs/10th-federal-board/number-systems-conversions.pdf"
+  },
+  "Boolean Algebra": {
+    "title": "Boolean Algebra",
+    "content": "<h2>Boolean Algebra</h2><p>Boolean algebra expresses logical relationships using variables and operators such as AND, OR, and NOT.</p>",
+    "pdf": "assets/pdfs/10th-federal-board/boolean-algebra.pdf"
+  },
+  "Data Representation": {
+    "title": "Data Representation",
+    "content": "<h2>Data Representation</h2><p>Data representation explains how numbers, text, images, and sound are stored in digital form.</p>",
+    "pdf": "assets/pdfs/10th-federal-board/data-representation.pdf"
+  },
+  "Computer System Architecture": {
+    "title": "Computer System Architecture",
+    "content": "<h2>Computer System Architecture</h2><p>System architecture covers how the CPU, memory, storage, and peripherals work together.</p>",
+    "pdf": "assets/pdfs/10th-federal-board/system-architecture.pdf"
+  },
+  "Networking and Security": {
+    "title": "Networking and Security",
+    "content": "<h2>Networking and Security</h2><p>Networking studies how computers share data, while security covers protecting information from unauthorized access.</p>",
+    "pdf": "assets/pdfs/10th-federal-board/networking-security.pdf"
+  }
+}

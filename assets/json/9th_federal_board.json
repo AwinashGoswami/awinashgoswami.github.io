@@ -1,0 +1,32 @@
+{
+  "Introduction to Computing": {
+    "title": "Introduction to Computing",
+    "content": "<h2>Introduction to Computing</h2><p>Computing is the use of computers to process, store, and communicate information.</p><h3>Theme</h3><p>Students learn about the role of technology in education, business, and daily life.</p>",
+    "pdf": "assets/pdfs/9th-federal-board/introduction-to-computing.pdf"
+  },
+  "Computer Fundamentals": {
+    "title": "Computer Fundamentals",
+    "content": "<h2>Computer Fundamentals</h2><p>Basic computer knowledge includes hardware, software, memory, and processing concepts.</p><h3>Purpose</h3><p>This foundation helps learners understand how computers work and how systems are connected.</p>",
+    "pdf": "assets/pdfs/9th-federal-board/computer-fundamentals.pdf"
+  },
+  "Number Systems": {
+    "title": "Number Systems",
+    "content": "<h2>Number Systems</h2><p>Decimal, binary, and hexadecimal are common systems used in computing and logic design.</p>",
+    "pdf": "assets/pdfs/9th-federal-board/number-systems.pdf"
+  },
+  "Logic and Flowcharts": {
+    "title": "Logic and Flowcharts",
+    "content": "<h2>Logic and Flowcharts</h2><p>Flowcharts help explain algorithm steps visually and make problem solving easier.</p><h3>Use</h3><p>Students learn to plan solutions before writing code.</p>",
+    "pdf": "assets/pdfs/9th-federal-board/logic-flowcharts.pdf"
+  },
+  "Internet and Communication": {
+    "title": "Internet and Communication",
+    "content": "<h2>Internet and Communication</h2><p>Communication systems and internet tools allow people to exchange information quickly and efficiently.</p>",
+    "pdf": "assets/pdfs/9th-federal-board/internet-communication.pdf"
+  },
+  "Digital Citizenship": {
+    "title": "Digital Citizenship",
+    "content": "<h2>Digital Citizenship</h2><p>Responsible use of digital tools includes respecting privacy, using technology safely, and preventing cyber misuse.</p>",
+    "pdf": "assets/pdfs/9th-federal-board/digital-citizenship.pdf"
+  }
+}

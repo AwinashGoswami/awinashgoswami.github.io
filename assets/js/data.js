@@ -11,6 +11,34 @@ const CATEGORY_META = {
     colorClass: "o-level",
     desc: "Essential CS concepts for O Level students — from programming basics to number systems.",
   },
+  "9th-sindh-board": {
+    label: "9th Sindh Board",
+    subtitle: "Foundational Computer Science",
+    icon: "bi-book-half",
+    colorClass: "o-level",
+    desc: "Foundational CS concepts for 9th grade Sindh Board students.",
+  },
+  "10th-sindh-board": {
+    label: "10th Sindh Board",
+    subtitle: "Foundational Computer Science",
+    icon: "bi-book-half",
+    colorClass: "o-level",
+    desc: "Computer science fundamentals for 10th grade Sindh Board students.",
+  },
+  "9th-federal-board": {
+    label: "9th Federal Board",
+    subtitle: "Pre-College Computer Science",
+    icon: "bi-journal-text",
+    colorClass: "a-level",
+    desc: "Core theory and practical foundations for 9th grade Federal Board students.",
+  },
+  "10th-federal-board": {
+    label: "10th Federal Board",
+    subtitle: "Advanced Computer Science",
+    icon: "bi-journal-text",
+    colorClass: "a-level",
+    desc: "Advanced preparation for 10th grade Federal Board students with revision-focused content.",
+  },
   "a-level": {
     label: "A Level",
     subtitle: "Advanced Computer Science",
@@ -1045,9 +1073,24 @@ const CATEGORIES = {
   },
 };
 
+const BOARD_LEVELS = [
+  "9th-sindh-board",
+  "10th-sindh-board",
+  "9th-federal-board",
+  "10th-federal-board",
+];
+
+BOARD_LEVELS.forEach((levelKey) => {
+  CATEGORIES[levelKey] = JSON.parse(JSON.stringify(CATEGORIES["o-level"]));
+});
+
 /* ── TUTORIAL PLAYLIST LINKS (per standard) ── */
 const TUTORIAL_PLAYLISTS = {
   "o-level": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
+  "9th-sindh-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
+  "10th-sindh-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
+  "9th-federal-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
+  "10th-federal-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
   "a-level": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
   university: "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
 };

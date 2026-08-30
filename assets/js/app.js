@@ -85,14 +85,50 @@ $(function () {
         <div class="container">
           <div class="row g-4">
 
-          <!-- O Level -->
+          <!-- 9th Sindh Board -->
             <div class="col-sm-6 col-md-12 col-lg-4">
-              <div class="feature-card" data-goto="cat-hub" data-level="o-level">
-                <div class="feature-icon"><i class="bi bi-mortarboard"></i></div>
-                <h5>O Level</h5>
-                <p>Foundational CS topics — programming basics, number systems, Boolean logic, and more.</p>
+              <div class="feature-card" data-goto="cat-hub" data-level="9th-sindh-board">
+                <div class="feature-icon"><i class="bi bi-book-half"></i></div>
+                <h5>9th Sindh Board</h5>
+                <p>Fundamentals for beginners — logic, coding basics, and classroom-ready practice.</p>
               </div>
             </div>
+
+          <!-- 10th Sindh Board -->
+            <div class="col-sm-6 col-md-12 col-lg-4">
+              <div class="feature-card" data-goto="cat-hub" data-level="10th-sindh-board">
+                <div class="feature-icon"><i class="bi bi-book-half"></i></div>
+                <h5>10th Sindh Board</h5>
+                <p>Core concepts, revision help, and topic-by-topic support for board exam prep.</p>
+              </div>
+            </div>
+
+          <!-- 9th Federal Board -->
+            <div class="col-sm-6 col-md-12 col-lg-4">
+              <div class="feature-card" data-goto="cat-hub" data-level="9th-federal-board">
+                <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
+                <h5>9th Federal Board</h5>
+                <p>Build your base with structured notes, quizzes, and revision cards.</p>
+              </div>
+            </div>
+
+          <!-- 10th Federal Board -->
+            <div class="col-sm-6 col-md-12 col-lg-4">
+              <div class="feature-card" data-goto="cat-hub" data-level="10th-federal-board">
+                <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
+                <h5>10th Federal Board</h5>
+                <p>High-yield topics, revision support, and practice for final board exam success.</p>
+              </div>
+            </div>
+
+          <!-- O Level -->
+          <div class="col-sm-6 col-md-12 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon"><i class="bi bi-mortarboard"></i></div>
+              <h5>O Level</h5>
+              <p>Coming Soon...</p>
+            </div>
+          </div>
 
           <!-- A Level -->
           <div class="col-sm-6 col-md-12 col-lg-4">
