@@ -210,7 +210,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-code-slash"></i></div>
                   <h5>C++</h5>
-                  <p>Foundations of logic, OOP, and problem solving.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
 
@@ -218,7 +218,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-file-earmark-code"></i></div>
                   <h5>Python</h5>
-                  <p>Clean syntax, automation, scripting, and AI-ready basics.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
             </div>
@@ -231,7 +231,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-filetype-html"></i></div>
                   <h5>HTML</h5>
-                  <p>Structure and semantic content for web pages.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
 
@@ -239,7 +239,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-filetype-css"></i></div>
                   <h5>CSS</h5>
-                  <p>Design, layout, responsiveness, and styling.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
 
@@ -247,7 +247,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-filetype-js"></i></div>
                   <h5>JavaScript</h5>
-                  <p>Interactivity, logic, and dynamic client-side behavior.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
             </div>
@@ -260,7 +260,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-database-check"></i></div>
                   <h5>Django</h5>
-                  <p>Full-stack Python web development with clean architecture.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
 
@@ -268,7 +268,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-hdd-rack"></i></div>
                   <h5>DRF</h5>
-                  <p>REST APIs and backend services with Django.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
 
@@ -276,7 +276,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-node-plus"></i></div>
                   <h5>Node.js</h5>
-                  <p>JavaScript runtime for APIs, servers, and apps.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
 
@@ -284,7 +284,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-filetype-php"></i></div>
                   <h5>PHP</h5>
-                  <p>Server-side scripting for dynamic websites and apps.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
             </div>
@@ -297,7 +297,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-robot"></i></div>
                   <h5>AI Integration</h5>
-                  <p>Building smart features, APIs, and workflow automation with AI tools.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
             </div>
@@ -310,7 +310,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-table"></i></div>
                   <h5>MySQL</h5>
-                  <p>Relational databases for structured and reliable data storage.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
 
@@ -318,7 +318,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-server"></i></div>
                   <h5>MongoDB</h5>
-                  <p>NoSQL storage for flexible, scalable document-based data.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
             </div>
@@ -331,7 +331,7 @@ $(function () {
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-git"></i></div>
                   <h5>Git</h5>
-                  <p>Version control for tracking, branching, and collaborating on projects.</p>
+                  <p>Coming Soon...</p>
                 </div>
               </div>
             </div>
