@@ -421,6 +421,44 @@ function buildPdfViewerUrl(pdfUrl) {
   return "https://docs.google.com/viewer?embedded=true&url=" + encodeURIComponent(absolutePdfUrl);
 }
 
+async function isPdfResourceAvailable(pdfUrl) {
+  if (!pdfUrl) {
+    return false;
+  }
+
+  if (pdfUrl.startsWith("data:")) {
+    return true;
+  }
+
+  try {
+    const headResponse = await fetch(pdfUrl, { method: "HEAD", cache: "no-store" });
+    if (headResponse.ok) {
+      return true;
+    }
+
+    if (headResponse.status === 405 || headResponse.status === 403) {
+      const getResponse = await fetch(pdfUrl, { method: "GET", cache: "no-store" });
+      return getResponse.ok;
+    }
+
+    return false;
+  } catch (error) {
+    try {
+      const getResponse = await fetch(pdfUrl, { method: "GET", cache: "no-store" });
+      return getResponse.ok;
+    } catch (secondError) {
+      return false;
+    }
+  }
+}
+
+function showPdfUnavailableMessage() {
+  if (!topicContent) {
+    return;
+  }
+  topicContent.innerHTML = '<div class="topic-unavailable"><p>PDF not available yet, Please check back soon for the study notes.</p></div>';
+}
+
 function renderTopic() {
   updateBreadcrumb();
 
@@ -449,19 +487,27 @@ function renderTopic() {
   const pdfUrl = resolveTopicPdfUrl(currentTopic, topicData);
 
   if (pdfUrl) {
-    const pdfTitle = topicData.title || currentTopic || "Study Notes";
-    const viewerUrl = isMobileDevice() ? buildPdfViewerUrl(pdfUrl) : pdfUrl;
+    isPdfResourceAvailable(pdfUrl).then((available) => {
+      if (!available) {
+        showPdfUnavailableMessage();
+        return;
+      }
 
-    topicContent.innerHTML = [
-      '<div class="pdf-viewer-shell">',
-      '  <div class="pdf-embed-wrap">',
-      '    <iframe class="pdf-embed-frame" src="' + viewerUrl + '" title="' + escapeHtml(pdfTitle) + ' PDF" loading="lazy" allow="fullscreen"></iframe>',
-      '  </div>',
-      '</div>'
-    ].join("");
+      const pdfTitle = topicData.title || currentTopic || "Study Notes";
+      const viewerUrl = isMobileDevice() ? buildPdfViewerUrl(pdfUrl) : pdfUrl;
+
+      topicContent.innerHTML = [
+        '<div class="pdf-viewer-shell">',
+        '  <div class="pdf-embed-wrap">',
+        '    <iframe class="pdf-embed-frame" src="' + viewerUrl + '" title="' + escapeHtml(pdfTitle) + ' PDF" loading="lazy" allow="fullscreen"></iframe>',
+        '  </div>',
+        '</div>'
+      ].join("");
+    }).catch(() => {
+      showPdfUnavailableMessage();
+    });
   } else {
-    const friendlyTitle = topicData.title || currentTopic || "This topic";
-    topicContent.innerHTML = "<div class=\"topic-unavailable\"><h3>PDF not available yet</h3><p>" + escapeHtml(friendlyTitle) + " is currently being prepared. Please check back soon for the study notes.</p></div>";
+    showPdfUnavailableMessage();
   }
 
   if (prevButton && nextButton) {
