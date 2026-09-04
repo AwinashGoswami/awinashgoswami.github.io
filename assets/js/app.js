@@ -109,18 +109,18 @@ $(function () {
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card">
+                <div class="feature-card" data-goto="cat-hub" data-level="11th-sindh-board">
                   <div class="feature-icon"><i class="bi bi-book-half"></i></div>
                   <h5>11th Sindh Board</h5>
-                  <p>Coming Soon...</p>
+                  <p>Board-ready notes, revision support, and chapter coverage for senior classes.</p>
                 </div>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card">
+                <div class="feature-card" data-goto="cat-hub" data-level="12th-sindh-board">
                   <div class="feature-icon"><i class="bi bi-book-half"></i></div>
                   <h5>12th Sindh Board</h5>
-                  <p>Coming Soon...</p>
+                  <p>Board-ready notes, revision support, and chapter coverage for senior classes.</p>
                 </div>
               </div>
             </div>
@@ -146,18 +146,18 @@ $(function () {
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card">
+                <div class="feature-card" data-goto="cat-hub" data-level="11th-federal-board">
                   <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
                   <h5>11th Federal Board</h5>
-                  <p>Coming Soon...</p>
+                  <p>Board-ready notes, revision support, and chapter coverage for senior classes.</p>
                 </div>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card">
+                <div class="feature-card" data-goto="cat-hub" data-level="12th-federal-board">
                   <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
                   <h5>12th Federal Board</h5>
-                  <p>Coming Soon...</p>
+                  <p>Board-ready notes, revision support, and chapter coverage for senior classes.</p>
                 </div>
               </div>
             </div>

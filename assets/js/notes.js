@@ -40,12 +40,35 @@ const levels = {
     sections: [
       {
         topics: [
-          "Programming Concepts",
-          "Number Systems",
-          "Boolean Logic",
-          "Data Types",
-          "Computer Hardware",
-          "Software and Operating Systems",
+          "Unit 1",
+          "Unit 2",
+          "Unit 3",
+          "Unit 4",
+          "Unit 5",
+          "Unit 6",
+          "Unit 7"
+        ],
+      },
+    ],
+  },
+  "11th-sindh-board": {
+    title: "11th Sindh Board",
+    json: "assets/json/11th_sindh_board.json",
+    sections: [
+      {
+        topics: [
+          "Unit 1",
+        ],
+      },
+    ],
+  },
+  "12th-sindh-board": {
+    title: "12th Sindh Board",
+    json: "assets/json/12th_sindh_board.json",
+    sections: [
+      {
+        topics: [
+          "Unit 1",
         ],
       },
     ],
@@ -78,6 +101,28 @@ const levels = {
           "Data Representation",
           "Computer System Architecture",
           "Networking and Security",
+        ],
+      },
+    ],
+  },
+  "11th-federal-board": {
+    title: "11th Federal Board",
+    json: "assets/json/11th_federal_board.json",
+    sections: [
+      {
+        topics: [
+          "Unit 1",
+        ],
+      },
+    ],
+  },
+  "12th-federal-board": {
+    title: "12th Federal Board",
+    json: "assets/json/12th_federal_board.json",
+    sections: [
+      {
+        topics: [
+          "Unit 1",
         ],
       },
     ],

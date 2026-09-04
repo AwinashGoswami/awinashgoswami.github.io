@@ -25,6 +25,20 @@ const CATEGORY_META = {
     colorClass: "o-level",
     desc: "Computer science fundamentals for 10th grade Sindh Board students.",
   },
+  "11th-sindh-board": {
+    label: "11th Sindh Board",
+    subtitle: "Intermediate Computer Science",
+    icon: "bi-book-half",
+    colorClass: "o-level",
+    desc: "Intermediate-level computer science support for 11th grade Sindh Board students.",
+  },
+  "12th-sindh-board": {
+    label: "12th Sindh Board",
+    subtitle: "Advanced Intermediate Computer Science",
+    icon: "bi-book-half",
+    colorClass: "o-level",
+    desc: "Senior-level computer science notes and revision support for 12th grade Sindh Board students.",
+  },
   "9th-federal-board": {
     label: "9th Federal Board",
     subtitle: "Pre-College Computer Science",
@@ -38,6 +52,20 @@ const CATEGORY_META = {
     icon: "bi-journal-text",
     colorClass: "a-level",
     desc: "Advanced preparation for 10th grade Federal Board students with revision-focused content.",
+  },
+  "11th-federal-board": {
+    label: "11th Federal Board",
+    subtitle: "Intermediate Computer Science",
+    icon: "bi-journal-text",
+    colorClass: "a-level",
+    desc: "Intermediate-level concept notes and revision support for 11th grade Federal Board students.",
+  },
+  "12th-federal-board": {
+    label: "12th Federal Board",
+    subtitle: "Senior Computer Science",
+    icon: "bi-journal-text",
+    colorClass: "a-level",
+    desc: "Senior-level board preparation for 12th grade Federal Board students.",
   },
   "a-level": {
     label: "A Level",
@@ -1076,8 +1104,12 @@ const CATEGORIES = {
 const BOARD_LEVELS = [
   "9th-sindh-board",
   "10th-sindh-board",
+  "11th-sindh-board",
+  "12th-sindh-board",
   "9th-federal-board",
   "10th-federal-board",
+  "11th-federal-board",
+  "12th-federal-board",
 ];
 
 BOARD_LEVELS.forEach((levelKey) => {
@@ -1089,8 +1121,12 @@ const TUTORIAL_PLAYLISTS = {
   "o-level": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
   "9th-sindh-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
   "10th-sindh-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
+  "11th-sindh-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
+  "12th-sindh-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
   "9th-federal-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
   "10th-federal-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
+  "11th-federal-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
+  "12th-federal-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
   "a-level": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
   university: "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
 };
