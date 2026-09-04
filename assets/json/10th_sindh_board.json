@@ -1,32 +1,6 @@
 {
-  "Programming Concepts": {
-    "title": "Programming Concepts",
-    "content": "<h2>Programming Concepts</h2><p>Programming includes sequence, selection, and iteration, which help solve problems logically.</p><h3>Core idea</h3><p>Programs are written to accept input, process it, and generate output efficiently.</p>",
-    "pdf": "assets/pdfs/10th-sindh-board/programming-concepts.pdf"
-  },
-  "Number Systems": {
-    "title": "Number Systems",
-    "content": "<h2>Number Systems</h2><p>Number systems explain how computers represent values using different bases such as binary, decimal, and hexadecimal.</p><h3>Use</h3><p>This helps in memory addressing, programming, and digital design.</p>",
-    "pdf": "assets/pdfs/10th-sindh-board/number-systems.pdf"
-  },
-  "Boolean Logic": {
-    "title": "Boolean Logic",
-    "content": "<h2>Boolean Logic</h2><p>Boolean logic forms the base of digital circuits and decision making in programming.</p><h3>Applications</h3><p>It is used in logic gates, conditions, and circuit design.</p>",
-    "pdf": "assets/pdfs/10th-sindh-board/boolean-logic.pdf"
-  },
-  "Data Types": {
-    "title": "Data Types",
-    "content": "<h2>Data Types</h2><p>Data types define the kind of values stored in variables, such as integers, strings, and booleans.</p><h3>Examples</h3><p>Understanding data types helps avoid incorrect results and improve program reliability.</p>",
-    "pdf": "assets/pdfs/10th-sindh-board/data-types.pdf"
-  },
-  "Computer Hardware": {
-    "title": "Computer Hardware",
-    "content": "<h2>Computer Hardware</h2><p>Hardware includes all physical components such as the CPU, memory, storage, and input/output devices.</p><h3>Function</h3><p>Each device plays a specific role in processing and using data.</p>",
-    "pdf": "assets/pdfs/10th-sindh-board/computer-hardware.pdf"
-  },
-  "Software and Operating Systems": {
-    "title": "Software and Operating Systems",
-    "content": "<h2>Software and Operating Systems</h2><p>Software includes programs that run on a computer, while the operating system manages system resources and user interaction.</p>",
-    "pdf": "assets/pdfs/10th-sindh-board/software-os.pdf"
+  "Unit 1": {
+    "title": "Unit 1",
+    "pdf": "assets/pdfs/10th-sindh-board/unit_1.pdf"
   }
 }
