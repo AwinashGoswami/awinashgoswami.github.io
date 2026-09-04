@@ -1,7 +1,7 @@
 const levels = {
   "o-level": {
     title: "O Level",
-    json: "assets/json/o_level.json",
+    json: "assets/json/cambridge/o_level.json",
     sections: [
       {
         topics: [
@@ -20,8 +20,8 @@ const levels = {
     ],
   },
   "9th-sindh-board": {
-    title: "9th Sindh Board",
-    json: "assets/json/9th_sindh_board.json",
+    title: "9th Grade",
+    json: "assets/json/sindh-board/9th_grade.json",
     sections: [
       {
         topics: [
@@ -35,8 +35,8 @@ const levels = {
     ],
   },
   "10th-sindh-board": {
-    title: "10th Sindh Board",
-    json: "assets/json/10th_sindh_board.json",
+    title: "10th Grade",
+    json: "assets/json/sindh-board/10th_grade.json",
     sections: [
       {
         topics: [
@@ -52,8 +52,8 @@ const levels = {
     ],
   },
   "11th-sindh-board": {
-    title: "11th Sindh Board",
-    json: "assets/json/11th_sindh_board.json",
+    title: "11th Grade",
+    json: "assets/json/sindh-board/11th_grade.json",
     sections: [
       {
         topics: [
@@ -63,8 +63,8 @@ const levels = {
     ],
   },
   "12th-sindh-board": {
-    title: "12th Sindh Board",
-    json: "assets/json/12th_sindh_board.json",
+    title: "12th Grade",
+    json: "assets/json/sindh-board/12th_grade.json",
     sections: [
       {
         topics: [
@@ -74,8 +74,8 @@ const levels = {
     ],
   },
   "9th-federal-board": {
-    title: "9th Federal Board",
-    json: "assets/json/9th_federal_board.json",
+    title: "9th Grade",
+    json: "assets/json/federal-board/9th_grade.json",
     sections: [
       {
         topics: [
@@ -90,8 +90,8 @@ const levels = {
     ],
   },
   "10th-federal-board": {
-    title: "10th Federal Board",
-    json: "assets/json/10th_federal_board.json",
+    title: "10th Grade",
+    json: "assets/json/federal-board/10th_grade.json",
     sections: [
       {
         topics: [
@@ -106,8 +106,8 @@ const levels = {
     ],
   },
   "11th-federal-board": {
-    title: "11th Federal Board",
-    json: "assets/json/11th_federal_board.json",
+    title: "11th Grade",
+    json: "assets/json/federal-board/11th_grade.json",
     sections: [
       {
         topics: [
@@ -117,8 +117,8 @@ const levels = {
     ],
   },
   "12th-federal-board": {
-    title: "12th Federal Board",
-    json: "assets/json/12th_federal_board.json",
+    title: "12th Grade",
+    json: "assets/json/federal-board/12th_grade.json",
     sections: [
       {
         topics: [
@@ -129,7 +129,7 @@ const levels = {
   },
   "a-level": {
     title: "A Level",
-    json: "assets/json/a_level.json",
+    json: "assets/json/cambridge/a_level.json",
     sections: [
       {
         topics: ["Data Representation", "Algorithms"],
