@@ -218,7 +218,7 @@ $(function () {
           </div>
 
           <div class="mb-4 mt-4">
-            <h3 class="fw-bold text-dark mb-3">Front-End</h3>
+            <h3 class="fw-bold text-dark mb-3">Web-Technologies</h3>
             <div class="row g-4">
               <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
