@@ -89,101 +89,135 @@ $(function () {
             </div>
           </div>
 
-          <div class="mb-4 mt-2">
-            <h3 class="fw-bold text-dark mb-3">Sindh Board</h3>
-            <div class="row g-4">
-              <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card" data-goto="cat-hub" data-level="9th-sindh-board">
-                  <div class="feature-icon"><i class="bi bi-book-half"></i></div>
-                  <h5>9th Grade</h5>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card" data-goto="cat-hub" data-level="10th-sindh-board">
-                  <div class="feature-icon"><i class="bi bi-book-half"></i></div>
-                  <h5>10th Grade</h5>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card" data-goto="cat-hub" data-level="11th-sindh-board">
-                  <div class="feature-icon"><i class="bi bi-book-half"></i></div>
-                  <h5>11th Grade</h5>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card" data-goto="cat-hub" data-level="12th-sindh-board">
-                  <div class="feature-icon"><i class="bi bi-book-half"></i></div>
-                  <h5>12th Grade</h5>
-                </div>
-              </div>
-            </div>
-          </div>
 
           <div class="mb-4">
-            <h3 class="fw-bold text-dark mb-3">Federal Board</h3>
+            <h4 class="fw-bold text-dark mb-3">Federal Board</h4>
             <div class="row g-4">
               <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card" data-goto="cat-hub" data-level="9th-federal-board">
                   <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
-                  <h5>9th Grade</h5>
+                  <div>
+                    <h5>9th Grade</h5>
+                    <p>Available</p>
+                  </div>
                 </div>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card" data-goto="cat-hub" data-level="10th-federal-board">
                   <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
-                  <h5>10th Grade</h5>
+                  <div>
+                    <h5>10th Grade</h5>
+                    <p>Available</p>
+                  </div>
                 </div>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card" data-goto="cat-hub" data-level="11th-federal-board">
                   <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
-                  <h5>11th Grade</h5>
+                  <div>
+                    <h5>11th Grade</h5>
+                    <p>Available</p>
+                  </div>
                 </div>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card" data-goto="cat-hub" data-level="12th-federal-board">
                   <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
-                  <h5>12th Grade</h5>
+                  <div>
+                    <h5>12th Grade</h5>
+                    <p>Available</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4 mt-2">
+            <h4 class="fw-bold text-dark mb-3">Sindh Board</h4>
+            <div class="row g-4">
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card" data-goto="cat-hub" data-level="9th-sindh-board">
+                  <div class="feature-icon"><i class="bi bi-book-half"></i></div>
+                  <div>
+                    <h5>9th Grade</h5>
+                    <p>Available</p>
+                  </div>
+
+                </div>
+              </div>
+
+
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card" data-goto="cat-hub" data-level="10th-sindh-board">
+                  <div class="feature-icon"><i class="bi bi-book-half"></i></div>
+                  <div>
+                    <h5>10th Grade</h5>
+                    <p>Available</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card" data-goto="cat-hub" data-level="11th-sindh-board">
+                  <div class="feature-icon"><i class="bi bi-book-half"></i></div>
+                  <div>
+                    <h5>11th Grade</h5>
+                    <p>Available</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card" data-goto="cat-hub" data-level="12th-sindh-board">
+                  <div class="feature-icon"><i class="bi bi-book-half"></i></div>      
+                  <div>
+                    <h5>12th Grade</h5>
+                    <p>Available</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="mb-4">
-            <h3 class="fw-bold text-dark mb-3">Cambridge</h3>
+            <h4 class="fw-bold text-dark mb-3">Cambridge IGCSE</h4>
             <div class="row g-4">
-              <div class="col-sm-6 col-md-12 col-lg-6">
+              <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-mortarboard"></i></div>
-                  <h5>O Level</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>O Level</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
 
-              <div class="col-sm-6 col-md-12 col-lg-6">
+              <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-cpu"></i></div>
-                  <h5>A Level</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>A Level</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="mb-4">
-            <h3 class="fw-bold text-dark mb-3">University</h3>
+            <h4 class="fw-bold text-dark mb-3">University</h4>
             <div class="row g-4">
-              <div class="col-12">
+              <div class="col-sm-6 col-md-12 col-lg-3">
+              
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-building"></i></div>
-                  <h5>University</h5>
+                  <div>
+                      <h5>University</h5>
                   <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -196,134 +230,140 @@ $(function () {
           </div>
 
           <div class="mb-4 mt-4">
-            <h3 class="fw-bold text-dark mb-3">Programming</h3>
+            <h4 class="fw-bold text-dark mb-3">Programming</h4>
             <div class="row g-4">
-              <div class="col-sm-6 col-md-12 col-lg-6">
+              <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-code-slash"></i></div>
-                  <h5>C++</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>C++</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
 
-              <div class="col-sm-6 col-md-12 col-lg-6">
+              <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-file-earmark-code"></i></div>
-                  <h5>Python</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>Python</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="mb-4 mt-4">
-            <h3 class="fw-bold text-dark mb-3">Front-End</h3>
+            <h4 class="fw-bold text-dark mb-3">Web-Technologies</h4>
             <div class="row g-4">
-              <div class="col-sm-6 col-md-12 col-lg-4">
+              <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-filetype-html"></i></div>
-                  <h5>HTML</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>HTML</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
 
-              <div class="col-sm-6 col-md-12 col-lg-4">
+              <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-filetype-css"></i></div>
-                  <h5>CSS</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>CSS</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
 
-              <div class="col-sm-6 col-md-12 col-lg-4">
+               <div class="col-sm-6 col-md-12 col-lg-3">
+                <div class="feature-card">
+                  <div class="feature-icon"><i class="bi bi-filetype-css"></i></div>
+                  <div>
+                    <h5>Bootstrap</h5>
+                    <p>Coming Soon...</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-filetype-js"></i></div>
-                  <h5>JavaScript</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>JS</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="mb-4 mt-4">
-            <h3 class="fw-bold text-dark mb-3">Server-Side</h3>
-            <div class="row g-4">
               <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-database-check"></i></div>
-                  <h5>Django</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>Django</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
 
-              <div class="col-sm-6 col-md-12 col-lg-3">
+               <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-hdd-rack"></i></div>
-                  <h5>DRF</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>DRF</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-node-plus"></i></div>
-                  <h5>Node.js</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>Node.js</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-filetype-php"></i></div>
-                  <h5>PHP</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>PHP</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="mb-4 mt-4">
-            <h3 class="fw-bold text-dark mb-3">AI Integration</h3>
-            <div class="row g-4">
-              <div class="col-12">
-                <div class="feature-card">
-                  <div class="feature-icon"><i class="bi bi-robot"></i></div>
-                  <h5>AI Integration</h5>
-                  <p>Coming Soon...</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-4 mt-4">
-            <h3 class="fw-bold text-dark mb-3">Databases</h3>
-            <div class="row g-4">
-              <div class="col-sm-6 col-md-12 col-lg-6">
+               <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-table"></i></div>
-                  <h5>MySQL</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>MySQL</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
 
-              <div class="col-sm-6 col-md-12 col-lg-6">
+              <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-server"></i></div>
-                  <h5>MongoDB</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>MongoDB</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="mb-4 mt-4">
-            <h3 class="fw-bold text-dark mb-3">Tools</h3>
-            <div class="row g-4">
-              <div class="col-12">
+              <div class="col-sm-6 col-md-12 col-lg-3">
                 <div class="feature-card">
                   <div class="feature-icon"><i class="bi bi-git"></i></div>
-                  <h5>Git</h5>
-                  <p>Coming Soon...</p>
+                  <div>
+                    <h5>Git</h5>
+                    <p>Coming Soon...</p>
+                  </div>
                 </div>
               </div>
             </div>

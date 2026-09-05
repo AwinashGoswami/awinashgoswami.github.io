@@ -1118,17 +1118,17 @@ BOARD_LEVELS.forEach((levelKey) => {
 
 /* ── TUTORIAL PLAYLIST LINKS (per standard) ── */
 const TUTORIAL_PLAYLISTS = {
-  "o-level": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
-  "9th-sindh-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
-  "10th-sindh-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
-  "11th-sindh-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
-  "12th-sindh-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
-  "9th-federal-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
-  "10th-federal-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
-  "11th-federal-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
-  "12th-federal-board": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
-  "a-level": "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
-  university: "https://www.youtube.com/playlist?list=PLgeE91O8FXgdY1ExFi7NrP-ICPX5nXHF3",
+  "o-level": "https://www.youtube.com/@awinashgoswami",
+  "9th-sindh-board": "https://www.youtube.com/@awinashgoswami",
+  "10th-sindh-board": "https://www.youtube.com/@awinashgoswami",
+  "11th-sindh-board": "https://www.youtube.com/@awinashgoswami",
+  "12th-sindh-board": "https://www.youtube.com/@awinashgoswami",
+  "9th-federal-board": "https://www.youtube.com/@awinashgoswami",
+  "10th-federal-board": "https://www.youtube.com/@awinashgoswami",
+  "11th-federal-board": "https://www.youtube.com/@awinashgoswami",
+  "12th-federal-board": "https://www.youtube.com/@awinashgoswami",
+  "a-level": "https://www.youtube.com/@awinashgoswami",
+  "university": "https://www.youtube.com/@awinashgoswami",
 };
 
 /* ── Video tutorial cards (still optional; used in the separate Tutorials page) ── */
