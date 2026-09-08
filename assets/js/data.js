@@ -1128,7 +1128,7 @@ const TUTORIAL_PLAYLISTS = {
   "11th-federal-board": "https://www.youtube.com/@awinashgoswami",
   "12th-federal-board": "https://www.youtube.com/@awinashgoswami",
   "a-level": "https://www.youtube.com/@awinashgoswami",
-  university: "https://www.youtube.com/@awinashgoswami",
+  "university": "https://www.youtube.com/@awinashgoswami",
 };
 
 /* ── Video tutorial cards (still optional; used in the separate Tutorials page) ── */
