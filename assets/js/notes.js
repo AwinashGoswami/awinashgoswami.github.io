@@ -263,9 +263,9 @@ function setLevel(levelKey) {
 
   highlightLevelNav(levelKey);
   highlightLevelCard(levelKey);
-  buildSidebar(levelConfig.sections);
 
   fetchNotes(levelConfig.json).then(() => {
+    buildSidebar(levelConfig.sections);
     if (!currentTopic || !currentTopicList.includes(currentTopic)) {
       currentTopic = currentTopicList[0] || "";
     }
@@ -335,8 +335,21 @@ function addTopicItem(topic, container) {
   const item = document.createElement("button");
   item.type = "button";
   item.className = "topic-item";
-  item.textContent = topic;
   item.dataset.topic = topic;
+
+  const label = document.createElement("span");
+  label.textContent = topic;
+
+  const status = currentNotes[topic]?.topicStatus || "to-upload";
+  const statusDetails = getStatusDetails(status);
+  const statusBadge = document.createElement("span");
+  statusBadge.className = `topic-status-badge topic-status-badge-${status}`;
+  const icon = document.createElement("i");
+  icon.className = statusDetails.icon;
+  icon.setAttribute("aria-hidden", "true");
+  statusBadge.appendChild(icon);
+  item.append(label, statusBadge);
+
   item.addEventListener("click", () => {
     currentTopic = topic;
     renderTopic();
@@ -345,6 +358,16 @@ function addTopicItem(topic, container) {
   container.appendChild(item);
 }
 
+function getStatusDetails(status) {
+  return {
+    completed: { label: "Completed", icon: "bi bi-check-circle-fill text-success" },
+    processing: { label: "Processing", icon: "bi bi-exclamation-triangle-fill text-warning" },
+    "to-upload": { label: "To upload", icon: "bi bi-x-circle-fill text-danger" },
+  }[status] || {
+    label: "To upload",
+    icon: "bi bi-x-circle-fill text-danger",
+  };
+}
 async function fetchNotes(path) {
   try {
     const response = await fetch(path);
@@ -365,6 +388,7 @@ function updateBreadcrumb() {
       ? levels[currentLevel].title
       : currentLevel;
   const topicLabel = currentTopic || "";
+  const statusDetails = getStatusDetails(currentNotes[currentTopic]?.topicStatus || "to-upload");
 
   notesBreadcrumb.innerHTML =
     '<div class="breadcrumb-custom">' +
@@ -377,7 +401,16 @@ function updateBreadcrumb() {
     "<strong>" +
     topicLabel +
     "</strong>" +
-    "</div>";
+    "</div>" +
+    '<div class="topic-status-summary topic-status-summary-' +
+    (currentNotes[currentTopic]?.topicStatus || "to-upload") +
+    '"><span class="topic-status-badge topic-status-badge-' +
+    (currentNotes[currentTopic]?.topicStatus || "to-upload") +
+    '"><i class="' +
+    statusDetails.icon +
+    '" aria-hidden="true"></i></span><span>' +
+    statusDetails.label +
+    "</span></div>";
 }
 
 function makePdfDataUrl(title) {
@@ -501,7 +534,7 @@ function showPdfUnavailableMessage() {
   if (!topicContent) {
     return;
   }
-  topicContent.innerHTML = '<div class="topic-unavailable"><p>PDF not available yet, Please check back soon for the study notes.</p></div>';
+  topicContent.innerHTML = '<div class="topic-unavailable"><p><i class="topic-unavailable-icon" aria-hidden="true"></i>PDF not available yet, Please check back soon for the study notes.</p></div>';
 }
 
 function renderTopic() {

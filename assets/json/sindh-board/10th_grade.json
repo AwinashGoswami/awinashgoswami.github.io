@@ -1,6 +1,7 @@
 {
   "Unit 1": {
     "title": "Unit 1",
-    "pdf": "assets/pdfs/10th-sindh-board/unit_1.pdf"
+    "pdf": "assets/pdfs/10th-sindh-board/unit_1.pdf",
+    "topicStatus": "completed"
   }
 }
