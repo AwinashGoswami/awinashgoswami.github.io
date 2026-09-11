@@ -3,5 +3,35 @@
     "title": "Unit 1",
     "pdf": "assets/pdfs/10th-sindh-board/unit_1.pdf",
     "topicStatus": "completed"
+  },
+  "Unit 2": {
+    "title": "Unit 2",
+    "pdf": "assets/pdfs/10th-sindh-board/unit_2.pdf",
+    "topicStatus": "processing"
+  },
+  "Unit 3": {
+    "title": "Unit 3",
+    "pdf": "assets/pdfs/10th-sindh-board/unit_3.pdf",
+    "topicStatus": "to-upload"
+  },
+  "Unit 4": {
+    "title": "Unit 4",
+    "pdf": "assets/pdfs/10th-sindh-board/unit_4.pdf",
+    "topicStatus": "to-upload"
+  },
+  "Unit 5": {
+    "title": "Unit 5",
+    "pdf": "assets/pdfs/10th-sindh-board/unit_5.pdf",
+    "topicStatus": "to-upload"
+  },
+  "Unit 6": {
+    "title": "Unit 6",
+    "pdf": "assets/pdfs/10th-sindh-board/unit_6.pdf",
+    "topicStatus": "to-upload"
+  },
+  "Unit 7": {
+    "title": "Unit 7",
+    "pdf": "assets/pdfs/10th-sindh-board/unit_7.pdf",
+    "topicStatus": "to-upload"
   }
 }

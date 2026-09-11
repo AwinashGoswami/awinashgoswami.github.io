@@ -30,6 +30,8 @@ const levels = {
           "Unit 3",
           "Unit 4",
           "Unit 5",
+          "Unit 6",
+          "Unit 7"
         ],
       },
     ],
@@ -79,12 +81,13 @@ const levels = {
     sections: [
       {
         topics: [
-          "Introduction to Computing",
-          "Computer Fundamentals",
-          "Number Systems",
-          "Logic and Flowcharts",
-          "Internet and Communication",
-          "Digital Citizenship",
+          "Unit 1",
+          "Unit 2",
+          "Unit 3",
+          "Unit 4",
+          "Unit 5",
+          "Unit 6",
+          "Unit 7"
         ],
       },
     ],
@@ -95,12 +98,16 @@ const levels = {
     sections: [
       {
         topics: [
-          "Programming Fundamentals",
-          "Number Systems and Conversions",
-          "Boolean Algebra",
-          "Data Representation",
-          "Computer System Architecture",
-          "Networking and Security",
+          "Unit 1",
+          "Unit 2",
+          "Unit 3",
+          "Unit 4",
+          "Unit 5",
+          "Unit 6",
+          "Unit 7",
+          "Unit 8"
+
+
         ],
       },
     ],
