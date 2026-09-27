@@ -13,8 +13,13 @@ $(function () {
   let fcFlipped = false;
   let quizQuestions = [];
   let quizIndex = 0;
+  let quizPage = 0;
   let quizScore = 0;
   let quizAnswered = false;
+  let quizTimerId = null;
+  let quizTimeRemaining = 0;
+  const QUIZ_PAGE_SIZE = 10;
+  const QUIZ_SECONDS_PER_QUESTION = 20;
   const ADMIN_PASS = "awinashgoswami";
 
   /* ── LOAD POSTS from assets/json/posts.json on startup ── */
@@ -627,7 +632,6 @@ $(function () {
               <h2>${meta.label} — Practice Quiz</h2>
               <p>One question at a time. Instant feedback. Track your score.</p>
             </div>
-            <button class="btn-restart" id="quiz-restart-top"><i class="bi bi-arrow-counterclockwise me-1"></i>Restart</button>
           </div>
           <div id="quiz-body">
             <div class="quiz-card">
@@ -635,12 +639,20 @@ $(function () {
                 <span class="quiz-progress-label" id="quiz-q-label"></span>
                 <span class="quiz-score-badge" id="quiz-score-badge">Score: 0 / 0</span>
               </div>
+              <div class="quiz-timer text-end mb-3" id="quiz-timer" aria-live="polite"></div>
+              <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                <span class="quiz-page-indicator" id="quiz-page-indicator">Page 1 of 1</span>
+              </div>
               <div class="quiz-progress mb-4"><div class="quiz-progress-bar" id="quiz-progress-bar" style="width:0%"></div></div>
               <p class="quiz-question" id="quiz-question"></p>
               <div id="quiz-options"></div>
               <div class="quiz-feedback" id="quiz-feedback"></div>
-              <div class="text-end"><button class="btn-next" id="quiz-next" style="display:none;">Next Question <i class="bi bi-arrow-right ms-1"></i></button></div>
+              <div class="d-flex justify-content-between align-items-center gap-2">
+                <span></span>
+                <button class="btn-next" id="quiz-next" style="display:none;">Next Question <i class="bi bi-arrow-right ms-1"></i></button>
+              </div>
             </div>
+            <div class="mt-3 text-center" id="quiz-pagination"></div>
           </div>
           <div class="quiz-card quiz-result" id="quiz-result" style="display:none;">
             <div class="score-big" id="quiz-result-score"></div>
@@ -664,17 +676,91 @@ $(function () {
   }
 
   function startQuiz(level) {
+    clearInterval(quizTimerId);
     quizQuestions = shuffle(CATEGORIES[level || currentLevel].quiz);
     quizIndex = 0;
+    quizPage = 0;
     quizScore = 0;
     quizAnswered = false;
+    quizTimeRemaining = quizQuestions.length * QUIZ_SECONDS_PER_QUESTION;
     $("#quiz-result").hide();
     $("#quiz-body").show();
+    updateQuizTimer();
+    quizTimerId = setInterval(function () {
+      quizTimeRemaining--;
+      updateQuizTimer();
+      if (quizTimeRemaining <= 0) {
+        clearInterval(quizTimerId);
+        finishQuiz();
+      }
+    }, 1000);
     renderQuestion();
+  }
+
+  function updateQuizTimer() {
+    const minutes = Math.floor(Math.max(quizTimeRemaining, 0) / 60);
+    const seconds = Math.max(quizTimeRemaining, 0) % 60;
+    const timer = $("#quiz-timer");
+    timer
+      .removeClass("timer-warning timer-danger")
+      .toggleClass("timer-warning", quizTimeRemaining <= 60 && quizTimeRemaining > 20)
+      .toggleClass("timer-danger", quizTimeRemaining <= 20);
+    timer.text(
+      "Time remaining: " +
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0") +
+        " (20 seconds per question)",
+    );
+  }
+
+  function getQuizPageInfo() {
+    const pageStart = quizPage * QUIZ_PAGE_SIZE;
+    const pageEnd = Math.min(pageStart + QUIZ_PAGE_SIZE, quizQuestions.length);
+    const questionsInPage = pageEnd - pageStart;
+    const pageNumber = Math.floor(quizIndex / QUIZ_PAGE_SIZE) + 1;
+    return {
+      pageStart,
+      pageEnd,
+      questionsInPage,
+      pageNumber,
+      totalPages: Math.max(1, Math.ceil(quizQuestions.length / QUIZ_PAGE_SIZE)),
+    };
+  }
+
+  function renderPaginationButtons() {
+    const totalPages = Math.max(1, Math.ceil(quizQuestions.length / QUIZ_PAGE_SIZE));
+    const pageWrap = $("#quiz-pagination").empty();
+    const startPage = Math.max(0, Math.min(quizPage - 4, totalPages - 10));
+    const endPage = Math.min(totalPages, startPage + 10);
+
+    const prevBtn = $(
+      '<button type="button" class="btn btn-sm btn-outline-secondary me-2 mb-2 quiz-page-nav" data-nav="prev" aria-label="Previous page"><i class="bi bi-arrow-left"></i></button>',
+    );
+    pageWrap.append(prevBtn);
+
+    for (let p = startPage; p < endPage; p++) {
+      const pageButton = $(
+        '<button type="button" class="btn btn-sm me-2 mb-2 ' +
+          (p === quizPage ? "btn-primary-custom" : "btn-outline-secondary") +
+          ' quiz-page-btn">' +
+          (p + 1) +
+          "</button>",
+      );
+      pageButton.data("page", p);
+      pageWrap.append(pageButton);
+    }
+
+    const nextBtn = $(
+      '<button type="button" class="btn btn-sm btn-outline-secondary ms-1 mb-2 quiz-page-nav" data-nav="next" aria-label="Next page"><i class="bi bi-arrow-right"></i></button>',
+    );
+    pageWrap.append(nextBtn);
   }
 
   function renderQuestion() {
     const q = quizQuestions[quizIndex];
+    if (!q) return;
+    const pageInfo = getQuizPageInfo();
     quizAnswered = false;
     $("#quiz-progress-bar").css(
       "width",
@@ -683,10 +769,14 @@ $(function () {
     $("#quiz-q-label").text(
       "Question " + (quizIndex + 1) + " of " + quizQuestions.length,
     );
-    $("#quiz-score-badge").text("Score: " + quizScore + " / " + quizIndex);
+    $("#quiz-page-indicator").text(
+      "Page " + pageInfo.pageNumber + " of " + pageInfo.totalPages,
+    );
+    $("#quiz-score-badge").text("Score: " + quizScore + " / " + Math.min(quizIndex + 1, quizQuestions.length));
     $("#quiz-question").text(q.q);
     $("#quiz-feedback").hide().removeClass("correct incorrect").text("");
     $("#quiz-next").hide();
+    renderPaginationButtons();
     const wrap = $("#quiz-options").empty();
     q.opts.forEach(function (opt, i) {
       wrap.append(
@@ -729,28 +819,66 @@ $(function () {
     $("#quiz-next").show();
   });
 
-  $(document).on("click", "#quiz-next", function () {
-    quizIndex++;
-    if (quizIndex >= quizQuestions.length) {
-      const pct = Math.round((quizScore / quizQuestions.length) * 100);
-      const msg =
-        pct >= 80
-          ? "Excellent work!"
-          : pct >= 60
-            ? "Good effort — keep revising!"
-            : "Keep studying — you've got this!";
-      $("#quiz-result-score").text(quizScore + "/" + quizQuestions.length);
-      $("#quiz-result-pct").text(pct + "% — " + msg);
-      $("#quiz-body").hide();
-      $("#quiz-result").show();
-    } else {
-      renderQuestion();
-    }
+  $(document).on("click", ".quiz-page-btn", function () {
+    const targetPage = parseInt($(this).data("page"), 10);
+    if (Number.isNaN(targetPage)) return;
+    quizPage = targetPage;
+    quizIndex = quizPage * QUIZ_PAGE_SIZE;
+    renderQuestion();
   });
 
-  $(document).on("click", "#quiz-restart-top, #quiz-restart-end", function () {
-    startQuiz();
+  $(document).on("click", ".quiz-page-nav", function () {
+    const direction = $(this).data("nav");
+    const totalPages = Math.max(1, Math.ceil(quizQuestions.length / QUIZ_PAGE_SIZE));
+    if (direction === "prev") {
+      quizPage = Math.max(0, quizPage - 1);
+    } else {
+      quizPage = Math.min(totalPages - 1, quizPage + 1);
+    }
+    quizIndex = quizPage * QUIZ_PAGE_SIZE;
+    renderQuestion();
   });
+
+  $(document).on("click", "#quiz-next", function () {
+    const pageInfo = getQuizPageInfo();
+    const questionsInPage = Math.min(
+      QUIZ_PAGE_SIZE,
+      quizQuestions.length - pageInfo.pageStart,
+    );
+    const localIndex = quizIndex - pageInfo.pageStart;
+
+    if (localIndex < questionsInPage - 1 && quizIndex < quizQuestions.length - 1) {
+      quizIndex++;
+      renderQuestion();
+      return;
+    }
+
+    if (quizIndex >= quizQuestions.length - 1) {
+      finishQuiz();
+      return;
+    }
+
+    quizPage++;
+    quizIndex = quizPage * QUIZ_PAGE_SIZE;
+    renderQuestion();
+  });
+
+  function finishQuiz() {
+    if ($("#quiz-result").is(":visible")) return;
+    clearInterval(quizTimerId);
+    const pct = Math.round((quizScore / quizQuestions.length) * 100);
+    const msg =
+      pct >= 80
+        ? "Excellent work!"
+        : pct >= 60
+          ? "Good effort — keep revising!"
+          : "Keep studying — you've got this!";
+    $("#quiz-result-score").text(quizScore + "/" + quizQuestions.length);
+    $("#quiz-result-pct").text(pct + "% — " + msg);
+    $("#quiz-body").hide();
+    $("#quiz-result").show();
+  }
+
 
   /* ══════════════════════════════════
      CONCEPTS
