@@ -15,7 +15,14 @@ $(function () {
   let quizIndex = 0;
   let quizPage = 0;
   let quizScore = 0;
+  let quizResponses = [];
   let quizAnswered = false;
+  let quizSelectedIndex = null;
+  let quizLevel = null;
+  let quizStudentName = "";
+  let quizFatherName = "";
+  let quizStartedAt = null;
+  let quizCompletionStatus = "completed";
   let quizTimerId = null;
   let quizTimeRemaining = 0;
   const QUIZ_PAGE_SIZE = 10;
@@ -44,6 +51,10 @@ $(function () {
   /* ── ROUTING ── */
   function navigate(page, opts) {
     opts = opts || {};
+    if (currentPage === "cat-quiz" && page !== "cat-quiz") {
+      clearInterval(quizTimerId);
+      persistQuizSession();
+    }
     currentPage = page;
     currentLevel = opts.level || null;
     $("[data-navpage]").removeClass("active");
@@ -633,13 +644,29 @@ $(function () {
               <p>One question at a time. Instant feedback. Track your score.</p>
             </div>
           </div>
-          <div id="quiz-body">
+          <form class="quiz-student-card" id="quiz-student-form" style="display:none;">
+            <div class="quiz-student-icon"><i class="bi bi-person-hearts"></i></div>
+            <p class="quiz-student-eyebrow">Your quiz adventure</p>
+            <h3>Who is taking the quiz?</h3>
+            <p class="quiz-student-copy">Add your details to personalize your report card.</p>
+            <label for="quiz-student-name">Student name</label>
+            <input class="form-control" id="quiz-student-name" name="studentName" type="text" maxlength="80" autocomplete="name" required />
+            <label for="quiz-father-name">Father's name</label>
+            <input class="form-control" id="quiz-father-name" name="fatherName" type="text" maxlength="80" autocomplete="off" required />
+            <button class="btn-primary-custom" type="submit"><i class="bi bi-stars me-2"></i>Start Quiz</button>
+          </form>
+          <div id="quiz-body" style="display:none;">
             <div class="quiz-card">
               <div class="d-flex justify-content-between align-items-center mb-1">
                 <span class="quiz-progress-label" id="quiz-q-label"></span>
                 <span class="quiz-score-badge" id="quiz-score-badge">Score: 0 / 0</span>
               </div>
-              <div class="quiz-timer text-end mb-3" id="quiz-timer" aria-live="polite"></div>
+              <div class="quiz-timer-row mb-3">
+                <div class="quiz-timer-track" role="progressbar" aria-label="Time left for this question" aria-valuemin="0" aria-valuemax="20" aria-valuenow="20">
+                  <div class="quiz-timer-bar" id="quiz-timer-bar"></div>
+                </div>
+                <span class="quiz-timer" id="quiz-timer" aria-live="polite">20s</span>
+              </div>
               <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                 <span class="quiz-page-indicator" id="quiz-page-indicator">Page 1 of 1</span>
               </div>
@@ -647,18 +674,46 @@ $(function () {
               <p class="quiz-question" id="quiz-question"></p>
               <div id="quiz-options"></div>
               <div class="quiz-feedback" id="quiz-feedback"></div>
-              <div class="d-flex justify-content-between align-items-center gap-2">
-                <span></span>
-                <button class="btn-next" id="quiz-next" style="display:none;">Next Question <i class="bi bi-arrow-right ms-1"></i></button>
+              <div class="quiz-action-row">
+                <button class="btn-quiz-restart" id="quiz-restart" type="button"><i class="bi bi-arrow-counterclockwise"></i><span>Restart Quiz</span></button>
+                <div class="quiz-action-main">
+                  <button class="btn-quiz-stop" id="quiz-stop" type="button"><i class="bi bi-stop-circle me-1"></i>Stop Quiz</button>
+                  <button class="btn-next" id="quiz-next" style="display:none;">Next Question <i class="bi bi-arrow-right ms-1"></i></button>
+                </div>
               </div>
             </div>
             <div class="mt-3 text-center" id="quiz-pagination"></div>
           </div>
-          <div class="quiz-card quiz-result" id="quiz-result" style="display:none;">
-            <div class="score-big" id="quiz-result-score"></div>
-            <h3>Quiz Complete!</h3>
-            <p id="quiz-result-pct"></p>
-            <button class="btn-primary-custom" id="quiz-restart-end"><i class="bi bi-arrow-counterclockwise me-1"></i>Try Again</button>
+          <div class="quiz-report-shell" id="quiz-result" style="display:none;">
+            <article class="quiz-report-card" id="quiz-report-card">
+              <div class="quiz-report-confetti" aria-hidden="true"><span>✦</span><span>★</span><span>✿</span><span>✦</span></div>
+              <div class="quiz-report-ribbon"><i class="bi bi-stars"></i> QUIZ CHAMPION <i class="bi bi-stars"></i></div>
+              <div class="quiz-report-trophy" aria-hidden="true">🏆</div>
+              <p class="quiz-report-kicker">YOUR REPORT CARD</p>
+              <h3>Brilliant effort, <span id="quiz-report-student"></span>!</h3>
+              <p class="quiz-report-message" id="quiz-report-message"></p>
+              <div class="quiz-report-student-line"><i class="bi bi-person-hearts"></i><span>Father: <strong id="quiz-report-father"></strong></span></div>
+              <div class="quiz-report-class"><i class="bi bi-mortarboard-fill"></i><span id="quiz-report-class"></span></div>
+              <div class="quiz-report-status" id="quiz-report-status"></div>
+              <div class="quiz-report-score-panel">
+                <span>YOUR SCORE</span>
+                <strong id="quiz-result-score"></strong>
+                <small id="quiz-result-pct"></small>
+              </div>
+              <div class="quiz-report-stats">
+                <div class="quiz-report-stat"><i class="bi bi-check2-circle"></i><span>Attempted</span><strong id="quiz-report-attempted"></strong></div>
+                <div class="quiz-report-stat"><i class="bi bi-skip-forward-circle"></i><span>Skipped</span><strong id="quiz-report-skipped"></strong></div>
+                <div class="quiz-report-stat"><i class="bi bi-question-circle"></i><span>Total questions</span><strong id="quiz-report-total"></strong></div>
+              </div>
+              <div class="quiz-report-times">
+                <p><i class="bi bi-play-circle-fill"></i><span>Started</span><strong id="quiz-report-start-time"></strong></p>
+                <p><i class="bi bi-flag-fill"></i><span>Finished</span><strong id="quiz-report-end-time"></strong></p>
+              </div>
+              <div class="quiz-report-actions">
+                <button class="btn-primary-custom" id="quiz-report-download" type="button"><i class="bi bi-download me-2"></i>Download report card</button>
+                <button class="btn-nav" id="quiz-restart-end" type="button"><i class="bi bi-arrow-counterclockwise me-1"></i>Try Again</button>
+              </div>
+            </article>
           </div>
         </div>
       </div>
@@ -677,41 +732,156 @@ $(function () {
 
   function startQuiz(level) {
     clearInterval(quizTimerId);
-    quizQuestions = shuffle(CATEGORIES[level || currentLevel].quiz);
-    quizIndex = 0;
-    quizPage = 0;
-    quizScore = 0;
-    quizAnswered = false;
-    quizTimeRemaining = quizQuestions.length * QUIZ_SECONDS_PER_QUESTION;
-    $("#quiz-result").hide();
+    quizLevel = level || currentLevel;
+    const sourceQuestions = CATEGORIES[quizLevel].quiz;
+    const storageKey = getQuizStorageKey(quizLevel);
+    let savedSession = null;
+    try {
+      savedSession = JSON.parse(localStorage.getItem(storageKey));
+    } catch (error) {
+      localStorage.removeItem(storageKey);
+    }
+
+    const validOrder =
+      savedSession &&
+      Array.isArray(savedSession.order) &&
+      savedSession.order.length === sourceQuestions.length &&
+      savedSession.order.every(function (index) {
+        return Number.isInteger(index) && index >= 0 && index < sourceQuestions.length;
+      }) &&
+      new Set(savedSession.order).size === sourceQuestions.length;
+    const validResponses =
+      validOrder &&
+      Array.isArray(savedSession.responses) &&
+      savedSession.responses.length === sourceQuestions.length &&
+      savedSession.responses.every(function (response, index) {
+        const sourceQuestion = sourceQuestions[savedSession.order[index]];
+        return response === null ||
+          (Number.isInteger(response) && response >= 0 && response < sourceQuestion.opts.length);
+      });
+
+    if (
+      validOrder &&
+      validResponses &&
+      typeof savedSession.studentName === "string" &&
+      savedSession.studentName.trim() &&
+      typeof savedSession.fatherName === "string" &&
+      savedSession.fatherName.trim() &&
+      typeof savedSession.startedAt === "string" &&
+      !Number.isNaN(Date.parse(savedSession.startedAt)) &&
+      Number.isInteger(savedSession.index) &&
+      savedSession.index >= 0 &&
+      savedSession.index < sourceQuestions.length &&
+      Number.isInteger(savedSession.timeRemaining) &&
+      savedSession.timeRemaining > 0 &&
+      savedSession.timeRemaining <= QUIZ_SECONDS_PER_QUESTION
+    ) {
+      quizQuestions = savedSession.order.map(function (index) {
+        return sourceQuestions[index];
+      });
+      quizIndex = savedSession.index;
+      quizResponses = savedSession.responses;
+      quizScore = countCorrectAnswers();
+      quizTimeRemaining = savedSession.timeRemaining;
+      quizStudentName = savedSession.studentName;
+      quizFatherName = savedSession.fatherName;
+      quizStartedAt = savedSession.startedAt;
+      quizAnswered = Number.isInteger(quizResponses[quizIndex]);
+      quizSelectedIndex = quizAnswered ? quizResponses[quizIndex] : null;
+      showActiveQuiz();
+    } else {
+      localStorage.removeItem(storageKey);
+      quizQuestions = [];
+      quizIndex = 0;
+      quizScore = 0;
+      quizTimeRemaining = QUIZ_SECONDS_PER_QUESTION;
+      quizResponses = [];
+      quizStudentName = "";
+      quizFatherName = "";
+      quizStartedAt = null;
+      quizAnswered = false;
+      quizSelectedIndex = null;
+      $("#quiz-student-form").show();
+      $("#quiz-body, #quiz-result").hide();
+    }
+  }
+
+  function showActiveQuiz() {
+    quizPage = Math.floor(quizIndex / QUIZ_PAGE_SIZE);
+    $("#quiz-student-form, #quiz-result").hide();
     $("#quiz-body").show();
+    renderQuestion();
     updateQuizTimer();
     quizTimerId = setInterval(function () {
       quizTimeRemaining--;
       updateQuizTimer();
-      if (quizTimeRemaining <= 0) {
-        clearInterval(quizTimerId);
-        finishQuiz();
-      }
+      persistQuizSession();
+      if (quizTimeRemaining <= 0) advanceQuizQuestion();
     }, 1000);
-    renderQuestion();
+  }
+
+  $(document).on("submit", "#quiz-student-form", function (event) {
+    event.preventDefault();
+    quizStudentName = $("#quiz-student-name").val().trim();
+    quizFatherName = $("#quiz-father-name").val().trim();
+    if (!quizStudentName || !quizFatherName) return;
+    quizQuestions = shuffle(CATEGORIES[quizLevel].quiz);
+    quizResponses = Array(quizQuestions.length).fill(null);
+    quizIndex = 0;
+    quizPage = 0;
+    quizScore = 0;
+    quizTimeRemaining = QUIZ_SECONDS_PER_QUESTION;
+    quizAnswered = false;
+    quizSelectedIndex = null;
+    quizStartedAt = new Date().toISOString();
+    quizCompletionStatus = "completed";
+    showActiveQuiz();
+    persistQuizSession();
+  });
+
+  function getQuizStorageKey(level) {
+    return "cs-study-quiz:" + level;
+  }
+
+  function persistQuizSession() {
+    if (!quizLevel || !quizQuestions.length || !quizQuestions[quizIndex]) return;
+    const sourceQuestions = CATEGORIES[quizLevel].quiz;
+    const order = quizQuestions.map(function (question) {
+      return sourceQuestions.indexOf(question);
+    });
+    try {
+      localStorage.setItem(
+        getQuizStorageKey(quizLevel),
+        JSON.stringify({
+          order,
+          index: quizIndex,
+          score: quizScore,
+          responses: quizResponses,
+          timeRemaining: quizTimeRemaining,
+          studentName: quizStudentName,
+          fatherName: quizFatherName,
+          startedAt: quizStartedAt,
+        }),
+      );
+    } catch (error) {
+      // Keep the quiz usable when browser storage is unavailable.
+    }
   }
 
   function updateQuizTimer() {
-    const minutes = Math.floor(Math.max(quizTimeRemaining, 0) / 60);
-    const seconds = Math.max(quizTimeRemaining, 0) % 60;
+    const seconds = Math.max(quizTimeRemaining, 0);
     const timer = $("#quiz-timer");
     timer
       .removeClass("timer-warning timer-danger")
-      .toggleClass("timer-warning", quizTimeRemaining <= 60 && quizTimeRemaining > 20)
-      .toggleClass("timer-danger", quizTimeRemaining <= 20);
-    timer.text(
-      "Time remaining: " +
-        String(minutes).padStart(2, "0") +
-        ":" +
-        String(seconds).padStart(2, "0") +
-        " (20 seconds per question)",
-    );
+      .toggleClass("timer-warning", seconds <= 10 && seconds > 5)
+      .toggleClass("timer-danger", seconds <= 5);
+    timer.text(seconds + "s");
+    $("#quiz-timer-bar")
+      .css("width", ((seconds / QUIZ_SECONDS_PER_QUESTION) * 100).toFixed(0) + "%")
+      .toggleClass("timer-warning", seconds <= 10 && seconds > 5)
+      .toggleClass("timer-danger", seconds <= 5)
+      .parent()
+      .attr("aria-valuenow", seconds);
   }
 
   function getQuizPageInfo() {
@@ -760,8 +930,9 @@ $(function () {
   function renderQuestion() {
     const q = quizQuestions[quizIndex];
     if (!q) return;
+    quizSelectedIndex = quizResponses[quizIndex];
+    quizAnswered = Number.isInteger(quizSelectedIndex);
     const pageInfo = getQuizPageInfo();
-    quizAnswered = false;
     $("#quiz-progress-bar").css(
       "width",
       ((quizIndex / quizQuestions.length) * 100).toFixed(0) + "%",
@@ -772,7 +943,7 @@ $(function () {
     $("#quiz-page-indicator").text(
       "Page " + pageInfo.pageNumber + " of " + pageInfo.totalPages,
     );
-    $("#quiz-score-badge").text("Score: " + quizScore + " / " + Math.min(quizIndex + 1, quizQuestions.length));
+    $("#quiz-score-badge").text("Score: " + quizScore + " / " + countAttemptedQuestions());
     $("#quiz-question").text(q.q);
     $("#quiz-feedback").hide().removeClass("correct incorrect").text("");
     $("#quiz-next").hide();
@@ -789,16 +960,31 @@ $(function () {
           "</button>",
       );
     });
+    if (quizAnswered && quizSelectedIndex !== null) {
+      const correct = q.ans;
+      $(".quiz-option").prop("disabled", true);
+      $('[data-idx="' + correct + '"]').addClass("correct");
+      if (quizSelectedIndex !== correct) {
+        $('[data-idx="' + quizSelectedIndex + '"]').addClass("incorrect");
+      }
+      $("#quiz-feedback")
+        .addClass(quizSelectedIndex === correct ? "correct" : "incorrect")
+        .text(quizSelectedIndex === correct ? "Correct!" : "Incorrect — correct answer: " + String.fromCharCode(65 + correct) + ".")
+        .show();
+      $("#quiz-next").show();
+    }
+    updateQuizTimer();
+    persistQuizSession();
   }
 
   $(document).on("click", ".quiz-option", function () {
     if (quizAnswered) return;
     quizAnswered = true;
     const chosen = parseInt($(this).data("idx"));
+    quizSelectedIndex = chosen;
     const correct = quizQuestions[quizIndex].ans;
     $(".quiz-option").prop("disabled", true);
     if (chosen === correct) {
-      quizScore++;
       $(this).addClass("correct");
       $("#quiz-feedback").addClass("correct").text("Correct!").show();
     } else {
@@ -813,10 +999,13 @@ $(function () {
         )
         .show();
     }
+    quizResponses[quizIndex] = chosen;
+    quizScore = countCorrectAnswers();
     $("#quiz-score-badge").text(
-      "Score: " + quizScore + " / " + (quizIndex + 1),
+      "Score: " + quizScore + " / " + countAttemptedQuestions(),
     );
     $("#quiz-next").show();
+    persistQuizSession();
   });
 
   $(document).on("click", ".quiz-page-btn", function () {
@@ -824,6 +1013,7 @@ $(function () {
     if (Number.isNaN(targetPage)) return;
     quizPage = targetPage;
     quizIndex = quizPage * QUIZ_PAGE_SIZE;
+    quizTimeRemaining = QUIZ_SECONDS_PER_QUESTION;
     renderQuestion();
   });
 
@@ -836,10 +1026,11 @@ $(function () {
       quizPage = Math.min(totalPages - 1, quizPage + 1);
     }
     quizIndex = quizPage * QUIZ_PAGE_SIZE;
+    quizTimeRemaining = QUIZ_SECONDS_PER_QUESTION;
     renderQuestion();
   });
 
-  $(document).on("click", "#quiz-next", function () {
+  function advanceQuizQuestion() {
     const pageInfo = getQuizPageInfo();
     const questionsInPage = Math.min(
       QUIZ_PAGE_SIZE,
@@ -847,37 +1038,174 @@ $(function () {
     );
     const localIndex = quizIndex - pageInfo.pageStart;
 
-    if (localIndex < questionsInPage - 1 && quizIndex < quizQuestions.length - 1) {
-      quizIndex++;
-      renderQuestion();
-      return;
-    }
-
     if (quizIndex >= quizQuestions.length - 1) {
       finishQuiz();
       return;
     }
-
-    quizPage++;
-    quizIndex = quizPage * QUIZ_PAGE_SIZE;
+    if (localIndex >= questionsInPage - 1) quizPage++;
+    quizIndex++;
+    quizTimeRemaining = QUIZ_SECONDS_PER_QUESTION;
     renderQuestion();
+  }
+
+  $(document).on("click", "#quiz-next", function () {
+    advanceQuizQuestion();
   });
 
-  function finishQuiz() {
+  $(document).on("click", "#quiz-stop", function () {
+    finishQuiz("stopped");
+  });
+
+  $(document).on("click", "#quiz-restart", restartQuizForStudent);
+
+  function finishQuiz(status) {
     if ($("#quiz-result").is(":visible")) return;
     clearInterval(quizTimerId);
-    const pct = Math.round((quizScore / quizQuestions.length) * 100);
-    const msg =
-      pct >= 80
-        ? "Excellent work!"
-        : pct >= 60
-          ? "Good effort — keep revising!"
-          : "Keep studying — you've got this!";
+    quizCompletionStatus = status === "stopped" ? "stopped" : "completed";
+    if (quizLevel) localStorage.removeItem(getQuizStorageKey(quizLevel));
+    const attempted = countAttemptedQuestions();
+    const skipped = quizQuestions.length - attempted;
+    const pct = quizQuestions.length ? Math.round((quizScore / quizQuestions.length) * 100) : 0;
+    const endTime = new Date();
+    const message = getQuizPerformanceMessage(pct);
     $("#quiz-result-score").text(quizScore + "/" + quizQuestions.length);
-    $("#quiz-result-pct").text(pct + "% — " + msg);
+    $("#quiz-result-pct").text(pct + "% correct");
+    $("#quiz-report-student").text(quizStudentName);
+    $("#quiz-report-father").text(quizFatherName);
+    $("#quiz-report-class").text(getQuizClassLabel());
+    $("#quiz-report-status")
+      .toggleClass("is-stopped", quizCompletionStatus === "stopped")
+      .html(
+        '<i class="bi ' +
+          (quizCompletionStatus === "stopped" ? "bi-pause-circle-fill" : "bi-check-circle-fill") +
+          '"></i> Test ' +
+          (quizCompletionStatus === "stopped" ? "stopped early" : "completed"),
+      );
+    $("#quiz-report-message").text(message);
+    $("#quiz-report-attempted").text(attempted);
+    $("#quiz-report-skipped").text(skipped);
+    $("#quiz-report-total").text(quizQuestions.length);
+    $("#quiz-report-start-time").text(formatQuizLocalTime(quizStartedAt));
+    $("#quiz-report-end-time").text(formatQuizLocalTime(endTime.toISOString()));
     $("#quiz-body").hide();
     $("#quiz-result").show();
   }
+
+  function countAttemptedQuestions() {
+    return quizResponses.filter(Number.isInteger).length;
+  }
+
+  function countCorrectAnswers() {
+    return quizResponses.reduce(function (score, response, index) {
+      return score + (Number.isInteger(response) && response === quizQuestions[index].ans ? 1 : 0);
+    }, 0);
+  }
+
+  function getQuizPerformanceMessage(percentage) {
+    if (percentage >= 90) return "Outstanding work! You're a quiz superstar!";
+    if (percentage >= 75) return "Fantastic effort! Keep that curiosity shining.";
+    if (percentage >= 50) return "Great practice! Every question helps you grow.";
+    return "Nice try! Keep learning and you'll level up.";
+  }
+
+  function getQuizClassLabel() {
+    const board = quizLevel.indexOf("federal-board") !== -1
+      ? "Federal Board"
+      : quizLevel.indexOf("sindh-board") !== -1
+        ? "Sindh Board"
+        : "";
+    return board ? CATEGORY_META[quizLevel].label + " - " + board : CATEGORY_META[quizLevel].label;
+  }
+
+  function formatQuizLocalTime(isoTime) {
+    return new Date(isoTime).toLocaleString(undefined, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
+  }
+
+  function escapeQuizSvgText(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\"/g, "&quot;")
+      .replace(/'/g, "&apos;");
+  }
+
+  function downloadQuizReport() {
+    const attempted = countAttemptedQuestions();
+    const skipped = quizQuestions.length - attempted;
+    const percentage = quizQuestions.length
+      ? Math.round((quizScore / quizQuestions.length) * 100)
+      : 0;
+    const report = {
+      student: escapeQuizSvgText(quizStudentName),
+      father: escapeQuizSvgText(quizFatherName),
+      className: escapeQuizSvgText(getQuizClassLabel()),
+      status: quizCompletionStatus === "stopped" ? "Stopped early" : "Completed",
+      score: quizScore + " / " + quizQuestions.length,
+      percentage: percentage + "% correct",
+      attempted: attempted,
+      skipped: skipped,
+      start: escapeQuizSvgText(formatQuizLocalTime(quizStartedAt)),
+      end: escapeQuizSvgText($("#quiz-report-end-time").text()),
+      message: escapeQuizSvgText(getQuizPerformanceMessage(percentage)),
+    };
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1120" viewBox="0 0 900 1120">
+      <defs><linearGradient id="paper" x2="1" y2="1"><stop stop-color="#fff7cc"/><stop offset="1" stop-color="#dff7ff"/></linearGradient><linearGradient id="score" x2="1" y2="1"><stop stop-color="#ffe47a"/><stop offset="1" stop-color="#ffc85a"/></linearGradient></defs>
+      <rect width="900" height="1120" rx="42" fill="url(#paper)"/><circle cx="90" cy="100" r="30" fill="#ff9d76"/><circle cx="810" cy="120" r="22" fill="#78d8c8"/><path d="M90 930l18 36 40 6-29 28 7 40-36-19-36 19 7-40-29-28 40-6z" fill="#f7bf45"/><path d="M790 900l13 26 29 4-21 20 5 29-26-14-26 14 5-29-21-20 29-4z" fill="#fd9476"/>
+      <rect x="105" y="72" width="690" height="976" rx="36" fill="#ffffff" stroke="#e4e8eb" stroke-width="3"/>
+      <rect x="260" y="105" width="380" height="54" rx="27" fill="#dcf7ed"/><text x="450" y="141" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#237d67">★  QUIZ CHAMPION  ★</text>
+      <text x="450" y="230" text-anchor="middle" font-size="70">🏆</text><text x="450" y="280" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="3" fill="#798490">YOUR REPORT CARD</text>
+      <text x="450" y="334" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#243447">Brilliant effort, ${report.student}!</text><text x="450" y="376" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#526274">${report.message}</text>
+      <text x="450" y="430" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#334155">👨‍👦  Father: ${report.father}</text><text x="450" y="470" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#334155">🎓  ${report.className}</text>
+      <rect x="320" y="488" width="260" height="38" rx="19" fill="${quizCompletionStatus === "stopped" ? "#fff0e9" : "#e3f6e9"}"/><text x="450" y="513" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="${quizCompletionStatus === "stopped" ? "#b45309" : "#237d67"}">●  Test ${report.status}</text>
+      <rect x="185" y="540" width="530" height="190" rx="28" fill="url(#score)"/><text x="450" y="584" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="2" fill="#735311">YOUR SCORE</text><text x="450" y="655" text-anchor="middle" font-family="Arial,sans-serif" font-size="58" font-weight="800" fill="#342b18">${report.score}</text><text x="450" y="695" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#735311">${report.percentage}</text>
+      <text x="450" y="782" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#344256">✨  QUIZ STATS  ✨</text>
+      <text x="260" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#526274">✓ Attempted</text><text x="260" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#237d67">${report.attempted}</text>
+      <text x="450" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#526274">↗ Skipped</text><text x="450" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#d97706">${report.skipped}</text>
+      <text x="640" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#526274">? Total</text><text x="640" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#3d6f9b">${quizQuestions.length}</text>
+      <path d="M170 910h560" stroke="#e7ebef" stroke-width="2"/><text x="190" y="956" font-family="Arial,sans-serif" font-size="17" fill="#526274">Started: ${report.start}</text><text x="190" y="994" font-family="Arial,sans-serif" font-size="17" fill="#526274">Finished: ${report.end}</text>
+    </svg>`;
+    const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    const filename = quizStudentName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "student";
+    link.href = url;
+    link.download = filename + "-quiz-report.svg";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(function () {
+      URL.revokeObjectURL(url);
+    }, 1000);
+  }
+
+  $(document).on("click", "#quiz-report-download", downloadQuizReport);
+
+  function restartQuizForStudent() {
+    clearInterval(quizTimerId);
+    if (quizLevel) localStorage.removeItem(getQuizStorageKey(quizLevel));
+    quizQuestions = [];
+    quizResponses = [];
+    quizIndex = 0;
+    quizPage = 0;
+    quizScore = 0;
+    quizTimeRemaining = QUIZ_SECONDS_PER_QUESTION;
+    quizAnswered = false;
+    quizSelectedIndex = null;
+    quizStudentName = "";
+    quizFatherName = "";
+    quizStartedAt = null;
+    quizCompletionStatus = "completed";
+    $("#quiz-student-form")[0].reset();
+    $("#quiz-result, #quiz-body").hide();
+    $("#quiz-student-form").show();
+    $("#quiz-student-name").trigger("focus");
+  }
+
+  $(document).on("click", "#quiz-restart-end", restartQuizForStudent);
 
 
   /* ══════════════════════════════════
