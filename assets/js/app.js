@@ -27,6 +27,7 @@ $(function () {
   let quizTimeRemaining = 0;
   const QUIZ_PAGE_SIZE = 10;
   const QUIZ_SECONDS_PER_QUESTION = 20;
+  const QUIZ_ORDER_VERSION = 1;
   const ADMIN_PASS = "awinashgoswami";
 
   /* ── LOAD POSTS from assets/json/posts.json on startup ── */
@@ -703,6 +704,8 @@ $(function () {
               <div class="quiz-report-stats">
                 <div class="quiz-report-stat"><i class="bi bi-check2-circle"></i><span>Attempted</span><strong id="quiz-report-attempted"></strong></div>
                 <div class="quiz-report-stat"><i class="bi bi-skip-forward-circle"></i><span>Skipped</span><strong id="quiz-report-skipped"></strong></div>
+                <div class="quiz-report-stat"><i class="bi bi-check-circle-fill"></i><span>Correct</span><strong id="quiz-report-correct"></strong></div>
+                <div class="quiz-report-stat"><i class="bi bi-x-circle-fill"></i><span>Incorrect</span><strong id="quiz-report-incorrect"></strong></div>
                 <div class="quiz-report-stat"><i class="bi bi-question-circle"></i><span>Total questions</span><strong id="quiz-report-total"></strong></div>
               </div>
               <div class="quiz-report-times">
@@ -721,15 +724,6 @@ $(function () {
     startQuiz(level);
   }
 
-  function shuffle(arr) {
-    const a = arr.slice();
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
-
   function startQuiz(level) {
     clearInterval(quizTimerId);
     quizLevel = level || currentLevel;
@@ -744,10 +738,11 @@ $(function () {
 
     const validOrder =
       savedSession &&
+      savedSession.orderVersion === QUIZ_ORDER_VERSION &&
       Array.isArray(savedSession.order) &&
       savedSession.order.length === sourceQuestions.length &&
-      savedSession.order.every(function (index) {
-        return Number.isInteger(index) && index >= 0 && index < sourceQuestions.length;
+      savedSession.order.every(function (index, position) {
+        return index === position;
       }) &&
       new Set(savedSession.order).size === sourceQuestions.length;
     const validResponses =
@@ -825,7 +820,7 @@ $(function () {
     quizStudentName = $("#quiz-student-name").val().trim();
     quizFatherName = $("#quiz-father-name").val().trim();
     if (!quizStudentName || !quizFatherName) return;
-    quizQuestions = shuffle(CATEGORIES[quizLevel].quiz);
+    quizQuestions = CATEGORIES[quizLevel].quiz.slice();
     quizResponses = Array(quizQuestions.length).fill(null);
     quizIndex = 0;
     quizPage = 0;
@@ -853,6 +848,7 @@ $(function () {
       localStorage.setItem(
         getQuizStorageKey(quizLevel),
         JSON.stringify({
+          orderVersion: QUIZ_ORDER_VERSION,
           order,
           index: quizIndex,
           score: quizScore,
@@ -1084,6 +1080,8 @@ $(function () {
     $("#quiz-report-message").text(message);
     $("#quiz-report-attempted").text(attempted);
     $("#quiz-report-skipped").text(skipped);
+    $("#quiz-report-correct").text(quizScore);
+    $("#quiz-report-incorrect").text(attempted - quizScore);
     $("#quiz-report-total").text(quizQuestions.length);
     $("#quiz-report-start-time").text(formatQuizLocalTime(quizStartedAt));
     $("#quiz-report-end-time").text(formatQuizLocalTime(endTime.toISOString()));
@@ -1148,6 +1146,8 @@ $(function () {
       percentage: percentage + "% correct",
       attempted: attempted,
       skipped: skipped,
+      correct: quizScore,
+      incorrect: attempted - quizScore,
       start: escapeQuizSvgText(formatQuizLocalTime(quizStartedAt)),
       end: escapeQuizSvgText($("#quiz-report-end-time").text()),
       message: escapeQuizSvgText(getQuizPerformanceMessage(percentage)),
@@ -1163,9 +1163,11 @@ $(function () {
       <rect x="320" y="488" width="260" height="38" rx="19" fill="${quizCompletionStatus === "stopped" ? "#fff0e9" : "#e3f6e9"}"/><text x="450" y="513" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="${quizCompletionStatus === "stopped" ? "#b45309" : "#237d67"}">●  Test ${report.status}</text>
       <rect x="185" y="540" width="530" height="190" rx="28" fill="url(#score)"/><text x="450" y="584" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="2" fill="#735311">YOUR SCORE</text><text x="450" y="655" text-anchor="middle" font-family="Arial,sans-serif" font-size="58" font-weight="800" fill="#342b18">${report.score}</text><text x="450" y="695" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#735311">${report.percentage}</text>
       <text x="450" y="782" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#344256">✨  QUIZ STATS  ✨</text>
-      <text x="260" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#526274">✓ Attempted</text><text x="260" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#237d67">${report.attempted}</text>
-      <text x="450" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#526274">↗ Skipped</text><text x="450" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#d97706">${report.skipped}</text>
-      <text x="640" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#526274">? Total</text><text x="640" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#3d6f9b">${quizQuestions.length}</text>
+      <text x="165" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#526274">Attempted</text><text x="165" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#237d67">${report.attempted}</text>
+      <text x="310" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#526274">Skipped</text><text x="310" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#d97706">${report.skipped}</text>
+      <text x="450" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#526274">Correct</text><text x="450" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#237d67">${report.correct}</text>
+      <text x="590" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#526274">Incorrect</text><text x="590" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#b45309">${report.incorrect}</text>
+      <text x="735" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#526274">Total</text><text x="735" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#3d6f9b">${quizQuestions.length}</text>
       <path d="M170 910h560" stroke="#e7ebef" stroke-width="2"/><text x="190" y="956" font-family="Arial,sans-serif" font-size="17" fill="#526274">Started: ${report.start}</text><text x="190" y="994" font-family="Arial,sans-serif" font-size="17" fill="#526274">Finished: ${report.end}</text>
     </svg>`;
     const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });

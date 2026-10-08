@@ -1006,6 +1006,7 @@ body {
   font-size: 1.2rem;
 }
 .quiz-report-stat:nth-child(2) i { color: #d28a2e; }
+.quiz-report-stat:nth-child(4) i { color: #a74732; }
 .quiz-report-stat span {
   color: #687887;
   font-size: 0.73rem;
@@ -1040,6 +1041,11 @@ body {
   color: #344b5b;
   font-size: 0.78rem;
   font-weight: 700;
+}
+@media (min-width: 768px) {
+  .quiz-report-stats {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
 }
 .quiz-report-status {
   display: inline-flex;
