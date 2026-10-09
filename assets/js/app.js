@@ -25,6 +25,8 @@ $(function () {
   let quizCompletionStatus = "completed";
   let quizTimerId = null;
   let quizTimeRemaining = 0;
+  let quizAudioCtx = null;
+  let quizAudioCompressor = null;
   const QUIZ_PAGE_SIZE = 10;
   const QUIZ_SECONDS_PER_QUESTION = 20;
   const QUIZ_ORDER_VERSION = 1;
@@ -809,9 +811,18 @@ $(function () {
     updateQuizTimer();
     quizTimerId = setInterval(function () {
       quizTimeRemaining--;
+      if (quizTimeRemaining <= 9 && quizTimeRemaining >= 0) {
+        playCountdownTickSound();
+      }
       updateQuizTimer();
       persistQuizSession();
-      if (quizTimeRemaining <= 0) advanceQuizQuestion();
+      if (quizTimeRemaining <= 0) {
+        if (!Number.isInteger(quizResponses[quizIndex])) {
+          playSkipSound();
+        }
+        triggerQuestionTransitionAnimation();
+        advanceQuizQuestion();
+      }
     }, 1000);
   }
 
@@ -862,6 +873,115 @@ $(function () {
     } catch (error) {
       // Keep the quiz usable when browser storage is unavailable.
     }
+  }
+
+  function ensureQuizAudioContext() {
+    if (!window.AudioContext && !window.webkitAudioContext) return null;
+    const AudioCtor = window.AudioContext || window.webkitAudioContext;
+    if (!quizAudioCtx) quizAudioCtx = new AudioCtor();
+    if (!quizAudioCompressor && quizAudioCtx.createDynamicsCompressor) {
+      quizAudioCompressor = quizAudioCtx.createDynamicsCompressor();
+      quizAudioCompressor.threshold.value = -1;
+      quizAudioCompressor.knee.value = 0;
+      quizAudioCompressor.ratio.value = 20;
+      quizAudioCompressor.attack.value = 0.003;
+      quizAudioCompressor.release.value = 0.15;
+      quizAudioCompressor.connect(quizAudioCtx.destination);
+    }
+    if (quizAudioCtx.state === "suspended") {
+      quizAudioCtx.resume();
+    }
+    return quizAudioCtx;
+  }
+
+  function playQuizTone({ frequency, duration, type, volume, delay, sweepTo }) {
+    const context = ensureQuizAudioContext();
+    if (!context) return;
+    const oscillator = context.createOscillator();
+    const gainNode = context.createGain();
+    const startAt = context.currentTime + (delay || 0);
+    oscillator.type = type || "sine";
+    oscillator.frequency.setValueAtTime(frequency, startAt);
+    if (sweepTo) {
+      oscillator.frequency.exponentialRampToValueAtTime(sweepTo, startAt + duration);
+    }
+    gainNode.gain.setValueAtTime(0.0001, startAt);
+    gainNode.gain.exponentialRampToValueAtTime(volume || 0.04, startAt + 0.01);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, startAt + duration);
+    oscillator.connect(gainNode);
+    gainNode.connect(quizAudioCompressor || context.destination);
+    oscillator.start(startAt);
+    oscillator.stop(startAt + duration + 0.03);
+  }
+
+  function playQuizNoiseBurst({ duration, volume, delay, highPass }) {
+    const context = ensureQuizAudioContext();
+    if (!context) return;
+    const buffer = context.createBuffer(1, Math.max(1, Math.floor(context.sampleRate * duration)), context.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i++) {
+      const envelope = 1 - i / data.length;
+      data[i] = (Math.random() * 2 - 1) * envelope;
+    }
+    const source = context.createBufferSource();
+    const gainNode = context.createGain();
+    const filter = context.createBiquadFilter();
+    const startAt = context.currentTime + (delay || 0);
+    source.buffer = buffer;
+    filter.type = highPass ? "highpass" : "lowpass";
+    filter.frequency.value = highPass || 9000;
+    gainNode.gain.setValueAtTime(0.0001, startAt);
+    gainNode.gain.exponentialRampToValueAtTime(volume || 0.12, startAt + 0.008);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, startAt + duration);
+    source.connect(filter);
+    filter.connect(gainNode);
+    gainNode.connect(quizAudioCompressor || context.destination);
+    source.start(startAt);
+    source.stop(startAt + duration + 0.02);
+  }
+
+  function playCountdownTickSound() {
+    playQuizTone({ frequency: 870, duration: 0.06, type: "triangle", volume: 1, sweepTo: 620 });
+  }
+
+  function playCorrectAnswerSound() {
+    playQuizTone({ frequency: 620, duration: 0.12, type: "triangle", volume: 1, sweepTo: 860 });
+    playQuizTone({ frequency: 840, duration: 0.14, type: "triangle", volume: 1, delay: 0.08, sweepTo: 1060 });
+    playQuizTone({ frequency: 1090, duration: 0.18, type: "triangle", volume: 1, delay: 0.16, sweepTo: 1360 });
+  }
+
+  function playWrongAnswerSound() {
+    playQuizTone({ frequency: 420, duration: 0.16, type: "sawtooth", volume: 1, sweepTo: 180 });
+    playQuizTone({ frequency: 260, duration: 0.22, type: "square", volume: 1, delay: 0.1, sweepTo: 120 });
+  }
+
+  function playSkipSound() {
+    playQuizTone({ frequency: 490, duration: 0.08, type: "sine", volume: 1, sweepTo: 360 });
+    playQuizTone({ frequency: 360, duration: 0.12, type: "sine", volume: 1, delay: 0.07, sweepTo: 240 });
+  }
+
+  function playResultSound() {
+    playQuizTone({ frequency: 620, duration: 0.2, type: "triangle", volume: 1, sweepTo: 760 });
+    playQuizTone({ frequency: 780, duration: 0.2, type: "triangle", volume: 1, delay: 0.16, sweepTo: 980 });
+    playQuizTone({ frequency: 980, duration: 0.3, type: "triangle", volume: 1, delay: 0.32, sweepTo: 1170 });
+    [0, 0.13, 0.27, 0.41, 0.56, 0.72, 0.89, 1.08].forEach(function (delay) {
+      playQuizNoiseBurst({ duration: 0.1, volume: 1, delay, highPass: 1100 });
+    });
+  }
+
+  function triggerQuestionTransitionAnimation() {
+    const card = document.querySelector(".quiz-card");
+    if (!card) return;
+    card.classList.remove("question-flash", "question-slide-up");
+    void card.offsetWidth;
+    card.classList.add("question-flash");
+    window.setTimeout(function () {
+      card.classList.remove("question-flash");
+      card.classList.add("question-slide-up");
+      window.setTimeout(function () {
+        card.classList.remove("question-slide-up");
+      }, 450);
+    }, 120);
   }
 
   function updateQuizTimer() {
@@ -983,6 +1103,7 @@ $(function () {
     if (chosen === correct) {
       $(this).addClass("correct");
       $("#quiz-feedback").addClass("correct").text("Correct!").show();
+      playCorrectAnswerSound();
     } else {
       $(this).addClass("incorrect");
       $('[data-idx="' + correct + '"]').addClass("correct");
@@ -994,6 +1115,7 @@ $(function () {
             ".",
         )
         .show();
+      playWrongAnswerSound();
     }
     quizResponses[quizIndex] = chosen;
     quizScore = countCorrectAnswers();
@@ -1034,11 +1156,16 @@ $(function () {
     );
     const localIndex = quizIndex - pageInfo.pageStart;
 
+    if (!Number.isInteger(quizResponses[quizIndex])) {
+      playSkipSound();
+    }
+
     if (quizIndex >= quizQuestions.length - 1) {
       finishQuiz();
       return;
     }
     if (localIndex >= questionsInPage - 1) quizPage++;
+    triggerQuestionTransitionAnimation();
     quizIndex++;
     quizTimeRemaining = QUIZ_SECONDS_PER_QUESTION;
     renderQuestion();
@@ -1064,6 +1191,7 @@ $(function () {
     const pct = quizQuestions.length ? Math.round((quizScore / quizQuestions.length) * 100) : 0;
     const endTime = new Date();
     const message = getQuizPerformanceMessage(pct);
+    playResultSound();
     $("#quiz-result-score").text(quizScore + "/" + quizQuestions.length);
     $("#quiz-result-pct").text(pct + "% correct");
     $("#quiz-report-student").text(quizStudentName);
