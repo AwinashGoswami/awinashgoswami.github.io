@@ -1125,6 +1125,7 @@ body {
   margin-left: auto;
 }
 .btn-quiz-restart,
+.btn-quiz-pause,
 .btn-quiz-stop {
   display: inline-flex;
   justify-content: center;
@@ -1147,6 +1148,16 @@ body {
   color: #334b5b;
   background: #f3f7f8;
   border-color: #aebfc7;
+}
+.btn-quiz-pause {
+  color: #286a58;
+  background: #edf8f3;
+  border: 1px solid #b7dfcf;
+}
+.btn-quiz-pause:hover {
+  color: #1f5143;
+  background: #ddf1e8;
+  border-color: #8bc9af;
 }
 .btn-quiz-stop {
   color: #a74732;

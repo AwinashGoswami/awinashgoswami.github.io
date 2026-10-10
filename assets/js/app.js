@@ -25,6 +25,7 @@ $(function () {
   let quizCompletionStatus = "completed";
   let quizTimerId = null;
   let quizTimeRemaining = 0;
+  let quizPaused = false;
   let quizAudioCtx = null;
   let quizAudioCompressor = null;
   const QUIZ_PAGE_SIZE = 10;
@@ -680,6 +681,7 @@ $(function () {
               <div class="quiz-action-row">
                 <button class="btn-quiz-restart" id="quiz-restart" type="button"><i class="bi bi-arrow-counterclockwise"></i><span>Restart Quiz</span></button>
                 <div class="quiz-action-main">
+                  <button class="btn-quiz-pause" id="quiz-pause" type="button" aria-pressed="false"><i class="bi bi-pause-fill me-1"></i><span>Pause Quiz</span></button>
                   <button class="btn-quiz-stop" id="quiz-stop" type="button"><i class="bi bi-stop-circle me-1"></i>Stop Quiz</button>
                   <button class="btn-next" id="quiz-next" style="display:none;">Next Question <i class="bi bi-arrow-right ms-1"></i></button>
                 </div>
@@ -783,6 +785,7 @@ $(function () {
       quizStudentName = savedSession.studentName;
       quizFatherName = savedSession.fatherName;
       quizStartedAt = savedSession.startedAt;
+      quizPaused = savedSession.paused === true;
       quizAnswered = Number.isInteger(quizResponses[quizIndex]);
       quizSelectedIndex = quizAnswered ? quizResponses[quizIndex] : null;
       showActiveQuiz();
@@ -796,6 +799,7 @@ $(function () {
       quizStudentName = "";
       quizFatherName = "";
       quizStartedAt = null;
+      quizPaused = false;
       quizAnswered = false;
       quizSelectedIndex = null;
       $("#quiz-student-form").show();
@@ -809,6 +813,14 @@ $(function () {
     $("#quiz-body").show();
     renderQuestion();
     updateQuizTimer();
+    updateQuizPauseButton();
+    startQuizTimer();
+  }
+
+  function startQuizTimer() {
+    clearInterval(quizTimerId);
+    quizTimerId = null;
+    if (quizPaused || Number.isInteger(quizResponses[quizIndex])) return;
     quizTimerId = setInterval(function () {
       quizTimeRemaining--;
       if (quizTimeRemaining <= 9 && quizTimeRemaining >= 0) {
@@ -865,6 +877,7 @@ $(function () {
           score: quizScore,
           responses: quizResponses,
           timeRemaining: quizTimeRemaining,
+          paused: quizPaused,
           studentName: quizStudentName,
           fatherName: quizFatherName,
           startedAt: quizStartedAt,
@@ -1094,7 +1107,9 @@ $(function () {
   }
 
   $(document).on("click", ".quiz-option", function () {
-    if (quizAnswered) return;
+    if (quizPaused || quizAnswered) return;
+    clearInterval(quizTimerId);
+    quizTimerId = null;
     quizAnswered = true;
     const chosen = parseInt($(this).data("idx"));
     quizSelectedIndex = chosen;
@@ -1127,15 +1142,18 @@ $(function () {
   });
 
   $(document).on("click", ".quiz-page-btn", function () {
+    if (quizPaused) return;
     const targetPage = parseInt($(this).data("page"), 10);
     if (Number.isNaN(targetPage)) return;
     quizPage = targetPage;
     quizIndex = quizPage * QUIZ_PAGE_SIZE;
     quizTimeRemaining = QUIZ_SECONDS_PER_QUESTION;
     renderQuestion();
+    startQuizTimer();
   });
 
   $(document).on("click", ".quiz-page-nav", function () {
+    if (quizPaused) return;
     const direction = $(this).data("nav");
     const totalPages = Math.max(1, Math.ceil(quizQuestions.length / QUIZ_PAGE_SIZE));
     if (direction === "prev") {
@@ -1146,6 +1164,7 @@ $(function () {
     quizIndex = quizPage * QUIZ_PAGE_SIZE;
     quizTimeRemaining = QUIZ_SECONDS_PER_QUESTION;
     renderQuestion();
+    startQuizTimer();
   });
 
   function advanceQuizQuestion() {
@@ -1169,10 +1188,34 @@ $(function () {
     quizIndex++;
     quizTimeRemaining = QUIZ_SECONDS_PER_QUESTION;
     renderQuestion();
+    startQuizTimer();
   }
 
   $(document).on("click", "#quiz-next", function () {
+    if (quizPaused) return;
     advanceQuizQuestion();
+  });
+
+  function updateQuizPauseButton() {
+    const button = $("#quiz-pause");
+    button.attr("aria-pressed", quizPaused ? "true" : "false");
+    button.html(
+      quizPaused
+        ? '<i class="bi bi-play-fill me-1"></i><span>Resume Quiz</span>'
+        : '<i class="bi bi-pause-fill me-1"></i><span>Pause Quiz</span>',
+    );
+  }
+
+  $(document).on("click", "#quiz-pause", function () {
+    quizPaused = !quizPaused;
+    if (quizPaused) {
+      clearInterval(quizTimerId);
+      quizTimerId = null;
+    } else {
+      startQuizTimer();
+    }
+    updateQuizPauseButton();
+    persistQuizSession();
   });
 
   $(document).on("click", "#quiz-stop", function () {
@@ -1184,6 +1227,7 @@ $(function () {
   function finishQuiz(status) {
     if ($("#quiz-result").is(":visible")) return;
     clearInterval(quizTimerId);
+    quizPaused = false;
     quizCompletionStatus = status === "stopped" ? "stopped" : "completed";
     if (quizLevel) localStorage.removeItem(getQuizStorageKey(quizLevel));
     const attempted = countAttemptedQuestions();
@@ -1323,6 +1367,7 @@ $(function () {
     quizPage = 0;
     quizScore = 0;
     quizTimeRemaining = QUIZ_SECONDS_PER_QUESTION;
+    quizPaused = false;
     quizAnswered = false;
     quizSelectedIndex = null;
     quizStudentName = "";
