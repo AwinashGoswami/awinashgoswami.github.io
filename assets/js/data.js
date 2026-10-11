@@ -717,7 +717,7 @@ const CATEGORIES = {
         ans: 0,
       },
       {
-        q: "Which operator is used for integer division in most languages?",
+        q: "In Python, which operator performs floor division?",
         opts: ["%", "//", "&&", "||"],
         ans: 1,
       },
@@ -1011,8 +1011,8 @@ const CATEGORIES = {
         ans: 2,
       },
       {
-        q: "What is the time complexity of Dijkstra's algorithm with a min-heap?",
-        opts: ["O(V²)", "O(E log V)", "O(V log E)", "O(VE)"],
+        q: "With an adjacency list and a binary min-heap, what is the time complexity of Dijkstra's algorithm?",
+        opts: ["O(V²)", "O((V + E) log V)", "O(V log E)", "O(VE)"],
         ans: 1,
       },
       {
@@ -1153,7 +1153,7 @@ const NINTH_GRADE_QUIZ = [
     ans: 1,
   },
   {
-    q: "Modern languages use",
+    q: "Which translator typically converts a high-level program into machine code before it runs?",
     opts: ["compiler", "interpreter", "convertor", "assembler"],
     ans: 0,
   },
@@ -1173,7 +1173,7 @@ const NINTH_GRADE_QUIZ = [
     ans: 3,
   },
   {
-    q: "Computer cannot start without:",
+    q: "Which software is needed to boot into a computer's normal operating environment?",
     opts: [
       "operating system",
       "utility program",
@@ -1308,7 +1308,7 @@ const NINTH_GRADE_QUIZ = [
     ans: 0,
   },
   {
-    q: "Both Physical and Logical addresses are:",
+    q: "On the same network, both physical and logical addresses are:",
     opts: ["different", "unique", "permanent", "temporary"],
     ans: 1,
   },
@@ -1426,7 +1426,7 @@ const NINTH_SINDH_APPEND_QUIZ = [
   ["MS Word allows users to:", ["Only type text", "Type, edit, format, and save text-based documents", "Only print documents", "Only save documents"], 1],
   ["MS Excel is a:", ["Word-processing software", "Spreadsheet software", "Presentation software", "Graphics software"], 1],
   ["MS Excel stores data using:", ["Rows only", "Columns only", "Rows, columns, and cells", "Paragraphs"], 2],
-  ["Which feature of MS Excel allows users to visualize data?", ["Formulas", "Charts", "Pivot tables", "All of these"], 3],
+  ["Which MS Excel feature is specifically used to visualize data?", ["Formulas", "Charts", "Pivot tables", "All of these"], 1],
   ["MS Word has advanced features like:", ["Tables and images", "Charts and pivot tables", "Conditional formatting", "None"], 0],
   ["MS Excel has advanced features like:", ["Tables and images", "Formulas, functions, charts, pivot tables", "Advanced formatting and reviewing", "None"], 1],
   ["MS Word was first released in:", ["1983", "1985", "1990", "1995"], 0],
@@ -1578,7 +1578,7 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 3,
   },
   {
-    q: "All errors, detected by users are typically:",
+    q: "An error that goes unnoticed by the compiler but produces an incorrect result is typically a:",
     opts: ["Syntax Errors", "Semantic Errors", "Run- Time Errors", "Logical Errors"],
     ans: 3,
   },
@@ -1598,12 +1598,12 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 3,
   },
   {
-    q: "Which data type occupies the most space in memory?",
+    q: "On typical C++ implementations, which listed type usually occupies the most memory?",
     opts: ["Character", "Integer", "Floating point", "Double floating point"],
     ans: 3,
   },
   {
-    q: "The C++ header file ______ contains function prototype for the standard Input and Output functions.",
+    q: "Which header declares standard C++ input/output streams such as cin and cout?",
     opts: ["&lt;ioman.h&gt;", "&lt;iostream&gt;", "&lt;fstream.h&gt;", "&lt;cstdio.h&gt;"],
     ans: 1,
   },
@@ -1613,9 +1613,14 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 2,
   },
   {
-    q: "gets stands for ______",
-    opts: ["get stream", "get string", "get str", "get std."],
-    ans: 1,
+    q: "What did the C gets() function do?",
+    opts: [
+      "Read a line of text from standard input",
+      "Write text to standard output",
+      "Read a formatted number",
+      "Read a single character",
+    ],
+    ans: 0,
   },
   {
     q: "getch() and getche() are included in ______ header file.",
@@ -1633,7 +1638,7 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 3,
   },
   {
-    q: "Which of the following needs pressing Enter Key from the keyboard?",
+    q: "Which function reads a single character from standard input?",
     opts: ["getch( )", "getche( )", "getchar( )", "gets( )"],
     ans: 2,
   },
@@ -1688,7 +1693,7 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 1,
   },
   {
-    q: '"break" statement is used with ______.',
+    q: "Which of these constructs can a break statement exit without being a loop?",
     opts: ["if", "switch", "for", "while"],
     ans: 1,
   },
@@ -1908,9 +1913,9 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 1,
   },
   {
-    q: 'How many types of translators are there?',
+    q: 'How many main types of language translators are commonly taught, including assemblers?',
     opts: ["2", "3", "4", "5"],
-    ans: 0,
+    ans: 1,
   },
   {
     q: 'A compiler converts high-level language into low-level language:',
@@ -2023,7 +2028,7 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 1,
   },
   {
-    q: 'A variable which can hold characters is called a:',
+    q: 'A variable that stores a sequence of characters (text) is called a:',
     opts: ["Integer", "Float", "String", "Boolean"],
     ans: 2,
   },
@@ -2318,7 +2323,7 @@ const NINTH_GRADE_FEDERAL_QUIZ = [
     ans: 1,
   },
   {
-    q: "In which network topology is data transmission unidirectional, like radio or television broadcasts?",
+    q: "In which network topology does data typically travel around nodes in one direction?",
     opts: ["Star Topology", "Bus Topology", "Mesh Topology", "Ring Topology"],
     ans: 3,
   },
@@ -2626,7 +2631,7 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
     ans: 2,
   },
   {
-    q: "Which type of operating system allows multiple tasks to be performed at the same time?",
+    q: "Which operating-system technique keeps multiple programs in memory so the CPU can switch between them?",
     opts: ["Multiprogramming", "Batch Processing", "Real-time", "Single-tasking"],
     ans: 0,
   },
@@ -2656,7 +2661,7 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
     ans: 3,
   },
   {
-    q: "Which memory management technique divides memory into fixed-sized blocks?",
+    q: "Which memory-management technique divides virtual memory into fixed-size pages mapped to physical frames?",
     opts: ["Segmentation", "Paging", "Fixed Partitioning", "Dynamic Partitioning"],
     ans: 1,
   },
@@ -2796,32 +2801,32 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
     ans: 0,
   },
   {
-    q: "Which of the following is the primary benefit of integrating Mathematics and Statistics with Computer Science in Data Science?",
+    q: "Which organizational activity is directly improved by data-science insights derived using mathematics, statistics, and computer science?",
     opts: ["Improved data visualization", "Better forecasting", "Increased accuracy", "Better decision-making"],
     ans: 3,
   },
   {
-    q: "Which of the following best describes the relationship between Data Science and Artificial Intelligence?",
-    opts: ["Data Science is a subset of Artificial Intelligence", "Artificial Intelligence is a tool used in Data Science", "Data Science and Artificial Intelligence are unrelated", "Data Science enables Artificial Intelligence"],
+    q: "Which statement describes one common way AI is used in data science?",
+    opts: ["Data science is a subset of AI", "AI and machine-learning techniques can build predictive models from data", "AI and data science are unrelated", "Every data-science project requires AI"],
     ans: 1,
   },
   {
-    q: "The Turing Test, proposed by Alan Turing in 1950, measures a machine's ability to exhibit intelligent behavior. Which of the following is the fundamental assumption underlies this test?",
-    opts: ["Humans are better", "Machines are equal", "Intelligence levels vary", "Machines copy humans"],
+    q: "According to the Turing Test, what evidence would support a machine's ability to exhibit human-like intelligence?",
+    opts: ["It calculates faster than a person", "It stores more information than a person", "It follows a fixed script", "An evaluator cannot reliably distinguish its responses from a human's"],
     ans: 3,
   },
   {
-    q: "Which of the following should be considered critically while developing AI-powered chatbots and virtual assistants?",
+    q: "What capability helps an AI chatbot interpret a user's current message in light of earlier turns in the conversation?",
     opts: ["User experience", "Data security", "Contextual awareness", "Emotional intelligence"],
     ans: 2,
   },
   {
-    q: "What ethical consideration arises from the integration of Artificial Intelligence (AI) into daily life devices?",
+    q: "Which is a workforce-related ethical concern about integrating AI into daily-life devices?",
     opts: ["Job displacement due to automation.", "Increased energy consumption.", "Improved customer service.", "Enhanced data security."],
     ans: 0,
   },
   {
-    q: "Which of the following fields of Artificial Intelligence (AI) enables smartphones to recognize faces and unlock devices?",
+    q: "Which AI field specializes in analyzing images and video for tasks such as face recognition?",
     opts: ["NLP", "Computer vision", "Deep learning", "Neural networks"],
     ans: 1,
   },
@@ -2831,12 +2836,12 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
     ans: 0,
   },
   {
-    q: "In a Reinforcement Learning model, what is the primary function of rewards and penalties provided as feedback to the agent?",
+    q: "In reinforcement learning, how do rewards and penalties guide an agent?",
     opts: ["Labeling data", "Evaluating performance", "Improving action choices", "Classifying outcomes"],
     ans: 2,
   },
   {
-    q: "Which stage of the data science life cycle ensures the model's accuracy, reliability, and compliance with privacy rules?",
+    q: "Which stage assesses a trained model's accuracy and reliability using validation or test data?",
     opts: ["Model Deployment", "Model Evaluation", "Data Analysis", "Maintenance and Monitoring"],
     ans: 1,
   },
@@ -3257,7 +3262,7 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Which programming languages can be used for data visualization?",
-    opts: ["Python", "R Studio", "MATLAB", "All of these"],
+    opts: ["Python", "R", "MATLAB", "All of these"],
     ans: 3,
   },
   {
@@ -3326,8 +3331,8 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
     ans: 1,
   },
   {
-    q: "Artificial Intelligence refers to a machine's ability to exhibit:",
-    opts: ["Random behavior", "Human-like behavior", "Machine-like behavior", "Animal-like behavior"],
+    q: "Artificial Intelligence refers to a machine's ability to perform tasks that typically require:",
+    opts: ["Random behavior", "Human intelligence", "Machine-like behavior", "Animal-like behavior"],
     ans: 1,
   },
   {
