@@ -29,7 +29,7 @@ $(function () {
   let quizAudioCtx = null;
   let quizAudioCompressor = null;
   const QUIZ_PAGE_SIZE = 10;
-  const QUIZ_SECONDS_PER_QUESTION = 20;
+  const QUIZ_SECONDS_PER_QUESTION = 30;
   const QUIZ_ORDER_VERSION = 2;
   const ADMIN_PASS = "awinashgoswami";
 
