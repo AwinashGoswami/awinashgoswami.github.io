@@ -390,10 +390,17 @@ async function fetchNotes(path) {
 
 function updateBreadcrumb() {
   if (!notesBreadcrumb) return;
-  const levelLabel =
+  const levelTitle =
     levels[currentLevel] && levels[currentLevel].title
       ? levels[currentLevel].title
       : currentLevel;
+  const levelLabel = currentLevel.endsWith("-sindh-board")
+    ? "Sindh " + levelTitle
+    : currentLevel.endsWith("-federal-board")
+      ? "Federal " + levelTitle
+      : currentLevel === "o-level" || currentLevel === "a-level"
+        ? "Cambridge " + levelTitle
+        : levelTitle;
   const topicLabel = currentTopic || "";
   const statusDetails = getStatusDetails(currentNotes[currentTopic]?.topicStatus || "to-upload");
 

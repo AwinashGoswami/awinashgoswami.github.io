@@ -30,7 +30,7 @@ $(function () {
   let quizAudioCompressor = null;
   const QUIZ_PAGE_SIZE = 10;
   const QUIZ_SECONDS_PER_QUESTION = 20;
-  const QUIZ_ORDER_VERSION = 1;
+  const QUIZ_ORDER_VERSION = 2;
   const ADMIN_PASS = "awinashgoswami";
 
   /* ── LOAD POSTS from assets/json/posts.json on startup ── */
@@ -333,7 +333,7 @@ $(function () {
       <div class="section-wrap">
         <div class="container">
           <div class="breadcrumb-custom">
-            <a href="#" data-goto="home">Home</a><span>/</span><strong>${meta.label}</strong>
+            <a href="#" data-goto="home">Home</a><span>/</span><strong>${getCategoryBreadcrumbLabel(level)}</strong>
           </div>
           <div class="level-header ${meta.colorClass}">
             <div class="level-icon"><i class="bi ${meta.icon}" style="font-size:2.5rem;"></i></div>
@@ -1079,15 +1079,11 @@ $(function () {
     renderPaginationButtons();
     const wrap = $("#quiz-options").empty();
     q.opts.forEach(function (opt, i) {
-      wrap.append(
-        '<button class="quiz-option" data-idx="' +
-          i +
-          '">' +
-          String.fromCharCode(65 + i) +
-          ". " +
-          opt +
-          "</button>",
-      );
+      const option = $("<button>", {
+        class: "quiz-option",
+        "data-idx": i,
+      }).text(String.fromCharCode(65 + i) + ". " + opt);
+      wrap.append(option);
     });
     if (quizAnswered && quizSelectedIndex !== null) {
       const correct = q.ans;
@@ -1925,11 +1921,20 @@ $(function () {
   });
 
   /* ── UTIL ── */
-  function breadcrumb(level, section) {
+  function getCategoryBreadcrumbLabel(level) {
     const meta = CATEGORY_META[level] || {};
+    if (level.endsWith("-sindh-board")) return "Sindh " + meta.label;
+    if (level.endsWith("-federal-board")) return "Federal " + meta.label;
+    if (level === "o-level" || level === "a-level")
+      return "Cambridge " + meta.label;
+    return meta.label || level;
+  }
+
+  function breadcrumb(level, section) {
+    const categoryLabel = getCategoryBreadcrumbLabel(level);
     return `<div class="breadcrumb-custom">
       <a href="#" data-goto="home">Home</a><span>/</span>
-      <a href="#" data-goto="cat-hub" data-level="${level}">${meta.label || level}</a>
+      <a href="#" data-goto="cat-hub" data-level="${level}">${categoryLabel}</a>
       <span>/</span><strong>${section}</strong>
     </div>`;
   }
