@@ -1558,13 +1558,13 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 3,
   },
   {
-    q: "Which header declares standard C++ input/output streams such as cin and cout?",
-    opts: ["&lt;ioman.h&gt;", "&lt;iostream&gt;", "&lt;fstream.h&gt;", "&lt;cstdio.h&gt;"],
+    q: "Which standard C++ header declares input/output streams such as cin and cout?",
+    opts: ["<cstdio>", "<iostream>", "<fstream>", "<iomanip>"],
     ans: 1,
   },
   {
-    q: "Which operator is used for input stream?",
-    opts: [">", "&lt;&lt;", ">&gt;", "&lt;"],
+    q: "Which operator does std::cin use to extract input into a variable?",
+    opts: ["<<", "<", ">>", ">"],
     ans: 2,
   },
   {
@@ -1578,8 +1578,8 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 0,
   },
   {
-    q: "getch() and getche() are included in ______ header file.",
-    opts: ["&lt;cstdio.h&gt;", "&lt;conio.h&gt;", "&lt;stdlib.h&gt;", "&lt;stdio.h&gt;"],
+    q: "In legacy Turbo C environments, which non-standard header declares getch() and getche()?",
+    opts: ["<cstdio>", "<conio.h>", "<cstdlib>", "<cstdio.h>"],
     ans: 1,
   },
   {
@@ -2348,8 +2348,8 @@ const NINTH_GRADE_FEDERAL_QUIZ = [
     ans: 2,
   },
   {
-    q: "The heading tag-pair for 5th level heading is ______.",
-    opts: ["&lt;h5 .. h5&gt;", "&lt;h5 .. /h5&gt;", "h5&gt; .. &lt;/h5&gt;", "&lt;h5&gt; .. &lt;/h5&gt;"],
+    q: "Which is the correct opening and closing tag pair for a level-five HTML heading?",
+    opts: ["<h5> ... <h5>", "<h5 ... </h5>", "h5> ... </h5>", "<h5> ... </h5>"],
     ans: 3,
   },
   {
@@ -2442,8 +2442,8 @@ NINTH_GRADE_FEDERAL_QUIZ.push(
   { q: "The Eight Puzzle Problem is an example of:", opts: ["Decision problem", "Search problem", "Counting problem", "Sorting problem"], ans: 1 },
   { q: "If one event has A choices and another has B choices, the total unique combinations =:", opts: ["A + B", "A − B", "A × B", "A ÷ B"], ans: 2 },
   { q: "If shirts = 5 and pants = 3, total outfits =:", opts: ["8", "15", "2", "53"], ans: 1 },
-  { q: "How many steps are there for simple problems?", opts: ["2", "3", "4", "6"], ans: 1 },
-  { q: "How many steps are there for complex problems?", opts: ["2", "3", "4", "6"], ans: 2 },
+  { q: "How many steps are there for simple problems?", opts: ["2", "3", "4", "6"], ans: 2 },
+  { q: "How many steps are there for complex problems?", opts: ["2", "6", "4", "3"], ans: 1 },
   { q: "Breaking a large problem into manageable sub-problems is called:", opts: ["Abstraction", "Decomposition", "Pattern Recognition", "Algorithm Design"], ans: 1 },
   { q: "Removing unnecessary details to focus on essential information is called:", opts: ["Decomposition", "Abstraction", "Pattern Recognition", "Algorithm Design"], ans: 1 },
   { q: "Looking for patterns or similarities with previously solved problems is called:", opts: ["Decomposition", "Abstraction", "Pattern Recognition", "Algorithm Design"], ans: 2 },
@@ -2721,8 +2721,8 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
     ans: 1,
   },
   {
-    q: "Table's header cell and content is referred in ______ tag.",
-    opts: ["&lt;th&gt;", "&lt;td&gt;", "&lt;caption&gt;", "&lt;tr&gt;"],
+    q: "Which HTML tag defines a header cell in a table?",
+    opts: ["<th>", "<td>", "<caption>", "<tr>"],
     ans: 0,
   },
   {
@@ -2741,8 +2741,8 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
     ans: 0,
   },
   {
-    q: "A single table cell is indicated by a ______ tag.",
-    opts: ["&lt;tc&gt;", "&lt;tf&gt;", "&lt;td&gt;", "&lt;th&gt;"],
+    q: "Which HTML tag defines a standard (non-header) data cell in a table?",
+    opts: ["<tc>", "<tf>", "<td>", "<th>"],
     ans: 2,
   },
   {
@@ -3433,6 +3433,37 @@ BOARD_LEVELS.forEach((levelKey) => {
   const answerPositions = shuffle(
     Array.from({ length: questions.length }, (_, index) => index % 4),
   );
+  const fixedAnswerPositions = new Map([
+    ["How many steps are there for simple problems?", 2],
+    ["How many steps are there for complex problems?", 1],
+  ]);
+  const fixedQuestionIndexes = new Set(
+    questions.flatMap((question, index) =>
+      fixedAnswerPositions.has(question.q) ? [index] : [],
+    ),
+  );
+
+  fixedAnswerPositions.forEach((desiredPosition, questionText) => {
+    const questionIndex = questions.findIndex(
+      (question) => question.q === questionText,
+    );
+    if (questionIndex === -1 || answerPositions[questionIndex] === desiredPosition) {
+      return;
+    }
+
+    const swapIndex = answerPositions.findIndex(
+      (position, index) =>
+        position === desiredPosition && !fixedQuestionIndexes.has(index),
+    );
+    if (swapIndex === -1) {
+      throw new Error(`Unable to preserve the answer position for "${questionText}".`);
+    }
+
+    [answerPositions[questionIndex], answerPositions[swapIndex]] = [
+      answerPositions[swapIndex],
+      answerPositions[questionIndex],
+    ];
+  });
 
   questions.forEach((question, index) => {
     const correctOption = question.opts[question.ans];
