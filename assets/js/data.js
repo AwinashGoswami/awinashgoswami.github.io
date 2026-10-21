@@ -726,25 +726,7 @@ const CATEGORIES = {
         opts: ["2", "3", "1", "4"],
         ans: 2,
       },
-    ],
-    concepts: [
-      {
-        title: "Number Systems",
-        body: "<strong>Binary (Base-2):</strong> Uses digits 0 and 1. Each position is a power of 2 (1, 2, 4, 8, 16...).<br><br><strong>Hexadecimal (Base-16):</strong> Uses 0–9 then A–F. One hex digit represents 4 bits (a nibble). Used in memory addressing and colour codes (#FF5733).<br><br><strong>Two's Complement:</strong> Method for representing negative numbers in binary. Invert all bits then add 1. Allows subtraction using addition circuits.",
-      },
-      {
-        title: "Boolean Logic",
-        body: "<strong>AND gate:</strong> Output is 1 only when BOTH inputs are 1.<br><strong>OR gate:</strong> Output is 1 when at least ONE input is 1.<br><strong>NOT gate:</strong> Inverts the input (0→1, 1→0).<br><strong>NAND, NOR, XOR:</strong> Combinations of basic gates.<br><br><strong>Truth Tables:</strong> A table showing all possible inputs and outputs for a logic expression. Essential for verifying circuit behaviour.",
-      },
-      {
-        title: "Programming Fundamentals",
-        body: "<strong>Sequence:</strong> Instructions executed one after another in order.<br><strong>Selection:</strong> IF/ELSE statements — choose a path based on a condition.<br><strong>Iteration:</strong> FOR, WHILE, REPEAT-UNTIL loops — repeat code blocks.<br><br><strong>Subprograms:</strong> Procedures (no return value) and functions (return a value) — break large programs into manageable, reusable parts.<br><br><strong>Variables vs Constants:</strong> Variables can change; constants are fixed throughout the program.",
-      },
-      {
-        title: "Data Representation",
-        body: "<strong>Characters:</strong> Represented using ASCII (7-bit, 128 characters) or Unicode (supports thousands of characters worldwide).<br><br><strong>Images:</strong> Stored as pixels. Each pixel has a colour value. Resolution = width × height pixels. Colour depth = bits per pixel.<br><br><strong>Sound:</strong> Analogue signal sampled at regular intervals (sample rate). Higher sample rate and bit depth = better quality but larger file size.",
-      },
-    ],
+    ]
   },
 
   /* ══════════════════════════════════
@@ -1119,294 +1101,969 @@ BOARD_LEVELS.forEach((levelKey) => {
 const NINTH_GRADE_QUIZ = [
   {
     q: "The device that converts hard copy into soft copy is:",
-    opts: ["scanner","barcode reader","printer","plotter"],
+    opts: ["scanner", "barcode reader", "printer", "plotter"],
     ans: 0,
   },
   {
     q: "The volatile memory",
-    opts: ["possesses large storage","is permanent","loses contents as the power is disconnected","manages hardware resources"],
+    opts: [
+      "possesses large storage",
+      "is permanent",
+      "loses contents as the power is disconnected",
+      "manages hardware resources",
+    ],
     ans: 2,
   },
   {
     q: "Media players are:",
-    opts: ["business software","entertainment software","productivity software","education software"],
+    opts: [
+      "business software",
+      "entertainment software",
+      "productivity software",
+      "education software",
+    ],
     ans: 1,
   },
   {
     q: "The programs that are generally installed to manage and maintain overall computer resources is:",
-    opts: ["utility program","operating system","language translator","device driver"],
+    opts: [
+      "utility program",
+      "operating system",
+      "language translator",
+      "device driver",
+    ],
     ans: 0,
   },
   {
     q: "Which translator typically converts a high-level program into machine code before it runs?",
-    opts: ["convertor","compiler","assembler","interpreter"],
+    opts: ["convertor", "compiler", "assembler", "interpreter"],
     ans: 1,
   },
   {
     q: "A collection of wires connecting the CPU with main memory that is used to identify particular locations is:",
-    opts: ["memory bus","data bus","address bus","control bus"],
+    opts: ["memory bus", "data bus", "address bus", "control bus"],
     ans: 2,
   },
   {
     q: "The inexpensive and most commonly used computers are:",
-    opts: ["mainframe computer","super computer","microcomputer","minicomputer"],
+    opts: [
+      "mainframe computer",
+      "super computer",
+      "microcomputer",
+      "minicomputer",
+    ],
     ans: 2,
   },
   {
     q: "Which software is needed to boot into a computer's normal operating environment?",
-    opts: ["operating system","device drivers","utility program","business software"],
+    opts: [
+      "operating system",
+      "device drivers",
+      "utility program",
+      "business software",
+    ],
     ans: 0,
   },
   {
     q: "Graphical User Interface (GUI) was developed in:",
-    opts: ["second generation","fourth generation","electro-mechanical era","mechanical era"],
+    opts: [
+      "second generation",
+      "fourth generation",
+      "electro-mechanical era",
+      "mechanical era",
+    ],
     ans: 1,
   },
   {
     q: "A person who uses different programming languages to develop programs is:",
-    opts: ["software engineer","database administrator","graphic designer","web designer"],
+    opts: [
+      "software engineer",
+      "database administrator",
+      "graphic designer",
+      "web designer",
+    ],
     ans: 0,
   },
   {
     q: "The software which performs all basic tasks is:",
-    opts: ["operating system","antivirus","start menu","office automation"],
+    opts: ["operating system", "antivirus", "start menu", "office automation"],
     ans: 0,
   },
   {
     q: "A program that enables user to interact with computer is called:",
-    opts: ["interface","start menu","my document","desktop"],
+    opts: ["interface", "start menu", "my document", "desktop"],
     ans: 0,
   },
   {
     q: "The process of checking computer, starting operating system and making it ready to work is referred to as:",
-    opts: ["resource management","booting","file management","error checking"],
+    opts: [
+      "resource management",
+      "booting",
+      "file management",
+      "error checking",
+    ],
     ans: 1,
   },
   {
     q: "The number of user(s) that can access the resources simultaneously on a Multiuser OS is /are:",
-    opts: ["only administrators","one","many","two"],
+    opts: ["only administrators", "one", "many", "two"],
     ans: 2,
   },
   {
     q: "Which management controls the dynamic allocation and de-allocation of processor, memory, etc?",
-    opts: ["User","Resource","I/O","File"],
+    opts: ["User", "Resource", "I/O", "File"],
     ans: 1,
   },
   {
     q: "In which operating system jobs are executed in groups?",
-    opts: ["Batch Processing","Time Sharing","Real Time","Single User"],
+    opts: ["Batch Processing", "Time Sharing", "Real Time", "Single User"],
     ans: 0,
   },
   {
     q: "The system that guarantees that critical tasks should be completed without shortest delay is:",
-    opts: ["Time Sharing","Hard Real Time","Batch Processing","Soft Real Time"],
+    opts: [
+      "Time Sharing",
+      "Hard Real Time",
+      "Batch Processing",
+      "Soft Real Time",
+    ],
     ans: 1,
   },
   {
     q: "DOS is an example of:",
-    opts: ["Multi User OS","Real Time Processing OS","Single User OS","Multi Processing OS"],
+    opts: [
+      "Multi User OS",
+      "Real Time Processing OS",
+      "Single User OS",
+      "Multi Processing OS",
+    ],
     ans: 2,
   },
   {
     q: "The group of programs that helps office workers to do a number of routine tasks easily and efficiently is called:",
-    opts: ["operating system","anti-virus","office automation","e-mail"],
+    opts: ["operating system", "anti-virus", "office automation", "e-mail"],
     ans: 2,
   },
   {
     q: "The operating system that allows frequent switching from one task to another is:",
-    opts: ["Single User","Batch Processing","Time Sharing","Real Time Processing"],
+    opts: [
+      "Single User",
+      "Batch Processing",
+      "Time Sharing",
+      "Real Time Processing",
+    ],
     ans: 2,
   },
   {
     q: "The software that is used for accounting purpose is:",
-    opts: ["MS Power point","MS Excel","MS Word","MS Access"],
+    opts: ["MS Power point", "MS Excel", "MS Word", "MS Access"],
     ans: 1,
   },
   {
     q: "The software that is used to format a document is:",
-    opts: ["MS Access","MS Excel","MS Power point","MS Word"],
+    opts: ["MS Access", "MS Excel", "MS Power point", "MS Word"],
     ans: 3,
   },
   {
     q: "The special character that initiates the formula mode in a cell is:",
-    opts: ["-","=","/","*"],
+    opts: ["-", "=", "/", "*"],
     ans: 1,
   },
   {
     q: "The function which is used to re-arrange data according to specific criteria is called:",
-    opts: ["Sorting","Filtering","Grouping","Organizing"],
+    opts: ["Sorting", "Filtering", "Grouping", "Organizing"],
     ans: 0,
   },
   {
     q: "If we want to change the overall design of a word document, we should use:",
-    opts: ["margins","page layout","themes","watermark"],
+    opts: ["margins", "page layout", "themes", "watermark"],
     ans: 2,
   },
   {
     q: "Charts are basically used to",
-    opts: ["organize data in tables","design tables","Sort data in different columns","show the quantities and their relationships graphically"],
+    opts: [
+      "organize data in tables",
+      "design tables",
+      "Sort data in different columns",
+      "show the quantities and their relationships graphically",
+    ],
     ans: 3,
   },
   {
     q: "To apply the table of contents automatically, the most important task is to properly define the",
-    opts: ["themes","page numbering","page layout","levels of heading"],
+    opts: ["themes", "page numbering", "page layout", "levels of heading"],
     ans: 3,
   },
   {
     q: "Wired Media is also called:",
-    opts: ["unguided media","directed media","guided media","targeted media"],
+    opts: [
+      "unguided media",
+      "directed media",
+      "guided media",
+      "targeted media",
+    ],
     ans: 2,
   },
   {
     q: "Communication system is made up of",
-    opts: ["four components","six components","three components","five components"],
+    opts: [
+      "four components",
+      "six components",
+      "three components",
+      "five components",
+    ],
     ans: 2,
   },
   {
     q: "On the same network, both physical and logical addresses are:",
-    opts: ["temporary","permanent","different","unique"],
+    opts: ["temporary", "permanent", "different", "unique"],
     ans: 3,
   },
   {
     q: "If you are an electrical or electronic engineer, you should join:",
-    opts: ["ANSI","IEEE","IETF","ITU"],
+    opts: ["ANSI", "IEEE", "IETF", "ITU"],
     ans: 1,
   },
   {
     q: "The topology in which all computers are connected to a central device called hub is:",
-    opts: ["Bus","Ring","Star","Tree"],
+    opts: ["Bus", "Ring", "Star", "Tree"],
     ans: 2,
   },
   {
     q: "Change in the shape of signal between sender and receiver is called:",
-    opts: ["noise","interruption","distortion","attenuation"],
+    opts: ["noise", "interruption", "distortion", "attenuation"],
     ans: 2,
   },
   {
     q: "Router determines data path to transfer data packets which is the:",
-    opts: ["optimal","shortest","cheapest","longest"],
+    opts: ["optimal", "shortest", "cheapest", "longest"],
     ans: 0,
   },
   {
     q: "Converting digital signal to analog is called:",
-    opts: ["bandwidth","modulation","modification","multiplexing"],
+    opts: ["bandwidth", "modulation", "modification", "multiplexing"],
     ans: 1,
   },
   {
     q: "The number of bits used in an IPV 4 address are:",
-    opts: ["16","32","128","64"],
+    opts: ["16", "32", "128", "64"],
     ans: 1,
   },
   {
     q: "The loss of energy in transmission signal refers to.",
-    opts: ["Jitter","Attenuation","Noise","Distortion"],
+    opts: ["Jitter", "Attenuation", "Noise", "Distortion"],
     ans: 1,
   },
 ];
 
 const NINTH_SINDH_APPEND_QUIZ = [
-  ["A computer is an electronic:",["Drawing machine","Printing machine","Entertainment machine","Data processing machine"],3],
-  ["First-generation computers used:",["Vacuum tubes","Microprocessors","Transistors","ICs"],0],
-  ["First-generation computers used which language for programming?",["C++","Machine language","FORTRAN","COBOL"],1],
-  ["Examples of first-generation computers are:",["ENIAC and UNIVAC","IBM PC","Apple Macintosh","IBM 360"],0],
-  ["Second-generation computers used:",["Transistors","Microprocessors","Vacuum tubes","ICs"],0],
-  ["Which high-level language was introduced in the second generation?",["FORTRAN","COBOL","Java","Pascal"],0],
-  ["Third-generation computers used:",["Integrated Circuits (ICs)","Transistors","Microprocessors","Vacuum tubes"],0],
-  ["Which languages were used in third-generation computers?",["FORTRAN and COBOL","Java and Python","C and C++","Pascal and COBOL"],0],
-  ["Fourth-generation computers used:",["Transistors","Vacuum tubes","ICs","Microprocessors"],3],
-  ["Which generation saw the development of GUIs?",["First","Fourth","Third","Second"],1],
-  ["Fifth-generation computers are based on:",["Transistors","Microprocessors","Artificial Intelligence","Vacuum tubes"],2],
-  ["Analog computers process:",["Discrete data","Text data","Continuously varying physical quantities","Binary data"],2],
-  ["Which is an example of an analog computer?",["Laptop","Desktop","Car speedometer","Smartphone"],2],
-  ["Digital computers process information using:",["Binary number system","Roman numerals","Decimal system","Analog signals"],0],
-  ["Hybrid computers are a combination of:",["General and special purpose","Analog and digital","Super and mainframe","Mini and micro"],1],
-  ["ICU monitors in hospitals are an example of:",["Digital computers","Analog computers","Super computers","Hybrid computers"],3],
-  ["Which is the fastest, largest, and most powerful computer?",["Mini","Supercomputer","Mainframe","Microcomputer"],1],
-  ["PARAM is an example of:",["Mainframe","Minicomputer","Supercomputer","Microcomputer"],2],
-  ["Mainframe computers are used by:",["Individuals","Small shops","Large organizations like banks","Students"],2],
-  ["IBM zSeries is an example of:",["Mainframe","Microcomputer","Minicomputer","Supercomputer"],0],
-  ["Minicomputers are used as:",["Personal computers","Network servers","Embedded systems","Supercomputers"],1],
-  ["Desktop, laptop, and smartphone are examples of:",["Microcomputers","Mainframes","Minicomputers","Supercomputers"],0],
-  ["General-purpose computers can:",["Only play games","Perform a wide variety of tasks","Perform only one task","Only do calculations"],1],
-  ["Special-purpose computers are also called:",["Hybrid computers","Analog computers","General computers","Dedicated computers"],3],
-  ["ATMs are an example of:",["Mainframes","Special-purpose computers","Supercomputers","General-purpose computers"],1],
-  ["AI stands for:",["Automatic Intelligence","Advanced Intelligence","Applied Intelligence","Artificial Intelligence"],3],
-  ["VR stands for:",["Virtual Response","Virtual Reality","Visual Reality","Video Reality"],1],
-  ["Who protects networks and prevents data loss?",["Network Administrator","Information Security Analyst","Web Designer","Software Engineer"],1],
-  ["Who builds websites with attractive designs?",["Network Administrator","Graphic Designer","Web Designer","DBA"],2],
-  ["Which career is called the police force of the internet?",["DBA","Information Security Analyst","Software Engineer","Teacher"],1],
-  ["The System Unit contains:",["Motherboard, CPU, RAM, and other components","Only RAM","Only CPU","Only motherboard"],0],
-  ["The motherboard is like the:",["Nervous system","Eyes","Heart","Brain"],0],
-  ["The CPU is called the:",["Memory","Heart of the computer","Nervous system","Brain of the computer"],3],
-  ["The CPU's speed mainly depends on:",["Monitor size","Keyboard type","Mouse speed","Clock speed, cores, and cache"],3],
-  ["Which component performs arithmetic and logical operations?",["Cache","Control Unit","Clock","ALU"],3],
-  ["Which component acts like a traffic policeman?",["Control Unit","Register","Clock","ALU"],0],
-  ["Clock speed is measured in:",["MB and GB","Bits and bytes","KB and MB","MHz and GHz"],3],
-  ["Which is a temporary storage area that holds data being processed?",["Hard disk","ROM","Register","Cache"],2],
-  ["How many types of buses are there?",["5","2","4","3"],3],
-  ["Which bus carries command between different components?",["Data bus","Control bus","Address bus","System bus"],1],
-  ["Which bus carries the address of data but not the data itself?",["Memory bus","Control bus","Address bus","Data bus"],2],
-  ["Barcode scanners are examples of:",["Storage devices","Processing devices","Image scanning input devices","Output devices"],2],
-  ["An Operating System is a:",["Firmware","Hardware","Software","Input device"],2],
-  ["Which is NOT an operating system?",["MS Word","Android","Linux","Windows"],0],
-  ["Booting is the process of:",["Shutting down the computer","Cleaning the computer","Formatting the computer","Starting the computer operating system"],3],
-  ["Which OS function manages allocation and de-allocation of memory space?",["File Management","User Management","Process Management","Memory Management"],3],
-  ["Which OS function manages creation, deletion, suspension, and resumption of processes?",["Memory Management","I/O Management","Process Management","File Management"],2],
-  ["Which OS function controls who can use the computer and what they can do?",["Process Management","Memory Management","File Management","User Management"],3],
-  ["CLI stands for:",["Central Line Interface","Command Line Interface","Command Logic Interface","Computer Line Interface"],1],
-  ["In CLI, the user types commands at a place called:",["Desktop","Icon","Menu","Prompt"],3],
-  ["GUI stands for:",["Graphical User Interface","General User Interface","Guided User Interface","Graphical Utility Interface"],0],
-  ["Which interface is easier to use?",["CLI","Both are equal","GUI","Neither"],2],
-  ["Which interface is faster in use?",["Neither","CLI","Both are equal","GUI"],1],
-  ["In a single-user operating system, how many users can access the computer at a time?",["Multiple","Unlimited","Two","Single"],3],
-  ["Which is an example of a multi-user operating system?",["Windows 98","Linux","DOS","None"],1],
-  ["Batch processing runs programs with:",["Minimum human interaction","No programs","Only games","Maximum human interaction"],0],
-  ["In time-sharing OS, each task is given a short time slot called:",["Thread","Quantum","Batch","Process"],1],
-  ["Time-sharing systems are also called:",["Batch systems","Real-time systems","Single-tasking systems","Multitasking systems"],3],
-  ["Real-time OS is a:",["Time-bound operating system","Batch operating system","None","Single-user operating system"],0],
-  ["Missile systems and Air Traffic Control are examples of:",["Hard real-time systems","Soft real-time systems","Batch systems","Time-sharing systems"],0],
-  ["Online transactions and airline ticket reservation are examples of:",["Single-user systems","Hard real-time systems","Soft real-time systems","Batch systems"],2],
-  ["IBM OS/360 is an example of:",["Time-sharing OS","Single-user OS","Real-time OS","Batch processing OS"],3],
-  ["Which OS function provides device drivers to facilitate I/O functions?",["Memory Management","Process Management","File Management","I/O Management"],3],
-  ["Which OS function manages organization, storage, retrieval, naming, sharing, and protection of files?",["File Management","Memory Management","I/O Management","User Management"],0],
-  ["Android is an example of:",["CLI","Batch OS","GUI","None"],2],
-  ["MS-DOS is an example of:",["Hybrid","CLI","None","GUI"],1],
-  ["In a multi-user OS, resources are managed among users according to:",["Age","Requirement","Random selection","Alphabetical order"],1],
-  ["Which OS type allows multiple users to share computer resources simultaneously?",["Time-sharing","Single-user","None","Batch"],0],
-  ["Which OS type has a fixed time limit for processing?",["Time-sharing","Single-user","Real-time","Batch"],2],
-  ["Which is NOT a function of an operating system?",["Booting","Playing games","Resource Management","File Management"],1],
-  ["Windows and iOS are examples of:",["CLI","None","GUI","Batch OS"],2],
-  ["Which OS function creates and manages user accounts like Admin, Guest, or Standard User?",["User Management","File Management","Memory Management","Process Management"],0],
-  ["MS Word is a:",["Database software","Presentation software","Spreadsheet software","Word-processing software"],3],
-  ["MS Word allows users to:",["Only print documents","Only type text","Only save documents","Type, edit, format, and save text-based documents"],3],
-  ["MS Excel is a:",["Word-processing software","Spreadsheet software","Graphics software","Presentation software"],1],
-  ["MS Excel stores data using:",["Columns only","Rows only","Paragraphs","Rows, columns, and cells"],3],
-  ["Which MS Excel feature is specifically used to visualize data?",["All of these","Formulas","Pivot tables","Charts"],3],
-  ["MS Word has advanced features like:",["Tables and images","Conditional formatting","None","Charts and pivot tables"],0],
-  ["MS Excel has advanced features like:",["Tables and images","Advanced formatting and reviewing","Formulas, functions, charts, pivot tables","None"],2],
-  ["MS Word was first released in:",["1995","1985","1983","1990"],2],
-  ["MS Excel was first released in:",["1983","1990","1985","1995"],2],
-  ["MS Office for Windows is an example of:",["Entertainment software","Business software","Productivity software","Educational software"],2],
-  ["Data communication refers to the sharing of a virtual message between:",["Two devices","Two people only","Two companies","Two countries"],0],
-  ["The raw facts and figures are called:",["Knowledge","Information","Data","Wisdom"],2],
-  ["The word data is derived from:",["Greek language","French language","Arabic language","Latin language"],3],
-  ["Analog signals are:",["Digital only","Binary","Discrete","Waves that change with time period"],3],
-  ["A digital signal is represented as:",["Analog only","0 or 1","Continuous waves","None"],1],
-  ["Data Rate is measured in:",["Meters per second","Hertz","Decibels","Bits per second"],3],
-  ["SNR stands for:",["Sound to Noise Ratio","Signal to Number Ratio","System to Network Ratio","Signal to Noise Ratio"],3],
-  ["Which is NOT a component of a communication system?",["Receiver","Keyboard","Message","Sender"],1],
-  ["A protocol is:",["An agreement/rules between two parties","A cable","A hardware device","A signal"],0],
-  ["Which is a property of a good communication system?",["All of these","Accuracy","Delivery","Timeliness"],0],
-  ["In guided media, signals are transmitted using:",["Satellites","Infrared","Physical links (cables, wires)","Wireless waves"],2],
-  ["Which cable is made by two separate wires twisted together?",["None","Fiber-optic cable","Coaxial cable","Twisted pair cable"],3],
-  ["Which cable transmits data in the form of light?",["Twisted pair cable","Coaxial cable","None","Fiber-optic cable"],3],
-  ["Radio waves, microwaves, and infrared are types of:",["Bounded media","Wired media","Unguided media","Guided media"],2],
-  ["Which transmission is line-of-sight?",["Both B and C","Microwaves","Radio waves","Infrared"],0],
-  ["Transmission impairments include:",["Distortion","Attenuation","Noise","All of these"],3],
-  ["Attenuation is measured in:",["Hertz","Decibels","Meters","Bits"],1],
-  ["A switch connects:",["Multiple devices on a network","Only printers","Multiple networks","Only two computers"],0],
-  ["A router connects:",["Multiple devices on one network","Only printers","Only two computers","Multiple networks and finds the best path for data"],3],
-  ["A modem modulates digital signals into:",["Digital signals","Analog signals","Radio signals","Optical signals"],1],
+  [
+    "A computer is an electronic:",
+    [
+      "Drawing machine",
+      "Printing machine",
+      "Entertainment machine",
+      "Data processing machine",
+    ],
+    3,
+  ],
+  [
+    "First-generation computers used:",
+    ["Vacuum tubes", "Microprocessors", "Transistors", "ICs"],
+    0,
+  ],
+  [
+    "First-generation computers used which language for programming?",
+    ["C++", "Machine language", "FORTRAN", "COBOL"],
+    1,
+  ],
+  [
+    "Examples of first-generation computers are:",
+    ["ENIAC and UNIVAC", "IBM PC", "Apple Macintosh", "IBM 360"],
+    0,
+  ],
+  [
+    "Second-generation computers used:",
+    ["Transistors", "Microprocessors", "Vacuum tubes", "ICs"],
+    0,
+  ],
+  [
+    "Which high-level language was introduced in the second generation?",
+    ["FORTRAN", "COBOL", "Java", "Pascal"],
+    0,
+  ],
+  [
+    "Third-generation computers used:",
+    [
+      "Integrated Circuits (ICs)",
+      "Transistors",
+      "Microprocessors",
+      "Vacuum tubes",
+    ],
+    0,
+  ],
+  [
+    "Which languages were used in third-generation computers?",
+    ["FORTRAN and COBOL", "Java and Python", "C and C++", "Pascal and COBOL"],
+    0,
+  ],
+  [
+    "Fourth-generation computers used:",
+    ["Transistors", "Vacuum tubes", "ICs", "Microprocessors"],
+    3,
+  ],
+  [
+    "Which generation saw the development of GUIs?",
+    ["First", "Fourth", "Third", "Second"],
+    1,
+  ],
+  [
+    "Fifth-generation computers are based on:",
+    [
+      "Transistors",
+      "Microprocessors",
+      "Artificial Intelligence",
+      "Vacuum tubes",
+    ],
+    2,
+  ],
+  [
+    "Analog computers process:",
+    [
+      "Discrete data",
+      "Text data",
+      "Continuously varying physical quantities",
+      "Binary data",
+    ],
+    2,
+  ],
+  [
+    "Which is an example of an analog computer?",
+    ["Laptop", "Desktop", "Car speedometer", "Smartphone"],
+    2,
+  ],
+  [
+    "Digital computers process information using:",
+    [
+      "Binary number system",
+      "Roman numerals",
+      "Decimal system",
+      "Analog signals",
+    ],
+    0,
+  ],
+  [
+    "Hybrid computers are a combination of:",
+    [
+      "General and special purpose",
+      "Analog and digital",
+      "Super and mainframe",
+      "Mini and micro",
+    ],
+    1,
+  ],
+  [
+    "ICU monitors in hospitals are an example of:",
+    [
+      "Digital computers",
+      "Analog computers",
+      "Super computers",
+      "Hybrid computers",
+    ],
+    3,
+  ],
+  [
+    "Which is the fastest, largest, and most powerful computer?",
+    ["Mini", "Supercomputer", "Mainframe", "Microcomputer"],
+    1,
+  ],
+  [
+    "PARAM is an example of:",
+    ["Mainframe", "Minicomputer", "Supercomputer", "Microcomputer"],
+    2,
+  ],
+  [
+    "Mainframe computers are used by:",
+    [
+      "Individuals",
+      "Small shops",
+      "Large organizations like banks",
+      "Students",
+    ],
+    2,
+  ],
+  [
+    "IBM zSeries is an example of:",
+    ["Mainframe", "Microcomputer", "Minicomputer", "Supercomputer"],
+    0,
+  ],
+  [
+    "Minicomputers are used as:",
+    [
+      "Personal computers",
+      "Network servers",
+      "Embedded systems",
+      "Supercomputers",
+    ],
+    1,
+  ],
+  [
+    "Desktop, laptop, and smartphone are examples of:",
+    ["Microcomputers", "Mainframes", "Minicomputers", "Supercomputers"],
+    0,
+  ],
+  [
+    "General-purpose computers can:",
+    [
+      "Only play games",
+      "Perform a wide variety of tasks",
+      "Perform only one task",
+      "Only do calculations",
+    ],
+    1,
+  ],
+  [
+    "Special-purpose computers are also called:",
+    [
+      "Hybrid computers",
+      "Analog computers",
+      "General computers",
+      "Dedicated computers",
+    ],
+    3,
+  ],
+  [
+    "ATMs are an example of:",
+    [
+      "Mainframes",
+      "Special-purpose computers",
+      "Supercomputers",
+      "General-purpose computers",
+    ],
+    1,
+  ],
+  [
+    "AI stands for:",
+    [
+      "Automatic Intelligence",
+      "Advanced Intelligence",
+      "Applied Intelligence",
+      "Artificial Intelligence",
+    ],
+    3,
+  ],
+  [
+    "VR stands for:",
+    ["Virtual Response", "Virtual Reality", "Visual Reality", "Video Reality"],
+    1,
+  ],
+  [
+    "Who protects networks and prevents data loss?",
+    [
+      "Network Administrator",
+      "Information Security Analyst",
+      "Web Designer",
+      "Software Engineer",
+    ],
+    1,
+  ],
+  [
+    "Who builds websites with attractive designs?",
+    ["Network Administrator", "Graphic Designer", "Web Designer", "DBA"],
+    2,
+  ],
+  [
+    "Which career is called the police force of the internet?",
+    ["DBA", "Information Security Analyst", "Software Engineer", "Teacher"],
+    1,
+  ],
+  [
+    "The System Unit contains:",
+    [
+      "Motherboard, CPU, RAM, and other components",
+      "Only RAM",
+      "Only CPU",
+      "Only motherboard",
+    ],
+    0,
+  ],
+  [
+    "The motherboard is like the:",
+    ["Nervous system", "Eyes", "Heart", "Brain"],
+    0,
+  ],
+  [
+    "The CPU is called the:",
+    [
+      "Memory",
+      "Heart of the computer",
+      "Nervous system",
+      "Brain of the computer",
+    ],
+    3,
+  ],
+  [
+    "The CPU's speed mainly depends on:",
+    [
+      "Monitor size",
+      "Keyboard type",
+      "Mouse speed",
+      "Clock speed, cores, and cache",
+    ],
+    3,
+  ],
+  [
+    "Which component performs arithmetic and logical operations?",
+    ["Cache", "Control Unit", "Clock", "ALU"],
+    3,
+  ],
+  [
+    "Which component acts like a traffic policeman?",
+    ["Control Unit", "Register", "Clock", "ALU"],
+    0,
+  ],
+  [
+    "Clock speed is measured in:",
+    ["MB and GB", "Bits and bytes", "KB and MB", "MHz and GHz"],
+    3,
+  ],
+  [
+    "Which is a temporary storage area that holds data being processed?",
+    ["Hard disk", "ROM", "Register", "Cache"],
+    2,
+  ],
+  ["How many types of buses are there?", ["5", "2", "4", "3"], 3],
+  [
+    "Which bus carries command between different components?",
+    ["Data bus", "Control bus", "Address bus", "System bus"],
+    1,
+  ],
+  [
+    "Which bus carries the address of data but not the data itself?",
+    ["Memory bus", "Control bus", "Address bus", "Data bus"],
+    2,
+  ],
+  [
+    "Barcode scanners are examples of:",
+    [
+      "Storage devices",
+      "Processing devices",
+      "Image scanning input devices",
+      "Output devices",
+    ],
+    2,
+  ],
+  [
+    "An Operating System is a:",
+    ["Firmware", "Hardware", "Software", "Input device"],
+    2,
+  ],
+  [
+    "Which is NOT an operating system?",
+    ["MS Word", "Android", "Linux", "Windows"],
+    0,
+  ],
+  [
+    "Booting is the process of:",
+    [
+      "Shutting down the computer",
+      "Cleaning the computer",
+      "Formatting the computer",
+      "Starting the computer operating system",
+    ],
+    3,
+  ],
+  [
+    "Which OS function manages allocation and de-allocation of memory space?",
+    [
+      "File Management",
+      "User Management",
+      "Process Management",
+      "Memory Management",
+    ],
+    3,
+  ],
+  [
+    "Which OS function manages creation, deletion, suspension, and resumption of processes?",
+    [
+      "Memory Management",
+      "I/O Management",
+      "Process Management",
+      "File Management",
+    ],
+    2,
+  ],
+  [
+    "Which OS function controls who can use the computer and what they can do?",
+    [
+      "Process Management",
+      "Memory Management",
+      "File Management",
+      "User Management",
+    ],
+    3,
+  ],
+  [
+    "CLI stands for:",
+    [
+      "Central Line Interface",
+      "Command Line Interface",
+      "Command Logic Interface",
+      "Computer Line Interface",
+    ],
+    1,
+  ],
+  [
+    "In CLI, the user types commands at a place called:",
+    ["Desktop", "Icon", "Menu", "Prompt"],
+    3,
+  ],
+  [
+    "GUI stands for:",
+    [
+      "Graphical User Interface",
+      "General User Interface",
+      "Guided User Interface",
+      "Graphical Utility Interface",
+    ],
+    0,
+  ],
+  [
+    "Which interface is easier to use?",
+    ["CLI", "Both are equal", "GUI", "Neither"],
+    2,
+  ],
+  [
+    "Which interface is faster in use?",
+    ["Neither", "CLI", "Both are equal", "GUI"],
+    1,
+  ],
+  [
+    "In a single-user operating system, how many users can access the computer at a time?",
+    ["Multiple", "Unlimited", "Two", "Single"],
+    3,
+  ],
+  [
+    "Which is an example of a multi-user operating system?",
+    ["Windows 98", "Linux", "DOS", "None"],
+    1,
+  ],
+  [
+    "Batch processing runs programs with:",
+    [
+      "Minimum human interaction",
+      "No programs",
+      "Only games",
+      "Maximum human interaction",
+    ],
+    0,
+  ],
+  [
+    "In time-sharing OS, each task is given a short time slot called:",
+    ["Thread", "Quantum", "Batch", "Process"],
+    1,
+  ],
+  [
+    "Time-sharing systems are also called:",
+    [
+      "Batch systems",
+      "Real-time systems",
+      "Single-tasking systems",
+      "Multitasking systems",
+    ],
+    3,
+  ],
+  [
+    "Real-time OS is a:",
+    [
+      "Time-bound operating system",
+      "Batch operating system",
+      "None",
+      "Single-user operating system",
+    ],
+    0,
+  ],
+  [
+    "Missile systems and Air Traffic Control are examples of:",
+    [
+      "Hard real-time systems",
+      "Soft real-time systems",
+      "Batch systems",
+      "Time-sharing systems",
+    ],
+    0,
+  ],
+  [
+    "Online transactions and airline ticket reservation are examples of:",
+    [
+      "Single-user systems",
+      "Hard real-time systems",
+      "Soft real-time systems",
+      "Batch systems",
+    ],
+    2,
+  ],
+  [
+    "IBM OS/360 is an example of:",
+    [
+      "Time-sharing OS",
+      "Single-user OS",
+      "Real-time OS",
+      "Batch processing OS",
+    ],
+    3,
+  ],
+  [
+    "Which OS function provides device drivers to facilitate I/O functions?",
+    [
+      "Memory Management",
+      "Process Management",
+      "File Management",
+      "I/O Management",
+    ],
+    3,
+  ],
+  [
+    "Which OS function manages organization, storage, retrieval, naming, sharing, and protection of files?",
+    [
+      "File Management",
+      "Memory Management",
+      "I/O Management",
+      "User Management",
+    ],
+    0,
+  ],
+  ["Android is an example of:", ["CLI", "Batch OS", "GUI", "None"], 2],
+  ["MS-DOS is an example of:", ["Hybrid", "CLI", "None", "GUI"], 1],
+  [
+    "In a multi-user OS, resources are managed among users according to:",
+    ["Age", "Requirement", "Random selection", "Alphabetical order"],
+    1,
+  ],
+  [
+    "Which OS type allows multiple users to share computer resources simultaneously?",
+    ["Time-sharing", "Single-user", "None", "Batch"],
+    0,
+  ],
+  [
+    "Which OS type has a fixed time limit for processing?",
+    ["Time-sharing", "Single-user", "Real-time", "Batch"],
+    2,
+  ],
+  [
+    "Which is NOT a function of an operating system?",
+    ["Booting", "Playing games", "Resource Management", "File Management"],
+    1,
+  ],
+  ["Windows and iOS are examples of:", ["CLI", "None", "GUI", "Batch OS"], 2],
+  [
+    "Which OS function creates and manages user accounts like Admin, Guest, or Standard User?",
+    [
+      "User Management",
+      "File Management",
+      "Memory Management",
+      "Process Management",
+    ],
+    0,
+  ],
+  [
+    "MS Word is a:",
+    [
+      "Database software",
+      "Presentation software",
+      "Spreadsheet software",
+      "Word-processing software",
+    ],
+    3,
+  ],
+  [
+    "MS Word allows users to:",
+    [
+      "Only print documents",
+      "Only type text",
+      "Only save documents",
+      "Type, edit, format, and save text-based documents",
+    ],
+    3,
+  ],
+  [
+    "MS Excel is a:",
+    [
+      "Word-processing software",
+      "Spreadsheet software",
+      "Graphics software",
+      "Presentation software",
+    ],
+    1,
+  ],
+  [
+    "MS Excel stores data using:",
+    ["Columns only", "Rows only", "Paragraphs", "Rows, columns, and cells"],
+    3,
+  ],
+  [
+    "Which MS Excel feature is specifically used to visualize data?",
+    ["All of these", "Formulas", "Pivot tables", "Charts"],
+    3,
+  ],
+  [
+    "MS Word has advanced features like:",
+    [
+      "Tables and images",
+      "Conditional formatting",
+      "None",
+      "Charts and pivot tables",
+    ],
+    0,
+  ],
+  [
+    "MS Excel has advanced features like:",
+    [
+      "Tables and images",
+      "Advanced formatting and reviewing",
+      "Formulas, functions, charts, pivot tables",
+      "None",
+    ],
+    2,
+  ],
+  ["MS Word was first released in:", ["1995", "1985", "1983", "1990"], 2],
+  ["MS Excel was first released in:", ["1983", "1990", "1985", "1995"], 2],
+  [
+    "MS Office for Windows is an example of:",
+    [
+      "Entertainment software",
+      "Business software",
+      "Productivity software",
+      "Educational software",
+    ],
+    2,
+  ],
+  [
+    "Data communication refers to the sharing of a virtual message between:",
+    ["Two devices", "Two people only", "Two companies", "Two countries"],
+    0,
+  ],
+  [
+    "The raw facts and figures are called:",
+    ["Knowledge", "Information", "Data", "Wisdom"],
+    2,
+  ],
+  [
+    "The word data is derived from:",
+    ["Greek language", "French language", "Arabic language", "Latin language"],
+    3,
+  ],
+  [
+    "Analog signals are:",
+    [
+      "Digital only",
+      "Binary",
+      "Discrete",
+      "Waves that change with time period",
+    ],
+    3,
+  ],
+  [
+    "A digital signal is represented as:",
+    ["Analog only", "0 or 1", "Continuous waves", "None"],
+    1,
+  ],
+  [
+    "Data Rate is measured in:",
+    ["Meters per second", "Hertz", "Decibels", "Bits per second"],
+    3,
+  ],
+  [
+    "SNR stands for:",
+    [
+      "Sound to Noise Ratio",
+      "Signal to Number Ratio",
+      "System to Network Ratio",
+      "Signal to Noise Ratio",
+    ],
+    3,
+  ],
+  [
+    "Which is NOT a component of a communication system?",
+    ["Receiver", "Keyboard", "Message", "Sender"],
+    1,
+  ],
+  [
+    "A protocol is:",
+    [
+      "An agreement/rules between two parties",
+      "A cable",
+      "A hardware device",
+      "A signal",
+    ],
+    0,
+  ],
+  [
+    "Which is a property of a good communication system?",
+    ["All of these", "Accuracy", "Delivery", "Timeliness"],
+    0,
+  ],
+  [
+    "In guided media, signals are transmitted using:",
+    [
+      "Satellites",
+      "Infrared",
+      "Physical links (cables, wires)",
+      "Wireless waves",
+    ],
+    2,
+  ],
+  [
+    "Which cable is made by two separate wires twisted together?",
+    ["None", "Fiber-optic cable", "Coaxial cable", "Twisted pair cable"],
+    3,
+  ],
+  [
+    "Which cable transmits data in the form of light?",
+    ["Twisted pair cable", "Coaxial cable", "None", "Fiber-optic cable"],
+    3,
+  ],
+  [
+    "Radio waves, microwaves, and infrared are types of:",
+    ["Bounded media", "Wired media", "Unguided media", "Guided media"],
+    2,
+  ],
+  [
+    "Which transmission is line-of-sight?",
+    ["Both B and C", "Microwaves", "Radio waves", "Infrared"],
+    0,
+  ],
+  [
+    "Transmission impairments include:",
+    ["Distortion", "Attenuation", "Noise", "All of these"],
+    3,
+  ],
+  ["Attenuation is measured in:", ["Hertz", "Decibels", "Meters", "Bits"], 1],
+  [
+    "A switch connects:",
+    [
+      "Multiple devices on a network",
+      "Only printers",
+      "Multiple networks",
+      "Only two computers",
+    ],
+    0,
+  ],
+  [
+    "A router connects:",
+    [
+      "Multiple devices on one network",
+      "Only printers",
+      "Only two computers",
+      "Multiple networks and finds the best path for data",
+    ],
+    3,
+  ],
+  [
+    "A modem modulates digital signals into:",
+    ["Digital signals", "Analog signals", "Radio signals", "Optical signals"],
+    1,
+  ],
 ];
 
 const makeQuizQuestions = (questions) =>
@@ -1534,7 +2191,12 @@ const TENTH_GRADE_SINDH_QUIZ = [
   },
   {
     q: "An error that goes unnoticed by the compiler but produces an incorrect result is typically a:",
-    opts: ["Syntax Errors", "Semantic Errors", "Run- Time Errors", "Logical Errors"],
+    opts: [
+      "Syntax Errors",
+      "Semantic Errors",
+      "Run- Time Errors",
+      "Logical Errors",
+    ],
     ans: 3,
   },
   {
@@ -1613,7 +2275,7 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 2,
   },
   {
-    q: 'Loop within a loop is called ______ loop.',
+    q: "Loop within a loop is called ______ loop.",
     opts: ["inner", "outer", "enclosed", "nested"],
     ans: 3,
   },
@@ -1639,7 +2301,12 @@ const TENTH_GRADE_SINDH_QUIZ = [
   },
   {
     q: 'In "goto" statement label is followed by ______ character.',
-    opts: ["colon (:)" , "semi colon (;)" , "single quote (')", 'double quote (")'],
+    opts: [
+      "colon (:)",
+      "semi colon (;)",
+      "single quote (')",
+      'double quote (")',
+    ],
     ans: 0,
   },
   {
@@ -1663,12 +2330,17 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 1,
   },
   {
-    q: 'A computer is not intelligent because it cannot:',
-    opts: ["Store data", "Analyze problems on its own", "Display output", "Process instructions"],
+    q: "A computer is not intelligent because it cannot:",
+    opts: [
+      "Store data",
+      "Analyze problems on its own",
+      "Display output",
+      "Process instructions",
+    ],
     ans: 1,
   },
   {
-    q: 'In problem solving, you should:',
+    q: "In problem solving, you should:",
     opts: [
       "Select the first solution immediately",
       "Postpone selecting until several alternatives are considered",
@@ -1678,407 +2350,527 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 1,
   },
   {
-    q: 'An algorithm is a set of:',
-    opts: ["Random guesses", "Instructions/steps/rules to solve a problem", "Hardware components", "Data types"],
+    q: "An algorithm is a set of:",
+    opts: [
+      "Random guesses",
+      "Instructions/steps/rules to solve a problem",
+      "Hardware components",
+      "Data types",
+    ],
     ans: 1,
   },
   {
-    q: 'Which of the following is an example of an algorithm in daily life?',
-    opts: ["Making tea", "Taking directions", "Completing a study task", "All of these"],
+    q: "Which of the following is an example of an algorithm in daily life?",
+    opts: [
+      "Making tea",
+      "Taking directions",
+      "Completing a study task",
+      "All of these",
+    ],
     ans: 3,
   },
   {
-    q: 'Algorithms in computer problems can be expressed via:',
-    opts: ["Pseudocode and flowcharts", "Only flowcharts", "Only pseudocode", "Binary only"],
+    q: "Algorithms in computer problems can be expressed via:",
+    opts: [
+      "Pseudocode and flowcharts",
+      "Only flowcharts",
+      "Only pseudocode",
+      "Binary only",
+    ],
     ans: 0,
   },
   {
-    q: 'In the volume of a box algorithm, the formula used is:',
-    opts: ["volume = length + width + height", "volume = length × width × height", "volume = length − width", "volume = length / width"],
+    q: "In the volume of a box algorithm, the formula used is:",
+    opts: [
+      "volume = length + width + height",
+      "volume = length × width × height",
+      "volume = length − width",
+      "volume = length / width",
+    ],
     ans: 1,
   },
   {
-    q: 'A flowchart is a ______ representation of a step-by-step process.',
+    q: "A flowchart is a ______ representation of a step-by-step process.",
     opts: ["Textual", "Visual", "Binary", "Numeric"],
     ans: 1,
   },
   {
-    q: 'Which flowchart symbol represents start or end?',
+    q: "Which flowchart symbol represents start or end?",
     opts: ["Rectangle", "Diamond", "Oval", "Parallelogram"],
     ans: 2,
   },
   {
-    q: 'Which flowchart symbol denotes a process or operation step?',
+    q: "Which flowchart symbol denotes a process or operation step?",
     opts: ["Oval", "Rectangle", "Arrow", "Diamond"],
     ans: 1,
   },
   {
-    q: 'Which flowchart symbol signifies a point requiring yes/no?',
+    q: "Which flowchart symbol signifies a point requiring yes/no?",
     opts: ["Oval", "Rectangle", "Diamond", "Parallelogram"],
     ans: 2,
   },
   {
-    q: 'Which flowchart symbol is used for input or output operations?',
+    q: "Which flowchart symbol is used for input or output operations?",
     opts: ["Parallelogram", "Rectangle", "Diamond", "Arrow"],
     ans: 0,
   },
   {
-    q: 'A data structure is a particular way of:',
-    opts: ["Deleting data", "Organizing data in a computer", "Printing data", "Encrypting data"],
+    q: "A data structure is a particular way of:",
+    opts: [
+      "Deleting data",
+      "Organizing data in a computer",
+      "Printing data",
+      "Encrypting data",
+    ],
     ans: 1,
   },
   {
-    q: 'Which of the following is a linear data structure?',
+    q: "Which of the following is a linear data structure?",
     opts: ["Tree", "Graph", "Stack", "None of these"],
     ans: 2,
   },
   {
-    q: 'Which of the following is a non-linear data structure?',
+    q: "Which of the following is a non-linear data structure?",
     opts: ["Stack", "Queue", "Array", "Tree"],
     ans: 3,
   },
   {
-    q: 'In a Stack, items can be added or removed only at the:',
+    q: "In a Stack, items can be added or removed only at the:",
     opts: ["Bottom", "Top", "Middle", "Front"],
     ans: 1,
   },
   {
-    q: 'Stack follows which order?',
+    q: "Stack follows which order?",
     opts: ["FIFO", "LIFO", "Random", "Sequential"],
     ans: 1,
   },
   {
-    q: 'The term used to insert a new element into a stack is:',
+    q: "The term used to insert a new element into a stack is:",
     opts: ["Pop", "Push", "Enqueue", "Dequeue"],
     ans: 1,
   },
   {
-    q: 'Stack is in ______ state when it is completely full.',
+    q: "Stack is in ______ state when it is completely full.",
     opts: ["Underflow", "Overflow", "Empty", "Null"],
     ans: 1,
   },
   {
-    q: 'Which is an example of a Stack in a computer?',
-    opts: ["Printer spooler", "Browser Back Button", "Keyboard buffer", "None of these"],
+    q: "Which is an example of a Stack in a computer?",
+    opts: [
+      "Printer spooler",
+      "Browser Back Button",
+      "Keyboard buffer",
+      "None of these",
+    ],
     ans: 1,
   },
   {
-    q: 'A Queue follows which order?',
+    q: "A Queue follows which order?",
     opts: ["LIFO", "FILO", "FIFO", "Random"],
     ans: 2,
   },
   {
-    q: 'In a Queue, deletions take place at the:',
+    q: "In a Queue, deletions take place at the:",
     opts: ["Rear/tail", "Front/head", "Top", "Bottom"],
     ans: 1,
   },
   {
-    q: 'The process to add an element into a queue is called:',
+    q: "The process to add an element into a queue is called:",
     opts: ["Push", "Pop", "Enqueue", "Dequeue"],
     ans: 2,
   },
   {
-    q: 'Which is an example of a Queue in a computer?',
-    opts: ["Undo/Redo", "Browser history", "Printer Spooler", "Stack of plates"],
+    q: "Which is an example of a Queue in a computer?",
+    opts: [
+      "Undo/Redo",
+      "Browser history",
+      "Printer Spooler",
+      "Stack of plates",
+    ],
     ans: 2,
   },
   {
-    q: 'An array holds data elements of:',
-    opts: ["Different data types", "Same data type", "Only characters", "Only floats"],
+    q: "An array holds data elements of:",
+    opts: [
+      "Different data types",
+      "Same data type",
+      "Only characters",
+      "Only floats",
+    ],
     ans: 1,
   },
   {
-    q: 'The index of an array starts from:',
+    q: "The index of an array starts from:",
     opts: ["1", "0", "-1", "2"],
     ans: 1,
   },
   {
-    q: 'In a tree, the first node is called the:',
+    q: "In a tree, the first node is called the:",
     opts: ["Child node", "Root node", "Leaf node", "Edge"],
     ans: 1,
   },
   {
-    q: 'A binary tree allows each node to have at most:',
+    q: "A binary tree allows each node to have at most:",
     opts: ["One child", "Two children", "Three children", "Unlimited children"],
     ans: 1,
   },
   {
-    q: 'A graph consists of nodes/vertices and:',
+    q: "A graph consists of nodes/vertices and:",
     opts: ["Roots", "Edges", "Leaves", "Indexes"],
     ans: 1,
   },
   {
-    q: 'In an undirected graph, edges are:',
-    opts: ["One-directional", "Bidirectional", "Not connected", "Weighted only"],
+    q: "In an undirected graph, edges are:",
+    opts: [
+      "One-directional",
+      "Bidirectional",
+      "Not connected",
+      "Weighted only",
+    ],
     ans: 1,
   },
   {
-    q: 'In a directed graph, edges:',
-    opts: ["Go in both directions", "Only go in one direction", "Are absent", "Form a tree"],
+    q: "In a directed graph, edges:",
+    opts: [
+      "Go in both directions",
+      "Only go in one direction",
+      "Are absent",
+      "Form a tree",
+    ],
     ans: 1,
   },
   {
-    q: 'A set of instructions that perform a specific task is called a:',
+    q: "A set of instructions that perform a specific task is called a:",
     opts: ["Hardware", "Computer program", "Translator", "Compiler"],
     ans: 1,
   },
   {
-    q: 'Syntax in programming is like:',
+    q: "Syntax in programming is like:",
     opts: ["A compiler", "Grammar of programming", "An error", "A variable"],
     ans: 1,
   },
   {
-    q: 'Which of the following is a high-level language?',
+    q: "Which of the following is a high-level language?",
     opts: ["Machine language", "Assembly language", "Python", "Binary"],
     ans: 2,
   },
   {
-    q: 'Low-level languages can directly communicate with:',
+    q: "Low-level languages can directly communicate with:",
     opts: ["The user", "The hardware", "The internet", "Other programs"],
     ans: 1,
   },
   {
-    q: 'Machine-level language is written in:',
+    q: "Machine-level language is written in:",
     opts: ["English words", "Binary (0s and 1s)", "Pseudocode", "Flowcharts"],
     ans: 1,
   },
   {
-    q: 'Assembly language requires a(n) ______ to convert it into machine code.',
+    q: "Assembly language requires a(n) ______ to convert it into machine code.",
     opts: ["Compiler", "Interpreter", "Assembler", "Linker"],
     ans: 2,
   },
   {
-    q: 'Which language combines low-level hardware control with readable syntax?',
+    q: "Which language combines low-level hardware control with readable syntax?",
     opts: ["Machine-level", "Assembly", "Middle-level", "High-level"],
     ans: 2,
   },
   {
-    q: 'Examples of middle-level languages include:',
+    q: "Examples of middle-level languages include:",
     opts: ["Python, Java", "C, C++, Rust", "Binary, Assembly", "HTML, CSS"],
     ans: 1,
   },
   {
-    q: 'High-level languages are:',
-    opts: ["Machine-dependent", "Portable and machine-independent", "Written in binary", "Not readable by humans"],
+    q: "High-level languages are:",
+    opts: [
+      "Machine-dependent",
+      "Portable and machine-independent",
+      "Written in binary",
+      "Not readable by humans",
+    ],
     ans: 1,
   },
   {
-    q: 'A translator is needed to convert ______ into low-level language.',
+    q: "A translator is needed to convert ______ into low-level language.",
     opts: ["Machine code", "Source code", "Binary", "Hardware"],
     ans: 1,
   },
   {
-    q: 'How many main types of language translators are commonly taught, including assemblers?',
+    q: "How many main types of language translators are commonly taught, including assemblers?",
     opts: ["2", "3", "4", "5"],
     ans: 1,
   },
   {
-    q: 'A compiler converts high-level language into low-level language:',
-    opts: ["Line by line", "All at once", "Instruction by instruction", "Never"],
+    q: "A compiler converts high-level language into low-level language:",
+    opts: [
+      "Line by line",
+      "All at once",
+      "Instruction by instruction",
+      "Never",
+    ],
     ans: 1,
   },
   {
-    q: 'An interpreter translates code:',
+    q: "An interpreter translates code:",
     opts: ["All at once", "Line by line", "Only at the end", "In binary"],
     ans: 1,
   },
   {
-    q: 'Which translator creates an executable file?',
+    q: "Which translator creates an executable file?",
     opts: ["Interpreter", "Compiler", "Assembler", "None"],
     ans: 1,
   },
   {
-    q: 'Examples of compilers include:',
+    q: "Examples of compilers include:",
     opts: ["CPython", "GCC, Clang, javac", "NASM", "Node.js"],
     ans: 1,
   },
   {
-    q: 'An assembler translates:',
-    opts: ["High-level to machine code", "Assembly language to machine code", "Machine to assembly", "Binary to decimal"],
+    q: "An assembler translates:",
+    opts: [
+      "High-level to machine code",
+      "Assembly language to machine code",
+      "Machine to assembly",
+      "Binary to decimal",
+    ],
     ans: 1,
   },
   {
-    q: 'A syntax error occurs when:',
-    opts: ["The program crashes at runtime", "Code violates the rules of a programming language", "The output is incorrect", "The program is slow"],
+    q: "A syntax error occurs when:",
+    opts: [
+      "The program crashes at runtime",
+      "Code violates the rules of a programming language",
+      "The output is incorrect",
+      "The program is slow",
+    ],
     ans: 1,
   },
   {
-    q: 'Which error occurs during program execution after successful compilation?',
+    q: "Which error occurs during program execution after successful compilation?",
     opts: ["Syntax error", "Run-time error", "Logic error", "Compile error"],
     ans: 1,
   },
   {
-    q: 'Dividing by zero is an example of:',
+    q: "Dividing by zero is an example of:",
     opts: ["Syntax error", "Run-time error", "Logic error", "None"],
     ans: 1,
   },
   {
-    q: 'A logic error:',
-    opts: ["Stops the program from running", "Produces incorrect output while appearing error-free", "Is caught by the compiler", "Shows error messages"],
+    q: "A logic error:",
+    opts: [
+      "Stops the program from running",
+      "Produces incorrect output while appearing error-free",
+      "Is caught by the compiler",
+      "Shows error messages",
+    ],
     ans: 1,
   },
   {
-    q: 'C++ was created by:',
-    opts: ["Dennis Ritchie", "Bjarne Stroustrup", "James Gosling", "Guido van Rossum"],
+    q: "C++ was created by:",
+    opts: [
+      "Dennis Ritchie",
+      "Bjarne Stroustrup",
+      "James Gosling",
+      "Guido van Rossum",
+    ],
     ans: 1,
   },
   {
-    q: 'C++ is a(n):',
-    opts: ["Low-level language", "High-level general-purpose language", "Assembly language", "Machine language"],
+    q: "C++ is a(n):",
+    opts: [
+      "Low-level language",
+      "High-level general-purpose language",
+      "Assembly language",
+      "Machine language",
+    ],
     ans: 1,
   },
   {
-    q: 'A reserved word in C++ is a word whose meaning is:',
-    opts: ["Not defined", "Already defined by the compiler", "User-defined", "Optional"],
+    q: "A reserved word in C++ is a word whose meaning is:",
+    opts: [
+      "Not defined",
+      "Already defined by the compiler",
+      "User-defined",
+      "Optional",
+    ],
     ans: 1,
   },
   {
-    q: 'Which of the following is a reserved word in C++?',
+    q: "Which of the following is a reserved word in C++?",
     opts: ["myVar", "int", "student_name", "total"],
     ans: 1,
   },
   {
-    q: 'Data types are like containers with specific:',
+    q: "Data types are like containers with specific:",
     opts: ["Colors", "Format and size", "Fonts", "Speeds"],
     ans: 1,
   },
   {
-    q: 'The size of an int is typically:',
+    q: "The size of an int is typically:",
     opts: ["1 byte", "4 bytes", "8 bytes", "2 bytes"],
     ans: 1,
   },
   {
-    q: 'A constant is a data item whose value:',
-    opts: ["Changes during runtime", "Cannot be changed during runtime", "Is always zero", "Is always text"],
+    q: "A constant is a data item whose value:",
+    opts: [
+      "Changes during runtime",
+      "Cannot be changed during runtime",
+      "Is always zero",
+      "Is always text",
+    ],
     ans: 1,
   },
   {
-    q: 'Which keyword is used to make a data item constant?',
+    q: "Which keyword is used to make a data item constant?",
     opts: ["static", "final", "const", "fixed"],
     ans: 2,
   },
   {
-    q: 'A variable is a data item whose value:',
-    opts: ["Cannot change", "Can be changed during runtime", "Is always fixed", "Is always a string"],
+    q: "A variable is a data item whose value:",
+    opts: [
+      "Cannot change",
+      "Can be changed during runtime",
+      "Is always fixed",
+      "Is always a string",
+    ],
     ans: 1,
   },
   {
-    q: 'Which of the following is a valid variable name?',
+    q: "Which of the following is a valid variable name?",
     opts: ["2ndValue", "my Var", "_count", "int"],
     ans: 2,
   },
   {
-    q: 'Variable names in C++ are:',
-    opts: ["Case insensitive", "Case sensitive", "Always lowercase", "Always uppercase"],
+    q: "Variable names in C++ are:",
+    opts: [
+      "Case insensitive",
+      "Case sensitive",
+      "Always lowercase",
+      "Always uppercase",
+    ],
     ans: 1,
   },
   {
-    q: 'Declaring a variable means to:',
-    opts: ["Assign a value", "Reserve a space for data item", "Delete data", "Print data"],
+    q: "Declaring a variable means to:",
+    opts: [
+      "Assign a value",
+      "Reserve a space for data item",
+      "Delete data",
+      "Print data",
+    ],
     ans: 1,
   },
   {
-    q: 'Initializing a variable means to:',
-    opts: ["Reserve space only", "Reserve space and put data in it", "Delete the variable", "Rename the variable"],
+    q: "Initializing a variable means to:",
+    opts: [
+      "Reserve space only",
+      "Reserve space and put data in it",
+      "Delete the variable",
+      "Rename the variable",
+    ],
     ans: 1,
   },
   {
-    q: 'A variable that stores a sequence of characters (text) is called a:',
+    q: "A variable that stores a sequence of characters (text) is called a:",
     opts: ["Integer", "Float", "String", "Boolean"],
     ans: 2,
   },
   {
-    q: 'Which header file is used for input/output in C++?',
+    q: "Which header file is used for input/output in C++?",
     opts: ["stdio.h", "iostream", "conio.h", "stdlib.h"],
     ans: 1,
   },
   {
-    q: 'Execution of a C++ program begins at:',
+    q: "Execution of a C++ program begins at:",
     opts: ["#include", "using namespace std", "int main()", "cout"],
     ans: 2,
   },
   {
-    q: 'Comment statements are:',
-    opts: ["Executed by the compiler", "Ignored by the compiler", "Printed on screen", "Stored in variables"],
+    q: "Comment statements are:",
+    opts: [
+      "Executed by the compiler",
+      "Ignored by the compiler",
+      "Printed on screen",
+      "Stored in variables",
+    ],
     ans: 1,
   },
   {
-    q: 'A single-line comment starts with:',
+    q: "A single-line comment starts with:",
     opts: ["/*", "//", "#", "--"],
     ans: 1,
   },
   {
-    q: 'Multi-line comments are placed inside:',
+    q: "Multi-line comments are placed inside:",
     opts: ["// //", "/* */", "{ }", "( )"],
     ans: 1,
   },
   {
-    q: 'Which object is used to display output in C++?',
+    q: "Which object is used to display output in C++?",
     opts: ["cin", "cout", "getch", "puts"],
     ans: 1,
   },
   {
-    q: 'The insertion operator (<<) is used with:',
+    q: "The insertion operator (<<) is used with:",
     opts: ["cin", "cout", "getch", "gets"],
     ans: 1,
   },
   {
-    q: 'Which function reads data from the keyboard using the extraction operator (>>)?',
+    q: "Which function reads data from the keyboard using the extraction operator (>>)?",
     opts: ["cout", "cin", "puts", "gets"],
     ans: 1,
   },
   {
-    q: 'getch() is defined in which header file?',
+    q: "getch() is defined in which header file?",
     opts: ["iostream", "conio.h", "stdio.h", "stdlib.h"],
     ans: 1,
   },
   {
-    q: 'Every statement in C++ must be terminated with a:',
+    q: "Every statement in C++ must be terminated with a:",
     opts: ["Colon", "Semicolon", "Comma", "Period"],
     ans: 1,
   },
   {
-    q: 'Which escape sequence is used for a new line?',
+    q: "Which escape sequence is used for a new line?",
     opts: ["\\t", "\\n", "\\a", "\\"],
     ans: 1,
   },
   {
-    q: 'Which escape sequence causes a beep sound?',
+    q: "Which escape sequence causes a beep sound?",
     opts: ["\\n", "\\t", "\\a", '"'],
     ans: 2,
   },
   {
-    q: 'The escape sequence \\t stands for:',
+    q: "The escape sequence \\t stands for:",
     opts: ["New line", "Horizontal tab", "Alert", "Backslash"],
     ans: 1,
   },
   {
-    q: 'Operators perform operations on:',
+    q: "Operators perform operations on:",
     opts: ["Variables only", "Operands", "Headers", "Comments"],
     ans: 1,
   },
   {
-    q: 'Which operator is used to find the remainder of a division?',
+    q: "Which operator is used to find the remainder of a division?",
     opts: ["/", "*", "%", "+"],
     ans: 2,
   },
   {
-    q: 'The increment operator is represented by:',
+    q: "The increment operator is represented by:",
     opts: ["--", "++", "+=", "**"],
     ans: 1,
   },
   {
-    q: 'In prefix increment (++a), the value is incremented:',
+    q: "In prefix increment (++a), the value is incremented:",
     opts: ["After printing", "Before printing", "Never", "Only at the end"],
     ans: 1,
   },
   {
-    q: 'In postfix increment (a++), the value is incremented:',
+    q: "In postfix increment (a++), the value is incremented:",
     opts: ["Before printing", "After printing", "Immediately", "Never"],
     ans: 1,
   },
   {
-    q: 'Relational operators return:',
+    q: "Relational operators return:",
     opts: ["Numbers", "True (1) or False (0)", "Strings", "Characters"],
     ans: 1,
   },
@@ -2088,130 +2880,155 @@ const TENTH_GRADE_SINDH_QUIZ = [
     ans: 1,
   },
   {
-    q: 'The logical AND operator is:',
+    q: "The logical AND operator is:",
     opts: ["||", "&&", "!", "&"],
     ans: 1,
   },
   {
-    q: 'The assignment operator is:',
+    q: "The assignment operator is:",
     opts: ["==", "=", "!=", "<="],
     ans: 1,
   },
   {
-    q: 'The equal to operator is:',
+    q: "The equal to operator is:",
     opts: ["=", "==", "!=", ":="],
     ans: 1,
   },
   {
-    q: 'Control statements are used to:',
-    opts: ["Store data", "Control the direction/flow of a program", "Print output", "Declare variables"],
+    q: "Control statements are used to:",
+    opts: [
+      "Store data",
+      "Control the direction/flow of a program",
+      "Print output",
+      "Declare variables",
+    ],
     ans: 1,
   },
   {
-    q: 'C++ has how many types of control statements?',
+    q: "C++ has how many types of control statements?",
     opts: ["2", "3", "4", "5"],
     ans: 1,
   },
   {
-    q: 'Which of the following is a selection/decision-making structure?',
+    q: "Which of the following is a selection/decision-making structure?",
     opts: ["for", "while", "if", "break"],
     ans: 2,
   },
   {
-    q: 'The basic decision statement in C++ is:',
+    q: "The basic decision statement in C++ is:",
     opts: ["switch", "if", "for", "goto"],
     ans: 1,
   },
   {
-    q: 'In an if-else statement, if the condition is false, which block executes?',
+    q: "In an if-else statement, if the condition is false, which block executes?",
     opts: ["if block", "else block", "Both blocks", "No block"],
     ans: 1,
   },
   {
-    q: 'An if statement inside another if statement is called:',
+    q: "An if statement inside another if statement is called:",
     opts: ["else-if", "nested if", "switch", "loop"],
     ans: 1,
   },
   {
-    q: 'The switch statement checks a variable\'s value against:',
+    q: "The switch statement checks a variable's value against:",
     opts: ["Variables", "Case constants", "Relational operators", "Functions"],
     ans: 1,
   },
   {
-    q: 'Which statement is used to exit a switch case?',
+    q: "Which statement is used to exit a switch case?",
     opts: ["continue", "break", "return", "exit"],
     ans: 1,
   },
   {
-    q: 'Loops allow us to execute a block of statements:',
+    q: "Loops allow us to execute a block of statements:",
     opts: ["Once", "Several times", "Never", "Only if true"],
     ans: 1,
   },
   {
-    q: 'How many types of loops are in C++?',
+    q: "How many types of loops are in C++?",
     opts: ["2", "3", "4", "5"],
     ans: 1,
   },
   {
-    q: 'Which loop is usually used when the number of iterations is known?',
+    q: "Which loop is usually used when the number of iterations is known?",
     opts: ["while", "do-while", "for", "goto"],
     ans: 2,
   },
   {
-    q: 'The for loop is a:',
+    q: "The for loop is a:",
     opts: ["Post-test loop", "Pre-test loop", "Infinite loop", "Nested loop"],
     ans: 1,
   },
   {
-    q: 'The while loop is also called a(n) ______ repetition loop.',
+    q: "The while loop is also called a(n) ______ repetition loop.",
     opts: ["Definite", "Indefinite", "Counter-controlled", "Post-test"],
     ans: 1,
   },
   {
-    q: 'The do-while loop tests the condition:',
+    q: "The do-while loop tests the condition:",
     opts: ["At the start", "At the end", "In the middle", "Never"],
     ans: 1,
   },
   {
-    q: 'The do-while loop executes its body at least:',
+    q: "The do-while loop executes its body at least:",
     opts: ["Zero times", "Once", "Twice", "Never"],
     ans: 1,
   },
   {
-    q: 'A loop inside another loop is called:',
+    q: "A loop inside another loop is called:",
     opts: ["Infinite loop", "Nested loop", "Double loop", "Pre-test loop"],
     ans: 1,
   },
   {
-    q: 'The break statement is used to:',
-    opts: ["Continue the loop", "Exit the loop or switch", "Restart the program", "Pause execution"],
+    q: "The break statement is used to:",
+    opts: [
+      "Continue the loop",
+      "Exit the loop or switch",
+      "Restart the program",
+      "Pause execution",
+    ],
     ans: 1,
   },
   {
-    q: 'The continue statement:',
-    opts: ["Exits the loop", "Skips the remaining statements and continues the loop", "Terminates the program", "Does nothing"],
+    q: "The continue statement:",
+    opts: [
+      "Exits the loop",
+      "Skips the remaining statements and continues the loop",
+      "Terminates the program",
+      "Does nothing",
+    ],
     ans: 1,
   },
   {
-    q: 'The goto statement transfers control:',
+    q: "The goto statement transfers control:",
     opts: ["Conditionally", "Unconditionally", "Never", "Only in loops"],
     ans: 1,
   },
   {
-    q: 'A labeled statement is any identifier followed by a:',
+    q: "A labeled statement is any identifier followed by a:",
     opts: ["Semicolon", "Colon", "Comma", "Period"],
     ans: 1,
   },
   {
-    q: 'The return statement:',
-    opts: ["Continues the loop", "Terminates the execution of a function", "Restarts the program", "Prints output"],
+    q: "The return statement:",
+    opts: [
+      "Continues the loop",
+      "Terminates the execution of a function",
+      "Restarts the program",
+      "Prints output",
+    ],
     ans: 1,
   },
   {
-    q: 'The exit() function is used to:',
-    opts: ["Pause the program", "Terminate the C++ program", "Restart the program", "Loop the program"],
+    q: "The exit() function is used to:",
+    opts: [
+      "Pause the program",
+      "Terminate the C++ program",
+      "Restart the program",
+      "Loop the program",
+    ],
     ans: 1,
-  }
+  },
 ];
 
 CATEGORIES["10th-sindh-board"].quiz = TENTH_GRADE_SINDH_QUIZ;
@@ -2219,17 +3036,32 @@ CATEGORIES["10th-sindh-board"].quiz = TENTH_GRADE_SINDH_QUIZ;
 const NINTH_GRADE_FEDERAL_QUIZ = [
   {
     q: "What computing machine was capable of taking input from punch cards and storing data in memory?",
-    opts: ["Abacus", "Analytical Engine", "Tabulating Machine", "Differential Analyzer"],
+    opts: [
+      "Abacus",
+      "Analytical Engine",
+      "Tabulating Machine",
+      "Differential Analyzer",
+    ],
     ans: 1,
   },
   {
     q: "What technology replaced vacuum tubes in second-generation computers?",
-    opts: ["Transistors", "Integrated Circuits (ICs)", "Microprocessors", "Magnetic tapes"],
+    opts: [
+      "Transistors",
+      "Integrated Circuits (ICs)",
+      "Microprocessors",
+      "Magnetic tapes",
+    ],
     ans: 0,
   },
   {
     q: "Which computer generation introduced the use of Integrated Circuits (ICs)?",
-    opts: ["First Generation", "Second Generation", "Third Generation", "Fourth Generation"],
+    opts: [
+      "First Generation",
+      "Second Generation",
+      "Third Generation",
+      "Fourth Generation",
+    ],
     ans: 2,
   },
   {
@@ -2239,7 +3071,12 @@ const NINTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Which component of the microprocessor controls the working of input/output devices and storage devices?",
-    opts: ["Arithmetic Logic Unit (ALU)", "Control Unit (CU)", "Memory Address Register (MAR)", "Data Register (DR)"],
+    opts: [
+      "Arithmetic Logic Unit (ALU)",
+      "Control Unit (CU)",
+      "Memory Address Register (MAR)",
+      "Data Register (DR)",
+    ],
     ans: 1,
   },
   {
@@ -2249,7 +3086,12 @@ const NINTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "What is the main purpose of Cache memory?",
-    opts: ["Store program instructions", "Provide high-speed storage", "Control input/output devices", "Perform arithmetic operations"],
+    opts: [
+      "Store program instructions",
+      "Provide high-speed storage",
+      "Control input/output devices",
+      "Perform arithmetic operations",
+    ],
     ans: 1,
   },
   {
@@ -2264,17 +3106,32 @@ const NINTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "In Von Neumann architecture, where are instruction data and program data stored?",
-    opts: ["In separate memory units", "In the same memory unit", "In the processor's registers", "In the cache memory"],
+    opts: [
+      "In separate memory units",
+      "In the same memory unit",
+      "In the processor's registers",
+      "In the cache memory",
+    ],
     ans: 1,
   },
   {
     q: "What is the primary function of the buses in a computer's memory system?",
-    opts: ["Control memory operations", "Display graphics", "Transmit data between components", "Perform arithmetic operations"],
+    opts: [
+      "Control memory operations",
+      "Display graphics",
+      "Transmit data between components",
+      "Perform arithmetic operations",
+    ],
     ans: 2,
   },
   {
     q: "What is the primary function of the Presentation Layer in the OSI model?",
-    opts: ["Establishing connections between computers", "Converting data into a standard format", "Deciding the physical path of data", "Sending data in both directions simultaneously"],
+    opts: [
+      "Establishing connections between computers",
+      "Converting data into a standard format",
+      "Deciding the physical path of data",
+      "Sending data in both directions simultaneously",
+    ],
     ans: 1,
   },
   {
@@ -2289,7 +3146,12 @@ const NINTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Which network architecture requires each computer to act as either a server or a client but not both simultaneously?",
-    opts: ["Client/Server Network", "Peer-to-Peer Network", "Metropolitan Area Network (MAN)", "Wide Area Network (WAN)"],
+    opts: [
+      "Client/Server Network",
+      "Peer-to-Peer Network",
+      "Metropolitan Area Network (MAN)",
+      "Wide Area Network (WAN)",
+    ],
     ans: 0,
   },
   {
@@ -2304,12 +3166,22 @@ const NINTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Computational thinking is",
-    opts: ["Programming", "Thinking like a computer", "Coding", "Logically solving problems"],
+    opts: [
+      "Programming",
+      "Thinking like a computer",
+      "Coding",
+      "Logically solving problems",
+    ],
     ans: 3,
   },
   {
     q: "To solve Search problems, we need to",
-    opts: ["Provide the moves.", "Provide start state.", "Provide the end state.", "a, b and c"],
+    opts: [
+      "Provide the moves.",
+      "Provide start state.",
+      "Provide the end state.",
+      "a, b and c",
+    ],
     ans: 3,
   },
   {
@@ -2324,7 +3196,12 @@ const NINTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "In IPO Charts, we have",
-    opts: ["Input, Plan, Output", "Input, Program, Output", "Input, Process, Output", "Input, Proceed, Output"],
+    opts: [
+      "Input, Plan, Output",
+      "Input, Program, Output",
+      "Input, Process, Output",
+      "Input, Proceed, Output",
+    ],
     ans: 2,
   },
   {
@@ -2374,7 +3251,12 @@ const NINTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "The first value assigned to a variable after declaration is called ______.",
-    opts: ["Beginning value", "Starting value", "Initialization", "Substitution"],
+    opts: [
+      "Beginning value",
+      "Starting value",
+      "Initialization",
+      "Substitution",
+    ],
     ans: 2,
   },
   {
@@ -2389,17 +3271,32 @@ const NINTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "______ is the graphical representation of data through use of common charts, plots, infographics, and animations.",
-    opts: ["Data cleaning", "Missing values", "Data visualization", "Data hiding"],
+    opts: [
+      "Data cleaning",
+      "Missing values",
+      "Data visualization",
+      "Data hiding",
+    ],
     ans: 2,
   },
   {
     q: "______ is subset of Machine learning, with emphasis on the simulation or imitation of human brain's behavior by using artificial neural networks.",
-    opts: ["Data visualization", "Computer vision", "Deep learning", "Big Data"],
+    opts: [
+      "Data visualization",
+      "Computer vision",
+      "Deep learning",
+      "Big Data",
+    ],
     ans: 2,
   },
   {
     q: "______ is the use of data to predict future trends and events based on historical data.",
-    opts: ["Statistical analysis", "Predictive analysis", "Graphical analysis", "Deep learning"],
+    opts: [
+      "Statistical analysis",
+      "Predictive analysis",
+      "Graphical analysis",
+      "Deep learning",
+    ],
     ans: 1,
   },
   {
@@ -2414,7 +3311,12 @@ const NINTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "______ is limitation of big data.",
-    opts: ["Statistical data", "Unlimited growth of data", "Data visualization", "Predictive maintenance"],
+    opts: [
+      "Statistical data",
+      "Unlimited growth of data",
+      "Data visualization",
+      "Predictive maintenance",
+    ],
     ans: 1,
   },
   {
@@ -2430,126 +3332,822 @@ const NINTH_GRADE_FEDERAL_QUIZ = [
 ];
 
 NINTH_GRADE_FEDERAL_QUIZ.push(
-  { q: "A computer solves problems by:", opts: ["Thinking independently", "Accepting inputs, performing operations, and presenting outputs", "Guessing answers", "Random selection"], ans: 1 },
-  { q: "Computers can't think — they only perform operations written by us as:", opts: ["Hardware and software", "Algorithms and programs", "Inputs and outputs", "Data and information"], ans: 1 },
-  { q: "Before programming a computer to solve a problem, you must:", opts: ["Buy a new computer", "Understand the problem and create a solution", "Install new software", "Upgrade the processor"], ans: 1 },
-  { q: "Computation is mainly based on:", opts: ["Monitor and keyboard", "Processor and main memory", "Mouse and printer", "Speakers and microphone"], ans: 1 },
-  { q: "A problem is a:", opts: ["Solution to a challenge", "Challenge or situation that needs to be overcome", "Type of computer", "Programming language"], ans: 1 },
-  { q: "A problem where the input requires a binary response (Yes/No) is called:", opts: ["Search problem", "Counting problem", "Decision problem", "Sorting problem"], ans: 2 },
-  { q: "Is a given number a prime number? is an example of:", opts: ["Search problem", "Decision problem", "Counting problem", "Optimization problem"], ans: 1 },
-  { q: "In search problems, the node where the search starts is called:", opts: ["Goal", "Operation", "Initial State", "Link"], ans: 2 },
-  { q: "In search problems, the target or end condition is called:", opts: ["Initial State", "Goal", "Operation", "Node"], ans: 1 },
-  { q: "The Eight Puzzle Problem is an example of:", opts: ["Decision problem", "Search problem", "Counting problem", "Sorting problem"], ans: 1 },
-  { q: "If one event has A choices and another has B choices, the total unique combinations =:", opts: ["A + B", "A − B", "A × B", "A ÷ B"], ans: 2 },
-  { q: "If shirts = 5 and pants = 3, total outfits =:", opts: ["8", "15", "2", "53"], ans: 1 },
-  { q: "How many steps are there for simple problems?", opts: ["2", "3", "4", "6"], ans: 2 },
-  { q: "How many steps are there for complex problems?", opts: ["2", "6", "4", "3"], ans: 1 },
-  { q: "Breaking a large problem into manageable sub-problems is called:", opts: ["Abstraction", "Decomposition", "Pattern Recognition", "Algorithm Design"], ans: 1 },
-  { q: "Removing unnecessary details to focus on essential information is called:", opts: ["Decomposition", "Abstraction", "Pattern Recognition", "Algorithm Design"], ans: 1 },
-  { q: "Looking for patterns or similarities with previously solved problems is called:", opts: ["Decomposition", "Abstraction", "Pattern Recognition", "Algorithm Design"], ans: 2 },
-  { q: "Creating a step-by-step plan to solve a problem is called:", opts: ["Decomposition", "Abstraction", "Pattern Recognition", "Algorithm Design"], ans: 3 },
-  { q: "The IPO model stands for:", opts: ["Input-Process-Output", "Input-Program-Output", "Internal-Process-Output", "Input-Process-Operation"], ans: 0 },
-  { q: "The requirements/data given to the system from the environment is called:", opts: ["Output", "Processing", "Input", "Storage"], ans: 2 },
-  { q: "The result presented back to the environment is called:", opts: ["Input", "Processing", "Output", "Storage"], ans: 2 },
-  { q: "Logical thinking means analyzing a situation using:", opts: ["Emotion", "Reason", "Guesswork", "Luck"], ans: 1 },
-  { q: "Algorithmic thinking is about:", opts: ["Hardware design", "Problem-solving", "Graphic design", "Networking"], ans: 1 },
-  { q: "A diagrammatic representation of an algorithm is called:", opts: ["Concept map", "Flowchart", "Table", "Graph"], ans: 1 },
-  { q: "Which flowchart symbol represents start or end?", opts: ["Rectangle", "Diamond", "Oval", "Parallelogram"], ans: 2 },
-  { q: "Which flowchart symbol denotes a process or operation step?", opts: ["Oval", "Rectangle", "Arrow", "Diamond"], ans: 1 },
-  { q: "Which flowchart symbol signifies a point requiring a yes/no?", opts: ["Oval", "Rectangle", "Diamond", "Parallelogram"], ans: 2 },
-  { q: "Which flowchart symbol is used for input or output operations?", opts: ["Parallelogram", "Rectangle", "Diamond", "Arrow"], ans: 0 },
-  { q: "Which flowchart symbol indicates the flow between steps?", opts: ["Oval", "Rectangle", "Arrow", "Diamond"], ans: 2 },
-  { q: "The two methods used to design a solution are:", opts: ["Flowcharts and Concept Maps", "Tables and Graphs", "Charts and Diagrams", "Lists and Arrays"], ans: 0 },
-  { q: "A single document or page on the internet is called a:", opts: ["Website", "Webpage", "Web server", "Web browser"], ans: 1 },
-  { q: "A collection of many webpages linked together under one domain name is called a:", opts: ["Webpage", "Website", "Web application", "Web server"], ans: 1 },
-  { q: "URL stands for:", opts: ["Uniform Resource Locator", "Universal Resource Link", "Uniform Reference Locator", "United Resource Locator"], ans: 0 },
-  { q: "In a URL, \"https://\" represents the:", opts: ["Domain name", "Path", "Protocol", "Server"], ans: 2 },
-  { q: "In a URL, \"/home\" represents the:", opts: ["Protocol", "Domain name", "Path", "Server"], ans: 2 },
-  { q: "A tool/website that helps you find information on the internet is called a:", opts: ["Browser", "Search Engine", "Web server", "URL"], ans: 1 },
-  { q: "Which is NOT a search engine?", opts: ["Google", "Bing", "Yahoo", "Photoshop"], ans: 3 },
-  { q: "A service that stores your website's files on a server is called:", opts: ["Web hosting service", "Search engine", "Web browser", "URL"], ans: 0 },
-  { q: "An interactive program that runs in a browser and allows you to do things is called a:", opts: ["Webpage", "Website", "Web application", "Web server"], ans: 2 },
-  { q: "Which is an example of a web application?", opts: ["A news article", "Gmail", "A static portfolio page", "A business brochure site"], ans: 1 },
-  { q: "A website where content stays the same for every user is called:", opts: ["Dynamic website", "Static website", "Web application", "Search engine"], ans: 1 },
-  { q: "A website where content changes based on the user, time, or actions is called:", opts: ["Static website", "Dynamic website", "Webpage", "Web server"], ans: 1 },
-  { q: "Which is an example of a dynamic website?", opts: ["A personal portfolio page", "A small business brochure site", "Facebook", "A landing page with fixed information"], ans: 2 },
-  { q: "Front-end development deals with:", opts: ["Server and database", "Everything the user sees and interacts with directly", "Application logic", "Data storage"], ans: 1 },
-  { q: "Which technology is used for structure in front-end development?", opts: ["CSS", "JavaScript", "HTML", "PHP"], ans: 2 },
-  { q: "Which technology is used for styling in front-end development?", opts: ["HTML", "CSS", "JavaScript", "Python"], ans: 1 },
-  { q: "Which technology is used for interactivity in front-end development?", opts: ["HTML", "CSS", "JavaScript", "Java"], ans: 2 },
-  { q: "Back-end development deals with:", opts: ["Everything the user sees", "Server, database, and application logic", "Only design", "Only animations"], ans: 1 },
-  { q: "Which is a back-end language?", opts: ["HTML", "CSS", "Python", "None"], ans: 2 },
-  { q: "Which is a database used in back-end development?", opts: ["MySQL", "Photoshop", "Chrome", "Firefox"], ans: 0 },
-  { q: "HTML stands for:", opts: ["Hypertext Markup Language", "Hypertext Making Language", "High-level Text Markup Language", "Hyperlink Text Markup Language"], ans: 0 },
-  { q: "Tags in HTML are written with:", opts: ["Parentheses ( )", "Curly braces { }", "Angle brackets < >", "Square brackets [ ]"], ans: 2 },
-  { q: "Which tag is used for a paragraph in HTML?", opts: ["<h1>", "<p>", "<div>", "<span>"], ans: 1 },
-  { q: "Which tag is used to define the largest heading?", opts: ["<h6>", "<h1>", "<head>", "<title>"], ans: 1 },
-  { q: "Which tag does NOT need an ending tag?", opts: ["<p>", "<h1>", "<br>", "<div>"], ans: 2 },
-  { q: "The <title> tag is used to define:", opts: ["The main content", "The name of the website shown on the browser tab", "The metadata", "The body"], ans: 1 },
-  { q: "The <body> tag is used to write:", opts: ["Metadata", "Actual content like headings, paragraphs, links, buttons", "Title", "Links to CSS files"], ans: 1 },
-  { q: "How many heading tags are there in HTML?", opts: ["3", "4", "5", "6"], ans: 3 },
-  { q: "Which tag takes the space of only the content?", opts: ["<div>", "<span>", "<p>", "<body>"], ans: 1 },
-  { q: "Which tag takes the space of the entire width?", opts: ["<span>", "<div>", "<b>", "<i>"], ans: 1 },
-  { q: "Which tag is used to make characters bold?", opts: ["<i>", "<b>", "<u>", "<em>"], ans: 1 },
-  { q: "Which tag is used to show text in italics?", opts: ["<b>", "<i>", "<u>", "<strong>"], ans: 1 },
-  { q: "Which tag is used for superscript?", opts: ["<sub>", "<sup>", "<small>", "<u>"], ans: 1 },
-  { q: "Which tag is used for subscript?", opts: ["<sup>", "<sub>", "<small>", "<u>"], ans: 1 },
-  { q: "Which tag is used to insert an image?", opts: ["<img>", "<image>", "<pic>", "<src>"], ans: 0 },
-  { q: "Which tag is used to define bullets?", opts: ["<ol>", "<ul>", "<li>", "<bullet>"], ans: 1 },
-  { q: "Which tag is used to define numbering?", opts: ["<ul>", "<ol>", "<li>", "<number>"], ans: 1 },
-  { q: "Which tag is also called an anchor tag or hyperlink?", opts: ["<link>", "<a>", "<href>", "<url>"], ans: 1 },
-  { q: "Which tag is used to generate a table?", opts: ["<tab>", "<table>", "<tr>", "<td>"], ans: 1 },
-  { q: "Which tag is used to add a video?", opts: ["<media>", "<video>", "<movie>", "<clip>"], ans: 1 },
-  { q: "CSS stands for:", opts: ["Cascading Style Sheets", "Creative Style Sheets", "Computer Style Sheets", "Cascading Sheet Styles"], ans: 0 },
-  { q: "How many ways are there to incorporate CSS in HTML?", opts: ["2", "3", "4", "5"], ans: 1 },
-  { q: "In which type of CSS do we apply styling in the opening tag?", opts: ["Internal CSS", "External CSS", "Inline CSS", "None"], ans: 2 },
-  { q: "In which type of CSS do we apply styling using a style tag inside the head?", opts: ["Inline CSS", "Internal CSS", "External CSS", "None"], ans: 1 },
-  { q: "In which type of CSS do we apply styling by integrating an external CSS file link?", opts: ["Inline CSS", "Internal CSS", "External CSS", "None"], ans: 2 },
-  { q: "JavaScript is a:", opts: ["Markup language", "Style sheet language", "Lightweight dynamic programming language", "Database language"], ans: 2 },
-  { q: "JavaScript code can be embedded in HTML with which tag?", opts: ["<js>", "<script>", "<javascript>", "<code>"], ans: 1 },
-  { q: "Which keywords are used to declare variables in JavaScript?", opts: ["int, float", "var, let", "dim, set", "declare, define"], ans: 1 },
-  { q: "JavaScript is:", opts: ["Case insensitive", "Case sensitive", "Not a programming language", "Only for styling"], ans: 1 },
-  { q: "Which operator is used to find the remainder in JavaScript?", opts: ["/", "*", "%", "+"], ans: 2 },
-  { q: "Which keywords are used for conditional statements in JavaScript?", opts: ["for, while", "if, else if, else", "switch, case", "do, while"], ans: 1 },
-  { q: "Which operator means \"is equal\" in JavaScript?", opts: ["=", "==", "!=", "<="], ans: 1 },
-  { q: "Which statement requires a task to be done multiple times?", opts: ["Conditional statement", "Iterative statement", "Declaration statement", "Assignment statement"], ans: 1 },
-  { q: "A loop inside a loop is called:", opts: ["Infinite loop", "Nested loop", "Double loop", "Pre-test loop"], ans: 1 },
-  { q: "An array is a data type that holds:", opts: ["Different data types", "A homogeneous set of elements", "Only numbers", "Only strings"], ans: 1 },
+  {
+    q: "A computer solves problems by:",
+    opts: [
+      "Thinking independently",
+      "Accepting inputs, performing operations, and presenting outputs",
+      "Guessing answers",
+      "Random selection",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Computers can't think — they only perform operations written by us as:",
+    opts: [
+      "Hardware and software",
+      "Algorithms and programs",
+      "Inputs and outputs",
+      "Data and information",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Before programming a computer to solve a problem, you must:",
+    opts: [
+      "Buy a new computer",
+      "Understand the problem and create a solution",
+      "Install new software",
+      "Upgrade the processor",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Computation is mainly based on:",
+    opts: [
+      "Monitor and keyboard",
+      "Processor and main memory",
+      "Mouse and printer",
+      "Speakers and microphone",
+    ],
+    ans: 1,
+  },
+  {
+    q: "A problem is a:",
+    opts: [
+      "Solution to a challenge",
+      "Challenge or situation that needs to be overcome",
+      "Type of computer",
+      "Programming language",
+    ],
+    ans: 1,
+  },
+  {
+    q: "A problem where the input requires a binary response (Yes/No) is called:",
+    opts: [
+      "Search problem",
+      "Counting problem",
+      "Decision problem",
+      "Sorting problem",
+    ],
+    ans: 2,
+  },
+  {
+    q: "Is a given number a prime number? is an example of:",
+    opts: [
+      "Search problem",
+      "Decision problem",
+      "Counting problem",
+      "Optimization problem",
+    ],
+    ans: 1,
+  },
+  {
+    q: "In search problems, the node where the search starts is called:",
+    opts: ["Goal", "Operation", "Initial State", "Link"],
+    ans: 2,
+  },
+  {
+    q: "In search problems, the target or end condition is called:",
+    opts: ["Initial State", "Goal", "Operation", "Node"],
+    ans: 1,
+  },
+  {
+    q: "The Eight Puzzle Problem is an example of:",
+    opts: [
+      "Decision problem",
+      "Search problem",
+      "Counting problem",
+      "Sorting problem",
+    ],
+    ans: 1,
+  },
+  {
+    q: "If one event has A choices and another has B choices, the total unique combinations =:",
+    opts: ["A + B", "A − B", "A × B", "A ÷ B"],
+    ans: 2,
+  },
+  {
+    q: "If shirts = 5 and pants = 3, total outfits =:",
+    opts: ["8", "15", "2", "53"],
+    ans: 1,
+  },
+  {
+    q: "How many steps are there for simple problems?",
+    opts: ["2", "3", "4", "6"],
+    ans: 2,
+  },
+  {
+    q: "How many steps are there for complex problems?",
+    opts: ["2", "6", "4", "3"],
+    ans: 1,
+  },
+  {
+    q: "Breaking a large problem into manageable sub-problems is called:",
+    opts: [
+      "Abstraction",
+      "Decomposition",
+      "Pattern Recognition",
+      "Algorithm Design",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Removing unnecessary details to focus on essential information is called:",
+    opts: [
+      "Decomposition",
+      "Abstraction",
+      "Pattern Recognition",
+      "Algorithm Design",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Looking for patterns or similarities with previously solved problems is called:",
+    opts: [
+      "Decomposition",
+      "Abstraction",
+      "Pattern Recognition",
+      "Algorithm Design",
+    ],
+    ans: 2,
+  },
+  {
+    q: "Creating a step-by-step plan to solve a problem is called:",
+    opts: [
+      "Decomposition",
+      "Abstraction",
+      "Pattern Recognition",
+      "Algorithm Design",
+    ],
+    ans: 3,
+  },
+  {
+    q: "The IPO model stands for:",
+    opts: [
+      "Input-Process-Output",
+      "Input-Program-Output",
+      "Internal-Process-Output",
+      "Input-Process-Operation",
+    ],
+    ans: 0,
+  },
+  {
+    q: "The requirements/data given to the system from the environment is called:",
+    opts: ["Output", "Processing", "Input", "Storage"],
+    ans: 2,
+  },
+  {
+    q: "The result presented back to the environment is called:",
+    opts: ["Input", "Processing", "Output", "Storage"],
+    ans: 2,
+  },
+  {
+    q: "Logical thinking means analyzing a situation using:",
+    opts: ["Emotion", "Reason", "Guesswork", "Luck"],
+    ans: 1,
+  },
+  {
+    q: "Algorithmic thinking is about:",
+    opts: [
+      "Hardware design",
+      "Problem-solving",
+      "Graphic design",
+      "Networking",
+    ],
+    ans: 1,
+  },
+  {
+    q: "A diagrammatic representation of an algorithm is called:",
+    opts: ["Concept map", "Flowchart", "Table", "Graph"],
+    ans: 1,
+  },
+  {
+    q: "Which flowchart symbol represents start or end?",
+    opts: ["Rectangle", "Diamond", "Oval", "Parallelogram"],
+    ans: 2,
+  },
+  {
+    q: "Which flowchart symbol denotes a process or operation step?",
+    opts: ["Oval", "Rectangle", "Arrow", "Diamond"],
+    ans: 1,
+  },
+  {
+    q: "Which flowchart symbol signifies a point requiring a yes/no?",
+    opts: ["Oval", "Rectangle", "Diamond", "Parallelogram"],
+    ans: 2,
+  },
+  {
+    q: "Which flowchart symbol is used for input or output operations?",
+    opts: ["Parallelogram", "Rectangle", "Diamond", "Arrow"],
+    ans: 0,
+  },
+  {
+    q: "Which flowchart symbol indicates the flow between steps?",
+    opts: ["Oval", "Rectangle", "Arrow", "Diamond"],
+    ans: 2,
+  },
+  {
+    q: "The two methods used to design a solution are:",
+    opts: [
+      "Flowcharts and Concept Maps",
+      "Tables and Graphs",
+      "Charts and Diagrams",
+      "Lists and Arrays",
+    ],
+    ans: 0,
+  },
+  {
+    q: "A single document or page on the internet is called a:",
+    opts: ["Website", "Webpage", "Web server", "Web browser"],
+    ans: 1,
+  },
+  {
+    q: "A collection of many webpages linked together under one domain name is called a:",
+    opts: ["Webpage", "Website", "Web application", "Web server"],
+    ans: 1,
+  },
+  {
+    q: "URL stands for:",
+    opts: [
+      "Uniform Resource Locator",
+      "Universal Resource Link",
+      "Uniform Reference Locator",
+      "United Resource Locator",
+    ],
+    ans: 0,
+  },
+  {
+    q: 'In a URL, "https://" represents the:',
+    opts: ["Domain name", "Path", "Protocol", "Server"],
+    ans: 2,
+  },
+  {
+    q: 'In a URL, "/home" represents the:',
+    opts: ["Protocol", "Domain name", "Path", "Server"],
+    ans: 2,
+  },
+  {
+    q: "A tool/website that helps you find information on the internet is called a:",
+    opts: ["Browser", "Search Engine", "Web server", "URL"],
+    ans: 1,
+  },
+  {
+    q: "Which is NOT a search engine?",
+    opts: ["Google", "Bing", "Yahoo", "Photoshop"],
+    ans: 3,
+  },
+  {
+    q: "A service that stores your website's files on a server is called:",
+    opts: ["Web hosting service", "Search engine", "Web browser", "URL"],
+    ans: 0,
+  },
+  {
+    q: "An interactive program that runs in a browser and allows you to do things is called a:",
+    opts: ["Webpage", "Website", "Web application", "Web server"],
+    ans: 2,
+  },
+  {
+    q: "Which is an example of a web application?",
+    opts: [
+      "A news article",
+      "Gmail",
+      "A static portfolio page",
+      "A business brochure site",
+    ],
+    ans: 1,
+  },
+  {
+    q: "A website where content stays the same for every user is called:",
+    opts: [
+      "Dynamic website",
+      "Static website",
+      "Web application",
+      "Search engine",
+    ],
+    ans: 1,
+  },
+  {
+    q: "A website where content changes based on the user, time, or actions is called:",
+    opts: ["Static website", "Dynamic website", "Webpage", "Web server"],
+    ans: 1,
+  },
+  {
+    q: "Which is an example of a dynamic website?",
+    opts: [
+      "A personal portfolio page",
+      "A small business brochure site",
+      "Facebook",
+      "A landing page with fixed information",
+    ],
+    ans: 2,
+  },
+  {
+    q: "Front-end development deals with:",
+    opts: [
+      "Server and database",
+      "Everything the user sees and interacts with directly",
+      "Application logic",
+      "Data storage",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Which technology is used for structure in front-end development?",
+    opts: ["CSS", "JavaScript", "HTML", "PHP"],
+    ans: 2,
+  },
+  {
+    q: "Which technology is used for styling in front-end development?",
+    opts: ["HTML", "CSS", "JavaScript", "Python"],
+    ans: 1,
+  },
+  {
+    q: "Which technology is used for interactivity in front-end development?",
+    opts: ["HTML", "CSS", "JavaScript", "Java"],
+    ans: 2,
+  },
+  {
+    q: "Back-end development deals with:",
+    opts: [
+      "Everything the user sees",
+      "Server, database, and application logic",
+      "Only design",
+      "Only animations",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Which is a back-end language?",
+    opts: ["HTML", "CSS", "Python", "None"],
+    ans: 2,
+  },
+  {
+    q: "Which is a database used in back-end development?",
+    opts: ["MySQL", "Photoshop", "Chrome", "Firefox"],
+    ans: 0,
+  },
+  {
+    q: "HTML stands for:",
+    opts: [
+      "Hypertext Markup Language",
+      "Hypertext Making Language",
+      "High-level Text Markup Language",
+      "Hyperlink Text Markup Language",
+    ],
+    ans: 0,
+  },
+  {
+    q: "Tags in HTML are written with:",
+    opts: [
+      "Parentheses ( )",
+      "Curly braces { }",
+      "Angle brackets < >",
+      "Square brackets [ ]",
+    ],
+    ans: 2,
+  },
+  {
+    q: "Which tag is used for a paragraph in HTML?",
+    opts: ["<h1>", "<p>", "<div>", "<span>"],
+    ans: 1,
+  },
+  {
+    q: "Which tag is used to define the largest heading?",
+    opts: ["<h6>", "<h1>", "<head>", "<title>"],
+    ans: 1,
+  },
+  {
+    q: "Which tag does NOT need an ending tag?",
+    opts: ["<p>", "<h1>", "<br>", "<div>"],
+    ans: 2,
+  },
+  {
+    q: "The <title> tag is used to define:",
+    opts: [
+      "The main content",
+      "The name of the website shown on the browser tab",
+      "The metadata",
+      "The body",
+    ],
+    ans: 1,
+  },
+  {
+    q: "The <body> tag is used to write:",
+    opts: [
+      "Metadata",
+      "Actual content like headings, paragraphs, links, buttons",
+      "Title",
+      "Links to CSS files",
+    ],
+    ans: 1,
+  },
+  {
+    q: "How many heading tags are there in HTML?",
+    opts: ["3", "4", "5", "6"],
+    ans: 3,
+  },
+  {
+    q: "Which tag takes the space of only the content?",
+    opts: ["<div>", "<span>", "<p>", "<body>"],
+    ans: 1,
+  },
+  {
+    q: "Which tag takes the space of the entire width?",
+    opts: ["<span>", "<div>", "<b>", "<i>"],
+    ans: 1,
+  },
+  {
+    q: "Which tag is used to make characters bold?",
+    opts: ["<i>", "<b>", "<u>", "<em>"],
+    ans: 1,
+  },
+  {
+    q: "Which tag is used to show text in italics?",
+    opts: ["<b>", "<i>", "<u>", "<strong>"],
+    ans: 1,
+  },
+  {
+    q: "Which tag is used for superscript?",
+    opts: ["<sub>", "<sup>", "<small>", "<u>"],
+    ans: 1,
+  },
+  {
+    q: "Which tag is used for subscript?",
+    opts: ["<sup>", "<sub>", "<small>", "<u>"],
+    ans: 1,
+  },
+  {
+    q: "Which tag is used to insert an image?",
+    opts: ["<img>", "<image>", "<pic>", "<src>"],
+    ans: 0,
+  },
+  {
+    q: "Which tag is used to define bullets?",
+    opts: ["<ol>", "<ul>", "<li>", "<bullet>"],
+    ans: 1,
+  },
+  {
+    q: "Which tag is used to define numbering?",
+    opts: ["<ul>", "<ol>", "<li>", "<number>"],
+    ans: 1,
+  },
+  {
+    q: "Which tag is also called an anchor tag or hyperlink?",
+    opts: ["<link>", "<a>", "<href>", "<url>"],
+    ans: 1,
+  },
+  {
+    q: "Which tag is used to generate a table?",
+    opts: ["<tab>", "<table>", "<tr>", "<td>"],
+    ans: 1,
+  },
+  {
+    q: "Which tag is used to add a video?",
+    opts: ["<media>", "<video>", "<movie>", "<clip>"],
+    ans: 1,
+  },
+  {
+    q: "CSS stands for:",
+    opts: [
+      "Cascading Style Sheets",
+      "Creative Style Sheets",
+      "Computer Style Sheets",
+      "Cascading Sheet Styles",
+    ],
+    ans: 0,
+  },
+  {
+    q: "How many ways are there to incorporate CSS in HTML?",
+    opts: ["2", "3", "4", "5"],
+    ans: 1,
+  },
+  {
+    q: "In which type of CSS do we apply styling in the opening tag?",
+    opts: ["Internal CSS", "External CSS", "Inline CSS", "None"],
+    ans: 2,
+  },
+  {
+    q: "In which type of CSS do we apply styling using a style tag inside the head?",
+    opts: ["Inline CSS", "Internal CSS", "External CSS", "None"],
+    ans: 1,
+  },
+  {
+    q: "In which type of CSS do we apply styling by integrating an external CSS file link?",
+    opts: ["Inline CSS", "Internal CSS", "External CSS", "None"],
+    ans: 2,
+  },
+  {
+    q: "JavaScript is a:",
+    opts: [
+      "Markup language",
+      "Style sheet language",
+      "Lightweight dynamic programming language",
+      "Database language",
+    ],
+    ans: 2,
+  },
+  {
+    q: "JavaScript code can be embedded in HTML with which tag?",
+    opts: ["<js>", "<script>", "<javascript>", "<code>"],
+    ans: 1,
+  },
+  {
+    q: "Which keywords are used to declare variables in JavaScript?",
+    opts: ["int, float", "var, let", "dim, set", "declare, define"],
+    ans: 1,
+  },
+  {
+    q: "JavaScript is:",
+    opts: [
+      "Case insensitive",
+      "Case sensitive",
+      "Not a programming language",
+      "Only for styling",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Which operator is used to find the remainder in JavaScript?",
+    opts: ["/", "*", "%", "+"],
+    ans: 2,
+  },
+  {
+    q: "Which keywords are used for conditional statements in JavaScript?",
+    opts: ["for, while", "if, else if, else", "switch, case", "do, while"],
+    ans: 1,
+  },
+  {
+    q: 'Which operator means "is equal" in JavaScript?',
+    opts: ["=", "==", "!=", "<="],
+    ans: 1,
+  },
+  {
+    q: "Which statement requires a task to be done multiple times?",
+    opts: [
+      "Conditional statement",
+      "Iterative statement",
+      "Declaration statement",
+      "Assignment statement",
+    ],
+    ans: 1,
+  },
+  {
+    q: "A loop inside a loop is called:",
+    opts: ["Infinite loop", "Nested loop", "Double loop", "Pre-test loop"],
+    ans: 1,
+  },
+  {
+    q: "An array is a data type that holds:",
+    opts: [
+      "Different data types",
+      "A homogeneous set of elements",
+      "Only numbers",
+      "Only strings",
+    ],
+    ans: 1,
+  },
   { q: "Array indexing starts at:", opts: ["1", "0", "−1", "2"], ans: 1 },
-  { q: "A reusable block of code designed to perform a specific task is called a:", opts: ["Variable", "Function", "Array", "Loop"], ans: 1 },
-  { q: "A function has a name, can have parameters, and:", opts: ["Cannot be reused", "Can be called", "Cannot return values", "Is always built-in"], ans: 1 },
-  { q: "Which is a built-in function in JavaScript?", opts: ["sum()", "prompt()", "add()", "calculate()"], ans: 1 },
-  { q: "Debugging is the process of:", opts: ["Writing code", "Finding and fixing errors in a computer program", "Deleting code", "Running code"], ans: 1 },
-  { q: "Data is:", opts: ["Processed information", "Information or facts gathered about something", "A type of computer", "A programming language"], ans: 1 },
-  { q: "Data Analytics refers to:", opts: ["Collecting data", "Carefully studying data to identify patterns and draw conclusions", "Storing data", "Deleting data"], ans: 1 },
-  { q: "Quantitative data is:", opts: ["Descriptive", "Numeric", "Random", "Qualitative"], ans: 1 },
-  { q: "Qualitative data is:", opts: ["Numeric", "Descriptive", "Always countable", "Always measurable"], ans: 1 },
-  { q: "Data Science is an interdisciplinary field of:", opts: ["Only mathematics", "Mathematics, statistics, data analysis, and machine learning", "Only statistics", "Only programming"], ans: 1 },
-  { q: "A collection of related data organized in a structured way is called a:", opts: ["Database", "Dataset", "Data warehouse", "Data lake"], ans: 0 },
-  { q: "The analysis of the frequency of past events is called:", opts: ["Probability", "Statistics", "Data mining", "Big data"], ans: 1 },
-  { q: "The prediction of the likelihood of future events is called:", opts: ["Statistics", "Probability", "Data mining", "Big data"], ans: 1 },
-  { q: "A branch of AI that allows computers to learn from data without being explicitly programmed is:", opts: ["Deep Learning", "Machine Learning", "Data Mining", "NLP"], ans: 1 },
-  { q: "A subset of machine learning that imitates the human brain using artificial neural networks is:", opts: ["Machine Learning", "Deep Learning", "Data Mining", "NLP"], ans: 1 },
-  { q: "The process of discovering patterns and relationships in existing datasets is:", opts: ["Data visualization", "Data mining", "Big data", "Predictive analysis"], ans: 1 },
-  { q: "The graphical representation of data using charts, plots, and infographics is:", opts: ["Data mining", "Data visualization", "Big data", "Predictive analysis"], ans: 1 },
-  { q: "The use of data to predict future trends and events based on historical data is:", opts: ["Data visualization", "Predictive analysis", "Data mining", "Big data"], ans: 1 },
-  { q: "The study of interaction between human language and computers is:", opts: ["Machine Learning", "NLP", "Deep Learning", "Data Mining"], ans: 1 },
-  { q: "Which is a common use of NLP?", opts: ["Chatbots", "Language translators", "Sentiment analysis", "All of these"], ans: 3 },
-  { q: "Qualitative data is subdivided into:", opts: ["Discrete and Continuous", "Ordinal and Nominal", "Primary and Secondary", "Structured and Unstructured"], ans: 1 },
-  { q: "Data that has a specific ranking or order is called:", opts: ["Nominal data", "Ordinal data", "Discrete data", "Continuous data"], ans: 1 },
-  { q: "Data that does not have any order and can be labelled into mutually exclusive categories is:", opts: ["Ordinal data", "Nominal data", "Discrete data", "Continuous data"], ans: 1 },
-  { q: "Quantitative data is subdivided into:", opts: ["Ordinal and Nominal", "Discrete and Continuous", "Primary and Secondary", "Structured and Unstructured"], ans: 1 },
-  { q: "Countable data that can only take certain values is called:", opts: ["Continuous data", "Discrete data", "Nominal data", "Ordinal data"], ans: 1 },
-  { q: "Unspecified uncountable measurements are called:", opts: ["Discrete data", "Continuous data", "Nominal data", "Ordinal data"], ans: 1 },
-  { q: "Data collected directly by questionnaires, surveys, and experiments is called:", opts: ["Secondary data", "Primary data", "Big data", "Metadata"], ans: 1 },
-  { q: "Data collected from previously recorded sources is called:", opts: ["Primary data", "Secondary data", "Big data", "Metadata"], ans: 1 },
-  { q: "A structured or organized collection of data in table form ready for a data science project is called a:", opts: ["Database", "Dataset", "Data warehouse", "Data lake"], ans: 1 },
-  { q: "A storage where data is stored and can be accessed electronically for further operations is called a:", opts: ["Dataset", "Database", "Data warehouse", "Data lake"], ans: 1 },
-  { q: "To perform CRUD in a database, we need a:", opts: ["Word processor", "Database Management System (DBMS)", "Spreadsheet", "Browser"], ans: 1 },
-  { q: "Relational databases are managed by:", opts: ["MongoDB", "MySQL, Oracle, MS-Access, IBM Db2", "Cassandra", "Hadoop"], ans: 1 },
-  { q: "Non-relational databases are also called:", opts: ["SQL DBMS", "NoSQL DBMS", "Relational DBMS", "Traditional DBMS"], ans: 1 },
-  { q: "Big Data is characterized by the three Vs:", opts: ["Volume, Velocity, Variety", "Value, Vision, Variety", "Volume, Value, Vision", "Velocity, Value, Vision"], ans: 0 },
-  { q: "The amount of data in Big Data is referred to as:", opts: ["Velocity", "Variety", "Volume", "Value"], ans: 2 }
+  {
+    q: "A reusable block of code designed to perform a specific task is called a:",
+    opts: ["Variable", "Function", "Array", "Loop"],
+    ans: 1,
+  },
+  {
+    q: "A function has a name, can have parameters, and:",
+    opts: [
+      "Cannot be reused",
+      "Can be called",
+      "Cannot return values",
+      "Is always built-in",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Which is a built-in function in JavaScript?",
+    opts: ["sum()", "prompt()", "add()", "calculate()"],
+    ans: 1,
+  },
+  {
+    q: "Debugging is the process of:",
+    opts: [
+      "Writing code",
+      "Finding and fixing errors in a computer program",
+      "Deleting code",
+      "Running code",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Data is:",
+    opts: [
+      "Processed information",
+      "Information or facts gathered about something",
+      "A type of computer",
+      "A programming language",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Data Analytics refers to:",
+    opts: [
+      "Collecting data",
+      "Carefully studying data to identify patterns and draw conclusions",
+      "Storing data",
+      "Deleting data",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Quantitative data is:",
+    opts: ["Descriptive", "Numeric", "Random", "Qualitative"],
+    ans: 1,
+  },
+  {
+    q: "Qualitative data is:",
+    opts: ["Numeric", "Descriptive", "Always countable", "Always measurable"],
+    ans: 1,
+  },
+  {
+    q: "Data Science is an interdisciplinary field of:",
+    opts: [
+      "Only mathematics",
+      "Mathematics, statistics, data analysis, and machine learning",
+      "Only statistics",
+      "Only programming",
+    ],
+    ans: 1,
+  },
+  {
+    q: "A collection of related data organized in a structured way is called a:",
+    opts: ["Database", "Dataset", "Data warehouse", "Data lake"],
+    ans: 0,
+  },
+  {
+    q: "The analysis of the frequency of past events is called:",
+    opts: ["Probability", "Statistics", "Data mining", "Big data"],
+    ans: 1,
+  },
+  {
+    q: "The prediction of the likelihood of future events is called:",
+    opts: ["Statistics", "Probability", "Data mining", "Big data"],
+    ans: 1,
+  },
+  {
+    q: "A branch of AI that allows computers to learn from data without being explicitly programmed is:",
+    opts: ["Deep Learning", "Machine Learning", "Data Mining", "NLP"],
+    ans: 1,
+  },
+  {
+    q: "A subset of machine learning that imitates the human brain using artificial neural networks is:",
+    opts: ["Machine Learning", "Deep Learning", "Data Mining", "NLP"],
+    ans: 1,
+  },
+  {
+    q: "The process of discovering patterns and relationships in existing datasets is:",
+    opts: [
+      "Data visualization",
+      "Data mining",
+      "Big data",
+      "Predictive analysis",
+    ],
+    ans: 1,
+  },
+  {
+    q: "The graphical representation of data using charts, plots, and infographics is:",
+    opts: [
+      "Data mining",
+      "Data visualization",
+      "Big data",
+      "Predictive analysis",
+    ],
+    ans: 1,
+  },
+  {
+    q: "The use of data to predict future trends and events based on historical data is:",
+    opts: [
+      "Data visualization",
+      "Predictive analysis",
+      "Data mining",
+      "Big data",
+    ],
+    ans: 1,
+  },
+  {
+    q: "The study of interaction between human language and computers is:",
+    opts: ["Machine Learning", "NLP", "Deep Learning", "Data Mining"],
+    ans: 1,
+  },
+  {
+    q: "Which is a common use of NLP?",
+    opts: [
+      "Chatbots",
+      "Language translators",
+      "Sentiment analysis",
+      "All of these",
+    ],
+    ans: 3,
+  },
+  {
+    q: "Qualitative data is subdivided into:",
+    opts: [
+      "Discrete and Continuous",
+      "Ordinal and Nominal",
+      "Primary and Secondary",
+      "Structured and Unstructured",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Data that has a specific ranking or order is called:",
+    opts: ["Nominal data", "Ordinal data", "Discrete data", "Continuous data"],
+    ans: 1,
+  },
+  {
+    q: "Data that does not have any order and can be labelled into mutually exclusive categories is:",
+    opts: ["Ordinal data", "Nominal data", "Discrete data", "Continuous data"],
+    ans: 1,
+  },
+  {
+    q: "Quantitative data is subdivided into:",
+    opts: [
+      "Ordinal and Nominal",
+      "Discrete and Continuous",
+      "Primary and Secondary",
+      "Structured and Unstructured",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Countable data that can only take certain values is called:",
+    opts: ["Continuous data", "Discrete data", "Nominal data", "Ordinal data"],
+    ans: 1,
+  },
+  {
+    q: "Unspecified uncountable measurements are called:",
+    opts: ["Discrete data", "Continuous data", "Nominal data", "Ordinal data"],
+    ans: 1,
+  },
+  {
+    q: "Data collected directly by questionnaires, surveys, and experiments is called:",
+    opts: ["Secondary data", "Primary data", "Big data", "Metadata"],
+    ans: 1,
+  },
+  {
+    q: "Data collected from previously recorded sources is called:",
+    opts: ["Primary data", "Secondary data", "Big data", "Metadata"],
+    ans: 1,
+  },
+  {
+    q: "A structured or organized collection of data in table form ready for a data science project is called a:",
+    opts: ["Database", "Dataset", "Data warehouse", "Data lake"],
+    ans: 1,
+  },
+  {
+    q: "A storage where data is stored and can be accessed electronically for further operations is called a:",
+    opts: ["Dataset", "Database", "Data warehouse", "Data lake"],
+    ans: 1,
+  },
+  {
+    q: "To perform CRUD in a database, we need a:",
+    opts: [
+      "Word processor",
+      "Database Management System (DBMS)",
+      "Spreadsheet",
+      "Browser",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Relational databases are managed by:",
+    opts: [
+      "MongoDB",
+      "MySQL, Oracle, MS-Access, IBM Db2",
+      "Cassandra",
+      "Hadoop",
+    ],
+    ans: 1,
+  },
+  {
+    q: "Non-relational databases are also called:",
+    opts: ["SQL DBMS", "NoSQL DBMS", "Relational DBMS", "Traditional DBMS"],
+    ans: 1,
+  },
+  {
+    q: "Big Data is characterized by the three Vs:",
+    opts: [
+      "Volume, Velocity, Variety",
+      "Value, Vision, Variety",
+      "Volume, Value, Vision",
+      "Velocity, Value, Vision",
+    ],
+    ans: 0,
+  },
+  {
+    q: "The amount of data in Big Data is referred to as:",
+    opts: ["Velocity", "Variety", "Volume", "Value"],
+    ans: 2,
+  },
 );
 
 CATEGORIES["9th-federal-board"].quiz = NINTH_GRADE_FEDERAL_QUIZ;
@@ -2562,7 +4160,12 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Which of the following binary numbers corresponds to the hexadecimal number 3AF7?",
-    opts: ["0011 1010 1111 0111", "1100 0011 1011 1000", "1011 1100 0011 1011", "0011 1011 1111 1100"],
+    opts: [
+      "0011 1010 1111 0111",
+      "1100 0011 1011 1000",
+      "1011 1100 0011 1011",
+      "0011 1011 1111 1100",
+    ],
     ans: 0,
   },
   {
@@ -2582,12 +4185,22 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Which of the following is NOT a task performed by an operating system?",
-    opts: ["Process Management", "Memory Management", "Email Management", "Device Management"],
+    opts: [
+      "Process Management",
+      "Memory Management",
+      "Email Management",
+      "Device Management",
+    ],
     ans: 2,
   },
   {
     q: "Which operating-system technique keeps multiple programs in memory so the CPU can switch between them?",
-    opts: ["Multiprogramming", "Batch Processing", "Real-time", "Single-tasking"],
+    opts: [
+      "Multiprogramming",
+      "Batch Processing",
+      "Real-time",
+      "Single-tasking",
+    ],
     ans: 0,
   },
   {
@@ -2597,7 +4210,12 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "What is the main purpose of a process scheduler?",
-    opts: ["To manage file operations", "To manage CPU utilization", "To manage memory allocation", "To manage network resources"],
+    opts: [
+      "To manage file operations",
+      "To manage CPU utilization",
+      "To manage memory allocation",
+      "To manage network resources",
+    ],
     ans: 1,
   },
   {
@@ -2607,22 +4225,42 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "What is the main purpose of interrupts in an operating system?",
-    opts: ["To speed up CPU processing", "To slow down CPU processing", "To handle immediate events", "To manage network connections"],
+    opts: [
+      "To speed up CPU processing",
+      "To slow down CPU processing",
+      "To handle immediate events",
+      "To manage network connections",
+    ],
     ans: 2,
   },
   {
     q: "Which scheduling algorithm assigns CPU time in fixed time slices to each process in a cyclic order?",
-    opts: ["First-Come First-Served (FCFS)", "Shortest Job Next (SJN)", "Priority Scheduling", "Round Robin (RR)"],
+    opts: [
+      "First-Come First-Served (FCFS)",
+      "Shortest Job Next (SJN)",
+      "Priority Scheduling",
+      "Round Robin (RR)",
+    ],
     ans: 3,
   },
   {
     q: "Which memory-management technique divides virtual memory into fixed-size pages mapped to physical frames?",
-    opts: ["Segmentation", "Paging", "Fixed Partitioning", "Dynamic Partitioning"],
+    opts: [
+      "Segmentation",
+      "Paging",
+      "Fixed Partitioning",
+      "Dynamic Partitioning",
+    ],
     ans: 1,
   },
   {
     q: "Which type of hosting involves installing and running software on servers located within an organization's physical premises?",
-    opts: ["Shared Hosting", "Dedicated Hosting", "On-Premises Hosting", "Cloud Hosting"],
+    opts: [
+      "Shared Hosting",
+      "Dedicated Hosting",
+      "On-Premises Hosting",
+      "Cloud Hosting",
+    ],
     ans: 2,
   },
   {
@@ -2632,12 +4270,22 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Identify the activity that is based on personal preferences rather than algorithmic logic.",
-    opts: ["Sorting numbers in a list.", "Deciding what to eat for dinner.", "Determining if a number is a prime number.", "Calculating the square root of a number."],
+    opts: [
+      "Sorting numbers in a list.",
+      "Deciding what to eat for dinner.",
+      "Determining if a number is a prime number.",
+      "Calculating the square root of a number.",
+    ],
     ans: 1,
   },
   {
     q: "Counting Principle Problems could easily be understood by the use of",
-    opts: ["Graph representation", "Tree representation", "Clock representation", "Map representation"],
+    opts: [
+      "Graph representation",
+      "Tree representation",
+      "Clock representation",
+      "Map representation",
+    ],
     ans: 1,
   },
   {
@@ -2662,7 +4310,12 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "The Pigeonhole Principle states that if more items are placed into containers than the number of containers, then:",
-    opts: ["Some containers must be empty", "At least one container must hold more than one item", "All containers will be full", "Each item will be placed in a different container"],
+    opts: [
+      "Some containers must be empty",
+      "At least one container must hold more than one item",
+      "All containers will be full",
+      "Each item will be placed in a different container",
+    ],
     ans: 1,
   },
   {
@@ -2682,7 +4335,12 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Which of the following is primarily associated with front-end development?",
-    opts: ["Server management", "Database design", "User interface and design", "Memory Management"],
+    opts: [
+      "Server management",
+      "Database design",
+      "User interface and design",
+      "Memory Management",
+    ],
     ans: 2,
   },
   {
@@ -2707,7 +4365,12 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "What is the primary purpose of unit tests?",
-    opts: ["To validate code syntax", "To test individual parts of the code for correctness", "To style the user interface", "To deploy code to production"],
+    opts: [
+      "To validate code syntax",
+      "To test individual parts of the code for correctness",
+      "To style the user interface",
+      "To deploy code to production",
+    ],
     ans: 1,
   },
   {
@@ -2752,32 +4415,62 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "ADT stands for ______.",
-    opts: ["Abstract Data type", "Abstract document type", "All Data type", "Any Data type"],
+    opts: [
+      "Abstract Data type",
+      "Abstract document type",
+      "All Data type",
+      "Any Data type",
+    ],
     ans: 0,
   },
   {
     q: "Which organizational activity is directly improved by data-science insights derived using mathematics, statistics, and computer science?",
-    opts: ["Improved data visualization", "Better forecasting", "Increased accuracy", "Better decision-making"],
+    opts: [
+      "Improved data visualization",
+      "Better forecasting",
+      "Increased accuracy",
+      "Better decision-making",
+    ],
     ans: 3,
   },
   {
     q: "Which statement describes one common way AI is used in data science?",
-    opts: ["Data science is a subset of AI", "AI and machine-learning techniques can build predictive models from data", "AI and data science are unrelated", "Every data-science project requires AI"],
+    opts: [
+      "Data science is a subset of AI",
+      "AI and machine-learning techniques can build predictive models from data",
+      "AI and data science are unrelated",
+      "Every data-science project requires AI",
+    ],
     ans: 1,
   },
   {
     q: "According to the Turing Test, what evidence would support a machine's ability to exhibit human-like intelligence?",
-    opts: ["It calculates faster than a person", "It stores more information than a person", "It follows a fixed script", "An evaluator cannot reliably distinguish its responses from a human's"],
+    opts: [
+      "It calculates faster than a person",
+      "It stores more information than a person",
+      "It follows a fixed script",
+      "An evaluator cannot reliably distinguish its responses from a human's",
+    ],
     ans: 3,
   },
   {
     q: "What capability helps an AI chatbot interpret a user's current message in light of earlier turns in the conversation?",
-    opts: ["User experience", "Data security", "Contextual awareness", "Emotional intelligence"],
+    opts: [
+      "User experience",
+      "Data security",
+      "Contextual awareness",
+      "Emotional intelligence",
+    ],
     ans: 2,
   },
   {
     q: "Which is a workforce-related ethical concern about integrating AI into daily-life devices?",
-    opts: ["Job displacement due to automation.", "Increased energy consumption.", "Improved customer service.", "Enhanced data security."],
+    opts: [
+      "Job displacement due to automation.",
+      "Increased energy consumption.",
+      "Improved customer service.",
+      "Enhanced data security.",
+    ],
     ans: 0,
   },
   {
@@ -2787,22 +4480,42 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "A company wants to develop a system that categorizes customer feedback into positive, negative, or neutral. Which learning model would be most suitable?",
-    opts: ["Supervised learning", "Unsupervised learning", "Reinforcement learning", "Deep learning"],
+    opts: [
+      "Supervised learning",
+      "Unsupervised learning",
+      "Reinforcement learning",
+      "Deep learning",
+    ],
     ans: 0,
   },
   {
     q: "In reinforcement learning, how do rewards and penalties guide an agent?",
-    opts: ["Labeling data", "Evaluating performance", "Improving action choices", "Classifying outcomes"],
+    opts: [
+      "Labeling data",
+      "Evaluating performance",
+      "Improving action choices",
+      "Classifying outcomes",
+    ],
     ans: 2,
   },
   {
     q: "Which stage assesses a trained model's accuracy and reliability using validation or test data?",
-    opts: ["Model Deployment", "Model Evaluation", "Data Analysis", "Maintenance and Monitoring"],
+    opts: [
+      "Model Deployment",
+      "Model Evaluation",
+      "Data Analysis",
+      "Maintenance and Monitoring",
+    ],
     ans: 1,
   },
   {
-    q: "Which of the following is the key characteristic of the \"Data Cleaning\" stage in the data science life cycle?",
-    opts: ["Data collection", "Error removal and data organization", "Pattern identification", "Model deployment"],
+    q: 'Which of the following is the key characteristic of the "Data Cleaning" stage in the data science life cycle?',
+    opts: [
+      "Data collection",
+      "Error removal and data organization",
+      "Pattern identification",
+      "Model deployment",
+    ],
     ans: 1,
   },
   {
@@ -2817,12 +4530,22 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Computing problems usually have a well-defined:",
-    opts: ["Input and output", "Color and shape", "Size and weight", "Speed and distance"],
+    opts: [
+      "Input and output",
+      "Color and shape",
+      "Size and weight",
+      "Speed and distance",
+    ],
     ans: 0,
   },
   {
     q: "Finding the largest number in a list is an example of:",
-    opts: ["A computing problem", "A hardware problem", "A network problem", "A storage problem"],
+    opts: [
+      "A computing problem",
+      "A hardware problem",
+      "A network problem",
+      "A storage problem",
+    ],
     ans: 0,
   },
   {
@@ -2832,22 +4555,42 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Is n even? is an example of:",
-    opts: ["Search problem", "Decision problem", "Sorting problem", "Counting problem"],
+    opts: [
+      "Search problem",
+      "Decision problem",
+      "Sorting problem",
+      "Counting problem",
+    ],
     ans: 1,
   },
   {
     q: "In search problems, the solution is made by having a set of values that satisfy:",
-    opts: ["A random condition", "A certain criteria", "No condition", "Only numeric values"],
+    opts: [
+      "A random condition",
+      "A certain criteria",
+      "No condition",
+      "Only numeric values",
+    ],
     ans: 1,
   },
   {
     q: "Finding a route on a map from Islamabad to Lahore is an example of:",
-    opts: ["Decision problem", "Search problem", "Counting problem", "Sorting problem"],
+    opts: [
+      "Decision problem",
+      "Search problem",
+      "Counting problem",
+      "Sorting problem",
+    ],
     ans: 1,
   },
   {
     q: "An algorithm is a:",
-    opts: ["Random guess", "Well-defined, step-by-step procedure for solving a problem", "Hardware device", "Type of computer"],
+    opts: [
+      "Random guess",
+      "Well-defined, step-by-step procedure for solving a problem",
+      "Hardware device",
+      "Type of computer",
+    ],
     ans: 1,
   },
   {
@@ -2932,7 +4675,12 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Which searching algorithm works on sorted arrays by repeatedly dividing the search interval in half?",
-    opts: ["Linear Search", "Binary Search", "Sequential Search", "Random Search"],
+    opts: [
+      "Linear Search",
+      "Binary Search",
+      "Sequential Search",
+      "Random Search",
+    ],
     ans: 1,
   },
   {
@@ -2952,27 +4700,52 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Which of the following is an example of abstraction in daily life?",
-    opts: ["Maps focusing on roads and landmarks", "Smartphone icons representing apps", "Architectural models showing simple structures", "All of these"],
+    opts: [
+      "Maps focusing on roads and landmarks",
+      "Smartphone icons representing apps",
+      "Architectural models showing simple structures",
+      "All of these",
+    ],
     ans: 3,
   },
   {
     q: "A solution that handles only one situation is called:",
-    opts: ["Generic solution", "Specific solution", "General solution", "Universal solution"],
+    opts: [
+      "Generic solution",
+      "Specific solution",
+      "General solution",
+      "Universal solution",
+    ],
     ans: 1,
   },
   {
     q: "A solution that can handle similar problems anytime is called:",
-    opts: ["Specific solution", "Generic solution", "Temporary solution", "Single solution"],
+    opts: [
+      "Specific solution",
+      "Generic solution",
+      "Temporary solution",
+      "Single solution",
+    ],
     ans: 1,
   },
   {
     q: "What is the first step to create generalized solutions?",
-    opts: ["Extract Common Patterns", "Identify the Core Problem", "Develop a Generic Solution", "Test with Different Scenarios"],
+    opts: [
+      "Extract Common Patterns",
+      "Identify the Core Problem",
+      "Develop a Generic Solution",
+      "Test with Different Scenarios",
+    ],
     ans: 1,
   },
   {
     q: "Breaking down a system into smaller, manageable, interchangeable parts is called:",
-    opts: ["Abstraction", "Modular Design", "Decomposition", "Pattern Recognition"],
+    opts: [
+      "Abstraction",
+      "Modular Design",
+      "Decomposition",
+      "Pattern Recognition",
+    ],
     ans: 1,
   },
   {
@@ -2987,27 +4760,47 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "In dry run, what is the first step?",
-    opts: ["Simulate Execution", "Choose an Input", "Observe Output", "Compare with Expected Result"],
+    opts: [
+      "Simulate Execution",
+      "Choose an Input",
+      "Observe Output",
+      "Compare with Expected Result",
+    ],
     ans: 1,
   },
   {
     q: "Mistakes in the structure of an expression or statement are called:",
-    opts: ["Logical Errors", "Syntax Errors", "Runtime Errors", "Semantic Errors"],
+    opts: [
+      "Logical Errors",
+      "Syntax Errors",
+      "Runtime Errors",
+      "Semantic Errors",
+    ],
     ans: 1,
   },
   {
     q: "Mistakes in reasoning or planning that lead to incorrect conclusions are called:",
-    opts: ["Syntax Errors", "Logical Errors", "Runtime Errors", "Compilation Errors"],
+    opts: [
+      "Syntax Errors",
+      "Logical Errors",
+      "Runtime Errors",
+      "Compilation Errors",
+    ],
     ans: 1,
   },
   {
-    q: "In the search engine query example, \"Best smartphones for college students under 500\" has a:",
+    q: 'In the search engine query example, "Best smartphones for college students under 500" has a:',
     opts: ["Syntax error", "Logical error", "Runtime error", "No error"],
     ans: 3,
   },
   {
     q: "Front-end development deals with:",
-    opts: ["Server and database", "Everything the user sees and interacts with", "Application logic", "Data storage"],
+    opts: [
+      "Server and database",
+      "Everything the user sees and interacts with",
+      "Application logic",
+      "Data storage",
+    ],
     ans: 1,
   },
   {
@@ -3027,7 +4820,12 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Back-end development deals with:",
-    opts: ["Everything the user sees", "Server, database, and application logic", "Only design", "Only animations"],
+    opts: [
+      "Everything the user sees",
+      "Server, database, and application logic",
+      "Only design",
+      "Only animations",
+    ],
     ans: 1,
   },
   {
@@ -3096,28 +4894,48 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
     ans: 1,
   },
   {
-    q: "In the CSS animation code, what does \"2s\" represent?",
-    opts: ["Delay", "Duration of one full cycle", "Number of repetitions", "Speed"],
+    q: 'In the CSS animation code, what does "2s" represent?',
+    opts: [
+      "Delay",
+      "Duration of one full cycle",
+      "Number of repetitions",
+      "Speed",
+    ],
     ans: 1,
   },
   {
-    q: "In the CSS animation code, what does \"infinite\" represent?",
-    opts: ["One time", "Repeats forever", "Stops after 2 times", "No animation"],
+    q: 'In the CSS animation code, what does "infinite" represent?',
+    opts: [
+      "One time",
+      "Repeats forever",
+      "Stops after 2 times",
+      "No animation",
+    ],
     ans: 1,
   },
   {
-    q: "In the JavaScript code `document.getElementById(\"numberDisplay\").textContent = \"numbers\"`, what does `document` refer to?",
+    q: 'In the JavaScript code `document.getElementById("numberDisplay").textContent = "numbers"`, what does `document` refer to?',
     opts: ["A variable", "The whole web page", "A function", "An array"],
     ans: 1,
   },
   {
-    q: "In the same code, what does `.getElementById(\"numberDisplay\")` do?",
-    opts: ["Creates a new element", "Finds the HTML element with id=\"numberDisplay\"", "Deletes an element", "Changes the color"],
+    q: 'In the same code, what does `.getElementById("numberDisplay")` do?',
+    opts: [
+      "Creates a new element",
+      'Finds the HTML element with id="numberDisplay"',
+      "Deletes an element",
+      "Changes the color",
+    ],
     ans: 1,
   },
   {
     q: "In the same code, what does `.textContent` refer to?",
-    opts: ["The HTML tag", "The text inside that element", "The style", "The attribute"],
+    opts: [
+      "The HTML tag",
+      "The text inside that element",
+      "The style",
+      "The attribute",
+    ],
     ans: 1,
   },
   {
@@ -3132,17 +4950,32 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Unit test is a process to check:",
-    opts: ["The whole system", "A single module for its proper functionality", "Only the database", "Only the UI"],
+    opts: [
+      "The whole system",
+      "A single module for its proper functionality",
+      "Only the database",
+      "Only the UI",
+    ],
     ans: 1,
   },
   {
     q: "Debugging is a process of:",
-    opts: ["Writing code", "Finding and fixing errors or bugs in computer software", "Deleting code", "Running code"],
+    opts: [
+      "Writing code",
+      "Finding and fixing errors or bugs in computer software",
+      "Deleting code",
+      "Running code",
+    ],
     ans: 1,
   },
   {
     q: "Which of the following is an example of a unit test?",
-    opts: ["Testing a single module of authentication", "Testing the whole website", "Testing the network", "Testing the hardware"],
+    opts: [
+      "Testing a single module of authentication",
+      "Testing the whole website",
+      "Testing the network",
+      "Testing the hardware",
+    ],
     ans: 0,
   },
   {
@@ -3177,27 +5010,52 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "In the CSS code, what does `border-collapse: collapse;` do?",
-    opts: ["Adds borders", "Collapses table borders into a single border", "Removes borders", "Changes border color"],
+    opts: [
+      "Adds borders",
+      "Collapses table borders into a single border",
+      "Removes borders",
+      "Changes border color",
+    ],
     ans: 1,
   },
   {
     q: "In the CSS animation code, what does `@keyframes spin` define?",
-    opts: ["The element to animate", "The animation named \"spin\"", "The duration", "The delay"],
+    opts: [
+      "The element to animate",
+      'The animation named "spin"',
+      "The duration",
+      "The delay",
+    ],
     ans: 1,
   },
   {
     q: "In the JavaScript array code, what does `fruits.length` return?",
-    opts: ["The first element", "The last element", "The number of elements in the array", "The index of the last element"],
+    opts: [
+      "The first element",
+      "The last element",
+      "The number of elements in the array",
+      "The index of the last element",
+    ],
     ans: 2,
   },
   {
     q: "In the JavaScript loop `for (let i = 0; i < fruits.length; i++)`, what does `i++` do?",
-    opts: ["Decrements i by 1", "Increments i by 1", "Multiplies i by 2", "Divides i by 2"],
+    opts: [
+      "Decrements i by 1",
+      "Increments i by 1",
+      "Multiplies i by 2",
+      "Divides i by 2",
+    ],
     ans: 1,
   },
   {
     q: "What does `console.log(fruits[i])` do?",
-    opts: ["Deletes the element", "Prints each element of the array one by one", "Changes the element", "Adds a new element"],
+    opts: [
+      "Deletes the element",
+      "Prints each element of the array one by one",
+      "Changes the element",
+      "Adds a new element",
+    ],
     ans: 1,
   },
   {
@@ -3207,12 +5065,22 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Data Science is the field of:",
-    opts: ["Only collecting data", "Collecting, cleaning, and analyzing data to find useful patterns", "Only storing data", "Only deleting data"],
+    opts: [
+      "Only collecting data",
+      "Collecting, cleaning, and analyzing data to find useful patterns",
+      "Only storing data",
+      "Only deleting data",
+    ],
     ans: 1,
   },
   {
     q: "Data Science combines:",
-    opts: ["Only math", "Math, statistics, programming, and domain knowledge", "Only programming", "Only statistics"],
+    opts: [
+      "Only math",
+      "Math, statistics, programming, and domain knowledge",
+      "Only programming",
+      "Only statistics",
+    ],
     ans: 1,
   },
   {
@@ -3227,52 +5095,102 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "In healthcare, data science is used to:",
-    opts: ["Predict diseases based on X-Rays and patient analytics", "Only store patient records", "Only print reports", "Only schedule appointments"],
+    opts: [
+      "Predict diseases based on X-Rays and patient analytics",
+      "Only store patient records",
+      "Only print reports",
+      "Only schedule appointments",
+    ],
     ans: 0,
   },
   {
     q: "In sports, data science can help to:",
-    opts: ["Only record scores", "Predict who is going to win a cricket match", "Only show replays", "Only count players"],
+    opts: [
+      "Only record scores",
+      "Predict who is going to win a cricket match",
+      "Only show replays",
+      "Only count players",
+    ],
     ans: 1,
   },
   {
     q: "In finance, data science is helpful in:",
-    opts: ["Only counting money", "Fraud detection and developing trading strategies", "Only printing currency", "Only storing transactions"],
+    opts: [
+      "Only counting money",
+      "Fraud detection and developing trading strategies",
+      "Only printing currency",
+      "Only storing transactions",
+    ],
     ans: 1,
   },
   {
     q: "In goods transportation, data science helps in:",
-    opts: ["Only loading goods", "Route optimization and minimizing delivery times", "Only unloading goods", "Only packaging"],
+    opts: [
+      "Only loading goods",
+      "Route optimization and minimizing delivery times",
+      "Only unloading goods",
+      "Only packaging",
+    ],
     ans: 1,
   },
   {
     q: "In airlines, data science helps in:",
-    opts: ["Only booking tickets", "Efficient route planning to reduce fuel consumption", "Only serving food", "Only cleaning planes"],
+    opts: [
+      "Only booking tickets",
+      "Efficient route planning to reduce fuel consumption",
+      "Only serving food",
+      "Only cleaning planes",
+    ],
     ans: 1,
   },
   {
     q: "In energy and utilities, data science helps in:",
-    opts: ["Only billing", "Optimizing energy production and distribution", "Only reading meters", "Only cutting trees"],
+    opts: [
+      "Only billing",
+      "Optimizing energy production and distribution",
+      "Only reading meters",
+      "Only cutting trees",
+    ],
     ans: 1,
   },
   {
     q: "In education, data science is useful to:",
-    opts: ["Only print certificates", "Enhance personalized learning based on learner performance", "Only take attendance", "Only clean classrooms"],
+    opts: [
+      "Only print certificates",
+      "Enhance personalized learning based on learner performance",
+      "Only take attendance",
+      "Only clean classrooms",
+    ],
     ans: 1,
   },
   {
     q: "In communication media, data science is used for:",
-    opts: ["Only printing newspapers", "Content creation and distribution, sentiment analysis, social media monitoring", "Only broadcasting", "Only recording"],
+    opts: [
+      "Only printing newspapers",
+      "Content creation and distribution, sentiment analysis, social media monitoring",
+      "Only broadcasting",
+      "Only recording",
+    ],
     ans: 1,
   },
   {
     q: "In entertainment, data science plays an important role when you get:",
-    opts: ["Only advertisements", "Suggestions about your favorite songs while playing online games", "Only error messages", "Only updates"],
+    opts: [
+      "Only advertisements",
+      "Suggestions about your favorite songs while playing online games",
+      "Only error messages",
+      "Only updates",
+    ],
     ans: 1,
   },
   {
     q: "In business, data science helps in:",
-    opts: ["Only counting products", "Intelligent decision making to get optimal profits", "Only hiring employees", "Only cleaning offices"],
+    opts: [
+      "Only counting products",
+      "Intelligent decision making to get optimal profits",
+      "Only hiring employees",
+      "Only cleaning offices",
+    ],
     ans: 1,
   },
   {
@@ -3282,12 +5200,22 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "The Turing Test measures a machine's ability to:",
-    opts: ["Calculate fast", "Exhibit intelligent behavior", "Store data", "Print documents"],
+    opts: [
+      "Calculate fast",
+      "Exhibit intelligent behavior",
+      "Store data",
+      "Print documents",
+    ],
     ans: 1,
   },
   {
     q: "Artificial Intelligence refers to a machine's ability to perform tasks that typically require:",
-    opts: ["Random behavior", "Human intelligence", "Machine-like behavior", "Animal-like behavior"],
+    opts: [
+      "Random behavior",
+      "Human intelligence",
+      "Machine-like behavior",
+      "Animal-like behavior",
+    ],
     ans: 1,
   },
   {
@@ -3307,17 +5235,32 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Which learning model uses labeled data (questions with correct answers)?",
-    opts: ["Unsupervised Learning", "Supervised Learning", "Reinforcement Learning", "Deep Learning"],
+    opts: [
+      "Unsupervised Learning",
+      "Supervised Learning",
+      "Reinforcement Learning",
+      "Deep Learning",
+    ],
     ans: 1,
   },
   {
     q: "Which learning model uses unlabeled data and identifies patterns?",
-    opts: ["Supervised Learning", "Unsupervised Learning", "Reinforcement Learning", "Deep Learning"],
+    opts: [
+      "Supervised Learning",
+      "Unsupervised Learning",
+      "Reinforcement Learning",
+      "Deep Learning",
+    ],
     ans: 1,
   },
   {
     q: "Which learning model trains machines using positive or negative feedback?",
-    opts: ["Supervised Learning", "Unsupervised Learning", "Reinforcement Learning", "Deep Learning"],
+    opts: [
+      "Supervised Learning",
+      "Unsupervised Learning",
+      "Reinforcement Learning",
+      "Deep Learning",
+    ],
     ans: 2,
   },
   {
@@ -3342,17 +5285,32 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Self-driving cars are an example of:",
-    opts: ["Supervised Learning", "Unsupervised Learning", "Reinforcement Learning", "Deep Learning"],
+    opts: [
+      "Supervised Learning",
+      "Unsupervised Learning",
+      "Reinforcement Learning",
+      "Deep Learning",
+    ],
     ans: 2,
   },
   {
     q: "In the machine learning process, what is the first step?",
-    opts: ["Model training", "Splitting data into training and testing data", "Model evaluation", "Model deployment"],
+    opts: [
+      "Model training",
+      "Splitting data into training and testing data",
+      "Model evaluation",
+      "Model deployment",
+    ],
     ans: 1,
   },
   {
     q: "Churn Prediction is the technique of finding out the possibility of a:",
-    opts: ["New customer joining", "Customer stopping the use of a company's services", "Product being launched", "Employee being promoted"],
+    opts: [
+      "New customer joining",
+      "Customer stopping the use of a company's services",
+      "Product being launched",
+      "Employee being promoted",
+    ],
     ans: 1,
   },
   {
@@ -3362,7 +5320,12 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
   },
   {
     q: "Data Visualization is the process of creating:",
-    opts: ["Textual representations of data", "Graphical representations of data using charts, graphs, and maps", "Audio representations of data", "Numeric representations of data"],
+    opts: [
+      "Textual representations of data",
+      "Graphical representations of data using charts, graphs, and maps",
+      "Audio representations of data",
+      "Numeric representations of data",
+    ],
     ans: 1,
   },
   {
@@ -3404,7 +5367,7 @@ const TENTH_GRADE_FEDERAL_QUIZ = [
     q: "Which visualization is similar to a scatter plot but has a third variable represented by the size of the bubble?",
     opts: ["Histogram", "Box-plot", "Heatmap", "Bubble Chart"],
     ans: 3,
-  }
+  },
 ];
 
 CATEGORIES["10th-federal-board"].quiz = TENTH_GRADE_FEDERAL_QUIZ;
@@ -3412,7 +5375,8 @@ CATEGORIES["10th-federal-board"].quiz = TENTH_GRADE_FEDERAL_QUIZ;
 BOARD_LEVELS.forEach((levelKey) => {
   const questions = CATEGORIES[levelKey].quiz;
   let seed = Array.from(levelKey).reduce(
-    (value, character) => (Math.imul(value, 31) + character.charCodeAt(0)) >>> 0,
+    (value, character) =>
+      (Math.imul(value, 31) + character.charCodeAt(0)) >>> 0,
     0x9e3779b9,
   );
   const random = () => {
@@ -3447,7 +5411,10 @@ BOARD_LEVELS.forEach((levelKey) => {
     const questionIndex = questions.findIndex(
       (question) => question.q === questionText,
     );
-    if (questionIndex === -1 || answerPositions[questionIndex] === desiredPosition) {
+    if (
+      questionIndex === -1 ||
+      answerPositions[questionIndex] === desiredPosition
+    ) {
       return;
     }
 
@@ -3456,7 +5423,9 @@ BOARD_LEVELS.forEach((levelKey) => {
         position === desiredPosition && !fixedQuestionIndexes.has(index),
     );
     if (swapIndex === -1) {
-      throw new Error(`Unable to preserve the answer position for "${questionText}".`);
+      throw new Error(
+        `Unable to preserve the answer position for "${questionText}".`,
+      );
     }
 
     [answerPositions[questionIndex], answerPositions[swapIndex]] = [
@@ -4162,7 +6131,10 @@ const TENTH_GRADE_FEDERAL_FLASHCARD_TERMS = [
   "Data Modeling",
 ];
 
-if (TENTH_GRADE_FEDERAL_FLASHCARD_TERMS.length !== TENTH_GRADE_FEDERAL_FLASHCARDS.length) {
+if (
+  TENTH_GRADE_FEDERAL_FLASHCARD_TERMS.length !==
+  TENTH_GRADE_FEDERAL_FLASHCARDS.length
+) {
   throw new Error("Federal 10th flashcard terms do not match the card count.");
 }
 
@@ -4176,84 +6148,280 @@ const REPLACEMENT_TENTH_GRADE_FEDERAL_FLASHCARDS = [
   ["Decimal System", "Uses base 10 with symbols 0-9."],
   ["Binary System", "Base 2, using 0 and 1 for data representation."],
   ["Octal System", "Base 8, with symbols 0-7."],
-  ["Hexadecimal System", "Base 16, using symbols 0-9 and A-F for compact data representation."],
-  ["Complements (1's and 2's)", "Used in binary operations, especially for subtraction."],
-  ["Signed/Unsigned Numbers", "Binary numbers can be represented with or without a sign bit to indicate positive or negative values."],
-  ["Main OS Tasks", "Managing processes, memory, files, devices, networks, and security."],
+  [
+    "Hexadecimal System",
+    "Base 16, using symbols 0-9 and A-F for compact data representation.",
+  ],
+  [
+    "Complements (1's and 2's)",
+    "Used in binary operations, especially for subtraction.",
+  ],
+  [
+    "Signed/Unsigned Numbers",
+    "Binary numbers can be represented with or without a sign bit to indicate positive or negative values.",
+  ],
+  [
+    "Main OS Tasks",
+    "Managing processes, memory, files, devices, networks, and security.",
+  ],
   ["Process Management", "Allocates CPU time and optimizes resource use."],
   ["Memory Management", "Allocates and manages memory for programs."],
   ["File Management", "Handles file creation, deletion, and organization."],
   ["Device Management", "Controls and optimizes input/output devices."],
-  ["Network Management", "Manages network resources and resolves network issues."],
-  ["Security Management", "Enforces security policies and manages user accounts."],
-  ["Multiprogramming OS", "Executes multiple programs simultaneously in memory."],
-  ["Multitasking OS", "Performs multiple tasks at once by quickly switching between programs."],
-  ["Time-sharing OS", "Shares CPU time across programs, simulating simultaneous processing."],
-  ["Real-time OS", "Executes tasks within strict timing constraints, often used in industrial processes."],
+  [
+    "Network Management",
+    "Manages network resources and resolves network issues.",
+  ],
+  [
+    "Security Management",
+    "Enforces security policies and manages user accounts.",
+  ],
+  [
+    "Multiprogramming OS",
+    "Executes multiple programs simultaneously in memory.",
+  ],
+  [
+    "Multitasking OS",
+    "Performs multiple tasks at once by quickly switching between programs.",
+  ],
+  [
+    "Time-sharing OS",
+    "Shares CPU time across programs, simulating simultaneous processing.",
+  ],
+  [
+    "Real-time OS",
+    "Executes tasks within strict timing constraints, often used in industrial processes.",
+  ],
   ["Multiprocessor OS", "Manages multiple CPUs to improve performance."],
-  ["Parallel Processing OS", "Runs multiple processes at once using several processors."],
-  ["Interrupts", "Signals to the CPU that require immediate action, handled by interrupt routines."],
-  ["Deadlock", "Occurs when processes block each other indefinitely over shared resources."],
-  ["On-Premises Hosting", "Software hosted on internal servers, offering control but with high cost."],
-  ["Shared Hosting", "Multiple websites share a single server, offering low cost but potential performance issues."],
-  ["Dedicated Hosting", "A server dedicated to one user, providing high performance and security at a higher cost."],
-  ["Cloud Hosting", "Uses cloud servers for scalability and cost-efficiency, though dependent on connectivity."],
-  ["Application Software", "Performs specific user tasks such as writing, streaming, or browsing (e.g., Microsoft Word, Spotify)."],
-  ["Driver Software", "Enables communication between the operating system and hardware devices (e.g., printer drivers, Wi-Fi drivers)."],
-  ["Word Processors", "Used for writing documents (e.g., Microsoft Word, Google Docs)."],
-  ["Spreadsheets", "For data analysis, budgeting (e.g., Excel, Google Sheets)."],
-  ["Presentation Software", "Create presentations for business or education (e.g., PowerPoint, Google Slides)."],
-  ["Database Management", "Organize large datasets (e.g., Microsoft Access, MySQL)."],
-  ["Email Clients", "Manage emails and appointments (e.g., Outlook, Thunderbird)."],
-  ["Computational Thinking", "Is a way of solving problems by using ideas from computer science."],
-  ["Computing problem", "In computer science is one that is solved step-by-step through computation."],
+  [
+    "Parallel Processing OS",
+    "Runs multiple processes at once using several processors.",
+  ],
+  [
+    "Interrupts",
+    "Signals to the CPU that require immediate action, handled by interrupt routines.",
+  ],
+  [
+    "Deadlock",
+    "Occurs when processes block each other indefinitely over shared resources.",
+  ],
+  [
+    "On-Premises Hosting",
+    "Software hosted on internal servers, offering control but with high cost.",
+  ],
+  [
+    "Shared Hosting",
+    "Multiple websites share a single server, offering low cost but potential performance issues.",
+  ],
+  [
+    "Dedicated Hosting",
+    "A server dedicated to one user, providing high performance and security at a higher cost.",
+  ],
+  [
+    "Cloud Hosting",
+    "Uses cloud servers for scalability and cost-efficiency, though dependent on connectivity.",
+  ],
+  [
+    "Application Software",
+    "Performs specific user tasks such as writing, streaming, or browsing (e.g., Microsoft Word, Spotify).",
+  ],
+  [
+    "Driver Software",
+    "Enables communication between the operating system and hardware devices (e.g., printer drivers, Wi-Fi drivers).",
+  ],
+  [
+    "Word Processors",
+    "Used for writing documents (e.g., Microsoft Word, Google Docs).",
+  ],
+  [
+    "Spreadsheets",
+    "For data analysis, budgeting (e.g., Excel, Google Sheets).",
+  ],
+  [
+    "Presentation Software",
+    "Create presentations for business or education (e.g., PowerPoint, Google Slides).",
+  ],
+  [
+    "Database Management",
+    "Organize large datasets (e.g., Microsoft Access, MySQL).",
+  ],
+  [
+    "Email Clients",
+    "Manage emails and appointments (e.g., Outlook, Thunderbird).",
+  ],
+  [
+    "Computational Thinking",
+    "Is a way of solving problems by using ideas from computer science.",
+  ],
+  [
+    "Computing problem",
+    "In computer science is one that is solved step-by-step through computation.",
+  ],
   ["Decision problems", "Normally 'yes-or-no' response is found in a choice."],
-  ["Search problems", "The solution is made up by having a set of values that satisfy a certain criteria."],
-  ["Permutation", "Is an arrangement of all the members of a set into a specific sequence or order."],
-  ["Combination", "Is a selection of items from a set where the order of selection does not matter."],
-  ["Algorithm", "Is a well-defined, step-by-step procedure or set of rules for solving a specific problem or performing a task."],
+  [
+    "Search problems",
+    "The solution is made up by having a set of values that satisfy a certain criteria.",
+  ],
+  [
+    "Permutation",
+    "Is an arrangement of all the members of a set into a specific sequence or order.",
+  ],
+  [
+    "Combination",
+    "Is a selection of items from a set where the order of selection does not matter.",
+  ],
+  [
+    "Algorithm",
+    "Is a well-defined, step-by-step procedure or set of rules for solving a specific problem or performing a task.",
+  ],
   ["Sorting", "Is the process of arranging items in a specific order."],
   ["Searching", "Is the process of finding a particular item within a set."],
-  ["Logical reasoning", "Is the basis for developing and evaluating algorithms, it is an essential part of computational thinking."],
-  ["Boolean", "Two statements or expressions are evaluated in a way that can only have one of two potential values as a result—either true or false."],
-  ["Bubble Sort", "Repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order."],
-  ["Selection Sort", "Divides the list into a sorted and an unsorted part, and repeatedly selects the smallest (or largest) element from the unsorted part to move to the sorted part."],
-  ["Merge Sort", "Divides the list into halves, recursively sorts each half, and then merges the sorted halves."],
-  ["HTML", "Controls how web pages appear or in other words the layout of webpage."],
-  ["JavaScript arrays", "In JavaScript, an array stores various types of data, such as alphabets, numbers or a combination of both."],
-  ["HTML lists", "You may create lists with bullet points in HTML in two major ways, Unordered List and Ordered List."],
-  ["Unit tests", "Are intended to test each line of code to make sure it functions properly."],
-  ["Breakpoints", "To monitor a certain line of code, the application pauses at breakpoints and allows you to examine the code (variable values, data flow, etc.)."],
-  ["Watchpoint", "In a watchpoint, you establish a rule (for example, whether the value is utilized or changed) on variables or expressions. The software pauses at that particular watchpoint if the rule is followed."],
-  ["Data science", "It refers to an interdisciplinary field of mathematics, statistics, and computer science aims to do analysis on data and perform prediction."],
-  ["Turing Test", "It measures the ability of machine to exhibit intelligent behavior."],
-  ["Artificial Intelligence", "Is referred to the ability of a machine to exhibit human behavior like problem solving, understanding natural language and interacting with the environment intelligently."],
-  ["Personalized recommendations", "It helps to provide personalized feed to customers, based on their past usage of machines."],
-  ["Natural Language Processing (NLP)", "AI enabled the machines to understand and respond to the natural human languages. ChatGPT and chatbots are examples of it."],
-  ["Computer vision", "It is a specialized branch of AI that teaches computers to draw meaningful results from digital images, videos and other visuals."],
-  ["Smart cities", "Artificial Intelligence enables to develop efficient infrastructure and services, which can be used to manage energy consumption, traffic management and other necessary tasks for smart cities."],
-  ["AI Agents", "Artificial intelligence provides bases to develop modern AI agents like Siri, Alexa, Google assistant, ChatGPT and Cortana to generate human language."],
-  ["Deep learning", "Is a type of computer learning which uses layers of artificial neural network to learn from data."],
-  ["Neural Network", "It is system designed to work like human brain. It is made up of artificial neurons. These tiny neurons make decisions like human brain."],
-  ["Supervised Learning Model", "In this learning model a set of labeled data is provided to the machine/computer. The labeled data means that questions with their correct answers are provided to the machine. After reading/learning a lot of questions/answers the machine is trained. Now, only new questions without correct answers are provided to that machine and it provides us with the possible correct answers."],
-  ["Unsupervised learning model", "In this model unlabeled data is provided to the machine/computer. The algorithm identifies the pattern in the data and divide it into groups based on similarities and differences. When the training is completed, the computer can identify new data and put it in the relevant category."],
-  ["Reinforce learning model", "In this model the machines are trained with the help of positive or negative feedback. The agent is provided with an environment where it must take certain actions, if the action is helpful towards the desired solution the agent will be rewarded with some points through feedback. If the actions are not helpful towards the desired solution the agent will be penalized (punished) by deducting the points."],
-  ["Churn Prediction", "Is the technique to find out the possibility of a customer, to stop taking the services or products of a certain company. It is used in the fields of business and marketing."],
-  ["Behavioral segmentation", "Is the process of dividing customers into groups based on their behavior. This approach enables the business to design marketing strategies and promotional offers more precisely."],
-  ["Data Visualization", "It is the process of creating graphical representation of data and information. It involves various visual elements like charts, graphs, and maps."],
-  ["Quantitative visualization", "Is used to represent numerical data. It focuses on quantities or numbers to show measurable data."],
-  ["Categorical visualization", "Is used to represents data that falls into distinct categories. It helps to show proportions or parts of a whole. This type is ideal for displaying nominal or ordinal data."],
-  ["Temporal visualization", "Is used to display data that changes over time. It is used for time-series data. Line graphs are usually used to represent temporal data."],
-  ["Spatial visualization", "Is used to represent data related to physical locations or spaces, visualizing geographic or spatial data. For example, a heatmap showing population density across different regions."],
-  ["Multivariate visualization", "Is used to represents data involving more than two variables or dimensions. Scatter plots and heatmaps are effective tools. For example, a scatter plot matrix showing relationships between income, age, and spending habits."],
-  ["Interactive Visualization", "Interactive visualization allows users to interact with the data, through digital platforms. These digital platforms can be dashboards and filters."],
-  ["Statistical Visualization", "Statistical visualization is used to present data to show statistical properties, such as distribution or correlation. Histograms, box plots, and scatter plots are popular choices."],
-  ["Database", "Is collection of related data stored in the form of tables. Common examples include; MySQL, Postgres, Oracle."]
+  [
+    "Logical reasoning",
+    "Is the basis for developing and evaluating algorithms, it is an essential part of computational thinking.",
+  ],
+  [
+    "Boolean",
+    "Two statements or expressions are evaluated in a way that can only have one of two potential values as a result—either true or false.",
+  ],
+  [
+    "Bubble Sort",
+    "Repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.",
+  ],
+  [
+    "Selection Sort",
+    "Divides the list into a sorted and an unsorted part, and repeatedly selects the smallest (or largest) element from the unsorted part to move to the sorted part.",
+  ],
+  [
+    "Merge Sort",
+    "Divides the list into halves, recursively sorts each half, and then merges the sorted halves.",
+  ],
+  [
+    "HTML",
+    "Controls how web pages appear or in other words the layout of webpage.",
+  ],
+  [
+    "JavaScript arrays",
+    "In JavaScript, an array stores various types of data, such as alphabets, numbers or a combination of both.",
+  ],
+  [
+    "HTML lists",
+    "You may create lists with bullet points in HTML in two major ways, Unordered List and Ordered List.",
+  ],
+  [
+    "Unit tests",
+    "Are intended to test each line of code to make sure it functions properly.",
+  ],
+  [
+    "Breakpoints",
+    "To monitor a certain line of code, the application pauses at breakpoints and allows you to examine the code (variable values, data flow, etc.).",
+  ],
+  [
+    "Watchpoint",
+    "In a watchpoint, you establish a rule (for example, whether the value is utilized or changed) on variables or expressions. The software pauses at that particular watchpoint if the rule is followed.",
+  ],
+  [
+    "Data science",
+    "It refers to an interdisciplinary field of mathematics, statistics, and computer science aims to do analysis on data and perform prediction.",
+  ],
+  [
+    "Turing Test",
+    "It measures the ability of machine to exhibit intelligent behavior.",
+  ],
+  [
+    "Artificial Intelligence",
+    "Is referred to the ability of a machine to exhibit human behavior like problem solving, understanding natural language and interacting with the environment intelligently.",
+  ],
+  [
+    "Personalized recommendations",
+    "It helps to provide personalized feed to customers, based on their past usage of machines.",
+  ],
+  [
+    "Natural Language Processing (NLP)",
+    "AI enabled the machines to understand and respond to the natural human languages. ChatGPT and chatbots are examples of it.",
+  ],
+  [
+    "Computer vision",
+    "It is a specialized branch of AI that teaches computers to draw meaningful results from digital images, videos and other visuals.",
+  ],
+  [
+    "Smart cities",
+    "Artificial Intelligence enables to develop efficient infrastructure and services, which can be used to manage energy consumption, traffic management and other necessary tasks for smart cities.",
+  ],
+  [
+    "AI Agents",
+    "Artificial intelligence provides bases to develop modern AI agents like Siri, Alexa, Google assistant, ChatGPT and Cortana to generate human language.",
+  ],
+  [
+    "Deep learning",
+    "Is a type of computer learning which uses layers of artificial neural network to learn from data.",
+  ],
+  [
+    "Neural Network",
+    "It is system designed to work like human brain. It is made up of artificial neurons. These tiny neurons make decisions like human brain.",
+  ],
+  [
+    "Supervised Learning Model",
+    "In this learning model a set of labeled data is provided to the machine/computer. The labeled data means that questions with their correct answers are provided to the machine. After reading/learning a lot of questions/answers the machine is trained. Now, only new questions without correct answers are provided to that machine and it provides us with the possible correct answers.",
+  ],
+  [
+    "Unsupervised learning model",
+    "In this model unlabeled data is provided to the machine/computer. The algorithm identifies the pattern in the data and divide it into groups based on similarities and differences. When the training is completed, the computer can identify new data and put it in the relevant category.",
+  ],
+  [
+    "Reinforce learning model",
+    "In this model the machines are trained with the help of positive or negative feedback. The agent is provided with an environment where it must take certain actions, if the action is helpful towards the desired solution the agent will be rewarded with some points through feedback. If the actions are not helpful towards the desired solution the agent will be penalized (punished) by deducting the points.",
+  ],
+  [
+    "Churn Prediction",
+    "Is the technique to find out the possibility of a customer, to stop taking the services or products of a certain company. It is used in the fields of business and marketing.",
+  ],
+  [
+    "Behavioral segmentation",
+    "Is the process of dividing customers into groups based on their behavior. This approach enables the business to design marketing strategies and promotional offers more precisely.",
+  ],
+  [
+    "Data Visualization",
+    "It is the process of creating graphical representation of data and information. It involves various visual elements like charts, graphs, and maps.",
+  ],
+  [
+    "Quantitative visualization",
+    "Is used to represent numerical data. It focuses on quantities or numbers to show measurable data.",
+  ],
+  [
+    "Categorical visualization",
+    "Is used to represents data that falls into distinct categories. It helps to show proportions or parts of a whole. This type is ideal for displaying nominal or ordinal data.",
+  ],
+  [
+    "Temporal visualization",
+    "Is used to display data that changes over time. It is used for time-series data. Line graphs are usually used to represent temporal data.",
+  ],
+  [
+    "Spatial visualization",
+    "Is used to represent data related to physical locations or spaces, visualizing geographic or spatial data. For example, a heatmap showing population density across different regions.",
+  ],
+  [
+    "Multivariate visualization",
+    "Is used to represents data involving more than two variables or dimensions. Scatter plots and heatmaps are effective tools. For example, a scatter plot matrix showing relationships between income, age, and spending habits.",
+  ],
+  [
+    "Interactive Visualization",
+    "Interactive visualization allows users to interact with the data, through digital platforms. These digital platforms can be dashboards and filters.",
+  ],
+  [
+    "Statistical Visualization",
+    "Statistical visualization is used to present data to show statistical properties, such as distribution or correlation. Histograms, box plots, and scatter plots are popular choices.",
+  ],
+  [
+    "Database",
+    "Is collection of related data stored in the form of tables. Common examples include; MySQL, Postgres, Oracle.",
+  ],
 ].map(function (card) {
   return { q: card[0], a: card[1] };
 });
 
-CATEGORIES["10th-federal-board"].flashcards = REPLACEMENT_TENTH_GRADE_FEDERAL_FLASHCARDS;
+CATEGORIES["10th-federal-board"].flashcards =
+  REPLACEMENT_TENTH_GRADE_FEDERAL_FLASHCARDS;
 
 /* ── TUTORIAL PLAYLIST LINKS (per standard) ── */
 const TUTORIAL_PLAYLISTS = {
@@ -4267,7 +6435,7 @@ const TUTORIAL_PLAYLISTS = {
   "11th-federal-board": "https://www.youtube.com/@awinashgoswami",
   "12th-federal-board": "https://www.youtube.com/@awinashgoswami",
   "a-level": "https://www.youtube.com/@awinashgoswami",
-  "university": "https://www.youtube.com/@awinashgoswami",
+  university: "https://www.youtube.com/@awinashgoswami",
 };
 
 /* ── Video tutorial cards (still optional; used in the separate Tutorials page) ── */
@@ -4281,7 +6449,6 @@ const TUTORIALS = [
     tagText: "#1d4ed8",
   },
 ];
-
 
 const GLOSSARY_TERMS = [
   {
@@ -4311,6 +6478,71 @@ const GLOSSARY_TERMS = [
   },
 ];
 
+const BOOK_CATEGORIES = ["C++", "Data Science", "Python", "Algorithms"];
+
+const BOOKS = [
+  {
+    title: "Think C++",
+    author: "Allen B. Downey",
+    categories: ["C++"],
+    description:
+      "A free introduction to programming with C++, written for students learning computer science.",
+    coverLabel: "C++",
+    coverTheme: "ocean",
+    actionLabel: "Download PDF",
+    actionUrl: "https://www.greenteapress.com/thinkcpp/thinkCScpp.pdf",
+    license: "CC BY-NC-SA 4.0",
+  },
+  {
+    title: "Think Python, 2nd Edition",
+    author: "Allen B. Downey",
+    categories: ["Python"],
+    description:
+      "A beginner-friendly introduction to Python programming and core computer science ideas.",
+    coverLabel: "PYTHON",
+    coverTheme: "violet",
+    actionLabel: "Download PDF",
+    actionUrl: "https://greenteapress.com/thinkpython2/thinkpython2.pdf",
+    license: "CC BY-NC 3.0",
+  },
+  {
+    title: "Think Stats, 2nd Edition",
+    author: "Allen B. Downey",
+    categories: ["Data Science", "Python"],
+    description:
+      "An introduction to probability and statistics using Python, real datasets, and practical analysis.",
+    coverLabel: "DATA + STATS",
+    coverTheme: "amber",
+    actionLabel: "Download PDF",
+    actionUrl: "https://greenteapress.com/thinkstats2/thinkstats2.pdf",
+    license: "Free under a Creative Commons non-commercial license",
+  },
+  {
+    title: "Think Complexity, 2nd Edition",
+    author: "Allen B. Downey",
+    categories: ["Algorithms", "Python"],
+    description:
+      "Explore algorithms, data structures, graphs, and complex systems through computational models.",
+    coverLabel: "ALGORITHMS",
+    coverTheme: "rose",
+    actionLabel: "Download PDF",
+    actionUrl: "https://greenteapress.com/complexity2/thinkcomplexity2.pdf",
+    license: "CC BY-NC-SA 4.0",
+  },
+  {
+    title: "Data Science from Scratch",
+    author: "Joel Grus",
+    categories: ["Data Science", "Python"],
+    description:
+      "Learn the fundamental ideas behind data science by implementing core algorithms and techniques from scratch in Python.",
+    coverLabel: "DATA SCIENCE",
+    coverTheme: "teal",
+    actionLabel: "Download PDF",
+    actionUrl:
+      "https://jcer.in/jcer-docs/E-Learning/Digital%20Library%20/E-Books/Data%20Science%20from%20Scratch%20by%20Joel%20Grus.pdf",
+  },
+];
+
 /* ── FALLBACK POSTS (shown only if posts.json cannot be fetched) ── */
 const FALLBACK_POSTS = [
   {
@@ -4320,6 +6552,8 @@ const FALLBACK_POSTS = [
       "Posts are loaded from assets/json/posts.json — add your own via the Admin panel.",
     content:
       "<p>Welcome! Use the Admin panel to publish posts. They will be committed to your GitHub repo and visible to all visitors.</p>",
+    imageUrl:
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80",
     tags: "General",
     author: "CS Teacher",
     date: "2025-05-01",

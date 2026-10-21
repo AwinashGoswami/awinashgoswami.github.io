@@ -9,6 +9,9 @@ $(function () {
   let currentLevel = null;
   let loadedPosts = null; // populated async from posts.json
   let loadedGlossary = null; // populated async from glossary.json
+  let glossarySearchTimer = null;
+  let glossarySearchController = null;
+  let glossarySearchRequestId = 0;
   let fcIndex = 0;
   let fcFlipped = false;
   let quizQuestions = [];
@@ -71,6 +74,7 @@ $(function () {
     else if (page === "tutorial") showTutorial();
     else if (page === "blog") showBlog();
     else if (page === "glossary") showGlossary();
+    else if (page === "books") showBooks();
     else if (page === "notes") showNotesPage(currentLevel);
     else if (page === "blog-post") showBlogPost(opts.postId);
     else if (page === "blog-admin") showBlogAdmin();
@@ -347,43 +351,19 @@ $(function () {
 
            
           <a href="#" class="section-btn" data-goto="notes" data-level="${level}">
-              <span class="sb-icon"><i class="bi bi-file-earmark-pdf"></i></span>
-              <h4>Study Notes</h4><p>Downloadable PDF guides for every topic</p>
-            </a>
-            <a href="#" class="section-btn" data-goto="cat-fc" data-level="${level}">
-              <span class="sb-icon"><i class="bi bi-layers"></i></span>
-              <h4>Flashcards</h4><p>Interactive flip cards for quick revision</p>
-            </a>
+            <span class="sb-icon"><i class="bi bi-file-earmark-pdf"></i></span>
+            <h4>Study Notes</h4><p>Downloadable PDF guides for every topic</p>
+          </a>
           <a href="#" class="section-btn" data-goto="cat-quiz" data-level="${level}">
-              <span class="sb-icon"><i class="bi bi-patch-question"></i></span>
-              <h4>Practice Quiz</h4><p>Multiple-choice questions with instant feedback</p>
-            </a>
-
-            <!-- Tutorials playlist (dynamic per standard) -->
-            <a href="" class="section-btn" target="_blank" rel="noopener noreferrer" id="tutorials-card-${level}" data-tutorials-level="${level}">
-              <span class="sb-icon"><i class="bi bi-youtube"></i></span>
-              <h4>Tutorials</h4>
-              <p>Video playlist for quick learning</p>
-            </a>
+            <span class="sb-icon"><i class="bi bi-patch-question"></i></span>
+            <h4>Practice Quiz</h4><p>Multiple-choice questions with instant feedback</p>
+          </a>
 
           </div>
 
         </div>
       </div>
     `);
-
-    // Set Tutorials playlist link per selected standard
-    const tutorialsCard = document.getElementById("tutorials-card-" + level);
-    if (tutorialsCard) {
-      const playlist =
-        typeof TUTORIAL_PLAYLISTS !== "undefined" ? TUTORIAL_PLAYLISTS[level] : "";
-      if (playlist) {
-        tutorialsCard.setAttribute("href", playlist);
-        tutorialsCard.style.display = "block";
-      } else {
-        tutorialsCard.style.display = "none";
-      }
-    }
   }
 
 
@@ -1423,15 +1403,32 @@ $(function () {
                 <h2>CS Glossary</h2>
                 <p>Quickly search key computer science terms and definitions.</p>
               </div>
-              <div class="search-panel mb-4">
-                <input id="glossary-search" type="search" class="form-control" placeholder="Search terms like bit, binary, hexadecimal, MAC address…" autocomplete="off" />
-                <div class="form-text">Start typing to filter glossary entries instantly.</div>
+              <div class="search-panel glossary-search-panel mb-4" role="search">
+                <label class="visually-hidden" for="glossary-search">Search glossary</label>
+                <i class="bi bi-search glossary-search-icon" aria-hidden="true"></i>
+                <input id="glossary-search" type="search" class="form-control" placeholder="Search a term or definition…" autocomplete="off" aria-describedby="glossary-search-help" />
+                <button type="button" class="glossary-clear-search" id="glossary-clear-search" aria-label="Clear search" hidden>
+                  <i class="bi bi-x-circle-fill" aria-hidden="true"></i>
+                </button>
+                <div class="form-text" id="glossary-search-help">Search matches both terms and definitions as you type.</div>
               </div>
               <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-3 glossary-toolbar">
-                <div id="glossary-count" class="text-muted">Loading glossary…</div>
-                <button class="btn btn-sm btn-outline-secondary" id="glossary-show-all">Show all terms</button>
+                <div id="glossary-count" class="text-muted" role="status" aria-live="polite">Loading glossary…</div>
+                <button class="btn btn-sm btn-outline-secondary" id="glossary-show-all" type="button">Show all terms</button>
               </div>
               <div id="glossary-results"></div>
+              <section id="glossary-external-section" class="glossary-external-section" aria-labelledby="glossary-external-heading" hidden>
+                <div class="glossary-external-heading">
+                  <div>
+                    <h3 id="glossary-external-heading">Related computer science articles</h3>
+                    <p>Supplementary results from Wikipedia. Your curated glossary remains the primary source.</p>
+                  </div>
+                  <span class="glossary-source-badge"><i class="bi bi-globe2" aria-hidden="true"></i> Wikipedia</span>
+                </div>
+                <div id="glossary-external-status" class="glossary-external-status" role="status" aria-live="polite"></div>
+                <div id="glossary-external-results"></div>
+                <p class="glossary-attribution">Wikipedia text is by its contributors and available under the <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-ShareAlike 4.0 License</a>.</p>
+              </section>
             </div>
           </div>
         </div>
@@ -1452,6 +1449,30 @@ $(function () {
     const normalized = String(query || "")
       .trim()
       .toLowerCase();
+    const escapeHtml = function (value) {
+      return String(value).replace(/[&<>"']/g, function (character) {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        }[character];
+      });
+    };
+    const formatMatch = function (value) {
+      if (!normalized) return escapeHtml(value);
+      const escapedQuery = normalized.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const matcher = new RegExp(`(${escapedQuery})`, "gi");
+      return String(value)
+        .split(matcher)
+        .map(function (part) {
+          return part.toLowerCase() === normalized
+            ? `<mark>${escapeHtml(part)}</mark>`
+            : escapeHtml(part);
+        })
+        .join("");
+    };
     const filtered = allTerms.filter(function (item) {
       return (
         item.term.toLowerCase().includes(normalized) ||
@@ -1462,29 +1483,222 @@ $(function () {
       ? `${filtered.length} term${filtered.length === 1 ? "" : "s"} matching "${query}"`
       : `${filtered.length} total term${filtered.length === 1 ? "" : "s"}`;
     $("#glossary-count").text(countText);
+    $("#glossary-clear-search").prop("hidden", !normalized);
     if (!filtered.length) {
       $("#glossary-results").html(
-        '<p class="text-muted">No terms found. Try a different keyword.</p>',
+        `<div class="glossary-empty-state">
+          <i class="bi bi-search" aria-hidden="true"></i>
+          <h3>No matching terms</h3>
+          <p>Try a different keyword, or search for a related idea.</p>
+          <button class="btn btn-sm btn-primary" type="button" id="glossary-empty-clear">Clear search</button>
+        </div>`,
       );
       return;
     }
     const items = filtered
       .map(function (item) {
-        return `<div class="glossary-card mb-3 p-3 rounded-3 border border-2 border-gray bg-white shadow-sm">
-        <h5 class="mb-2">${item.term}</h5>
-        <p class="mb-0">${item.definition}</p>
-      </div>`;
+        return `<article class="glossary-row">
+        <h3 class="glossary-term">${formatMatch(item.term)}</h3>
+        <p class="glossary-definition">${formatMatch(item.definition)}</p>
+      </article>`;
       })
       .join("");
     $("#glossary-results").html(items);
   }
 
+  function searchExternalGlossary(query) {
+    const searchTerm = String(query || "").trim();
+    const $section = $("#glossary-external-section");
+    const requestId = ++glossarySearchRequestId;
+    if (glossarySearchController) {
+      glossarySearchController.abort();
+      glossarySearchController = null;
+    }
+    clearTimeout(glossarySearchTimer);
+
+    if (searchTerm.length < 3) {
+      $section.prop("hidden", true);
+      return;
+    }
+
+    $section.prop("hidden", false);
+    $("#glossary-external-status").text("Searching Wikipedia…");
+    $("#glossary-external-results").empty();
+    glossarySearchTimer = setTimeout(function () {
+      const controller = new AbortController();
+      glossarySearchController = controller;
+      const params = new URLSearchParams({
+        action: "query",
+        generator: "search",
+        gsrsearch: searchTerm,
+        gsrlimit: "5",
+        prop: "extracts|info",
+        exintro: "1",
+        explaintext: "1",
+        exchars: "700",
+        inprop: "url",
+        format: "json",
+        origin: "*",
+      });
+
+      fetch(`https://en.wikipedia.org/w/api.php?${params}`, {
+        signal: controller.signal,
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error(`Wikipedia search failed with status ${response.status}.`);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          if (requestId !== glossarySearchRequestId) return;
+          if (data.error) {
+            throw new Error(data.error.info || "Wikipedia returned a search error.");
+          }
+          const pages = Object.values(data.query?.pages || {}).sort(
+            (first, second) => first.index - second.index,
+          );
+          const results = pages.filter(
+            (page) => page.title && page.extract && page.fullurl,
+          );
+          if (!results.length) {
+            $("#glossary-external-status").text(
+              "No related Wikipedia articles found for this search.",
+            );
+            return;
+          }
+
+          const $results = $("#glossary-external-results").empty();
+          results.forEach(function (page) {
+            const $link = $("<a>")
+              .attr({
+                href: page.fullurl,
+                target: "_blank",
+                rel: "noopener noreferrer",
+              })
+              .text(page.title);
+            const $article = $("<article>").addClass(
+              "glossary-external-result",
+            );
+            $("<h4>").append($link).appendTo($article);
+            $("<p>").text(page.extract.trim()).appendTo($article);
+            $results.append($article);
+          });
+          $("#glossary-external-status").text(
+            `${results.length} related article${results.length === 1 ? "" : "s"} found.`,
+          );
+        })
+        .catch(function (error) {
+          if (error.name === "AbortError" || requestId !== glossarySearchRequestId) {
+            return;
+          }
+          console.error("Wikipedia glossary search failed:", error);
+          $("#glossary-external-status").text(
+            "Wikipedia search is unavailable right now. Your curated glossary is still available.",
+          );
+        });
+    }, 400);
+  }
+
   $(document).on("input", "#glossary-search", function () {
-    renderGlossaryResults(getGlossary(), $(this).val());
+    const query = $(this).val();
+    renderGlossaryResults(getGlossary(), query);
+    searchExternalGlossary(query);
+  });
+
+  $(document).on("click", "#glossary-clear-search, #glossary-empty-clear", function () {
+    $("#glossary-search").val("").trigger("input").trigger("focus");
   });
 
   $(document).on("click", "#glossary-show-all", function () {
     $("#glossary-search").val("").trigger("input");
+  });
+
+  function showBooks(category) {
+    const selectedCategory = category || "All";
+    const categories = ["All"].concat(BOOK_CATEGORIES);
+    const books =
+      selectedCategory === "All"
+        ? BOOKS
+        : BOOKS.filter((book) => book.categories.includes(selectedCategory));
+    const escapeHtml = function (value) {
+      return String(value).replace(/[&<>"']/g, function (character) {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        }[character];
+      });
+    };
+    const categoryButtons = categories
+      .map(
+        (item) => `<button
+          class="book-filter${item === selectedCategory ? " active" : ""}"
+          type="button"
+          data-book-category="${escapeHtml(item)}"
+          aria-pressed="${item === selectedCategory}"
+        >${escapeHtml(item)}</button>`,
+      )
+      .join("");
+    const bookCards = books
+      .map(function (book) {
+        const categoriesHtml = book.categories
+          .map(
+            (item) =>
+              `<span class="book-category-tag">${escapeHtml(item)}</span>`,
+          )
+          .join("");
+        return `<article class="book-card">
+          <div class="book-cover book-cover--${escapeHtml(book.coverTheme)}" role="img" aria-label="Illustrated cover for ${escapeHtml(book.title)}">
+            <span class="book-cover-mark" aria-hidden="true"><i class="bi bi-book-half"></i></span>
+            <span class="book-cover-label">${escapeHtml(book.coverLabel)}</span>
+            <span class="book-cover-title">${escapeHtml(book.title)}</span>
+            <span class="book-cover-author">${escapeHtml(book.author)}</span>
+          </div>
+          <div class="book-card-body">
+            <div class="book-category-tags">${categoriesHtml}</div>
+            <h3>${escapeHtml(book.title)}</h3>
+            <p class="book-author">${escapeHtml(book.author)}</p>
+            <p class="book-description">${escapeHtml(book.description)}</p>
+            <p class="book-license"><i class="bi bi-unlock" aria-hidden="true"></i> ${escapeHtml(book.license)}</p>
+            <div class="book-card-actions">
+              <a class="btn btn-primary book-action" href="${escapeHtml(book.actionUrl)}" target="_blank" rel="noopener noreferrer">
+                <i class="bi ${book.actionLabel.includes("PDF") ? "bi-file-earmark-pdf" : "bi-book"}" aria-hidden="true"></i>
+                ${escapeHtml(book.actionLabel)}
+              </a>
+            </div>
+          </div>
+        </article>`;
+      })
+      .join("");
+
+    $("#main-content").html(`
+      <div class="section-wrap books-page">
+        <div class="container">
+          <div class="section-header">
+            <span class="books-eyebrow"><i class="bi bi-book-half" aria-hidden="true"></i> Open learning library</span>
+            <h2>Computer Science Books</h2>
+            <p>Browse computer science books with free PDF access from their authors or publishers.</p>
+          </div>
+          <div class="book-filters" role="group" aria-label="Filter books by category">${categoryButtons}</div>
+          <div class="books-results-count" role="status" aria-live="polite">
+            Showing ${books.length} ${books.length === 1 ? "book" : "books"}${selectedCategory !== "All" ? ` in ${escapeHtml(selectedCategory)}` : ""}
+          </div>
+          ${
+            bookCards
+              ? `<div class="books-grid">${bookCards}</div>`
+              : `<div class="books-empty-state"><i class="bi bi-journal-x" aria-hidden="true"></i><p>No books in this category yet.</p></div>`
+          }
+          <p class="books-license-note"><i class="bi bi-info-circle" aria-hidden="true"></i> Books remain the property of their authors. Availability and license terms vary; check each official source before reusing or redistributing a book.</p>
+        </div>
+      </div>
+    `);
+  }
+
+  $(document).on("click", "[data-book-category]", function () {
+    showBooks($(this).attr("data-book-category"));
   });
 
   /* ══════════════════════════════════
@@ -1523,38 +1737,78 @@ $(function () {
   ═══════════════════════════════════*/
   function showBlog() {
     const posts = getPosts();
+    const escapeHtml = function (value) {
+      return String(value).replace(/[&<>"']/g, function (character) {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        }[character];
+      });
+    };
+    const safeImageUrl = function (value) {
+      const imageUrl = String(value || "").trim();
+      return /^(https?:\/\/|\/assets\/)/i.test(imageUrl)
+        ? escapeHtml(imageUrl)
+        : "";
+    };
     let cards = posts
       .slice()
       .reverse()
-      .map(function (p) {
-        const tags = (p.tags || "")
+      .map(function (post, index) {
+        const tags = String(post.tags || "")
           .split(",")
-          .map((t) => `<span class="blog-tag">${t.trim()}</span>`)
+          .map((tag) => tag.trim())
+          .filter(Boolean)
+          .slice(0, 3)
+          .map((tag) => `<span class="blog-tag">${escapeHtml(tag)}</span>`)
           .join("");
         const excerpt =
-          p.excerpt ||
-          p.content.replace(/<[^>]+>/g, "").substring(0, 140) + "…";
-        return `<div class="blog-card" data-goto="blog-post" data-postid="${p.id}">
-        <div class="mb-2">${tags}</div>
-        <h4>${p.title}</h4>
-        <p>${excerpt}</p>
-        <div class="blog-meta">
-          <span><i class="bi bi-person"></i>${p.author || "CS Teacher"}</span>
-          <span><i class="bi bi-calendar3"></i>${p.date || ""}</span>
-        </div>
-      </div>`;
+          post.excerpt ||
+          String(post.content || "")
+            .replace(/<[^>]+>/g, "")
+            .substring(0, 140) + "…";
+        const imageUrl = safeImageUrl(post.imageUrl);
+        const image = imageUrl
+          ? `<img src="${imageUrl}" alt="" loading="lazy" />`
+          : `<span class="blog-cover-placeholder-icon" aria-hidden="true"><i class="bi bi-journal-richtext"></i></span>`;
+        const postDate = post.date
+          ? new Date(`${post.date}T00:00:00`).toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })
+          : "";
+        return `<a class="blog-card blog-card--theme-${index % 4}" href="#" data-goto="blog-post" data-postid="${escapeHtml(post.id)}" aria-label="Read ${escapeHtml(post.title)}">
+          <div class="blog-card-cover">
+            ${image}
+            ${tags ? `<div class="blog-card-tags">${tags}</div>` : ""}
+          </div>
+          <div class="blog-card-body">
+            <h3>${escapeHtml(post.title)}</h3>
+            <p class="blog-card-excerpt">${escapeHtml(excerpt)}</p>
+            <div class="blog-card-footer">
+              <span class="blog-card-author"><i class="bi bi-person-circle" aria-hidden="true"></i>${escapeHtml(post.author || "CS Teacher")}</span>
+              ${postDate ? `<time datetime="${escapeHtml(post.date)}">${escapeHtml(postDate)}</time>` : ""}
+            </div>
+            <span class="blog-read-more">Read article <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </a>`;
       })
       .join("");
     if (!cards)
-      cards = '<p class="text-muted">No posts yet. Check back soon.</p>';
+      cards = '<div class="blog-empty-state"><i class="bi bi-journal-x" aria-hidden="true"></i><h3>No posts yet</h3><p>Check back soon for new articles and study tips.</p></div>';
     $("#main-content").html(`
-      <div class="section-wrap">
-        <div class="container" style="max-width:760px;">
+      <div class="section-wrap blog-page">
+        <div class="container">
           <div class="section-header">
+            <span class="blog-eyebrow"><i class="bi bi-journal-richtext" aria-hidden="true"></i> Ideas, guides &amp; insights</span>
             <h2>Blog</h2>
             <p>Study tips, concept breakdowns, and teaching insights.</p>
           </div>
-          ${cards}
+          ${posts.length ? `<div class="blog-results-count">${posts.length} ${posts.length === 1 ? "article" : "articles"}</div><div class="blog-grid">${cards}</div>` : cards}
         </div>
       </div>
     `);
@@ -1570,6 +1824,20 @@ $(function () {
       .split(",")
       .map((t) => `<span class="blog-tag">${t.trim()}</span>`)
       .join("");
+    const postImageUrl = /^(https?:\/\/|\/assets\/)/i.test(
+      String(post.imageUrl || "").trim(),
+    )
+      ? String(post.imageUrl).trim()
+      : "";
+    const escapedPostImageUrl = postImageUrl.replace(/[&<>"']/g, function (character) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      }[character];
+    });
     $("#main-content").html(`
       <div class="section-wrap">
         <div class="container">
@@ -1577,6 +1845,7 @@ $(function () {
             <a href="#" data-goto="blog">Blog</a><span>/</span><strong>${post.title}</strong>
           </div>
           <div class="blog-post-content">
+            ${postImageUrl ? `<img class="blog-post-hero" src="${escapedPostImageUrl}" alt="" />` : ""}
             <div class="mb-2">${tags}</div>
             <h1>${post.title}</h1>
             <div class="blog-meta">
@@ -1775,6 +2044,10 @@ $(function () {
                   <input type="text" class="form-control" id="post-excerpt" placeholder="One or two sentences…" />
                 </div>
                 <div class="mb-3">
+                  <label class="form-label" for="post-image-url">Cover image URL <span style="font-weight:400;opacity:.6;">(optional, HTTPS image URL)</span></label>
+                  <input type="url" class="form-control" id="post-image-url" placeholder="https://example.com/cover-image.jpg" />
+                </div>
+                <div class="mb-3">
                   <label class="form-label">Content <span style="font-weight:400;opacity:.6;">(HTML supported: &lt;h2&gt;, &lt;p&gt;, &lt;strong&gt;)</span></label>
                   <textarea class="form-control" id="post-content" rows="9" placeholder="Write your post…"></textarea>
                 </div>
@@ -1821,6 +2094,7 @@ $(function () {
   $(document).on("click", "#btn-publish-post", async function () {
     const title = $("#post-title").val().trim();
     const excerpt = $("#post-excerpt").val().trim();
+    const imageUrl = $("#post-image-url").val().trim();
     const content = $("#post-content").val().trim();
     const tags = $("#post-tags").val().trim();
 
@@ -1848,6 +2122,7 @@ $(function () {
       id: Date.now(),
       title,
       excerpt,
+      imageUrl,
       content,
       tags,
       author: "CS Teacher",
@@ -1860,7 +2135,7 @@ $(function () {
     try {
       await publishToGitHub(posts, title);
       loadedPosts = posts;
-      $("#post-title, #post-excerpt, #post-content, #post-tags").val("");
+      $("#post-title, #post-excerpt, #post-image-url, #post-content, #post-tags").val("");
       $("#post-save-msg")
         .removeClass("text-danger")
         .addClass("text-success")
