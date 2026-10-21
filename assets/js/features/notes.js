@@ -1,149 +1,4 @@
-const levels = {
-  "o-level": {
-    title: "O Level",
-    json: "assets/json/cambridge/o_level.json",
-    sections: [
-      {
-        topics: [
-          "Data Representation",
-          "Data Transmission",
-          "Hardware",
-          "Software",
-          "The Internet and It's Use",
-          "Automated and Emerging Technologies",
-          "Algorithms Design and Problem Solving",
-          "Programming",
-          "Databases",
-          "Boolean Logic",
-        ],
-      },
-    ],
-  },
-  "9th-sindh-board": {
-    title: "9th Grade",
-    json: "assets/json/sindh-board/9th_grade.json",
-    sections: [
-      {
-        topics: [
-          "Unit 1",
-          "Unit 2",
-          "Unit 3",
-          "Unit 4",
-          "Unit 5",
-          "Unit 6",
-          "Unit 7"
-        ],
-      },
-    ],
-  },
-  "10th-sindh-board": {
-    title: "10th Grade",
-    json: "assets/json/sindh-board/10th_grade.json",
-    sections: [
-      {
-        topics: [
-          "Unit 1",
-          "Unit 2",
-          "Unit 3",
-          "Unit 4",
-          "Unit 5",
-          "Unit 6",
-          "Unit 7"
-        ],
-      },
-    ],
-  },
-  "11th-sindh-board": {
-    title: "11th Grade",
-    json: "assets/json/sindh-board/11th_grade.json",
-    sections: [
-      {
-        topics: [
-          "Unit 1",
-        ],
-      },
-    ],
-  },
-  "12th-sindh-board": {
-    title: "12th Grade",
-    json: "assets/json/sindh-board/12th_grade.json",
-    sections: [
-      {
-        topics: [
-          "Unit 1",
-        ],
-      },
-    ],
-  },
-  "9th-federal-board": {
-    title: "9th Grade",
-    json: "assets/json/federal-board/9th_grade.json",
-    sections: [
-      {
-        topics: [
-          "Unit 1",
-          "Unit 2",
-          "Unit 3",
-          "Unit 4",
-          "Unit 5",
-          "Unit 6",
-          "Unit 7"
-        ],
-      },
-    ],
-  },
-  "10th-federal-board": {
-    title: "10th Grade",
-    json: "assets/json/federal-board/10th_grade.json",
-    sections: [
-      {
-        topics: [
-          "Unit 1",
-          "Unit 2",
-          "Unit 3",
-          "Unit 4",
-          "Unit 5",
-          "Unit 6",
-          "Unit 7",
-          "Unit 8"
 
-
-        ],
-      },
-    ],
-  },
-  "11th-federal-board": {
-    title: "11th Grade",
-    json: "assets/json/federal-board/11th_grade.json",
-    sections: [
-      {
-        topics: [
-          "Unit 1",
-        ],
-      },
-    ],
-  },
-  "12th-federal-board": {
-    title: "12th Grade",
-    json: "assets/json/federal-board/12th_grade.json",
-    sections: [
-      {
-        topics: [
-          "Unit 1",
-        ],
-      },
-    ],
-  },
-  "a-level": {
-    title: "A Level",
-    json: "assets/json/cambridge/a_level.json",
-    sections: [
-      {
-        topics: ["Data Representation", "Algorithms"],
-      },
-    ],
-  },
-};
 
 let currentLevel = "o-level";
 let currentTopic = "";
@@ -162,6 +17,15 @@ let closeSidebar;
 let overlay;
 let notesBreadcrumb;
 
+window.showNotesPage = function (level) {
+  currentLevel = level || new URLSearchParams(window.location.search).get("level") || "o-level";
+  const levelMeta = CATEGORY_META[currentLevel] || { label: "O Level" };
+  const levelClass = currentLevel === "a-level" ? "level-a" : "level-o";
+  document.getElementById("main-content").innerHTML =
+    NotesView.render(levelMeta, levelClass);
+  initNotesPage(currentLevel);
+};
+
 function initNotesPage(level) {
   sidebar = document.getElementById("sidebar");
   sidebarList = document.getElementById("sidebar-list");
@@ -175,44 +39,9 @@ function initNotesPage(level) {
   overlay = document.getElementById("sidebar-overlay");
   notesBreadcrumb = document.getElementById("notes-breadcrumb");
 
-  attachNavListeners();
-  attachLevelCardListeners();
   attachSidebarControls();
   attachTopicNavigation();
   setLevel(level || currentLevel || "o-level");
-}
-
-function attachNavListeners() {
-  document.querySelectorAll("[data-level]").forEach((link) => {
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-      const level = link.dataset.level;
-      if (level && levels[level]) {
-        setLevel(level);
-      }
-      hideMobileSidebar();
-    });
-  });
-
-  document.querySelectorAll(".nav-link").forEach((link) => {
-    link.addEventListener("click", (event) => {
-      const href = link.getAttribute("href");
-      if (href === "#" && !link.dataset.level) {
-        event.preventDefault();
-      }
-    });
-  });
-}
-
-function attachLevelCardListeners() {
-  document.querySelectorAll(".level-card").forEach((card) => {
-    card.addEventListener("click", () => {
-      const level = card.dataset.level;
-      if (level && levels[level]) {
-        setLevel(level);
-      }
-    });
-  });
 }
 
 function attachSidebarControls() {
@@ -257,19 +86,16 @@ function attachTopicNavigation() {
 }
 
 function setLevel(levelKey) {
-  if (!levels[levelKey]) {
+  if (!CLASSROOM_NOTES[levelKey]) {
     return;
   }
 
   currentLevel = levelKey;
-  const levelConfig = levels[levelKey];
+  const levelConfig = CLASSROOM_NOTES[levelKey];
 
   if (sidebarBadge) {
     sidebarBadge.textContent = levelConfig.title;
   }
-
-  highlightLevelNav(levelKey);
-  highlightLevelCard(levelKey);
 
   fetchNotes(levelConfig.json).then(() => {
     buildSidebar(levelConfig.sections);
@@ -277,24 +103,6 @@ function setLevel(levelKey) {
       currentTopic = currentTopicList[0] || "";
     }
     renderTopic();
-  });
-}
-
-function highlightLevelCard(levelKey) {
-  document.querySelectorAll(".level-card").forEach((card) => {
-    card.classList.toggle("active", card.dataset.level === levelKey);
-  });
-}
-
-function highlightLevelNav(levelKey) {
-  document.querySelectorAll(".nav-link").forEach((link) => {
-    if (link.dataset.level === levelKey) {
-      link.classList.add("active");
-    } else if (link.dataset.navpage && link.dataset.navpage === levelKey) {
-      link.classList.add("active");
-    } else {
-      link.classList.remove("active");
-    }
   });
 }
 
@@ -391,8 +199,8 @@ async function fetchNotes(path) {
 function updateBreadcrumb() {
   if (!notesBreadcrumb) return;
   const levelTitle =
-    levels[currentLevel] && levels[currentLevel].title
-      ? levels[currentLevel].title
+    CLASSROOM_NOTES[currentLevel] && CLASSROOM_NOTES[currentLevel].title
+      ? CLASSROOM_NOTES[currentLevel].title
       : currentLevel;
   const levelLabel = currentLevel.endsWith("-sindh-board")
     ? "Sindh " + levelTitle
@@ -406,9 +214,9 @@ function updateBreadcrumb() {
 
   notesBreadcrumb.innerHTML =
     '<div class="breadcrumb-custom">' +
-    '<a href="#" data-goto="home">Home</a><span>/</span>' +
-    '<a href="#" data-goto="cat-hub" data-level="' +
-    currentLevel +
+    '<a href="home.html">Home</a><span>/</span>' +
+    '<a href="classroom.html?level=' +
+    encodeURIComponent(currentLevel) +
     '">' +
     levelLabel +
     "</a><span>/</span>" +
@@ -628,7 +436,3 @@ window.addEventListener("resize", () => {
     hideMobileSidebar();
   }
 });
-
-if (document.getElementById("sidebar")) {
-  initNotesPage();
-}

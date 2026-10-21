@@ -222,9 +222,11 @@ body {
   border-radius: 14px;
   padding: 1.25rem 1.5rem;
   height: 100%;
+  color: inherit;
   display: flex;
   align-items: center;
   gap: 1rem;
+  text-decoration: none;
   transition:
     box-shadow 0.2s,
     transform 0.2s;
@@ -259,20 +261,20 @@ body {
   margin: 0;
   font-size: 0.97rem;
 }
-.feature-card:not([data-goto]) {
+.feature-card:not(.feature-card-available) {
   cursor: default;
   background: #f8fafc;
   border-color: #e2e8f0;
 }
-.feature-card:not([data-goto]):hover {
+.feature-card:not(.feature-card-available):hover {
   box-shadow: none;
   transform: none;
 }
-.feature-card:not([data-goto]) .feature-icon {
+.feature-card:not(.feature-card-available) .feature-icon {
   background: #e2e8f0;
   color: #64748b;
 }
-.feature-card:not([data-goto]) h5 {
+.feature-card:not(.feature-card-available) h5 {
   color: #64748b;
 }
 
@@ -954,95 +956,6 @@ body {
   background: var(--primary-lighter);
 }
 
-/* ─── FLASHCARDS ─── */
-.flashcard-wrap {
-  perspective: 1000px;
-  max-width: 520px;
-  margin: 0 auto;
-  cursor: pointer;
-  height: 280px;
-}
-.flashcard-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.flashcard-wrap.flipped .flashcard-inner {
-  transform: rotateY(180deg);
-}
-.flashcard-front,
-.flashcard-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border-radius: 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2.5rem 2rem;
-  text-align: center;
-  border: 1px solid var(--border);
-}
-.flashcard-front {
-  background: var(--white);
-  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
-}
-.flashcard-back {
-  background: var(--primary);
-  color: #fff;
-  transform: rotateY(180deg);
-  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.25);
-}
-.flashcard-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 1rem;
-  opacity: 0.55;
-}
-.flashcard-text {
-  font-size: 1.05rem;
-  font-weight: 600;
-  line-height: 1.55;
-}
-.flashcard-back .flashcard-text {
-  font-size: 0.93rem;
-  font-weight: 400;
-  line-height: 1.65;
-}
-.flashcard-hint {
-  position: absolute;
-  bottom: 1rem;
-  font-size: 0.7rem;
-  opacity: 0.4;
-  font-weight: 500;
-}
-.card-counter {
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 0.82rem;
-  font-weight: 500;
-  margin-bottom: 0.75rem;
-}
-.card-progress {
-  height: 4px;
-  background: var(--border);
-  border-radius: 2px;
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-}
-.card-progress-bar {
-  height: 100%;
-  background: var(--primary);
-  border-radius: 2px;
-  transition: width 0.3s;
-}
 .btn-nav {
   background: var(--white);
   border: 1.5px solid var(--border);
@@ -1645,40 +1558,6 @@ body {
   background: var(--primary-lighter);
 }
 
-/* ─── CONCEPTS / ACCORDION ─── */
-.accordion-item {
-  background: var(--white);
-  border: 1px solid var(--border) !important;
-  border-radius: 12px !important;
-  margin-bottom: 0.6rem;
-  overflow: hidden;
-}
-.accordion-button {
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--text-dark);
-  background: var(--white);
-  border-radius: 12px !important;
-  padding: 1rem 1.3rem;
-}
-.accordion-button:not(.collapsed) {
-  color: var(--primary);
-  background: var(--primary-lighter);
-  box-shadow: none;
-}
-.accordion-button:focus {
-  box-shadow: none;
-}
-.accordion-button:not(.collapsed)::after {
-  filter: invert(36%) sepia(98%) saturate(1000%) hue-rotate(205deg);
-}
-.accordion-body {
-  font-size: 0.9rem;
-  line-height: 1.75;
-  color: var(--text-mid);
-  padding: 0.9rem 1.3rem 1.3rem;
-}
-
 /* ─── TUTORIAL ─── */
 .video-card {
   background: var(--white);
@@ -2089,9 +1968,6 @@ footer {
   }
   .hero h1 {
     font-size: 1.85rem;
-  }
-  .flashcard-wrap {
-    height: 240px;
   }
   .quiz-card {
     padding: 1.3rem;

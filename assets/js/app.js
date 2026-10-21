@@ -1,19 +1,16 @@
-/* ═══════════════════════════════════
-   CS Study Hub — Application Logic
-   Posts are fetched from posts.json and saved back via GitHub API.
-   ═══════════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   CS Study Hub application controller
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 $(function () {
-  /* ── STATE ── */
-  let currentPage = "home";
+  /* â”€â”€ STATE â”€â”€ */
+  let currentPage = document.body.dataset.page || "home";
   let currentLevel = null;
   let loadedPosts = null; // populated async from posts.json
   let loadedGlossary = null; // populated async from glossary.json
   let glossarySearchTimer = null;
   let glossarySearchController = null;
   let glossarySearchRequestId = 0;
-  let fcIndex = 0;
-  let fcFlipped = false;
   let quizQuestions = [];
   let quizIndex = 0;
   let quizPage = 0;
@@ -34,19 +31,34 @@ $(function () {
   const QUIZ_PAGE_SIZE = 10;
   const QUIZ_SECONDS_PER_QUESTION = 30;
   const QUIZ_ORDER_VERSION = 2;
-  const ADMIN_PASS = "awinashgoswami";
 
-  /* ── LOAD POSTS from assets/json/posts.json on startup ── */
+  /* â”€â”€ LOAD POSTS from assets/json/posts.json on startup â”€â”€ */
   fetch("assets/json/posts.json?v=" + Date.now())
     .then(function (r) {
-      return r.ok ? r.json() : null;
+      if (!r.ok) {
+        throw new Error("Blog posts request failed with status " + r.status);
+      }
+      return r.json();
     })
     .then(function (data) {
-      loadedPosts = Array.isArray(data) && data.length ? data : FALLBACK_POSTS;
+      if (!Array.isArray(data)) {
+        throw new Error("Blog posts data must be a JSON array.");
+      }
+      loadedPosts = data.length ? data : FALLBACK_POSTS;
+      refreshPostPage();
     })
-    .catch(function () {
+    .catch(function (error) {
+      console.error("Unable to load blog posts; showing fallback posts.", error);
       loadedPosts = FALLBACK_POSTS;
+      refreshPostPage();
     });
+
+  function refreshPostPage() {
+    if (currentPage === "blog") showBlog();
+    else if (currentPage === "blog-post") {
+      showBlogPost(new URLSearchParams(window.location.search).get("id"));
+    }
+  }
 
   function getPosts() {
     return loadedPosts || FALLBACK_POSTS;
@@ -55,59 +67,15 @@ $(function () {
     return loadedGlossary || GLOSSARY_TERMS;
   }
 
-  /* ── ROUTING ── */
-  function navigate(page, opts) {
-    opts = opts || {};
-    if (currentPage === "cat-quiz" && page !== "cat-quiz") {
-      clearInterval(quizTimerId);
-      persistQuizSession();
-    }
-    currentPage = page;
-    currentLevel = opts.level || null;
-    $("[data-navpage]").removeClass("active");
-    $('[data-navpage="' + page + '"]').addClass("active");
-    if (page === "home") showHome();
-    else if (page === "cat-hub") showCatHub(currentLevel);
-    else if (page === "cat-fc") showCatFlashcards(currentLevel);
-    else if (page === "cat-quiz") showCatQuiz(currentLevel);
-    else if (page === "cat-concepts") showCatConcepts(currentLevel);
-    else if (page === "tutorial") showTutorial();
-    else if (page === "blog") showBlog();
-    else if (page === "glossary") showGlossary();
-    else if (page === "books") showBooks();
-    else if (page === "notes") showNotesPage(currentLevel);
-    else if (page === "blog-post") showBlogPost(opts.postId);
-    else if (page === "blog-admin") showBlogAdmin();
-    window.scrollTo(0, 0);
-  }
-
-  /* ── NAV CLICKS ── */
-  $(document).on("click", "[data-goto]", function (e) {
-    e.preventDefault();
-    const page = $(this).data("goto");
-    const level = $(this).data("level");
-    const postId = $(this).data("postid");
-    const nc = document.getElementById("navbarNav");
-    if (nc && nc.classList.contains("show"))
-      bootstrap.Collapse.getOrCreateInstance(nc).hide();
-    navigate(page, { level: level, postId: postId });
-  });
-
-  $(document).on("keydown", "[data-goto][role='button']", function (e) {
-    if (e.key !== "Enter" && e.key !== " ") return;
-    e.preventDefault();
-    $(this).trigger("click");
-  });
-
-  /* ══════════════════════════════════
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      HOME
-  ═══════════════════════════════════*/
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
   function showHome() {
     $("#main-content").html(`
       <section class="hero">
         <div class="container">
           <h1>Master Computer Science<br><span>Without the Burnout</span></h1>
-          <p>A free, carefully curated resource built by a passionate CS teacher. Notes, flashcards, quizzes, tutorials, and blog — everything you need to succeed.</p>
+          <p>A free, carefully curated resource built by a passionate CS teacher. Notes, quizzes, tutorials, books, and blog â€” everything you need to succeed.</p>
 
         </div>
       </section>
@@ -123,31 +91,31 @@ $(function () {
             <h3 class="fw-bold text-dark mb-3">Sindh Board</h3>
             <div class="row g-4">
               <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card feature-card-available" data-goto="cat-hub" data-level="9th-sindh-board" role="button" tabindex="0" aria-label="Open 9th Grade">
+                <a class="feature-card feature-card-available" href="classroom.html?level=9th-sindh-board" aria-label="Open 9th Grade">
                   <div class="feature-icon"><i class="bi bi-book-half"></i></div>
                   <div class="feature-card-content"><h5>9th Grade</h5></div>
-                </div>
+                </a>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card feature-card-available" data-goto="cat-hub" data-level="10th-sindh-board" role="button" tabindex="0" aria-label="Open 10th Grade">
+                <a class="feature-card feature-card-available" href="classroom.html?level=10th-sindh-board" aria-label="Open 10th Grade">
                   <div class="feature-icon"><i class="bi bi-book-half"></i></div>
                   <div class="feature-card-content"><h5>10th Grade</h5></div>
-                </div>
+                </a>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card feature-card-available" data-goto="cat-hub" data-level="11th-sindh-board" role="button" tabindex="0" aria-label="Open 11th Grade">
+                <a class="feature-card feature-card-available" href="classroom.html?level=11th-sindh-board" aria-label="Open 11th Grade">
                   <div class="feature-icon"><i class="bi bi-book-half"></i></div>
                   <div class="feature-card-content"><h5>11th Grade</h5></div>
-                </div>
+                </a>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card feature-card-available" data-goto="cat-hub" data-level="12th-sindh-board" role="button" tabindex="0" aria-label="Open 12th Grade">
+                <a class="feature-card feature-card-available" href="classroom.html?level=12th-sindh-board" aria-label="Open 12th Grade">
                   <div class="feature-icon"><i class="bi bi-book-half"></i></div>
                   <div class="feature-card-content"><h5>12th Grade</h5></div>
-                </div>
+                </a>
               </div>
             </div>
           </div>
@@ -156,31 +124,31 @@ $(function () {
             <h3 class="fw-bold text-dark mb-3">Federal Board</h3>
             <div class="row g-4">
               <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card feature-card-available" data-goto="cat-hub" data-level="9th-federal-board" role="button" tabindex="0" aria-label="Open 9th Grade">
+                <a class="feature-card feature-card-available" href="classroom.html?level=9th-federal-board" aria-label="Open 9th Grade">
                   <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
                   <div class="feature-card-content"><h5>9th Grade</h5></div>
-                </div>
+                </a>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card feature-card-available" data-goto="cat-hub" data-level="10th-federal-board" role="button" tabindex="0" aria-label="Open 10th Grade">
+                <a class="feature-card feature-card-available" href="classroom.html?level=10th-federal-board" aria-label="Open 10th Grade">
                   <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
                   <div class="feature-card-content"><h5>10th Grade</h5></div>
-                </div>
+                </a>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card feature-card-available" data-goto="cat-hub" data-level="11th-federal-board" role="button" tabindex="0" aria-label="Open 11th Grade">
+                <a class="feature-card feature-card-available" href="classroom.html?level=11th-federal-board" aria-label="Open 11th Grade">
                   <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
                   <div class="feature-card-content"><h5>11th Grade</h5></div>
-                </div>
+                </a>
               </div>
 
               <div class="col-sm-6 col-md-12 col-lg-3">
-                <div class="feature-card feature-card-available" data-goto="cat-hub" data-level="12th-federal-board" role="button" tabindex="0" aria-label="Open 12th Grade">
+                <a class="feature-card feature-card-available" href="classroom.html?level=12th-federal-board" aria-label="Open 12th Grade">
                   <div class="feature-icon"><i class="bi bi-journal-text"></i></div>
                   <div class="feature-card-content"><h5>12th Grade</h5></div>
-                </div>
+                </a>
               </div>
             </div>
           </div>
@@ -328,16 +296,35 @@ $(function () {
     `);
   }
 
-  /* ══════════════════════════════════
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      CATEGORY HUB
-  ═══════════════════════════════════*/
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
+  function getCategoryBreadcrumbLabel(level) {
+    const meta = CATEGORY_META[level];
+    const board = level.endsWith("-federal-board")
+      ? "Federal Board"
+      : level.endsWith("-sindh-board")
+        ? "Sindh Board"
+        : "";
+
+    return board ? `${board} ${meta.label}` : meta.label;
+  }
+
+  function breadcrumb(level, label) {
+    return `<div class="breadcrumb-custom">
+      <a href="home.html">Home</a><span>/</span>
+      <a href="classroom.html?level=${encodeURIComponent(level)}">${getCategoryBreadcrumbLabel(level)}</a><span>/</span>
+      <strong>${label}</strong>
+    </div>`;
+  }
+
   function showCatHub(level) {
     const meta = CATEGORY_META[level];
     $("#main-content").html(`
       <div class="section-wrap">
         <div class="container">
           <div class="breadcrumb-custom">
-            <a href="#" data-goto="home">Home</a><span>/</span><strong>${getCategoryBreadcrumbLabel(level)}</strong>
+            <a href="home.html">Home</a><span>/</span><strong>${getCategoryBreadcrumbLabel(level)}</strong>
           </div>
           <div class="level-header ${meta.colorClass}">
             <div class="level-icon"><i class="bi ${meta.icon}" style="font-size:2.5rem;"></i></div>
@@ -350,11 +337,11 @@ $(function () {
 
 
            
-          <a href="#" class="section-btn" data-goto="notes" data-level="${level}">
+          <a href="notes.html?level=${level}" class="section-btn">
             <span class="sb-icon"><i class="bi bi-file-earmark-pdf"></i></span>
             <h4>Study Notes</h4><p>Downloadable PDF guides for every topic</p>
           </a>
-          <a href="#" class="section-btn" data-goto="cat-quiz" data-level="${level}">
+          <a href="quiz.html?level=${level}" class="section-btn">
             <span class="sb-icon"><i class="bi bi-patch-question"></i></span>
             <h4>Practice Quiz</h4><p>Multiple-choice questions with instant feedback</p>
           </a>
@@ -367,81 +354,9 @@ $(function () {
   }
 
 
-  /* ══════════════════════════════════
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      NOTES
-  ═══════════════════════════════════*/
-  function showNotesPage(level) {
-    currentLevel = level || currentLevel || "o-level";
-    const levelMeta = CATEGORY_META[currentLevel] || { label: "O Level" };
-    const levelClass = currentLevel === "a-level" ? "level-a" : "level-o";
-    loadNotesCss();
-    $("#main-content").html(`
-      <main class="notes-app">
-        <section class="notes-hero">
-          <div class="container">
-            <h1>Notes</h1>
-            <div class="notes-level-cards">
-              <div class="notes-level-display">
-                <span class="${levelClass}"></span>
-                <strong>${levelMeta.label}</strong>
-              </div>
-            </div>
-          </div>
-        </section>
-          <section class="layout container">
-          <aside class="sidebar" id="sidebar">
-            <div class="sidebar-top">
-              <div>
-                <span class="sidebar-badge" id="sidebar-level-badge">O Level</span>
-              </div>
-              <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
-            </div>
-            <div class="sidebar-scroll" id="sidebar-list"></div>
-          </aside>
-          <section class="content-area">
-            <div class="content-control">
-              <button class="btn btn-outline-secondary mobile-toggle" id="mobile-sidebar-toggle"><i class="bi bi-list me-2"></i>Topics</button>
-              <div class="content-header">
-                <div>
-                  <h2 id="content-title">Decimal number system</h2>
-                </div>
-                <div class="content-actions">
-                  <button class="btn btn-secondary" id="prev-topic"><i class="bi bi-chevron-left me-1"></i>Previous</button>
-                  <button class="btn btn-primary" id="next-topic">Next<i class="bi bi-chevron-right ms-1"></i></button>
-                </div>
-              </div>
-            </div>
-            <div class="content-breadcrumb" id="notes-breadcrumb"></div>
-            <article class="topic-panel">
-              <div id="topic-content"></div>
-            </article>
-          </section>
-        </section>
-        <div class="sidebar-overlay" id="sidebar-overlay"></div>
-      </main>
-    `);
-    if (typeof initNotesPage === "function") {
-      initNotesPage(level);
-    }
-  }
-
-  function loadNotesCss() {
-    if (!document.getElementById("notes-css")) {
-      const link = document.createElement("link");
-      link.id = "notes-css";
-      link.rel = "stylesheet";
-      link.href = "assets/css/notes.css";
-      document.head.appendChild(link);
-    }
-  }
-
-  function unloadNotesCss() {
-    const existing = document.getElementById("notes-css");
-    if (existing) {
-      existing.parentNode.removeChild(existing);
-    }
-  }
-
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
   /* Download All as ZIP */
   $(document).on("click", "#btn-download-all", function () {
     const btn = $(this);
@@ -449,7 +364,7 @@ $(function () {
     const titles = btn.data("titles").split("|");
     btn
       .html(
-        '<span class="spinner-border spinner-border-sm me-1"></span>Preparing ZIP…',
+        '<span class="spinner-border spinner-border-sm me-1"></span>Preparing ZIPâ€¦',
       )
       .prop("disabled", true);
     const zip = new JSZip();
@@ -534,88 +449,9 @@ $(function () {
     );
   }
 
-  /* ══════════════════════════════════
-     FLASHCARDS
-  ═══════════════════════════════════*/
-  function showCatFlashcards(level) {
-    const meta = CATEGORY_META[level];
-    fcIndex = 0;
-    fcFlipped = false;
-    $("#main-content").html(`
-      <div class="section-wrap">
-        <div class="container" style="max-width:640px;">
-          ${breadcrumb(level, "Flashcards")}
-          <div class="section-header">
-            <h2>${meta.label} — Flashcards</h2>
-            <p>Click a card to flip it and reveal the answer.</p>
-          </div>
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <span id="fc-counter" class="card-counter"></span>
-            <button id="fc-restart" class="btn-nav" style="font-size:.78rem;padding:.3rem .9rem;"><i class="bi bi-arrow-counterclockwise me-1"></i>Restart</button>
-          </div>
-          <div class="card-progress mb-3"><div class="card-progress-bar" id="fc-progress-bar"></div></div>
-          <div class="flashcard-wrap" id="fc-wrap">
-            <div class="flashcard-inner">
-              <div class="flashcard-front">
-                <span class="flashcard-label">Question</span>
-                <p class="flashcard-text" id="fc-front-text"></p>
-                <span class="flashcard-hint">Click to flip</span>
-              </div>
-              <div class="flashcard-back">
-                <span class="flashcard-label" style="opacity:.5;">Answer</span>
-                <p class="flashcard-text" id="fc-back-text"></p>
-                <span class="flashcard-hint">Click to flip back</span>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-center gap-3 mt-4">
-            <button class="btn-nav" id="fc-prev"><i class="bi bi-chevron-left me-1"></i>Previous</button>
-            <button class="btn-nav" id="fc-next">Next<i class="bi bi-chevron-right ms-1"></i></button>
-          </div>
-        </div>
-      </div>
-    `);
-    renderFlashcard(CATEGORIES[level].flashcards);
-  }
-
-  function renderFlashcard(cards) {
-    const c = cards[fcIndex];
-    const pct = (((fcIndex + 1) / cards.length) * 100).toFixed(0);
-    fcFlipped = false;
-    $("#fc-wrap").removeClass("flipped");
-    $("#fc-front-text").text(c.q);
-    $("#fc-back-text").text(c.a);
-    $("#fc-counter").text("Card " + (fcIndex + 1) + " of " + cards.length);
-    $("#fc-progress-bar").css("width", pct + "%");
-    $("#fc-prev").prop("disabled", fcIndex === 0);
-    $("#fc-next").prop("disabled", fcIndex === cards.length - 1);
-  }
-
-  $(document).on("click", "#fc-wrap", function () {
-    fcFlipped = !fcFlipped;
-    $(this).toggleClass("flipped", fcFlipped);
-  });
-  $(document).on("click", "#fc-prev", function () {
-    if (fcIndex > 0) {
-      fcIndex--;
-      renderFlashcard(CATEGORIES[currentLevel].flashcards);
-    }
-  });
-  $(document).on("click", "#fc-next", function () {
-    const c = CATEGORIES[currentLevel].flashcards;
-    if (fcIndex < c.length - 1) {
-      fcIndex++;
-      renderFlashcard(c);
-    }
-  });
-  $(document).on("click", "#fc-restart", function () {
-    fcIndex = 0;
-    renderFlashcard(CATEGORIES[currentLevel].flashcards);
-  });
-
-  /* ══════════════════════════════════
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      QUIZ
-  ═══════════════════════════════════*/
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
   function showCatQuiz(level) {
     const meta = CATEGORY_META[level];
     $("#main-content").html(`
@@ -624,7 +460,7 @@ $(function () {
           ${breadcrumb(level, "Quiz")}
           <div class="section-header d-flex justify-content-between align-items-start flex-wrap gap-2">
             <div>
-              <h2>${meta.label} — Practice Quiz</h2>
+              <h2>${meta.label} - Practice Quiz</h2>
               <p>One question at a time. Instant feedback. Track your score.</p>
             </div>
           </div>
@@ -646,10 +482,10 @@ $(function () {
                 <span class="quiz-score-badge" id="quiz-score-badge">Score: 0 / 0</span>
               </div>
               <div class="quiz-timer-row mb-3">
-                <div class="quiz-timer-track" role="progressbar" aria-label="Time left for this question" aria-valuemin="0" aria-valuemax="20" aria-valuenow="20">
+                <div class="quiz-timer-track" role="progressbar" aria-label="Time left for this question" aria-valuemin="0" aria-valuemax="30" aria-valuenow="30">
                   <div class="quiz-timer-bar" id="quiz-timer-bar"></div>
                 </div>
-                <span class="quiz-timer" id="quiz-timer" aria-live="polite">20s</span>
+                <span class="quiz-timer" id="quiz-timer" aria-live="polite">30s</span>
               </div>
               <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                 <span class="quiz-page-indicator" id="quiz-page-indicator">Page 1 of 1</span>
@@ -671,9 +507,9 @@ $(function () {
           </div>
           <div class="quiz-report-shell" id="quiz-result" style="display:none;">
             <article class="quiz-report-card" id="quiz-report-card">
-              <div class="quiz-report-confetti" aria-hidden="true"><span>✦</span><span>★</span><span>✿</span><span>✦</span></div>
+              <div class="quiz-report-confetti" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
               <div class="quiz-report-ribbon"><i class="bi bi-stars"></i> QUIZ CHAMPION <i class="bi bi-stars"></i></div>
-              <div class="quiz-report-trophy" aria-hidden="true">🏆</div>
+              <div class="quiz-report-trophy" aria-hidden="true"><i class="bi bi-trophy-fill"></i></div>
               <p class="quiz-report-kicker">YOUR REPORT CARD</p>
               <h3>Brilliant effort, <span id="quiz-report-student"></span>!</h3>
               <p class="quiz-report-message" id="quiz-report-message"></p>
@@ -711,7 +547,13 @@ $(function () {
   function startQuiz(level) {
     clearInterval(quizTimerId);
     quizLevel = level || currentLevel;
-    const sourceQuestions = CATEGORIES[quizLevel].quiz;
+    const sourceQuestions = QUIZZES[quizLevel] || [];
+    if (!sourceQuestions.length) {
+      $("#quiz-student-form").html(
+        '<p class="text-danger" role="alert">Quiz questions are unavailable for this classroom.</p>',
+      ).show();
+      return;
+    }
     const storageKey = getQuizStorageKey(quizLevel);
     let savedSession = null;
     try {
@@ -823,7 +665,7 @@ $(function () {
     quizStudentName = $("#quiz-student-name").val().trim();
     quizFatherName = $("#quiz-father-name").val().trim();
     if (!quizStudentName || !quizFatherName) return;
-    quizQuestions = CATEGORIES[quizLevel].quiz.slice();
+    quizQuestions = QUIZZES[quizLevel].slice();
     quizResponses = Array(quizQuestions.length).fill(null);
     quizIndex = 0;
     quizPage = 0;
@@ -843,7 +685,7 @@ $(function () {
 
   function persistQuizSession() {
     if (!quizLevel || !quizQuestions.length || !quizQuestions[quizIndex]) return;
-    const sourceQuestions = CATEGORIES[quizLevel].quiz;
+    const sourceQuestions = QUIZZES[quizLevel];
     const order = quizQuestions.map(function (question) {
       return sourceQuestions.indexOf(question);
     });
@@ -1074,7 +916,7 @@ $(function () {
       }
       $("#quiz-feedback")
         .addClass(quizSelectedIndex === correct ? "correct" : "incorrect")
-        .text(quizSelectedIndex === correct ? "Correct!" : "Incorrect — correct answer: " + String.fromCharCode(65 + correct) + ".")
+        .text(quizSelectedIndex === correct ? "Correct!" : "Incorrect â€” correct answer: " + String.fromCharCode(65 + correct) + ".")
         .show();
       $("#quiz-next").show();
     }
@@ -1101,7 +943,7 @@ $(function () {
       $("#quiz-feedback")
         .addClass("incorrect")
         .text(
-          "Incorrect — correct answer: " +
+          "Incorrect â€” correct answer: " +
             String.fromCharCode(65 + correct) +
             ".",
         )
@@ -1304,13 +1146,13 @@ $(function () {
       <defs><linearGradient id="paper" x2="1" y2="1"><stop stop-color="#fff7cc"/><stop offset="1" stop-color="#dff7ff"/></linearGradient><linearGradient id="score" x2="1" y2="1"><stop stop-color="#ffe47a"/><stop offset="1" stop-color="#ffc85a"/></linearGradient></defs>
       <rect width="900" height="1120" rx="42" fill="url(#paper)"/><circle cx="90" cy="100" r="30" fill="#ff9d76"/><circle cx="810" cy="120" r="22" fill="#78d8c8"/><path d="M90 930l18 36 40 6-29 28 7 40-36-19-36 19 7-40-29-28 40-6z" fill="#f7bf45"/><path d="M790 900l13 26 29 4-21 20 5 29-26-14-26 14 5-29-21-20 29-4z" fill="#fd9476"/>
       <rect x="105" y="72" width="690" height="976" rx="36" fill="#ffffff" stroke="#e4e8eb" stroke-width="3"/>
-      <rect x="260" y="105" width="380" height="54" rx="27" fill="#dcf7ed"/><text x="450" y="141" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#237d67">★  QUIZ CHAMPION  ★</text>
-      <text x="450" y="230" text-anchor="middle" font-size="70">🏆</text><text x="450" y="280" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="3" fill="#798490">YOUR REPORT CARD</text>
+      <rect x="260" y="105" width="380" height="54" rx="27" fill="#dcf7ed"/><text x="450" y="141" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#237d67">QUIZ CHAMPION</text>
+      <path d="M420 180h60v20c0 20-12 34-30 34s-30-14-30-34v-20m0 8h-15v10c0 12 7 20 20 22m55-32h15v10c0 12-7 20-20 22m-18 14v14h-12v9h36v-9h-12v-14z" fill="none" stroke="#d99b24" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><text x="450" y="280" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="3" fill="#798490">YOUR REPORT CARD</text>
       <text x="450" y="334" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#243447">Brilliant effort, ${report.student}!</text><text x="450" y="376" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#526274">${report.message}</text>
-      <text x="450" y="430" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#334155">👨‍👦  Father: ${report.father}</text><text x="450" y="470" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#334155">🎓  ${report.className}</text>
-      <rect x="320" y="488" width="260" height="38" rx="19" fill="${quizCompletionStatus === "stopped" ? "#fff0e9" : "#e3f6e9"}"/><text x="450" y="513" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="${quizCompletionStatus === "stopped" ? "#b45309" : "#237d67"}">●  Test ${report.status}</text>
+      <text x="450" y="430" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#334155">Father: ${report.father}</text><text x="450" y="470" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#334155">${report.className}</text>
+      <rect x="320" y="488" width="260" height="38" rx="19" fill="${quizCompletionStatus === "stopped" ? "#fff0e9" : "#e3f6e9"}"/><text x="450" y="513" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="${quizCompletionStatus === "stopped" ? "#b45309" : "#237d67"}">Test ${report.status}</text>
       <rect x="185" y="540" width="530" height="190" rx="28" fill="url(#score)"/><text x="450" y="584" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="2" fill="#735311">YOUR SCORE</text><text x="450" y="655" text-anchor="middle" font-family="Arial,sans-serif" font-size="58" font-weight="800" fill="#342b18">${report.score}</text><text x="450" y="695" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#735311">${report.percentage}</text>
-      <text x="450" y="782" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#344256">✨  QUIZ STATS  ✨</text>
+      <text x="450" y="782" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#344256">QUIZ STATS</text>
       <text x="165" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#526274">Attempted</text><text x="165" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#237d67">${report.attempted}</text>
       <text x="310" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#526274">Skipped</text><text x="310" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#d97706">${report.skipped}</text>
       <text x="450" y="830" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#526274">Correct</text><text x="450" y="870" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#237d67">${report.correct}</text>
@@ -1359,40 +1201,6 @@ $(function () {
   $(document).on("click", "#quiz-restart-end", restartQuizForStudent);
 
 
-  /* ══════════════════════════════════
-     CONCEPTS
-  ═══════════════════════════════════*/
-  function showCatConcepts(level) {
-    const meta = CATEGORY_META[level];
-    const concepts = CATEGORIES[level].concepts;
-    let items = concepts
-      .map(function (c, i) {
-        const id = "concept-" + i + "-" + level;
-        return `<div class="accordion-item">
-        <h2 class="accordion-header">
-          <button class="accordion-button ${i === 0 ? "" : "collapsed"}" type="button"
-            data-bs-toggle="collapse" data-bs-target="#${id}">${c.title}</button>
-        </h2>
-        <div id="${id}" class="accordion-collapse collapse ${i === 0 ? "show" : ""}">
-          <div class="accordion-body">${c.body}</div>
-        </div>
-      </div>`;
-      })
-      .join("");
-    $("#main-content").html(`
-      <div class="section-wrap">
-        <div class="container" style="max-width:760px;">
-          ${breadcrumb(level, "Concepts")}
-          <div class="section-header">
-            <h2>${meta.label} — CS Concepts</h2>
-            <p>Click any heading to expand the full explanation.</p>
-          </div>
-          <div class="accordion">${items}</div>
-        </div>
-      </div>
-    `);
-  }
-
   function showGlossary() {
     $("#main-content").html(`
       <div class="section-wrap">
@@ -1406,14 +1214,14 @@ $(function () {
               <div class="search-panel glossary-search-panel mb-4" role="search">
                 <label class="visually-hidden" for="glossary-search">Search glossary</label>
                 <i class="bi bi-search glossary-search-icon" aria-hidden="true"></i>
-                <input id="glossary-search" type="search" class="form-control" placeholder="Search a term or definition…" autocomplete="off" aria-describedby="glossary-search-help" />
+                <input id="glossary-search" type="search" class="form-control" placeholder="Search a term or definitionâ€¦" autocomplete="off" aria-describedby="glossary-search-help" />
                 <button type="button" class="glossary-clear-search" id="glossary-clear-search" aria-label="Clear search" hidden>
                   <i class="bi bi-x-circle-fill" aria-hidden="true"></i>
                 </button>
                 <div class="form-text" id="glossary-search-help">Search matches both terms and definitions as you type.</div>
               </div>
               <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-3 glossary-toolbar">
-                <div id="glossary-count" class="text-muted" role="status" aria-live="polite">Loading glossary…</div>
+                <div id="glossary-count" class="text-muted" role="status" aria-live="polite">Loading glossaryâ€¦</div>
                 <button class="btn btn-sm btn-outline-secondary" id="glossary-show-all" type="button">Show all terms</button>
               </div>
               <div id="glossary-results"></div>
@@ -1522,7 +1330,7 @@ $(function () {
     }
 
     $section.prop("hidden", false);
-    $("#glossary-external-status").text("Searching Wikipedia…");
+    $("#glossary-external-status").text("Searching Wikipediaâ€¦");
     $("#glossary-external-results").empty();
     glossarySearchTimer = setTimeout(function () {
       const controller = new AbortController();
@@ -1662,7 +1470,7 @@ $(function () {
             <h3>${escapeHtml(book.title)}</h3>
             <p class="book-author">${escapeHtml(book.author)}</p>
             <p class="book-description">${escapeHtml(book.description)}</p>
-            <p class="book-license"><i class="bi bi-unlock" aria-hidden="true"></i> ${escapeHtml(book.license)}</p>
+            ${book.license ? `<p class="book-license"><i class="bi bi-unlock" aria-hidden="true"></i> ${escapeHtml(book.license)}</p>` : ""}
             <div class="book-card-actions">
               <a class="btn btn-primary book-action" href="${escapeHtml(book.actionUrl)}" target="_blank" rel="noopener noreferrer">
                 <i class="bi ${book.actionLabel.includes("PDF") ? "bi-file-earmark-pdf" : "bi-book"}" aria-hidden="true"></i>
@@ -1701,9 +1509,9 @@ $(function () {
     showBooks($(this).attr("data-book-category"));
   });
 
-  /* ══════════════════════════════════
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      TUTORIAL
-  ═══════════════════════════════════*/
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
   function showTutorial() {
     let cards = TUTORIALS.map(function (v) {
       return `<div class="col-md-6 col-lg-4 mb-4">
@@ -1732,9 +1540,9 @@ $(function () {
     `);
   }
 
-  /* ══════════════════════════════════
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      BLOG
-  ═══════════════════════════════════*/
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
   function showBlog() {
     const posts = getPosts();
     const escapeHtml = function (value) {
@@ -1769,7 +1577,7 @@ $(function () {
           post.excerpt ||
           String(post.content || "")
             .replace(/<[^>]+>/g, "")
-            .substring(0, 140) + "…";
+            .substring(0, 140) + "â€¦";
         const imageUrl = safeImageUrl(post.imageUrl);
         const image = imageUrl
           ? `<img src="${imageUrl}" alt="" loading="lazy" />`
@@ -1781,7 +1589,7 @@ $(function () {
               day: "numeric",
             })
           : "";
-        return `<a class="blog-card blog-card--theme-${index % 4}" href="#" data-goto="blog-post" data-postid="${escapeHtml(post.id)}" aria-label="Read ${escapeHtml(post.title)}">
+        return `<a class="blog-card blog-card--theme-${index % 4}" href="blog-post.html?id=${encodeURIComponent(post.id)}" aria-label="Read ${escapeHtml(post.title)}">
           <div class="blog-card-cover">
             ${image}
             ${tags ? `<div class="blog-card-tags">${tags}</div>` : ""}
@@ -1842,7 +1650,7 @@ $(function () {
       <div class="section-wrap">
         <div class="container">
           <div class="breadcrumb-custom">
-            <a href="#" data-goto="blog">Blog</a><span>/</span><strong>${post.title}</strong>
+            <a href="blog.html">Blog</a><span>/</span><strong>${post.title}</strong>
           </div>
           <div class="blog-post-content">
             ${postImageUrl ? `<img class="blog-post-hero" src="${escapedPostImageUrl}" alt="" />` : ""}
@@ -1854,7 +1662,7 @@ $(function () {
             </div>
             <div class="blog-post-body">${post.content}</div>
             <div class="mt-4">
-              <a href="#" class="btn-outline-custom" data-goto="blog" style="font-size:.85rem;padding:.5rem 1.1rem;">
+              <a href="blog.html" class="btn-outline-custom" style="font-size:.85rem;padding:.5rem 1.1rem;">
                 <i class="bi bi-arrow-left me-1"></i>Back to Blog
               </a>
             </div>
@@ -1864,358 +1672,42 @@ $(function () {
     `);
   }
 
-  /* ══════════════════════════════════
-     BLOG ADMIN
-  ═══════════════════════════════════*/
-  function showBlogAdmin() {
-    if (sessionStorage.getItem("cs_admin") !== "1") {
-      $("#main-content").html(`
-        <div class="section-wrap">
-          <div class="container">
-            <div class="admin-login">
-              <i class="bi bi-shield-lock" style="font-size:2.5rem;color:var(--primary);margin-bottom:1rem;display:block;"></i>
-              <h4>Admin Login</h4>
-              <p class="text-muted mb-3" style="font-size:.88rem;">Enter your password to access the blog admin panel.</p>
-              <input type="password" id="admin-pass-input" class="form-control mb-3" placeholder="Password" />
-              <div id="admin-pass-error" class="text-danger mb-2" style="font-size:.83rem;display:none;">Incorrect password.</div>
-              <button class="btn-primary-custom w-100" id="admin-login-btn">Sign In</button>
-            </div>
-          </div>
-        </div>
-      `);
-      return;
-    }
-    renderAdminPanel();
+  /* â”€â”€ INIT â”€â”€ */
+  const queryParams = new URLSearchParams(window.location.search);
+  currentLevel = queryParams.get("level");
+  const requestedPage = currentPage;
+  const requiredLevelPages = ["cat-hub", "notes", "cat-quiz"];
+  if (
+    requiredLevelPages.includes(requestedPage) &&
+    !Object.prototype.hasOwnProperty.call(CATEGORY_META, currentLevel)
+  ) {
+    $("#main-content").html(
+      '<div class="section-wrap"><div class="container"><p class="alert alert-warning" role="alert">Choose a classroom from the home page to continue.</p><a class="btn btn-primary" href="home.html">Go to Home</a></div></div>',
+    );
+  } else if (requestedPage === "home") showHome();
+  else if (requestedPage === "cat-hub") showCatHub(currentLevel);
+  else if (requestedPage === "notes") window.showNotesPage(currentLevel);
+  else if (requestedPage === "cat-quiz") showCatQuiz(currentLevel);
+  else if (requestedPage === "tutorial") showTutorial();
+  else if (requestedPage === "blog") showBlog();
+  else if (requestedPage === "blog-post") showBlogPost(queryParams.get("id"));
+  else if (requestedPage === "glossary") showGlossary();
+  else if (requestedPage === "books") showBooks(queryParams.get("category"));
+  else {
+    console.error("Unknown page configured in document:", requestedPage);
+    $("#main-content").html(
+      '<div class="section-wrap"><div class="container"><p class="alert alert-danger" role="alert">This page is not available.</p></div></div>',
+    );
   }
 
-  $(document).on("click", "#admin-login-btn", function () {
-    if ($("#admin-pass-input").val() === ADMIN_PASS) {
-      sessionStorage.setItem("cs_admin", "1");
-      renderAdminPanel();
-    } else {
-      $("#admin-pass-error").show();
-    }
-  });
-  $(document).on("keydown", "#admin-pass-input", function (e) {
-    if (e.key === "Enter") $("#admin-login-btn").trigger("click");
-  });
+  const navPage =
+    requestedPage === "blog-post" ? "blog" : requestedPage;
+  $('[data-navpage="' + navPage + '"]').addClass("active");
 
-  /* ── GitHub settings helpers ── */
-  function ghSettings() {
-    return {
-      owner: sessionStorage.getItem("gh_owner") || "",
-      repo: sessionStorage.getItem("gh_repo") || "",
-      branch: sessionStorage.getItem("gh_branch") || "main",
-      token: sessionStorage.getItem("gh_token") || "",
-    };
-  }
-  function ghConfigured() {
-    const s = ghSettings();
-    return s.owner && s.repo && s.token;
-  }
-
-  /* ── Publish to GitHub repo via API ── */
-  async function publishToGitHub(posts, title) {
-    const s = ghSettings();
-    const apiUrl =
-      "https://api.github.com/repos/" +
-      s.owner +
-      "/" +
-      s.repo +
-      "/contents/assets/json/posts.json";
-    const headers = {
-      Authorization: "Bearer " + s.token,
-      Accept: "application/vnd.github+json",
-      "Content-Type": "application/json",
-    };
-
-    // Get current file SHA (needed for update)
-    let sha = null;
-    const getResp = await fetch(apiUrl + "?ref=" + s.branch, { headers });
-    if (getResp.ok) {
-      const data = await getResp.json();
-      sha = data.sha;
-    }
-
-    // Encode JSON as base64 (handle Unicode)
-    const jsonStr = JSON.stringify(posts, null, 2);
-    const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
-
-    const body = {
-      message: "Blog: " + title,
-      content: encoded,
-      branch: s.branch,
-    };
-    if (sha) body.sha = sha;
-
-    const putResp = await fetch(apiUrl, {
-      method: "PUT",
-      headers,
-      body: JSON.stringify(body),
-    });
-    if (!putResp.ok) {
-      const err = await putResp.json();
-      throw new Error(
-        err.message || "GitHub API error (" + putResp.status + ")",
-      );
-    }
-  }
-
-  function renderAdminPanel() {
-    const posts = getPosts();
-    const cfg = ghSettings();
-    const ghConfigured = cfg.owner && cfg.repo && cfg.token;
-
-    const postList = posts.length
-      ? posts
-          .slice()
-          .reverse()
-          .map(
-            (p) =>
-              `<div class="d-flex justify-content-between align-items-center py-2 border-bottom gap-2">
-          <span style="font-size:.88rem;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.title}</span>
-          <button class="btn btn-sm btn-outline-danger flex-shrink-0" data-deleteid="${p.id}"><i class="bi bi-trash"></i></button>
-        </div>`,
-          )
-          .join("")
-      : '<p class="text-muted" style="font-size:.88rem;">No posts yet.</p>';
-
-    const ghBadge = ghConfigured
-      ? `<span class="badge bg-success"><i class="bi bi-github me-1"></i>${cfg.owner}/${cfg.repo}</span>`
-      : `<span class="badge bg-warning text-dark"><i class="bi bi-exclamation-triangle me-1"></i>GitHub not configured</span>`;
-
-    const ghBtnLabel = ghConfigured
-      ? "Update GitHub Settings"
-      : "Connect GitHub Repo";
-
-    $("#main-content").html(`
-      <div class="section-wrap">
-        <div class="container">
-          <div class="breadcrumb-custom">
-            <a href="#" data-goto="blog">Blog</a><span>/</span><strong>Admin Panel</strong>
-          </div>
-
-          <!-- GitHub settings card -->
-          <div class="admin-card mb-4">
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-              <h3 class="mb-0"><i class="bi bi-github me-2"></i>GitHub Connection</h3>
-              ${ghBadge}
-            </div>
-            <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:1rem;">
-              Posts are saved as <code>assets/json/posts.json</code> in your GitHub repo so every visitor sees them.
-              Enter your repo details and a <a href="https://github.com/settings/tokens/new?scopes=repo&description=CS+Study+Hub" target="_blank">Personal Access Token</a>
-              (scopes: <code>repo</code>). These are stored only in this browser session — never committed to code.
-            </p>
-            <div class="row g-3">
-              <div class="col-sm-4">
-                <label class="form-label">GitHub Username</label>
-                <input type="text" class="form-control" id="gh-owner" value="${cfg.owner}" placeholder="your-username" />
-              </div>
-              <div class="col-sm-4">
-                <label class="form-label">Repository Name</label>
-                <input type="text" class="form-control" id="gh-repo" value="${cfg.repo}" placeholder="cs-study-hub" />
-              </div>
-              <div class="col-sm-4">
-                <label class="form-label">Branch</label>
-                <input type="text" class="form-control" id="gh-branch" value="${cfg.branch}" placeholder="main" />
-              </div>
-              <div class="col-12">
-                <label class="form-label">Personal Access Token <span style="font-weight:400;opacity:.6;">(stored in session only, never saved in code)</span></label>
-                <input type="password" class="form-control" id="gh-token" value="${cfg.token}" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="new-password" />
-              </div>
-              <div class="col-12">
-                <button class="btn-primary-custom" id="btn-save-gh">${ghBtnLabel}</button>
-                <span id="gh-save-msg" class="ms-3 text-success" style="font-size:.85rem;display:none;"></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row g-4">
-            <!-- New post -->
-            <div class="col-lg-7">
-              <div class="admin-card">
-                <h3><i class="bi bi-pencil-square me-2"></i>New Post</h3>
-                <div class="mb-3">
-                  <label class="form-label">Title</label>
-                  <input type="text" class="form-control" id="post-title" placeholder="Post title…" />
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Excerpt <span style="font-weight:400;opacity:.6;">(short summary shown on blog list)</span></label>
-                  <input type="text" class="form-control" id="post-excerpt" placeholder="One or two sentences…" />
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="post-image-url">Cover image URL <span style="font-weight:400;opacity:.6;">(optional, HTTPS image URL)</span></label>
-                  <input type="url" class="form-control" id="post-image-url" placeholder="https://example.com/cover-image.jpg" />
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Content <span style="font-weight:400;opacity:.6;">(HTML supported: &lt;h2&gt;, &lt;p&gt;, &lt;strong&gt;)</span></label>
-                  <textarea class="form-control" id="post-content" rows="9" placeholder="Write your post…"></textarea>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Tags <span style="font-weight:400;opacity:.6;">(comma-separated)</span></label>
-                  <input type="text" class="form-control" id="post-tags" placeholder="e.g. Algorithms, Study Tips" />
-                </div>
-                <div id="post-save-msg" class="mb-2" style="font-size:.85rem;display:none;"></div>
-                <div class="d-flex gap-2 flex-wrap">
-                  <button class="btn-primary-custom" id="btn-publish-post">
-                    <i class="bi bi-github me-1"></i>Publish to GitHub
-                  </button>
-                  <button class="btn-restart" id="btn-admin-logout"><i class="bi bi-box-arrow-right me-1"></i>Sign Out</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Post list -->
-            <div class="col-lg-5">
-              <div class="admin-card">
-                <h3><i class="bi bi-list-ul me-2"></i>All Posts</h3>
-                <div id="admin-post-list">${postList}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `);
-  }
-
-  /* Save GitHub settings to sessionStorage */
-  $(document).on("click", "#btn-save-gh", function () {
-    sessionStorage.setItem("gh_owner", $("#gh-owner").val().trim());
-    sessionStorage.setItem("gh_repo", $("#gh-repo").val().trim());
-    sessionStorage.setItem("gh_branch", $("#gh-branch").val().trim() || "main");
-    sessionStorage.setItem("gh_token", $("#gh-token").val().trim());
-    $("#gh-save-msg").text("Settings saved for this session.").show();
-    setTimeout(function () {
-      $("#gh-save-msg").hide();
-    }, 3000);
-  });
-
-  /* Publish post */
-  $(document).on("click", "#btn-publish-post", async function () {
-    const title = $("#post-title").val().trim();
-    const excerpt = $("#post-excerpt").val().trim();
-    const imageUrl = $("#post-image-url").val().trim();
-    const content = $("#post-content").val().trim();
-    const tags = $("#post-tags").val().trim();
-
-    if (!title || !content) {
-      alert("Please fill in at least the title and content.");
-      return;
-    }
-
-    if (!ghConfigured()) {
-      alert(
-        "Please fill in and save your GitHub settings above before publishing.",
-      );
-      return;
-    }
-
-    const btn = $(this);
-    btn
-      .prop("disabled", true)
-      .html(
-        '<span class="spinner-border spinner-border-sm me-1"></span>Publishing…',
-      );
-    $("#post-save-msg").hide();
-
-    const newPost = {
-      id: Date.now(),
-      title,
-      excerpt,
-      imageUrl,
-      content,
-      tags,
-      author: "CS Teacher",
-      date: new Date().toISOString().slice(0, 10),
-    };
-
-    const posts = getPosts();
-    posts.push(newPost);
-
-    try {
-      await publishToGitHub(posts, title);
-      loadedPosts = posts;
-      $("#post-title, #post-excerpt, #post-image-url, #post-content, #post-tags").val("");
-      $("#post-save-msg")
-        .removeClass("text-danger")
-        .addClass("text-success")
-        .html(
-          '<i class="bi bi-check-circle me-1"></i>Published! GitHub Pages will update in ~1 minute.',
-        )
-        .show();
-
-      // Refresh post list in panel
-      const listHtml = posts
-        .slice()
-        .reverse()
-        .map(
-          (p) =>
-            `<div class="d-flex justify-content-between align-items-center py-2 border-bottom gap-2">
-          <span style="font-size:.88rem;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.title}</span>
-          <button class="btn btn-sm btn-outline-danger flex-shrink-0" data-deleteid="${p.id}"><i class="bi bi-trash"></i></button>
-        </div>`,
-        )
-        .join("");
-      $("#admin-post-list").html(listHtml);
-    } catch (err) {
-      $("#post-save-msg")
-        .removeClass("text-success")
-        .addClass("text-danger")
-        .html('<i class="bi bi-x-circle me-1"></i>Error: ' + err.message)
-        .show();
-    }
-
-    btn
-      .prop("disabled", false)
-      .html('<i class="bi bi-github me-1"></i>Publish to GitHub');
-  });
-
-  /* Delete post — also commits updated posts.json to GitHub */
-  $(document).on("click", "[data-deleteid]", async function () {
-    const id = $(this).data("deleteid");
-    const row = $(this).closest(".d-flex");
-    if (!confirm("Delete this post? This will update your GitHub repo."))
-      return;
-
-    const posts = getPosts().filter((p) => p.id != id);
-    loadedPosts = posts;
-    row.remove();
-
-    if (ghConfigured()) {
-      try {
-        await publishToGitHub(posts, "Delete post " + id);
-      } catch (e) {
-        console.warn("GitHub delete sync failed:", e.message);
-      }
+  window.addEventListener("pagehide", function () {
+    if (currentPage === "cat-quiz") {
+      clearInterval(quizTimerId);
+      persistQuizSession();
     }
   });
-
-  $(document).on("click", "#btn-admin-logout", function () {
-    sessionStorage.removeItem("cs_admin");
-    navigate("blog");
-  });
-
-  /* ── UTIL ── */
-  function getCategoryBreadcrumbLabel(level) {
-    const meta = CATEGORY_META[level] || {};
-    if (level.endsWith("-sindh-board")) return "Sindh " + meta.label;
-    if (level.endsWith("-federal-board")) return "Federal " + meta.label;
-    if (level === "o-level" || level === "a-level")
-      return "Cambridge " + meta.label;
-    return meta.label || level;
-  }
-
-  function breadcrumb(level, section) {
-    const categoryLabel = getCategoryBreadcrumbLabel(level);
-    return `<div class="breadcrumb-custom">
-      <a href="#" data-goto="home">Home</a><span>/</span>
-      <a href="#" data-goto="cat-hub" data-level="${level}">${categoryLabel}</a>
-      <span>/</span><strong>${section}</strong>
-    </div>`;
-  }
-
-  /* ── INIT ── */
-  if (!window.SKIP_APP_INIT) {
-    navigate("home");
-  }
 });
