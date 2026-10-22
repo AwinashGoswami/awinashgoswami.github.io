@@ -1,5 +1,5 @@
-
-
+(() => {
+// Notes-page state stays private to this feature module.
 let currentLevel = "o-level";
 let currentTopic = "";
 let currentNotes = {};
@@ -17,14 +17,21 @@ let closeSidebar;
 let overlay;
 let notesBreadcrumb;
 
-window.showNotesPage = function (level) {
-  currentLevel = level || new URLSearchParams(window.location.search).get("level") || "o-level";
-  const levelMeta = CATEGORY_META[currentLevel] || { label: "O Level" };
-  const levelClass = currentLevel === "a-level" ? "level-a" : "level-o";
-  document.getElementById("main-content").innerHTML =
-    NotesView.render(levelMeta, levelClass);
-  initNotesPage(currentLevel);
+const NotesFeature = {
+  render(level) {
+    const requestedLevel = new URLSearchParams(window.location.search).get("level");
+    currentLevel = level || requestedLevel || "o-level";
+    const levelMeta = CATEGORY_META[currentLevel] || { label: "O Level" };
+    let levelClass = "level-o";
+    if (currentLevel === "a-level") {
+      levelClass = "level-a";
+    }
+    document.getElementById("main-content").innerHTML =
+      NotesView.render(levelMeta, levelClass);
+    initNotesPage(currentLevel);
+  },
 };
+globalThis.NotesFeature = NotesFeature;
 
 function initNotesPage(level) {
   sidebar = document.getElementById("sidebar");
@@ -97,6 +104,7 @@ function setLevel(levelKey) {
     sidebarBadge.textContent = levelConfig.title;
   }
 
+  // Load the topic data before building the sidebar and selecting a topic.
   fetchNotes(levelConfig.json).then(() => {
     buildSidebar(levelConfig.sections);
     if (!currentTopic || !currentTopicList.includes(currentTopic)) {
@@ -174,15 +182,23 @@ function addTopicItem(topic, container) {
 }
 
 function getStatusDetails(status) {
-  return {
+  const statusDetails = {
     completed: { label: "Completed", icon: "bi bi-check-circle-fill text-success" },
     processing: { label: "Processing", icon: "bi bi-exclamation-triangle-fill text-warning" },
     "to-upload": { label: "To upload", icon: "bi bi-x-circle-fill text-danger" },
-  }[status] || {
+  };
+
+  if (statusDetails[status]) {
+    return statusDetails[status];
+  }
+
+  return {
     label: "To upload",
     icon: "bi bi-x-circle-fill text-danger",
   };
 }
+
+// Failed note-data requests are logged and leave the topic list usable.
 async function fetchNotes(path) {
   try {
     const response = await fetch(path);
@@ -198,77 +214,43 @@ async function fetchNotes(path) {
 
 function updateBreadcrumb() {
   if (!notesBreadcrumb) return;
-  const levelTitle =
-    CLASSROOM_NOTES[currentLevel] && CLASSROOM_NOTES[currentLevel].title
-      ? CLASSROOM_NOTES[currentLevel].title
-      : currentLevel;
-  const levelLabel = currentLevel.endsWith("-sindh-board")
-    ? "Sindh " + levelTitle
-    : currentLevel.endsWith("-federal-board")
-      ? "Federal " + levelTitle
-      : currentLevel === "o-level" || currentLevel === "a-level"
-        ? "Cambridge " + levelTitle
-        : levelTitle;
-  const topicLabel = currentTopic || "";
-  const statusDetails = getStatusDetails(currentNotes[currentTopic]?.topicStatus || "to-upload");
+  const levelConfig = CLASSROOM_NOTES[currentLevel];
+  const levelTitle = levelConfig ? levelConfig.title : currentLevel;
+  let levelPrefix = "";
 
-  notesBreadcrumb.innerHTML =
-    '<div class="breadcrumb-custom">' +
-    '<a href="home.html">Home</a><span>/</span>' +
-    '<a href="classroom.html?level=' +
-    encodeURIComponent(currentLevel) +
-    '">' +
-    levelLabel +
-    "</a><span>/</span>" +
-    "<strong>" +
-    topicLabel +
-    "</strong>" +
-    "</div>" +
-    '<div class="topic-status-summary topic-status-summary-' +
-    (currentNotes[currentTopic]?.topicStatus || "to-upload") +
-    '"><span class="topic-status-badge topic-status-badge-' +
-    (currentNotes[currentTopic]?.topicStatus || "to-upload") +
-    '"><i class="' +
-    statusDetails.icon +
-    '" aria-hidden="true"></i></span><span>' +
-    statusDetails.label +
-    "</span></div>";
-}
-
-function makePdfDataUrl(title) {
-  const text = String(title || "Study Notes");
-  const safeText = text.replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
-  const content = "BT /F1 18 Tf 72 740 Td (" + safeText + ") Tj ET";
-  const objects = [
-    "<< /Type /Catalog /Pages 2 0 R >>",
-    "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
-    "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>",
-    "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
-    "<< /Length " + content.length + " >>\nstream\n" + content + "\nendstream"
-  ];
-
-  let pdf = "%PDF-1.4\n";
-  const offsets = [0];
-
-  objects.forEach((obj, index) => {
-    offsets.push(pdf.length);
-    pdf += (index + 1) + " 0 obj\n" + obj + "\nendobj\n";
-  });
-
-  const xrefOffset = pdf.length;
-  pdf += "xref\n0 " + (objects.length + 1) + "\n";
-  pdf += "0000000000 65535 f \n";
-
-  for (let i = 1; i < offsets.length; i += 1) {
-    pdf += String(offsets[i]).padStart(10, "0") + " 00000 n \n";
+  if (currentLevel.endsWith("-sindh-board")) {
+    levelPrefix = "Sindh ";
+  } else if (currentLevel.endsWith("-federal-board")) {
+    levelPrefix = "Federal ";
+  } else if (currentLevel === "o-level" || currentLevel === "a-level") {
+    levelPrefix = "Cambridge ";
   }
 
-  pdf += "trailer\n<< /Size " + (objects.length + 1) + " /Root 1 0 R >>\nstartxref\n" + xrefOffset + "\n%%EOF";
+  const levelLabel = levelPrefix + levelTitle;
+  const topicLabel = currentTopic || "";
+  const topicStatus = currentNotes[currentTopic]
+    ? currentNotes[currentTopic].topicStatus
+    : "to-upload";
+  const status = topicStatus || "to-upload";
+  const statusDetails = getStatusDetails(status);
 
-  return "data:application/pdf;base64," + btoa(unescape(encodeURIComponent(pdf)));
+  notesBreadcrumb.innerHTML = `
+    <div class="breadcrumb-custom">
+      <a href="home.html">Home</a><span>/</span>
+      <a href="classroom.html?level=${encodeURIComponent(currentLevel)}">${CSHtml.escape(levelLabel)}</a><span>/</span>
+      <strong>${CSHtml.escape(topicLabel)}</strong>
+    </div>
+    <div class="topic-status-summary topic-status-summary-${status}">
+      <span class="topic-status-badge topic-status-badge-${status}">
+        <i class="${statusDetails.icon}" aria-hidden="true"></i>
+      </span>
+      <span>${statusDetails.label}</span>
+    </div>
+  `;
 }
 
-function resolveTopicPdfUrl(topic, topicData) {
+function resolveTopicPdfUrl(topicData) {
+  // Note data files use several names for the PDF field.
   const candidates = [
     topicData && topicData.pdf,
     topicData && topicData.pdfUrl,
@@ -287,17 +269,12 @@ function resolveTopicPdfUrl(topic, topicData) {
 }
 
 function isMobileDevice() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-    window.matchMedia("(pointer: coarse)").matches;
-}
+  const mobileUserAgent =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    );
 
-function escapeHtml(value) {
-  return String(value || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/\"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  return mobileUserAgent || window.matchMedia("(pointer: coarse)").matches;
 }
 
 function toAbsolutePdfUrl(pdfUrl) {
@@ -331,20 +308,29 @@ async function isPdfResourceAvailable(pdfUrl) {
   }
 
   try {
-    const headResponse = await fetch(pdfUrl, { method: "HEAD", cache: "no-store" });
+    const headResponse = await fetch(pdfUrl, {
+      method: "HEAD",
+      cache: "no-store",
+    });
     if (headResponse.ok) {
       return true;
     }
 
     if (headResponse.status === 405 || headResponse.status === 403) {
-      const getResponse = await fetch(pdfUrl, { method: "GET", cache: "no-store" });
+      const getResponse = await fetch(pdfUrl, {
+        method: "GET",
+        cache: "no-store",
+      });
       return getResponse.ok;
     }
 
     return false;
   } catch (error) {
     try {
-      const getResponse = await fetch(pdfUrl, { method: "GET", cache: "no-store" });
+      const getResponse = await fetch(pdfUrl, {
+        method: "GET",
+        cache: "no-store",
+      });
       return getResponse.ok;
     } catch (secondError) {
       return false;
@@ -384,7 +370,7 @@ function renderTopic() {
     contentTitle.textContent = topicData.title || currentTopic;
   }
 
-  const pdfUrl = resolveTopicPdfUrl(currentTopic, topicData);
+  const pdfUrl = resolveTopicPdfUrl(topicData);
 
   if (pdfUrl) {
     isPdfResourceAvailable(pdfUrl).then((available) => {
@@ -394,12 +380,15 @@ function renderTopic() {
       }
 
       const pdfTitle = topicData.title || currentTopic || "Study Notes";
-      const viewerUrl = isMobileDevice() ? buildPdfViewerUrl(pdfUrl) : pdfUrl;
+      let viewerUrl = pdfUrl;
+      if (isMobileDevice()) {
+        viewerUrl = buildPdfViewerUrl(pdfUrl);
+      }
 
       topicContent.innerHTML = [
         '<div class="pdf-viewer-shell">',
         '  <div class="pdf-embed-wrap">',
-        '    <iframe class="pdf-embed-frame" src="' + viewerUrl + '" title="' + escapeHtml(pdfTitle) + ' PDF" loading="lazy" allow="fullscreen"></iframe>',
+        '    <iframe class="pdf-embed-frame" src="' + viewerUrl + '" title="' + CSHtml.escape(pdfTitle) + ' PDF" loading="lazy" allow="fullscreen"></iframe>',
         '  </div>',
         '</div>'
       ].join("");
@@ -436,3 +425,4 @@ window.addEventListener("resize", () => {
     hideMobileSidebar();
   }
 });
+})();

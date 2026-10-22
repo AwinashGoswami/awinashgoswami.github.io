@@ -156,6 +156,45 @@ test("notes markup is rendered by its view module for the selected classroom", (
   assert.match(html, /id="topic-content"/);
 });
 
+test("shared HTML escaping and page feature modules render their content", () => {
+  const output = { html: "" };
+  const context = vm.createContext({
+    document: {
+      addEventListener() {},
+      getElementById() {
+        return {
+          set innerHTML(value) {
+            output.html = value;
+          },
+        };
+      },
+    },
+  });
+  for (const file of [
+    "assets/js/shared/html.js",
+    "assets/js/data/books.js",
+    "assets/js/data/tutorials.js",
+    "assets/js/data/fallback-posts.js",
+    "assets/js/features/books.js",
+    "assets/js/features/tutorials.js",
+    "assets/js/features/blog.js",
+  ]) {
+    vm.runInContext(fs.readFileSync(path.join(root, file), "utf8"), context, {
+      filename: file,
+    });
+  }
+
+  assert.equal(context.CSHtml.escape("<script>"), "&lt;script&gt;");
+  context.BooksFeature.render();
+  assert.match(output.html, /Computer Science Books/);
+  context.TutorialsFeature.render();
+  assert.match(output.html, /Video Tutorials/);
+  context.BlogFeature.renderList(context.FALLBACK_POSTS);
+  assert.match(output.html, /Welcome to CS Study Hub/);
+  context.BlogFeature.renderPost(context.FALLBACK_POSTS, 1);
+  assert.match(output.html, /Welcome to CS Study Hub/);
+});
+
 test("learning features have direct static pages with route-specific data", () => {
   const pageRoutes = {
     "home.html": "home",
@@ -177,32 +216,61 @@ test("learning features have direct static pages with route-specific data", () =
   }
 
   const quizPage = fs.readFileSync(path.join(root, "quiz.html"), "utf8");
+  const quizSource = fs.readFileSync(
+    path.join(root, "assets/js/features/quiz.js"),
+    "utf8",
+  );
   const notesPage = fs.readFileSync(path.join(root, "notes.html"), "utf8");
+  const homePage = fs.readFileSync(path.join(root, "home.html"), "utf8");
   const bookPage = fs.readFileSync(path.join(root, "books.html"), "utf8");
+  const blogPage = fs.readFileSync(path.join(root, "blog.html"), "utf8");
+  const blogPostPage = fs.readFileSync(path.join(root, "blog-post.html"), "utf8");
+  const glossaryPage = fs.readFileSync(path.join(root, "glossary.html"), "utf8");
+  const classroomPage = fs.readFileSync(path.join(root, "classroom.html"), "utf8");
+  const tutorialsPage = fs.readFileSync(path.join(root, "tutorials.html"), "utf8");
   const appSource = fs.readFileSync(
     path.join(root, "assets/js/app.js"),
     "utf8",
   );
   assert.match(quizPage, /assets\/js\/data\/quizzes\.js/);
+  assert.match(quizPage, /assets\/js\/features\/quiz\.js/);
+  assert.match(quizSource, /const QUIZ_SECONDS_PER_QUESTION = 30/);
+  assert.match(quizSource, /globalThis\.QuizFeature/);
   assert.doesNotMatch(bookPage, /assets\/js\/data\/quizzes\.js/);
   assert.match(bookPage, /assets\/js\/data\/books\.js/);
   assert.match(notesPage, /assets\/js\/data\/classrooms\.js/);
   assert.match(notesPage, /assets\/js\/views\/notes\.js/);
   assert.match(notesPage, /assets\/js\/features\/notes\.js/);
+  assert.match(notesPage, /assets\/js\/shared\/html\.js/);
   assert.match(notesPage, /assets\/css\/notes\.css/);
+  assert.match(homePage, /assets\/js\/features\/home\.js/);
+  assert.match(bookPage, /assets\/js\/shared\/html\.js/);
+  assert.match(bookPage, /assets\/js\/features\/books\.js/);
+  assert.match(blogPage, /assets\/js\/features\/blog\.js/);
+  assert.match(blogPostPage, /assets\/js\/features\/blog\.js/);
+  assert.match(glossaryPage, /assets\/js\/shared\/html\.js/);
+  assert.match(glossaryPage, /assets\/js\/features\/glossary\.js/);
+  assert.match(classroomPage, /assets\/js\/features\/classroom\.js/);
+  assert.match(tutorialsPage, /assets\/js\/features\/tutorials\.js/);
   assert.doesNotMatch(appSource, /function showNotesPage|function loadNotesCss/);
-  assert.match(appSource, /function getCategoryBreadcrumbLabel/);
-  assert.match(appSource, /function breadcrumb/);
-  assert.match(appSource, /\$\{meta\.label\} - Practice Quiz/);
-  assert.doesNotMatch(appSource, /â€” Practice Quiz/);
-  const reportGenerator = appSource.slice(
-    appSource.indexOf("function downloadQuizReport"),
-    appSource.indexOf("function restartQuizForStudent"),
+  assert.doesNotMatch(
+    appSource,
+    /function showHome|function showCatQuiz|function showCatHub/,
+  );
+  assert.doesNotMatch(
+    appSource,
+    /function showBooks|function showTutorial|function showBlog\(|function showBlogPost|function showGlossary/,
+  );
+  assert.match(quizSource, /\$\{meta\.label\} - Practice Quiz/);
+  assert.doesNotMatch(quizSource, /â€” Practice Quiz/);
+  const reportGenerator = quizSource.slice(
+    quizSource.indexOf("function downloadQuizReport"),
+    quizSource.indexOf("function restartQuizForStudent"),
   );
   assert.doesNotMatch(reportGenerator, /ðŸ|â˜|â€|â—|âœ/);
   assert.match(reportGenerator, /QUIZ CHAMPION/);
   assert.match(reportGenerator, /YOUR REPORT CARD/);
-  assert.match(appSource, /bi-trophy-fill/);
+  assert.match(quizSource, /bi-trophy-fill/);
   assert.doesNotMatch(appSource, /data-goto|function navigate|history\.pushState/);
   assert.doesNotMatch(appSource, /ADMIN_PASS|showBlogAdmin|publishToGitHub|btn-admin/);
   assert.equal(fs.existsSync(path.join(root, "admin.html")), false);

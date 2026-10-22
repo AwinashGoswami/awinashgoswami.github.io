@@ -1,3 +1,4 @@
+// Return the notes-page markup; the feature module wires up its controls.
 globalThis.NotesView = {
   render(levelMeta, levelClass) {
     return `
