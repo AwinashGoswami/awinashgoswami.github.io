@@ -31,7 +31,7 @@ globalThis.CLASSROOM_NOTES = {
           "Unit 4",
           "Unit 5",
           "Unit 6",
-          "Unit 7"
+          "Unit 7",
         ],
       },
     ],
@@ -48,7 +48,7 @@ globalThis.CLASSROOM_NOTES = {
           "Unit 4",
           "Unit 5",
           "Unit 6",
-          "Unit 7"
+          "Unit 7",
         ],
       },
     ],
@@ -58,9 +58,7 @@ globalThis.CLASSROOM_NOTES = {
     json: "assets/json/sindh-board/11th_grade.json",
     sections: [
       {
-        topics: [
-          "Unit 1",
-        ],
+        topics: ["Unit 1"],
       },
     ],
   },
@@ -69,9 +67,7 @@ globalThis.CLASSROOM_NOTES = {
     json: "assets/json/sindh-board/12th_grade.json",
     sections: [
       {
-        topics: [
-          "Unit 1",
-        ],
+        topics: ["Unit 1"],
       },
     ],
   },
@@ -87,7 +83,7 @@ globalThis.CLASSROOM_NOTES = {
           "Unit 4",
           "Unit 5",
           "Unit 6",
-          "Unit 7"
+          "Unit 7",
         ],
       },
     ],
@@ -105,9 +101,7 @@ globalThis.CLASSROOM_NOTES = {
           "Unit 5",
           "Unit 6",
           "Unit 7",
-          "Unit 8"
-
-
+          "Unit 8",
         ],
       },
     ],
@@ -117,9 +111,7 @@ globalThis.CLASSROOM_NOTES = {
     json: "assets/json/federal-board/11th_grade.json",
     sections: [
       {
-        topics: [
-          "Unit 1",
-        ],
+        topics: ["Unit 1"],
       },
     ],
   },
@@ -128,9 +120,7 @@ globalThis.CLASSROOM_NOTES = {
     json: "assets/json/federal-board/12th_grade.json",
     sections: [
       {
-        topics: [
-          "Unit 1",
-        ],
+        topics: ["Unit 1"],
       },
     ],
   },

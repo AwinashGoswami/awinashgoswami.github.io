@@ -15,8 +15,11 @@ $(function () {
     requiredLevelPages.includes(requestedPage) &&
     !Object.prototype.hasOwnProperty.call(CATEGORY_META, currentLevel)
   ) {
-    $("#main-content").html(
-      '<div class="section-wrap"><div class="container"><p class="alert alert-warning" role="alert">Choose a classroom from the home page to continue.</p><a class="btn btn-primary" href="home.html">Go to Home</a></div></div>',
+    CSHtml.renderRouteNotice(
+      document.getElementById("main-content"),
+      "Choose a classroom from the home page to continue.",
+      "warning",
+      { href: "home.html", label: "Go to Home" },
     );
   } else {
     switch (requestedPage) {
@@ -49,8 +52,10 @@ $(function () {
         break;
       default:
         console.error("Unknown page configured in document:", requestedPage);
-        $("#main-content").html(
-          '<div class="section-wrap"><div class="container"><p class="alert alert-danger" role="alert">This page is not available.</p></div></div>',
+        CSHtml.renderRouteNotice(
+          document.getElementById("main-content"),
+          "This page is not available.",
+          "danger",
         );
     }
   }

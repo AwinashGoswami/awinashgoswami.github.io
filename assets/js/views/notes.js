@@ -41,4 +41,34 @@ globalThis.NotesView = {
       </div>
     `;
   },
+
+  renderBreadcrumb(level, levelLabel, topicLabel, status, statusDetails) {
+    return `
+      <div class="breadcrumb-custom">
+        <a href="home.html">Home</a><span>/</span>
+        <a href="classroom.html?level=${encodeURIComponent(level)}">${CSHtml.escape(levelLabel)}</a><span>/</span>
+        <strong>${CSHtml.escape(topicLabel)}</strong>
+      </div>
+      <div class="topic-status-summary topic-status-summary-${status}">
+        <span class="topic-status-badge topic-status-badge-${status}">
+          <i class="${statusDetails.icon}" aria-hidden="true"></i>
+        </span>
+        <span>${statusDetails.label}</span>
+      </div>
+    `;
+  },
+
+  renderPdfUnavailable() {
+    return '<div class="topic-unavailable"><p><i class="topic-unavailable-icon" aria-hidden="true"></i>PDF not available yet, Please check back soon for the study notes.</p></div>';
+  },
+
+  renderPdfViewer(url, title) {
+    return `
+      <div class="pdf-viewer-shell">
+        <div class="pdf-embed-wrap">
+          <iframe class="pdf-embed-frame" src="${CSHtml.escape(url)}" title="${CSHtml.escape(title)} PDF" loading="lazy" allow="fullscreen"></iframe>
+        </div>
+      </div>
+    `;
+  },
 };

@@ -158,13 +158,27 @@ test("notes markup is rendered by its view module for the selected classroom", (
 
 test("shared HTML escaping and page feature modules render their content", () => {
   const output = { html: "" };
+  const contentTarget = {
+    replaceChildren(fragment) {
+      output.html = fragment.html;
+    },
+  };
   const context = vm.createContext({
     document: {
       addEventListener() {},
       getElementById() {
+        return contentTarget;
+      },
+      createElement() {
+        let markup = "";
         return {
+          content: {
+            cloneNode() {
+              return { html: markup };
+            },
+          },
           set innerHTML(value) {
-            output.html = value;
+            markup = value;
           },
         };
       },
@@ -175,6 +189,9 @@ test("shared HTML escaping and page feature modules render their content", () =>
     "assets/js/data/books.js",
     "assets/js/data/tutorials.js",
     "assets/js/data/fallback-posts.js",
+    "assets/js/views/books.js",
+    "assets/js/views/tutorials.js",
+    "assets/js/views/blog.js",
     "assets/js/features/books.js",
     "assets/js/features/tutorials.js",
     "assets/js/features/blog.js",
@@ -246,12 +263,20 @@ test("learning features have direct static pages with route-specific data", () =
   assert.match(homePage, /assets\/js\/features\/home\.js/);
   assert.match(bookPage, /assets\/js\/shared\/html\.js/);
   assert.match(bookPage, /assets\/js\/features\/books\.js/);
+  assert.match(bookPage, /assets\/js\/views\/books\.js/);
   assert.match(blogPage, /assets\/js\/features\/blog\.js/);
+  assert.match(blogPage, /assets\/js\/views\/blog\.js/);
   assert.match(blogPostPage, /assets\/js\/features\/blog\.js/);
+  assert.match(blogPostPage, /assets\/js\/views\/blog\.js/);
   assert.match(glossaryPage, /assets\/js\/shared\/html\.js/);
   assert.match(glossaryPage, /assets\/js\/features\/glossary\.js/);
+  assert.match(glossaryPage, /assets\/js\/views\/glossary\.js/);
   assert.match(classroomPage, /assets\/js\/features\/classroom\.js/);
+  assert.match(classroomPage, /assets\/js\/views\/classroom\.js/);
   assert.match(tutorialsPage, /assets\/js\/features\/tutorials\.js/);
+  assert.match(tutorialsPage, /assets\/js\/views\/tutorials\.js/);
+  assert.match(homePage, /assets\/js\/views\/home\.js/);
+  assert.match(quizPage, /assets\/js\/views\/quiz\.js/);
   assert.doesNotMatch(appSource, /function showNotesPage|function loadNotesCss/);
   assert.doesNotMatch(
     appSource,
@@ -261,8 +286,12 @@ test("learning features have direct static pages with route-specific data", () =
     appSource,
     /function showBooks|function showTutorial|function showBlog\(|function showBlogPost|function showGlossary/,
   );
-  assert.match(quizSource, /\$\{meta\.label\} - Practice Quiz/);
-  assert.doesNotMatch(quizSource, /â€” Practice Quiz/);
+  const quizView = fs.readFileSync(
+    path.join(root, "assets/js/views/quiz.js"),
+    "utf8",
+  );
+  assert.match(quizView, /\$\{CSHtml\.escape\(levelTitle\)\} - Practice Quiz/);
+  assert.doesNotMatch(quizView, /â€” Practice Quiz/);
   const reportGenerator = quizSource.slice(
     quizSource.indexOf("function downloadQuizReport"),
     quizSource.indexOf("function restartQuizForStudent"),
@@ -270,12 +299,15 @@ test("learning features have direct static pages with route-specific data", () =
   assert.doesNotMatch(reportGenerator, /ðŸ|â˜|â€|â—|âœ/);
   assert.match(reportGenerator, /QUIZ CHAMPION/);
   assert.match(reportGenerator, /YOUR REPORT CARD/);
-  assert.match(quizSource, /bi-trophy-fill/);
+  assert.match(quizView, /bi-trophy-fill/);
   assert.doesNotMatch(appSource, /data-goto|function navigate|history\.pushState/);
   assert.doesNotMatch(appSource, /ADMIN_PASS|showBlogAdmin|publishToGitHub|btn-admin/);
   assert.equal(fs.existsSync(path.join(root, "admin.html")), false);
 
-  const shell = fs.readFileSync(path.join(root, "assets/js/site-shell.js"), "utf8");
+  const shell = fs.readFileSync(
+    path.join(root, "assets/js/views/site-shell.js"),
+    "utf8",
+  );
   const navItems = [...shell.matchAll(/data-navpage="(home|books|blog|glossary)"/g)]
     .map((match) => match[1]);
   assert.deepEqual(navItems, ["home", "books", "blog", "glossary"]);

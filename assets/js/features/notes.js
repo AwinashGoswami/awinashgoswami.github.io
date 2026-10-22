@@ -26,8 +26,10 @@ const NotesFeature = {
     if (currentLevel === "a-level") {
       levelClass = "level-a";
     }
-    document.getElementById("main-content").innerHTML =
-      NotesView.render(levelMeta, levelClass);
+    CSHtml.replaceContents(
+      document.getElementById("main-content"),
+      NotesView.render(levelMeta, levelClass),
+    );
     initNotesPage(currentLevel);
   },
 };
@@ -116,7 +118,7 @@ function setLevel(levelKey) {
 
 function buildSidebar(sections) {
   if (!sidebarList) return;
-  sidebarList.innerHTML = "";
+  sidebarList.replaceChildren();
   currentTopicList = [];
 
   sections.forEach((section) => {
@@ -234,19 +236,16 @@ function updateBreadcrumb() {
   const status = topicStatus || "to-upload";
   const statusDetails = getStatusDetails(status);
 
-  notesBreadcrumb.innerHTML = `
-    <div class="breadcrumb-custom">
-      <a href="home.html">Home</a><span>/</span>
-      <a href="classroom.html?level=${encodeURIComponent(currentLevel)}">${CSHtml.escape(levelLabel)}</a><span>/</span>
-      <strong>${CSHtml.escape(topicLabel)}</strong>
-    </div>
-    <div class="topic-status-summary topic-status-summary-${status}">
-      <span class="topic-status-badge topic-status-badge-${status}">
-        <i class="${statusDetails.icon}" aria-hidden="true"></i>
-      </span>
-      <span>${statusDetails.label}</span>
-    </div>
-  `;
+  CSHtml.replaceContents(
+    notesBreadcrumb,
+    NotesView.renderBreadcrumb(
+      currentLevel,
+      levelLabel,
+      topicLabel,
+      status,
+      statusDetails,
+    ),
+  );
 }
 
 function resolveTopicPdfUrl(topicData) {
@@ -342,7 +341,7 @@ function showPdfUnavailableMessage() {
   if (!topicContent) {
     return;
   }
-  topicContent.innerHTML = '<div class="topic-unavailable"><p><i class="topic-unavailable-icon" aria-hidden="true"></i>PDF not available yet, Please check back soon for the study notes.</p></div>';
+  CSHtml.replaceContents(topicContent, NotesView.renderPdfUnavailable());
 }
 
 function renderTopic() {
@@ -385,13 +384,10 @@ function renderTopic() {
         viewerUrl = buildPdfViewerUrl(pdfUrl);
       }
 
-      topicContent.innerHTML = [
-        '<div class="pdf-viewer-shell">',
-        '  <div class="pdf-embed-wrap">',
-        '    <iframe class="pdf-embed-frame" src="' + viewerUrl + '" title="' + CSHtml.escape(pdfTitle) + ' PDF" loading="lazy" allow="fullscreen"></iframe>',
-        '  </div>',
-        '</div>'
-      ].join("");
+      CSHtml.replaceContents(
+        topicContent,
+        NotesView.renderPdfViewer(viewerUrl, pdfTitle),
+      );
     }).catch(() => {
       showPdfUnavailableMessage();
     });
