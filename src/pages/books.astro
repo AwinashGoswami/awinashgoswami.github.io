@@ -1,0 +1,161 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const categories = ["All", "C++", "Data Science", "Python", "Algorithms"];
+
+const books = [
+  {
+    title: "Think C++",
+    author: "Allen B. Downey",
+    categories: ["C++"],
+    description: "A free introduction to programming with C++, written for students learning computer science.",
+    coverLabel: "C++",
+    coverTheme: "ocean",
+    actionLabel: "Download PDF",
+    actionUrl: "https://www.greenteapress.com/thinkcpp/thinkCScpp.pdf",
+    license: "CC BY-NC-SA 4.0",
+  },
+  {
+    title: "Think Python, 2nd Edition",
+    author: "Allen B. Downey",
+    categories: ["Python"],
+    description: "A beginner-friendly introduction to Python programming and core computer science ideas.",
+    coverLabel: "PYTHON",
+    coverTheme: "violet",
+    actionLabel: "Download PDF",
+    actionUrl: "https://greenteapress.com/thinkpython2/thinkpython2.pdf",
+    license: "CC BY-NC 3.0",
+  },
+  {
+    title: "Think Stats, 2nd Edition",
+    author: "Allen B. Downey",
+    categories: ["Data Science", "Python"],
+    description: "An introduction to probability and statistics using Python, real datasets, and practical analysis.",
+    coverLabel: "DATA + STATS",
+    coverTheme: "amber",
+    actionLabel: "Download PDF",
+    actionUrl: "https://greenteapress.com/thinkstats2/thinkstats2.pdf",
+    license: "Free under a Creative Commons non-commercial license",
+  },
+  {
+    title: "Think Complexity, 2nd Edition",
+    author: "Allen B. Downey",
+    categories: ["Algorithms", "Python"],
+    description: "Explore algorithms, data structures, graphs, and complex systems through computational models.",
+    coverLabel: "ALGORITHMS",
+    coverTheme: "rose",
+    actionLabel: "Download PDF",
+    actionUrl: "https://greenteapress.com/complexity2/thinkcomplexity2.pdf",
+    license: "CC BY-NC-SA 4.0",
+  },
+  {
+    title: "Data Science from Scratch",
+    author: "Joel Grus",
+    categories: ["Data Science", "Python"],
+    description: "Learn the fundamental ideas behind data science by implementing core algorithms and techniques from scratch in Python.",
+    coverLabel: "DATA SCIENCE",
+    coverTheme: "teal",
+    actionLabel: "Download PDF",
+    actionUrl: "https://jcer.in/jcer-docs/E-Learning/Digital%20Library%20/E-Books/Data%20Science%20from%20Scratch%20by%20Joel%20Grus.pdf",
+  },
+];
+---
+
+<BaseLayout
+  title="Books | CS Moodle"
+  pageId="books"
+  activeNav="books"
+  description="Browse free and openly available computer science books."
+>
+  <div class="section-wrap books-page">
+    <div class="container">
+      <div class="section-header">
+        <span class="books-eyebrow"><i class="bi bi-book-half" aria-hidden="true"></i> Open learning library</span>
+        <h2>Computer Science Books</h2>
+        <p>Browse computer science books with free PDF access from their authors or publishers.</p>
+      </div>
+      <div class="book-filters" role="group" aria-label="Filter books by category">
+        {categories.map((item) => (
+          <button
+            class={`book-filter ${item === 'All' ? 'active' : ''}`}
+            type="button"
+            data-book-category={item}
+            aria-pressed={item === 'All'}
+          >{item}</button>
+        ))}
+      </div>
+      <div class="books-results-count" id="books-results-count" role="status" aria-live="polite">
+        Showing {books.length} books
+      </div>
+      <div class="books-grid" id="books-grid">
+        {books.map((book) => (
+          <article class="book-card" data-categories={book.categories.join(',')}>
+            <div class={`book-cover book-cover--${book.coverTheme}`} role="img" aria-label={`Illustrated cover for ${book.title}`}>
+              <span class="book-cover-mark" aria-hidden="true"><i class="bi bi-book-half"></i></span>
+              <span class="book-cover-label">{book.coverLabel}</span>
+              <span class="book-cover-title">{book.title}</span>
+              <span class="book-cover-author">{book.author}</span>
+            </div>
+            <div class="book-card-body">
+              <div class="book-category-tags">
+                {book.categories.map((cat) => (
+                  <span class="book-category-tag">{cat}</span>
+                ))}
+              </div>
+              <h3>{book.title}</h3>
+              <p class="book-author">{book.author}</p>
+              <p class="book-description">{book.description}</p>
+              {book.license && (
+                <p class="book-license"><i class="bi bi-unlock" aria-hidden="true"></i> {book.license}</p>
+              )}
+              <div class="book-card-actions">
+                <a class="btn btn-primary book-action" href={book.actionUrl} target="_blank" rel="noopener noreferrer">
+                  <i class={`bi ${book.actionLabel.includes('PDF') ? 'bi-file-earmark-pdf' : 'bi-book'}`} aria-hidden="true"></i>
+                  {book.actionLabel}
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="books-license-note"><i class="bi bi-info-circle" aria-hidden="true"></i> Books remain the property of their authors. Availability and license terms vary; check each official source before reusing or redistributing a book.</p>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      const buttons = document.querySelectorAll('[data-book-category]');
+      const cards = document.querySelectorAll('.book-card');
+      const countEl = document.getElementById('books-results-count');
+
+      function filterCategory(category) {
+        let count = 0;
+        buttons.forEach((btn) => {
+          const match = btn.dataset.bookCategory === category;
+          btn.classList.toggle('active', match);
+          btn.setAttribute('aria-pressed', String(match));
+        });
+
+        cards.forEach((card) => {
+          const cats = card.dataset.categories ? card.dataset.categories.split(',') : [];
+          const visible = category === 'All' || cats.includes(category);
+          card.style.display = visible ? '' : 'none';
+          if (visible) count++;
+        });
+
+        if (countEl) {
+          const noun = count === 1 ? 'book' : 'books';
+          countEl.textContent = category === 'All' ? `Showing ${count} ${noun}` : `Showing ${count} ${noun} in ${category}`;
+        }
+      }
+
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => filterCategory(btn.dataset.bookCategory));
+      });
+
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get('category');
+      if (cat) filterCategory(cat);
+    })();
+  </script>
+</BaseLayout>

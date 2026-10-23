@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import posts from '../data/posts.json';
+
+const sortedPosts = posts.slice().reverse();
+---
+
+<BaseLayout
+  title="Blog | CS Moodle"
+  pageId="blog"
+  activeNav="blog"
+  description="Computer science study tips, guides, and teaching insights."
+>
+  <div class="section-wrap blog-page">
+    <div class="container">
+      <div class="section-header">
+        <span class="blog-eyebrow"><i class="bi bi-journal-richtext" aria-hidden="true"></i> Ideas, guides &amp; insights</span>
+        <h2>Blog</h2>
+        <p>Study tips, concept breakdowns, and teaching insights.</p>
+      </div>
+
+      {sortedPosts.length > 0 ? (
+        <>
+          <div class="blog-results-count">{sortedPosts.length} {sortedPosts.length === 1 ? "article" : "articles"}</div>
+          <div class="blog-grid">
+            {sortedPosts.map((post, index) => {
+              const tags = String(post.tags || "")
+                .split(",")
+                .map((t) => t.trim())
+                .filter(Boolean)
+                .slice(0, 3);
+              const excerpt = post.excerpt || (post.content || "").replace(/<[^>]+>/g, "").substring(0, 140) + "…";
+              const postDate = post.date
+                ? new Date(`${post.date}T00:00:00`).toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })
+                : "";
+
+              return (
+                <a class={`blog-card blog-card--theme-${index % 4}`} href={`/blog-post?id=${encodeURIComponent(post.id)}`} aria-label={`Read ${post.title}`}>
+                  <div class="blog-card-cover">
+                    {post.imageUrl ? (
+                      <img src={post.imageUrl} alt="" loading="lazy" />
+                    ) : (
+                      <span class="blog-cover-placeholder-icon" aria-hidden="true"><i class="bi bi-journal-richtext"></i></span>
+                    )}
+                    {tags.length > 0 && (
+                      <div class="blog-card-tags">
+                        {tags.map((tag) => (
+                          <span class="blog-tag">{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div class="blog-card-body">
+                    <h3>{post.title}</h3>
+                    <p class="blog-card-excerpt">{excerpt}</p>
+                    <div class="blog-card-footer">
+                      <span class="blog-card-author"><i class="bi bi-person-circle" aria-hidden="true"></i>{post.author || "CS Teacher"}</span>
+                      {postDate && <time datetime={post.date}>{postDate}</time>}
+                    </div>
+                    <span class="blog-read-more">Read article <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        <div class="blog-empty-state">
+          <i class="bi bi-journal-x" aria-hidden="true"></i>
+          <h3>No posts yet</h3>
+          <p>Check back soon for new articles and study tips.</p>
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>

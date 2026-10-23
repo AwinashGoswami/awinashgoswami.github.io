@@ -1,71 +1,92 @@
-<a href="https://themes.3rdwavemedia.com/bootstrap-templates/all/free-bootstrap4-resume-cv-template-for-developers-pillar/" target="_blank"><img src="https://themes.3rdwavemedia.com/wp-content/uploads/2021/07/Bootstrap-Resume-CV-Template-Pillar-Pormo.png" alt="Bootstrap 5 Resume/CV Template for Developers" /></a>
+# CS Moodle by Awi
 
-## Theme Details & Demo
+Free computer science study resources for students — O Level, A Level, Sindh Board, Federal Board, and University notes, timed practice quizzes, curated video tutorials, books library, and blog.
 
-**Demo:** https://themes.3rdwavemedia.com/bootstrap-templates/all/free-bootstrap4-resume-cv-template-for-developers-pillar/
+Deploys to: [https://awinashgoswami.github.io/](https://awinashgoswami.github.io/)
 
-Pillar is a **free Bootstrap 5 resume/CV template** I made for developers. Built on **Bootstrap 5 and SASS**, it's quick and easy to change the template styling. This template is designed to **help you with your job hunting** and **boost your chances of getting the web development job you want**!
-
-**Want to have a printable version?** We’ve released a [free Sketch template](https://themes.3rdwavemedia.com/resources/sketch-template/pillar-sketch-sketch-resume-template-for-developers/) for this theme. [Download Now](https://themes.3rdwavemedia.com/resources/sketch-template/pillar-sketch-sketch-resume-template-for-developers/)
-
-<a href="https://themes.3rdwavemedia.com/resources/sketch-template/pillar-sketch-sketch-resume-template-for-developers/" target="_blank"><img src="https://themes.3rdwavemedia.com/wp-content/uploads/2018/12/pillar-theme-sketch-template-promo.png" alt="Pillar Sketch - Sketch Resume/CV Template for Developers" /></a>
-
-## Author & License
-
-This Bootstrap template is made by UX/UI designer [Xiaoying Riley](https://twitter.com/3rdwave_themes) for developers and is 100% FREE as long as you **keep the footer attribution link**. You do not have the rights to resell, sublicense or redistribute (even for free) the template on its own or as a separate attachment from any of your work.
-
-
-If you'd like to **use the template without the attribution link**, you can [buy the **commercial license** via the theme website](https://themes.3rdwavemedia.com/bootstrap-templates/all/free-bootstrap4-resume-cv-template-for-developers-pillar/)
-
-
-#### Follow Xiaoying
-
-[Twitter](https://twitter.com/3rdwave_themes)
-
-[Facebook](https://www.facebook.com/3rdwavethemes/)
-
-[Dribbble](https://dribbble.com/Xiaoying)
-
-[Medium](https://medium.com/@3rdwave_themes)
-
-[Linkedin](https://uk.linkedin.com/in/xiaoying)
-
-
-## Latest Version
-**Bootstrap 5 v2.0.1** - 2023-06-25
-
-[Changelog](https://themes.3rdwavemedia.com/bootstrap-templates/all/free-bootstrap4-resume-cv-template-for-developers-pillar/?target=changelog)
-
-## Colour Schemes
-
-#### Colour 1 (pillar-1.css)
-<img src="https://themes.3rdwavemedia.com/wp-content/uploads/2018/07/pillar-theme-1.jpg" width="400" alt="Pillar color 1" />
-
-#### Colour 2 (pillar-2.css)
-<img src="https://themes.3rdwavemedia.com/wp-content/uploads/2018/07/pillar-theme-2.jpg" width="400" alt="Pillar color 2" />
-
-#### Colour 3 (pillar-3.css)
-<img src="https://themes.3rdwavemedia.com/wp-content/uploads/2018/07/pillar-theme-3.jpg" width="400" alt="Pillar color 3" />
-
-#### Colour 4 (pillar-4.css)
-<img src="https://themes.3rdwavemedia.com/wp-content/uploads/2018/07/pillar-theme-4.jpg" width="400" alt="Pillar color 4" />
-
-#### Colour 5 (pillar-5.css)
-<img src="https://themes.3rdwavemedia.com/wp-content/uploads/2018/07/pillar-theme-5.jpg" width="400" alt="Pillar color 5" />
-
-#### Colour 6 (pillar-6.css)
-<img src="https://themes.3rdwavemedia.com/wp-content/uploads/2018/07/pillar-theme-6.jpg" width="400" alt="Pillar color 6" />
+---
 
 ## Features
 
--  Fully Responsive
--  HTML5 + CSS3
--  Built on Bootstrap 5
--  **SCSS** source files included
--  6 Colour Schemes
--  FontAwesome icons
--  Compatible with all modern browsers
+- **Classrooms:** Curated curriculum notes and topic navigation for Sindh Board (9th–12th), Federal Board (9th–12th), Cambridge (O/A Level), and University.
+- **Study Notes:** Topic-by-topic notes viewer with live PDF availability detection and mobile-friendly document preview.
+- **Practice Quizzes:** 30-second per-question timed quizzes with instant feedback, audio cues, progress saving/resuming, and downloadable report cards.
+- **CS Books:** Curated collection of open/free computer science books with direct PDF downloads and category filtering.
+- **Searchable Glossary:** Instant search across CS terms and definitions, with supplementary Wikipedia search fallback.
+- **Video Tutorials:** Curated YouTube video lessons and curriculum playlists.
+- **Blog:** Study strategies, concept breakdowns, and CS teaching insights.
+- **Resume / Portfolio:** Personal CV of CS instructor Awinash Goswami available at `/resume`.
 
-## Credits
-- [Bootstrap](http://getbootstrap.com/)
-- [FontAwesome](http://fortawesome.github.io/Font-Awesome/)
+---
+
+## Tech Stack & Architecture
+
+- **Framework:** [Astro](https://astro.build/) (Static Site Generation, `output: 'static'`)
+- **Styling:** Bootstrap 5.3 + custom stylesheets (`/assets/css/home.css`, `/assets/css/notes.css`)
+- **Interactions:** Vanilla JavaScript client scripts with resilient `localStorage` state management
+- **Testing:** Node.js native test runner (`node --test`)
+- **Hosting:** GitHub Pages (User site served from the domain root `/`)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- **Node.js:** `>= 20.0.0` (matching `.nvmrc` and `package.json` engines)
+- **npm:** `>= 10.0.0`
+
+### Installation
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/AwinashGoswami/awinashgoswami.github.io.git
+cd awinashgoswami.github.io
+npm install
+```
+
+### Development Server
+
+Start the local Astro development server:
+
+```bash
+npm run dev
+```
+
+The site will be available locally at `http://localhost:4321/`.
+
+### Running Tests
+
+Run the native test suite:
+
+```bash
+npm test
+```
+
+### Building for Production
+
+Compile the static production build to `dist/`:
+
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+---
+
+## Deployment to GitHub Pages
+
+The repository uses a GitHub Actions workflow targeting GitHub Pages:
+
+1. In repository settings (**Settings → Pages → Source**), select **GitHub Actions**.
+2. When changes are pushed to `main`, GitHub Actions automatically:
+   - Sets up Node.js 20.
+   - Installs dependencies with `npm ci`.
+   - Runs `npm run build` to generate static output in `dist/`.
+   - Uploads `dist/` as the Pages artifact and deploys it to `https://awinashgoswami.github.io/`.

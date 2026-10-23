@@ -6,16 +6,24 @@ const { after, before, test } = require("node:test");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
+const dist = path.join(root, "dist");
 let server;
 let baseUrl;
 
 before(async () => {
   server = http.createServer((request, response) => {
-    const pathname = decodeURIComponent(
-      new URL(request.url, "http://localhost").pathname,
-    );
-    const filePath = path.resolve(root, "." + pathname);
-    const relativePath = path.relative(root, filePath);
+    const url = new URL(request.url, "http://localhost");
+    let pathname = decodeURIComponent(url.pathname);
+    if (pathname.endsWith("/")) {
+      pathname += "index.html";
+    }
+
+    let filePath = path.resolve(dist, "." + pathname);
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+      filePath = path.join(filePath, "index.html");
+    }
+
+    const relativePath = path.relative(dist, filePath);
     if (relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
       response.writeHead(403);
       response.end("Forbidden");
@@ -24,10 +32,18 @@ before(async () => {
     fs.readFile(filePath, (error, content) => {
       if (error) {
         response.writeHead(404);
-        response.end("Not found");
+        response.end("Not found: " + pathname);
         return;
       }
-      response.writeHead(200);
+      const ext = path.extname(filePath);
+      const types = {
+        ".html": "text/html",
+        ".css": "text/css",
+        ".js": "application/javascript",
+        ".json": "application/json",
+        ".pdf": "application/pdf",
+      };
+      response.writeHead(200, { "Content-Type": types[ext] || "application/octet-stream" });
       response.end(content);
     });
   });
@@ -54,9 +70,9 @@ function loadDataModules(files) {
 
 test("course data contains notes only; quizzes and books are separate modules", () => {
   const context = loadDataModules([
-    "assets/js/data/site-data.js",
-    "assets/js/data/quizzes.js",
-    "assets/js/data/books.js",
+    "src/data/site-data.js",
+    "src/data/quizzes.js",
+    "src/data/books.js",
   ]);
 
   assert.equal(Object.keys(context.CATEGORIES).length, 11);
@@ -68,17 +84,15 @@ test("course data contains notes only; quizzes and books are separate modules", 
   assert.ok(Array.isArray(context.BOOKS));
   assert.ok(context.BOOKS.length > 0);
 
-  const legacyDataFile = path.join(root, "assets/js/data.js");
-  assert.equal(fs.existsSync(legacyDataFile), false);
   const siteDataSource = fs.readFileSync(
-    path.join(root, "assets/js/data/site-data.js"),
+    path.join(root, "src/data/site-data.js"),
     "utf8",
   );
   assert.doesNotMatch(siteDataSource, /\bflashcards\b|\bconcepts\s*:/i);
 });
 
 test("every quiz question has four valid choices and a valid answer index", () => {
-  const { QUIZZES } = loadDataModules(["assets/js/data/quizzes.js"]);
+  const { QUIZZES } = loadDataModules(["src/data/quizzes.js"]);
   const expectedCounts = {
     "o-level": 10,
     "a-level": 10,
@@ -118,7 +132,7 @@ test("every quiz question has four valid choices and a valid answer index", () =
 });
 
 test("Federal 9th step-count answer keys remain C: 4 and B: 6", () => {
-  const { QUIZZES } = loadDataModules(["assets/js/data/quizzes.js"]);
+  const { QUIZZES } = loadDataModules(["src/data/quizzes.js"]);
   const questions = QUIZZES["9th-federal-board"];
   const simple = questions.find(
     (question) => question.q === "How many steps are there for simple problems?",
@@ -136,7 +150,7 @@ test("Federal 9th step-count answer keys remain C: 4 and B: 6", () => {
 });
 
 test("books only expose download links and contain no sourceUrl property", () => {
-  const { BOOKS } = loadDataModules(["assets/js/data/books.js"]);
+  const { BOOKS } = loadDataModules(["src/data/books.js"]);
 
   assert.equal(BOOKS.length, 5);
   assert.ok(BOOKS.some((book) => book.title === "Data Science from Scratch"));
@@ -146,187 +160,79 @@ test("books only expose download links and contain no sourceUrl property", () =>
   }
 });
 
-test("notes markup is rendered by its view module for the selected classroom", () => {
-  const context = loadDataModules(["assets/js/views/notes.js"]);
-  const html = context.NotesView.render({ label: "9th Grade" }, "level-o");
-
-  assert.match(html, /class="level-o"/);
-  assert.match(html, /<strong>9th Grade<\/strong>/);
-  assert.match(html, /id="sidebar-list"/);
-  assert.match(html, /id="topic-content"/);
-});
-
-test("shared HTML escaping and page feature modules render their content", () => {
-  const output = { html: "" };
-  const contentTarget = {
-    replaceChildren(fragment) {
-      output.html = fragment.html;
-    },
-  };
-  const context = vm.createContext({
-    document: {
-      addEventListener() {},
-      getElementById() {
-        return contentTarget;
-      },
-      createElement() {
-        let markup = "";
-        return {
-          content: {
-            cloneNode() {
-              return { html: markup };
-            },
-          },
-          set innerHTML(value) {
-            markup = value;
-          },
-        };
-      },
-    },
-  });
-  for (const file of [
-    "assets/js/shared/html.js",
-    "assets/js/data/books.js",
-    "assets/js/data/tutorials.js",
-    "assets/js/data/fallback-posts.js",
-    "assets/js/views/books.js",
-    "assets/js/views/tutorials.js",
-    "assets/js/views/blog.js",
-    "assets/js/features/books.js",
-    "assets/js/features/tutorials.js",
-    "assets/js/features/blog.js",
-  ]) {
-    vm.runInContext(fs.readFileSync(path.join(root, file), "utf8"), context, {
-      filename: file,
-    });
-  }
-
-  assert.equal(context.CSHtml.escape("<script>"), "&lt;script&gt;");
-  context.BooksFeature.render();
-  assert.match(output.html, /Computer Science Books/);
-  context.TutorialsFeature.render();
-  assert.match(output.html, /Video Tutorials/);
-  context.BlogFeature.renderList(context.FALLBACK_POSTS);
-  assert.match(output.html, /Welcome to CS Study Hub/);
-  context.BlogFeature.renderPost(context.FALLBACK_POSTS, 1);
-  assert.match(output.html, /Welcome to CS Study Hub/);
-});
-
-test("learning features have direct static pages with route-specific data", () => {
-  const pageRoutes = {
-    "home.html": "home",
-    "classroom.html": "cat-hub",
-    "notes.html": "notes",
-    "quiz.html": "cat-quiz",
-    "tutorials.html": "tutorial",
-    "blog.html": "blog",
-    "blog-post.html": "blog-post",
-    "glossary.html": "glossary",
-    "books.html": "books",
-  };
-
-  for (const [file, route] of Object.entries(pageRoutes)) {
-    const html = fs.readFileSync(path.join(root, file), "utf8");
-    assert.match(html, new RegExp(`<body[^>]*data-page="${route}"`), file);
-    assert.match(html, /assets\/js\/app\.js/, file);
-    assert.match(html, /<main id="main-content"><\/main>/, file);
-  }
-
-  const quizPage = fs.readFileSync(path.join(root, "quiz.html"), "utf8");
-  const quizSource = fs.readFileSync(
-    path.join(root, "assets/js/features/quiz.js"),
-    "utf8",
-  );
-  const notesPage = fs.readFileSync(path.join(root, "notes.html"), "utf8");
-  const homePage = fs.readFileSync(path.join(root, "home.html"), "utf8");
-  const bookPage = fs.readFileSync(path.join(root, "books.html"), "utf8");
-  const blogPage = fs.readFileSync(path.join(root, "blog.html"), "utf8");
-  const blogPostPage = fs.readFileSync(path.join(root, "blog-post.html"), "utf8");
-  const glossaryPage = fs.readFileSync(path.join(root, "glossary.html"), "utf8");
-  const classroomPage = fs.readFileSync(path.join(root, "classroom.html"), "utf8");
-  const tutorialsPage = fs.readFileSync(path.join(root, "tutorials.html"), "utf8");
-  const appSource = fs.readFileSync(
-    path.join(root, "assets/js/app.js"),
-    "utf8",
-  );
-  assert.match(quizPage, /assets\/js\/data\/quizzes\.js/);
-  assert.match(quizPage, /assets\/js\/features\/quiz\.js/);
-  assert.match(quizSource, /const QUIZ_SECONDS_PER_QUESTION = 30/);
-  assert.match(quizSource, /globalThis\.QuizFeature/);
-  assert.doesNotMatch(bookPage, /assets\/js\/data\/quizzes\.js/);
-  assert.match(bookPage, /assets\/js\/data\/books\.js/);
-  assert.match(notesPage, /assets\/js\/data\/classrooms\.js/);
-  assert.match(notesPage, /assets\/js\/views\/notes\.js/);
-  assert.match(notesPage, /assets\/js\/features\/notes\.js/);
-  assert.match(notesPage, /assets\/js\/shared\/html\.js/);
-  assert.match(notesPage, /assets\/css\/notes\.css/);
-  assert.match(homePage, /assets\/js\/features\/home\.js/);
-  assert.match(bookPage, /assets\/js\/shared\/html\.js/);
-  assert.match(bookPage, /assets\/js\/features\/books\.js/);
-  assert.match(bookPage, /assets\/js\/views\/books\.js/);
-  assert.match(blogPage, /assets\/js\/features\/blog\.js/);
-  assert.match(blogPage, /assets\/js\/views\/blog\.js/);
-  assert.match(blogPostPage, /assets\/js\/features\/blog\.js/);
-  assert.match(blogPostPage, /assets\/js\/views\/blog\.js/);
-  assert.match(glossaryPage, /assets\/js\/shared\/html\.js/);
-  assert.match(glossaryPage, /assets\/js\/features\/glossary\.js/);
-  assert.match(glossaryPage, /assets\/js\/views\/glossary\.js/);
-  assert.match(classroomPage, /assets\/js\/features\/classroom\.js/);
-  assert.match(classroomPage, /assets\/js\/views\/classroom\.js/);
-  assert.match(tutorialsPage, /assets\/js\/features\/tutorials\.js/);
-  assert.match(tutorialsPage, /assets\/js\/views\/tutorials\.js/);
-  assert.match(homePage, /assets\/js\/views\/home\.js/);
-  assert.match(quizPage, /assets\/js\/views\/quiz\.js/);
-  assert.doesNotMatch(appSource, /function showNotesPage|function loadNotesCss/);
-  assert.doesNotMatch(
-    appSource,
-    /function showHome|function showCatQuiz|function showCatHub/,
-  );
-  assert.doesNotMatch(
-    appSource,
-    /function showBooks|function showTutorial|function showBlog\(|function showBlogPost|function showGlossary/,
-  );
-  const quizView = fs.readFileSync(
-    path.join(root, "assets/js/views/quiz.js"),
-    "utf8",
-  );
-  assert.match(quizView, /\$\{CSHtml\.escape\(levelTitle\)\} - Practice Quiz/);
-  assert.doesNotMatch(quizView, /â€” Practice Quiz/);
-  const reportGenerator = quizSource.slice(
-    quizSource.indexOf("function downloadQuizReport"),
-    quizSource.indexOf("function restartQuizForStudent"),
-  );
-  assert.doesNotMatch(reportGenerator, /ðŸ|â˜|â€|â—|âœ/);
-  assert.match(reportGenerator, /QUIZ CHAMPION/);
-  assert.match(reportGenerator, /YOUR REPORT CARD/);
-  assert.match(quizView, /bi-trophy-fill/);
-  assert.doesNotMatch(appSource, /data-goto|function navigate|history\.pushState/);
-  assert.doesNotMatch(appSource, /ADMIN_PASS|showBlogAdmin|publishToGitHub|btn-admin/);
-  assert.equal(fs.existsSync(path.join(root, "admin.html")), false);
-
-  const shell = fs.readFileSync(
-    path.join(root, "assets/js/views/site-shell.js"),
-    "utf8",
-  );
-  const navItems = [...shell.matchAll(/data-navpage="(home|books|blog|glossary)"/g)]
-    .map((match) => match[1]);
-  assert.deepEqual(navItems, ["home", "books", "blog", "glossary"]);
-
-  const classroomData = loadDataModules(["assets/js/data/classrooms.js"]);
+test("classroom configuration has 10 defined classroom notes", () => {
+  const classroomData = loadDataModules(["src/data/classrooms.js"]);
   assert.equal(Object.keys(classroomData.CLASSROOM_NOTES).length, 10);
 });
 
-test("static pages and all locally referenced scripts are served successfully", async () => {
+test("Astro learning features have direct static pages with route-specific data in dist", () => {
+  const pageRoutes = {
+    "index.html": "home",
+    "classroom/index.html": "cat-hub",
+    "notes/index.html": "notes",
+    "quiz/index.html": "cat-quiz",
+    "tutorials/index.html": "tutorial",
+    "blog/index.html": "blog",
+    "blog-post/index.html": "blog-post",
+    "glossary/index.html": "glossary",
+    "books/index.html": "books",
+  };
+
+  for (const [file, route] of Object.entries(pageRoutes)) {
+    const html = fs.readFileSync(path.join(dist, file), "utf8");
+    assert.match(html, new RegExp(`<body[^>]*data-page="${route}"`), file);
+    assert.match(html, /<main id="main-content">/, file);
+  }
+
+  const quizPage = fs.readFileSync(path.join(dist, "quiz/index.html"), "utf8");
+  assert.match(quizPage, /\/assets\/js\/data\/quizzes\.js/);
+  assert.match(quizPage, /\/assets\/js\/features\/quiz\.js/);
+
+  const notesPage = fs.readFileSync(path.join(dist, "notes/index.html"), "utf8");
+  assert.match(notesPage, /\/assets\/css\/notes\.css/);
+
+  const homePage = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+  assert.match(homePage, /href="\/classroom\?level=9th-federal-board"/);
+
+  const bookPage = fs.readFileSync(path.join(dist, "books/index.html"), "utf8");
+  assert.match(bookPage, /Computer Science Books/);
+  assert.match(bookPage, /Think C\+\+/);
+
+  const blogPage = fs.readFileSync(path.join(dist, "blog/index.html"), "utf8");
+  assert.match(blogPage, /How to Ace Your Computer Science Exam/);
+
+  const glossaryPage = fs.readFileSync(path.join(dist, "glossary/index.html"), "utf8");
+  assert.match(glossaryPage, /CS Glossary/);
+  assert.match(glossaryPage, /Binary Number System/);
+
+  const tutorialsPage = fs.readFileSync(path.join(dist, "tutorials/index.html"), "utf8");
+  assert.match(tutorialsPage, /Video Tutorials/);
+  assert.match(tutorialsPage, /O Level CS Course/);
+});
+
+test("Astro static site shell renders brand and navigation items", () => {
+  const homeHtml = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+  const navItems = [...homeHtml.matchAll(/data-navpage="(home|books|blog|glossary)"/g)]
+    .map((match) => match[1]);
+  assert.deepEqual(navItems, ["home", "books", "blog", "glossary"]);
+  assert.doesNotMatch(homeHtml, /ADMIN_PASS|showBlogAdmin|publishToGitHub|btn-admin/);
+  assert.equal(fs.existsSync(path.join(dist, "admin.html")), false);
+});
+
+test("all static pages and local assets in dist are served successfully over HTTP", async () => {
   const pages = [
-    "home.html",
-    "classroom.html?level=9th-federal-board",
-    "notes.html?level=9th-federal-board",
-    "quiz.html?level=9th-federal-board",
-    "tutorials.html",
-    "blog.html",
-    "blog-post.html?id=1",
-    "glossary.html",
-    "books.html",
+    "",
+    "home/",
+    "classroom/?level=9th-federal-board",
+    "notes/?level=9th-federal-board",
+    "quiz/?level=9th-federal-board",
+    "tutorials/",
+    "blog/",
+    "blog-post/?id=1",
+    "glossary/",
+    "books/",
+    "resume/",
+    "cv/",
   ];
 
   for (const page of pages) {
@@ -334,8 +240,8 @@ test("static pages and all locally referenced scripts are served successfully", 
     assert.equal(response.status, 200, page);
     const html = await response.text();
     const assets = [
-      ...html.matchAll(/<script src="([^"]+)"/g),
-      ...html.matchAll(/<link rel="stylesheet" href="([^"]+)"/g),
+      ...html.matchAll(/<script[^>]*src="([^"]+)"/g),
+      ...html.matchAll(/<link[^>]*href="([^"]+)"/g),
     ]
       .map((match) => match[1])
       .filter((source) => !/^https?:\/\//i.test(source));

@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Practice Quiz | CS Moodle"
+  pageId="cat-quiz"
+  description="Test your computer science knowledge with a timed classroom quiz."
+>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script is:inline src="/assets/js/shared/html.js"></script>
+  <script is:inline src="/assets/js/data/site-data.js"></script>
+  <script is:inline src="/assets/js/data/quizzes.js"></script>
+  <script is:inline src="/assets/js/views/classroom.js"></script>
+  <script is:inline src="/assets/js/features/classroom.js"></script>
+  <script is:inline src="/assets/js/views/quiz.js"></script>
+  <script is:inline src="/assets/js/features/quiz.js"></script>
+  <script is:inline>
+    (function () {
+      const queryParams = new URLSearchParams(window.location.search);
+      const currentLevel = queryParams.get("level");
+      const target = document.getElementById("main-content");
+
+      if (
+        !currentLevel ||
+        !Object.prototype.hasOwnProperty.call(window.CATEGORY_META || {}, currentLevel)
+      ) {
+        CSHtml.renderRouteNotice(
+          target,
+          "Choose a classroom from the home page to continue.",
+          "warning",
+          { href: "/", label: "Go to Home" },
+        );
+      } else {
+        window.QuizFeature.render(currentLevel);
+      }
+
+      window.addEventListener("pagehide", function () {
+        if (window.QuizFeature && window.QuizFeature.persistOnPageHide) {
+          window.QuizFeature.persistOnPageHide();
+        }
+      });
+    })();
+  </script>
+</BaseLayout>
+

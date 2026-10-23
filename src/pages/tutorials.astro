@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const tutorials = [
+  {
+    videoId: "f4NVQUKk8m8",
+    title: "O Level CS Course",
+    desc: "This playlist covers all chapter-wise topics from IGCSE & O Level Computer Science curriculum.",
+    tag: "Fundamentals",
+    tagColor: "#dbeafe",
+    tagText: "#1d4ed8"
+  }
+];
+---
+
+<BaseLayout
+  title="Video Tutorials | CS Moodle"
+  pageId="tutorial"
+  description="Watch curated computer science video tutorials."
+>
+  <div class="section-wrap">
+    <div class="container">
+      <div class="section-header">
+        <h2>Video Tutorials</h2>
+        <p>Curated YouTube lessons from top CS educators. Watch directly here or open on YouTube for full-screen.</p>
+      </div>
+      <div class="row">
+        {tutorials.map((tutorial) => (
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="video-card">
+              <div class="video-embed-wrap">
+                <iframe
+                  src={`https://www.youtube.com/embed/${tutorial.videoId}`}
+                  allowfullscreen
+                  loading="lazy"
+                  title={tutorial.title}
+                ></iframe>
+              </div>
+              <div class="video-card-body">
+                <span class="video-tag" style={`background:${tutorial.tagColor};color:${tutorial.tagText}`}>
+                  {tutorial.tag}
+                </span>
+                <h5>{tutorial.title}</h5>
+                <p>{tutorial.desc}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+

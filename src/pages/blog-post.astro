@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import posts from '../data/posts.json';
+
+const defaultPost = posts[0] || {
+  id: 1,
+  title: "How to Ace Your Computer Science Exam",
+  excerpt: "Five proven study strategies every CS student should know.",
+  content: "",
+  imageUrl: "",
+  tags: "Study Tips, Exams",
+  author: "CS Teacher",
+  date: "2025-04-15"
+};
+
+const defaultTags = String(defaultPost.tags || "").split(",").map((t) => t.trim()).filter(Boolean);
+---
+
+<BaseLayout
+  title={`${defaultPost.title} | CS Moodle`}
+  pageId="blog-post"
+  activeNav="blog"
+  description="Read a computer science article on CS Moodle."
+>
+  <div class="section-wrap" id="blog-post-wrapper">
+    <div class="container">
+      <div class="breadcrumb-custom" id="post-breadcrumb">
+        <a href="/blog">Blog</a><span>/</span><strong id="post-breadcrumb-title">{defaultPost.title}</strong>
+      </div>
+      <div class="blog-post-content">
+        {defaultPost.imageUrl && (
+          <img class="blog-post-hero" id="post-hero" src={defaultPost.imageUrl} alt="" />
+        )}
+        <div class="mb-2" id="post-tags">
+          {defaultTags.map((tag) => (
+            <span class="blog-tag">{tag}</span>
+          ))}
+        </div>
+        <h1 id="post-title">{defaultPost.title}</h1>
+        <div class="blog-meta">
+          <span><i class="bi bi-person"></i><span id="post-author">{defaultPost.author}</span></span>
+          <span><i class="bi bi-calendar3"></i><span id="post-date">{defaultPost.date}</span></span>
+        </div>
+        <div class="blog-post-body" id="post-body" set:html={defaultPost.content} />
+        <div class="mt-4">
+          <a href="/blog" class="btn-outline-custom" style="font-size:.85rem;padding:.5rem 1.1rem;">
+            <i class="bi bi-arrow-left me-1"></i>Back to Blog
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline define:vars={{ posts }}>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const postId = params.get("id");
+      if (!postId) return;
+
+      const post = posts.find((p) => String(p.id) === String(postId));
+      if (!post) {
+        window.location.href = "/blog";
+        return;
+      }
+
+      const titleEl = document.getElementById("post-title");
+      const breadcrumbEl = document.getElementById("post-breadcrumb-title");
+      const authorEl = document.getElementById("post-author");
+      const dateEl = document.getElementById("post-date");
+      const bodyEl = document.getElementById("post-body");
+      const heroEl = document.getElementById("post-hero");
+      const tagsEl = document.getElementById("post-tags");
+
+      if (titleEl) titleEl.textContent = post.title;
+      if (breadcrumbEl) breadcrumbEl.textContent = post.title;
+      if (authorEl) authorEl.textContent = post.author || "CS Teacher";
+      if (dateEl) dateEl.textContent = post.date || "";
+      if (bodyEl) bodyEl.innerHTML = post.content || "";
+      if (heroEl) {
+        if (post.imageUrl) {
+          heroEl.src = post.imageUrl;
+          heroEl.style.display = "";
+        } else {
+          heroEl.style.display = "none";
+        }
+      }
+      if (tagsEl) {
+        tagsEl.innerHTML = String(post.tags || "")
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean)
+          .map((t) => `<span class="blog-tag">${t}</span>`)
+          .join("");
+      }
+    })();
+  </script>
+</BaseLayout>
