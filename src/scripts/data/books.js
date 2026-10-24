@@ -9,7 +9,7 @@ globalThis.BOOKS = [
       "A free introduction to programming with C++, written for students learning computer science.",
     coverLabel: "C++",
     coverTheme: "ocean",
-    actionLabel: "Download PDF",
+
     actionUrl: "https://www.greenteapress.com/thinkcpp/thinkCScpp.pdf",
   },
   {
@@ -20,7 +20,6 @@ globalThis.BOOKS = [
       "A beginner-friendly introduction to Python programming and core computer science ideas.",
     coverLabel: "PYTHON",
     coverTheme: "violet",
-    actionLabel: "Download PDF",
     actionUrl: "https://greenteapress.com/thinkpython2/thinkpython2.pdf",
   },
   {
@@ -31,7 +30,6 @@ globalThis.BOOKS = [
       "An introduction to probability and statistics using Python, real datasets, and practical analysis.",
     coverLabel: "DATA + STATS",
     coverTheme: "amber",
-    actionLabel: "Download PDF",
     actionUrl: "https://greenteapress.com/thinkstats2/thinkstats2.pdf",
   },
   {
@@ -42,7 +40,6 @@ globalThis.BOOKS = [
       "Explore algorithms, data structures, graphs, and complex systems through computational models.",
     coverLabel: "ALGORITHMS",
     coverTheme: "rose",
-    actionLabel: "Download PDF",
     actionUrl: "https://greenteapress.com/complexity2/thinkcomplexity2.pdf",
   },
   {
@@ -53,8 +50,18 @@ globalThis.BOOKS = [
       "Learn the fundamental ideas behind data science by implementing core algorithms and techniques from scratch in Python.",
     coverLabel: "DATA SCIENCE",
     coverTheme: "teal",
-    actionLabel: "Download PDF",
     actionUrl:
       "https://jcer.in/jcer-docs/E-Learning/Digital%20Library%20/E-Books/Data%20Science%20from%20Scratch%20by%20Joel%20Grus.pdf",
+  },
+  {
+    title: "How to Program, 7th Edition",
+    author: "Paul Deitel and Harvey Deitel",
+    categories: ["C++"],
+    description:
+      "A comprehensive introduction to C++ programming, covering fundamentals and advanced topics.",
+    coverLabel: "C++",
+    coverTheme: "rose",
+    actionUrl:
+      "https://koracademy.com/sites/default/files/inline-files/C-How-to-Program-7th-Edition.pdf",
   },
 ];
