@@ -17,6 +17,16 @@ import { categories, books } from '../data/books.js';
         <h2>Computer Science Books</h2>
         <p>Browse computer science books with free PDF access from their authors or publishers.</p>
       </div>
+      <div class="search-panel glossary-search-panel book-search-panel mb-3" role="search">
+        <label class="visually-hidden" for="books-search">Search books</label>
+        <i class="bi bi-search glossary-search-icon" aria-hidden="true"></i>
+        <input id="books-search" type="search" class="form-control" placeholder="Search by title, author, category, or description…" autocomplete="off" aria-describedby="books-search-help" />
+        <button type="button" class="glossary-clear-search" id="books-clear-search" aria-label="Clear search" hidden>
+          <i class="bi bi-x-circle-fill" aria-hidden="true"></i>
+        </button>
+        <div class="form-text" id="books-search-help">Search matches titles, authors, categories, and descriptions as you type.</div>
+      </div>
+
       <div class="book-filters" role="group" aria-label="Filter books by category">
         {categories.map((item) => (
           <button
@@ -32,7 +42,20 @@ import { categories, books } from '../data/books.js';
       </div>
       <div class="books-grid" id="books-grid">
         {books.map((book) => (
-          <article class="book-card" data-categories={book.categories.join(',')}>
+          <article
+            class="book-card"
+            data-categories={book.categories.join(',')}
+            data-title={book.title}
+            data-author={book.author}
+            data-description={book.description}
+            data-url={book.actionUrl}
+            data-href={book.actionUrl}
+            data-action-url={book.actionUrl}
+            tabindex="0"
+            role="link"
+            aria-label={`Open ${book.title} PDF`}
+          >
+            <span class="book-external-link" aria-hidden="true"><i class="bi bi-box-arrow-up-right"></i></span>
             <div class={`book-cover book-cover--${book.coverTheme}`} role="img" aria-label={`Illustrated cover for ${book.title}`}>
               <span class="book-cover-mark" aria-hidden="true"><i class="bi bi-book-half"></i></span>
               <span class="book-cover-label">{book.coverLabel}</span>
@@ -48,18 +71,16 @@ import { categories, books } from '../data/books.js';
               <h3>{book.title}</h3>
               <p class="book-author">{book.author}</p>
               <p class="book-description">{book.description}</p>
-              {book.license && (
-                <p class="book-license"><i class="bi bi-unlock" aria-hidden="true"></i> {book.license}</p>
-              )}
-              <div class="book-card-actions">
-                <a class="btn btn-primary book-action" href={book.actionUrl} target="_blank" rel="noopener noreferrer">
-                  <i class={`bi ${book.actionLabel.includes('PDF') ? 'bi-file-earmark-pdf' : 'bi-book'}`} aria-hidden="true"></i>
-                  {book.actionLabel}
-                </a>
-              </div>
             </div>
           </article>
         ))}
+      </div>
+      <div class="books-load-more-wrap" id="books-load-more-wrap">
+        <button type="button" class="btn btn-outline-primary books-load-more" id="books-load-more" hidden>Load more books</button>
+      </div>
+      <div class="books-empty-state" id="books-empty-state" hidden>
+        <i class="bi bi-search" aria-hidden="true"></i>
+        <p>No books match your search.</p>
       </div>
       <p class="books-license-note"><i class="bi bi-info-circle" aria-hidden="true"></i> Books remain the property of their authors. Availability and license terms vary; check each official source before reusing or redistributing a book.</p>
     </div>
@@ -67,38 +88,130 @@ import { categories, books } from '../data/books.js';
 
   <script is:inline>
     (function () {
-      const buttons = document.querySelectorAll('[data-book-category]');
-      const cards = document.querySelectorAll('.book-card');
+      const PAGE_SIZE = 20;
+      const searchInput = document.getElementById('books-search');
+      const clearBtn = document.getElementById('books-clear-search');
       const countEl = document.getElementById('books-results-count');
+      const loadMoreBtn = document.getElementById('books-load-more');
+      const loadMoreWrap = document.getElementById('books-load-more-wrap');
+      const emptyState = document.getElementById('books-empty-state');
+      const buttons = document.querySelectorAll('[data-book-category]');
+      const cards = Array.prototype.slice.call(document.querySelectorAll('.book-card'));
 
-      function filterCategory(category) {
-        let count = 0;
-        buttons.forEach((btn) => {
-          const match = btn.dataset.bookCategory === category;
-          btn.classList.toggle('active', match);
-          btn.setAttribute('aria-pressed', String(match));
-        });
+      let currentCategory = 'All';
+      let currentQuery = '';
+      let shown = PAGE_SIZE;
 
-        cards.forEach((card) => {
+      function cardText(card) {
+        return [
+          card.dataset.title || '',
+          card.dataset.author || '',
+          card.dataset.description || '',
+          card.dataset.categories || ''
+        ].join(' ').toLowerCase();
+      }
+
+      function filteredCards() {
+        return cards.filter(function (card) {
           const cats = card.dataset.categories ? card.dataset.categories.split(',') : [];
-          const visible = category === 'All' || cats.includes(category);
-          card.style.display = visible ? '' : 'none';
-          if (visible) count++;
+          const catMatch = currentCategory === 'All' || cats.indexOf(currentCategory) !== -1;
+          if (!catMatch) return false;
+          if (!currentQuery) return true;
+          return cardText(card).indexOf(currentQuery) !== -1;
         });
+      }
 
+      function render() {
+        const filtered = filteredCards();
+        cards.forEach(function (card) { card.style.display = 'none'; });
+        const limit = Math.min(shown, filtered.length);
+        for (let i = 0; i < limit; i++) {
+          filtered[i].style.display = '';
+        }
+        if (emptyState) {
+          emptyState.hidden = filtered.length !== 0;
+        }
         if (countEl) {
-          const noun = count === 1 ? 'book' : 'books';
-          countEl.textContent = category === 'All' ? `Showing ${count} ${noun}` : `Showing ${count} ${noun} in ${category}`;
+          const noun = filtered.length === 1 ? 'book' : 'books';
+          if (filtered.length > shown) {
+            countEl.textContent = 'Showing ' + limit + ' of ' + filtered.length + ' ' + noun;
+          } else if (currentCategory === 'All' && !currentQuery) {
+            countEl.textContent = 'Showing ' + filtered.length + ' ' + noun;
+          } else {
+            countEl.textContent = 'Showing ' + filtered.length + ' ' + noun + (currentCategory !== 'All' ? ' in ' + currentCategory : '');
+          }
+        }
+        if (loadMoreBtn) {
+          const hasMore = filtered.length > limit;
+          loadMoreBtn.hidden = !hasMore;
+          if (loadMoreWrap) loadMoreWrap.style.display = hasMore ? '' : 'none';
         }
       }
 
-      buttons.forEach((btn) => {
-        btn.addEventListener('click', () => filterCategory(btn.dataset.bookCategory));
+      function resetAndRender() {
+        shown = PAGE_SIZE;
+        render();
+      }
+
+      function filterCategory(category) {
+        currentCategory = category || 'All';
+        buttons.forEach(function (btn) {
+          const match = btn.dataset.bookCategory === currentCategory;
+          btn.classList.toggle('active', match);
+          btn.setAttribute('aria-pressed', String(match));
+        });
+        resetAndRender();
+      }
+
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          filterCategory(btn.dataset.bookCategory);
+        });
+      });
+
+      if (searchInput) {
+        searchInput.addEventListener('input', function () {
+          currentQuery = searchInput.value.trim().toLowerCase();
+          if (clearBtn) clearBtn.hidden = !currentQuery;
+          resetAndRender();
+        });
+      }
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+          if (searchInput) {
+            searchInput.value = '';
+            currentQuery = '';
+            clearBtn.hidden = true;
+            searchInput.focus();
+            resetAndRender();
+          }
+        });
+      }
+      if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function () {
+          shown += PAGE_SIZE;
+          render();
+        });
+      }
+
+      cards.forEach(function (card) {
+        const url = card.dataset.url || card.dataset.href || card.dataset.actionUrl;
+        function open() {
+          if (url) window.open(url, '_blank', 'noopener,noreferrer');
+        }
+        card.addEventListener('click', open);
+        card.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            open();
+          }
+        });
       });
 
       const params = new URLSearchParams(window.location.search);
       const cat = params.get('category');
       if (cat) filterCategory(cat);
+      else render();
     })();
   </script>
 </BaseLayout>
