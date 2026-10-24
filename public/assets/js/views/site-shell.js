@@ -4,7 +4,7 @@ globalThis.SiteShellView = {
     return `
       <nav class="navbar navbar-expand-md">
         <div class="container">
-          <a class="navbar-brand" href="home.html">
+          <a class="navbar-brand" href="/portal">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
             CS Moodle
           </a>
@@ -13,7 +13,7 @@ globalThis.SiteShellView = {
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto gap-1 align-items-md-center">
-              <li class="nav-item"><a class="nav-link" href="home.html" data-navpage="home"><i class="bi bi-house me-1"></i>Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="/portal" data-navpage="home"><i class="bi bi-house me-1"></i>Home</a></li>
               <li class="nav-item"><a class="nav-link" href="books.html" data-navpage="books"><i class="bi bi-book me-1"></i>Books</a></li>
               <li class="nav-item"><a class="nav-link" href="blog.html" data-navpage="blog"><i class="bi bi-journal-text me-1"></i>Blog</a></li>
               <li class="nav-item"><a class="nav-link" href="glossary.html" data-navpage="glossary"><i class="bi bi-bookmarks me-1"></i>Glossary</a></li>

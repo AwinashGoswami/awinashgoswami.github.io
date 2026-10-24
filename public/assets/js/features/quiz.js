@@ -650,8 +650,94 @@
     persistQuizSession();
   });
 
+  let quizStopConfirmOpen = false;
+
+  function ensureQuizStopConfirmModal() {
+    let backdrop = document.getElementById("quiz-stop-confirm");
+    if (backdrop) return backdrop;
+
+    backdrop = document.createElement("div");
+    backdrop.id = "quiz-stop-confirm";
+    backdrop.className = "quiz-confirm-backdrop";
+    backdrop.setAttribute("role", "dialog");
+    backdrop.setAttribute("aria-modal", "true");
+    backdrop.setAttribute("aria-labelledby", "quiz-stop-confirm-title");
+    backdrop.innerHTML = `
+      <div class="quiz-confirm-dialog" role="document">
+        <div class="quiz-confirm-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+        <h3 class="quiz-confirm-title" id="quiz-stop-confirm-title">Stop this quiz?</h3>
+        <p class="quiz-confirm-message">Your progress will be saved as a stopped attempt.</p>
+        <div class="quiz-confirm-actions">
+          <button type="button" class="quiz-confirm-btn quiz-confirm-cancel" data-quiz-stop-action="cancel">Keep going</button>
+          <button type="button" class="quiz-confirm-btn quiz-confirm-stop" data-quiz-stop-action="confirm">Stop quiz</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(backdrop);
+
+    backdrop.addEventListener("click", function (event) {
+      if (event.target === backdrop) closeQuizStopConfirm(false);
+    });
+    backdrop
+      .querySelector('[data-quiz-stop-action="cancel"]')
+      .addEventListener("click", function () {
+        closeQuizStopConfirm(false);
+      });
+    backdrop
+      .querySelector('[data-quiz-stop-action="confirm"]')
+      .addEventListener("click", function () {
+        closeQuizStopConfirm(true);
+      });
+
+    document.addEventListener("keydown", function (event) {
+      if (!quizStopConfirmOpen) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeQuizStopConfirm(false);
+      }
+    });
+
+    return backdrop;
+  }
+
+  function openQuizStopConfirm() {
+    if (quizStopConfirmOpen) return;
+    const backdrop = ensureQuizStopConfirmModal();
+    quizStopConfirmOpen = true;
+
+    // Pause the live timer while the confirmation is open, matching the
+    // blocking behavior of the previous native confirm dialog.
+    if (quizTimerId) {
+      clearInterval(quizTimerId);
+      quizTimerId = null;
+      backdrop.dataset.timerWasRunning = "true";
+    } else {
+      backdrop.dataset.timerWasRunning = "false";
+    }
+
+    backdrop.classList.add("is-open");
+    const confirmButton = backdrop.querySelector(
+      '[data-quiz-stop-action="confirm"]',
+    );
+    if (confirmButton) confirmButton.focus();
+  }
+
+  function closeQuizStopConfirm(confirmed) {
+    if (!quizStopConfirmOpen) return;
+    const backdrop = document.getElementById("quiz-stop-confirm");
+    quizStopConfirmOpen = false;
+    if (backdrop) {
+      backdrop.classList.remove("is-open");
+      if (backdrop.dataset.timerWasRunning === "true" && !confirmed && !quizPaused) {
+        startQuizTimer();
+      }
+      delete backdrop.dataset.timerWasRunning;
+    }
+    if (confirmed) finishQuiz("stopped");
+  }
+
   $(document).on("click", "#quiz-stop", function () {
-    finishQuiz("stopped");
+    openQuizStopConfirm();
   });
 
   $(document).on("click", "#quiz-restart", restartQuizForStudent);

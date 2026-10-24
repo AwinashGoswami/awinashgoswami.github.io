@@ -40,7 +40,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="section-wrap">
             <div class="container">
               <p class="alert alert-warning" role="alert">Choose a classroom from the home page to continue.</p>
-              <a class="btn btn-primary" href="/">Go to Home</a>
+              <a class="btn btn-primary" href="/portal">Go to Home</a>
             </div>
           </div>
         `;
@@ -51,7 +51,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="section-wrap">
             <div class="container">
               <div class="breadcrumb-custom">
-                <a href="/">Home</a><span>/</span><strong>${escapeHtml(label)}</strong>
+                <a href="/portal">Home</a><span>/</span><strong>${escapeHtml(label)}</strong>
               </div>
               <div class="level-header ${escapeHtml(meta.colorClass || 'o-level')}">
                 <div class="level-icon"><i class="bi ${escapeHtml(meta.icon)}" style="font-size:2.5rem;"></i></div>

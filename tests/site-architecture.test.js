@@ -70,9 +70,9 @@ function loadDataModules(files) {
 
 test("course data contains notes only; quizzes and books are separate modules", () => {
   const context = loadDataModules([
-    "src/data/site-data.js",
-    "src/data/quizzes.js",
-    "src/data/books.js",
+    "public/assets/js/data/site-data.js",
+    "public/assets/js/data/quizzes.js",
+    "public/assets/js/data/books.js",
   ]);
 
   assert.equal(Object.keys(context.CATEGORIES).length, 11);
@@ -85,14 +85,14 @@ test("course data contains notes only; quizzes and books are separate modules", 
   assert.ok(context.BOOKS.length > 0);
 
   const siteDataSource = fs.readFileSync(
-    path.join(root, "src/data/site-data.js"),
+    path.join(root, "public/assets/js/data/site-data.js"),
     "utf8",
   );
   assert.doesNotMatch(siteDataSource, /\bflashcards\b|\bconcepts\s*:/i);
 });
 
 test("every quiz question has four valid choices and a valid answer index", () => {
-  const { QUIZZES } = loadDataModules(["src/data/quizzes.js"]);
+  const { QUIZZES } = loadDataModules(["public/assets/js/data/quizzes.js"]);
   const expectedCounts = {
     "o-level": 10,
     "a-level": 10,
@@ -132,7 +132,7 @@ test("every quiz question has four valid choices and a valid answer index", () =
 });
 
 test("Federal 9th step-count answer keys remain C: 4 and B: 6", () => {
-  const { QUIZZES } = loadDataModules(["src/data/quizzes.js"]);
+  const { QUIZZES } = loadDataModules(["public/assets/js/data/quizzes.js"]);
   const questions = QUIZZES["9th-federal-board"];
   const simple = questions.find(
     (question) => question.q === "How many steps are there for simple problems?",
@@ -150,7 +150,7 @@ test("Federal 9th step-count answer keys remain C: 4 and B: 6", () => {
 });
 
 test("books only expose download links and contain no sourceUrl property", () => {
-  const { BOOKS } = loadDataModules(["src/data/books.js"]);
+  const { BOOKS } = loadDataModules(["public/assets/js/data/books.js"]);
 
   assert.equal(BOOKS.length, 5);
   assert.ok(BOOKS.some((book) => book.title === "Data Science from Scratch"));
@@ -161,13 +161,13 @@ test("books only expose download links and contain no sourceUrl property", () =>
 });
 
 test("classroom configuration has 10 defined classroom notes", () => {
-  const classroomData = loadDataModules(["src/data/classrooms.js"]);
+  const classroomData = loadDataModules(["public/assets/js/data/classrooms.js"]);
   assert.equal(Object.keys(classroomData.CLASSROOM_NOTES).length, 10);
 });
 
 test("Astro learning features have direct static pages with route-specific data in dist", () => {
   const pageRoutes = {
-    "index.html": "home",
+    "portal/index.html": "home",
     "classroom/index.html": "cat-hub",
     "notes/index.html": "notes",
     "quiz/index.html": "cat-quiz",
@@ -191,7 +191,7 @@ test("Astro learning features have direct static pages with route-specific data 
   const notesPage = fs.readFileSync(path.join(dist, "notes/index.html"), "utf8");
   assert.match(notesPage, /\/assets\/css\/notes\.css/);
 
-  const homePage = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+  const homePage = fs.readFileSync(path.join(dist, "portal/index.html"), "utf8");
   assert.match(homePage, /href="\/classroom\?level=9th-federal-board"/);
 
   const bookPage = fs.readFileSync(path.join(dist, "books/index.html"), "utf8");
@@ -211,7 +211,7 @@ test("Astro learning features have direct static pages with route-specific data 
 });
 
 test("Astro static site shell renders brand and navigation items", () => {
-  const homeHtml = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+  const homeHtml = fs.readFileSync(path.join(dist, "portal/index.html"), "utf8");
   const navItems = [...homeHtml.matchAll(/data-navpage="(home|books|blog|glossary)"/g)]
     .map((match) => match[1]);
   assert.deepEqual(navItems, ["home", "books", "blog", "glossary"]);
@@ -221,6 +221,7 @@ test("Astro static site shell renders brand and navigation items", () => {
 
 test("all static pages and local assets in dist are served successfully over HTTP", async () => {
   const pages = [
+    "portal/",
     "",
     "home/",
     "classroom/?level=9th-federal-board",

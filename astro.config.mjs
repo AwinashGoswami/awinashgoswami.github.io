@@ -6,7 +6,7 @@ export default defineConfig({
   output: 'static',
   // base is intentionally unset (defaults to '/') because this is a user site.
   redirects: {
-    '/home.html': '/',
+    '/home.html': '/portal',
     '/classroom.html': '/classroom',
     '/notes.html': '/notes',
     '/quiz.html': '/quiz',

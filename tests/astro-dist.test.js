@@ -11,6 +11,7 @@ test("Astro static build outputs all required pages and assets", () => {
 
   const expectedRoutes = [
     "index.html",
+    "portal/index.html",
     "classroom/index.html",
     "notes/index.html",
     "quiz/index.html",
@@ -31,7 +32,7 @@ test("Astro static build outputs all required pages and assets", () => {
 });
 
 test("Astro generated pages use root-relative links and correct metadata", () => {
-  const homeHtml = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+  const homeHtml = fs.readFileSync(path.join(dist, "portal/index.html"), "utf8");
   assert.match(homeHtml, /<body[^>]*data-page="home"/);
   assert.match(homeHtml, /href="\/assets\/css\/home\.css"/);
   assert.match(homeHtml, /href="\/classroom\?level=9th-federal-board"/);

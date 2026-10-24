@@ -1961,6 +1961,115 @@ footer {
   margin-top: auto;
 }
 
+/* ─── QUIZ STOP CONFIRMATION ─── */
+.quiz-confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.48);
+  backdrop-filter: blur(4px);
+}
+
+.quiz-confirm-backdrop.is-open {
+  display: flex;
+}
+
+.quiz-confirm-dialog {
+  width: min(420px, 100%);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.75rem;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
+  animation: quiz-confirm-pop 0.18s ease;
+}
+
+@keyframes quiz-confirm-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.quiz-confirm-icon {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  margin-bottom: 1rem;
+  background: var(--danger-bg);
+  color: var(--danger);
+  font-size: 1.35rem;
+}
+
+.quiz-confirm-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin: 0 0 0.45rem;
+}
+
+.quiz-confirm-message {
+  font-size: 0.92rem;
+  color: var(--text-mid);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.quiz-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.4rem;
+}
+
+.quiz-confirm-btn {
+  min-height: 42px;
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease;
+}
+
+.quiz-confirm-cancel {
+  color: var(--text-mid);
+  background: var(--white);
+  border: 1px solid var(--border);
+}
+
+.quiz-confirm-cancel:hover {
+  background: var(--primary-lighter);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.quiz-confirm-stop {
+  color: #ffffff;
+  background: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+.quiz-confirm-stop:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
+}
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
   .hero {
