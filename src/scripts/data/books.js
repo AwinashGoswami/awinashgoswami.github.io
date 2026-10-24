@@ -11,7 +11,6 @@ globalThis.BOOKS = [
     coverTheme: "ocean",
     actionLabel: "Download PDF",
     actionUrl: "https://www.greenteapress.com/thinkcpp/thinkCScpp.pdf",
-    license: "CC BY-NC-SA 4.0",
   },
   {
     title: "Think Python, 2nd Edition",
@@ -23,7 +22,6 @@ globalThis.BOOKS = [
     coverTheme: "violet",
     actionLabel: "Download PDF",
     actionUrl: "https://greenteapress.com/thinkpython2/thinkpython2.pdf",
-    license: "CC BY-NC 3.0",
   },
   {
     title: "Think Stats, 2nd Edition",
@@ -35,7 +33,6 @@ globalThis.BOOKS = [
     coverTheme: "amber",
     actionLabel: "Download PDF",
     actionUrl: "https://greenteapress.com/thinkstats2/thinkstats2.pdf",
-    license: "Free under a Creative Commons non-commercial license",
   },
   {
     title: "Think Complexity, 2nd Edition",
@@ -47,7 +44,6 @@ globalThis.BOOKS = [
     coverTheme: "rose",
     actionLabel: "Download PDF",
     actionUrl: "https://greenteapress.com/complexity2/thinkcomplexity2.pdf",
-    license: "CC BY-NC-SA 4.0",
   },
   {
     title: "Data Science from Scratch",
