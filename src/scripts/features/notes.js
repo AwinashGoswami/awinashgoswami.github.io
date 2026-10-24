@@ -201,7 +201,10 @@ function getStatusDetails(status) {
 }
 
 // Failed note-data requests are logged and leave the topic list usable.
-async function fetchNotes(path) {`r`n  try {`r`n    const fetchPath = path.startsWith("/") || path.startsWith("http") ? path : "/" + path;`r`n    const response = await fetch(fetchPath);
+async function fetchNotes(path) {
+  try {
+    const fetchPath = path.startsWith("/") || path.startsWith("http") ? path : "/" + path;
+    const response = await fetch(fetchPath);
     if (!response.ok) {
       throw new Error("Unable to fetch notes data");
     }

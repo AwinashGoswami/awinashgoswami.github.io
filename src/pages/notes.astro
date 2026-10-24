@@ -8,31 +8,5 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   description="Browse computer science study notes by classroom and topic."
   extraCss={['/assets/css/notes.css']}
 >
-  <script is:inline src="/assets/js/shared/html.js"></script>
-  <script is:inline src="/assets/js/data/classrooms.js"></script>
-  <script is:inline src="/assets/js/data/site-data.js"></script>
-  <script is:inline src="/assets/js/views/notes.js"></script>
-  <script is:inline src="/assets/js/features/notes.js"></script>
-  <script is:inline>
-    (function () {
-      const queryParams = new URLSearchParams(window.location.search);
-      const currentLevel = queryParams.get("level");
-      const target = document.getElementById("main-content");
-
-      if (
-        !currentLevel ||
-        !Object.prototype.hasOwnProperty.call(window.CATEGORY_META || {}, currentLevel)
-      ) {
-        CSHtml.renderRouteNotice(
-          target,
-          "Choose a classroom from the home page to continue.",
-          "warning",
-          { href: "/portal", label: "Go to Home" },
-        );
-      } else {
-        window.NotesFeature.render(currentLevel);
-      }
-    })();
-  </script>
+  <script src="../scripts/pages/notes.js"></script>
 </BaseLayout>
-

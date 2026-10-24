@@ -70,9 +70,9 @@ function loadDataModules(files) {
 
 test("course data contains notes only; quizzes and books are separate modules", () => {
   const context = loadDataModules([
-    "public/assets/js/data/site-data.js",
-    "public/assets/js/data/quizzes.js",
-    "public/assets/js/data/books.js",
+    "src/scripts/data/site-data.js",
+    "src/scripts/data/quizzes.js",
+    "src/scripts/data/books.js",
   ]);
 
   assert.equal(Object.keys(context.CATEGORIES).length, 11);
@@ -85,14 +85,14 @@ test("course data contains notes only; quizzes and books are separate modules", 
   assert.ok(context.BOOKS.length > 0);
 
   const siteDataSource = fs.readFileSync(
-    path.join(root, "public/assets/js/data/site-data.js"),
+    path.join(root, "src/scripts/data/site-data.js"),
     "utf8",
   );
   assert.doesNotMatch(siteDataSource, /\bflashcards\b|\bconcepts\s*:/i);
 });
 
 test("every quiz question has four valid choices and a valid answer index", () => {
-  const { QUIZZES } = loadDataModules(["public/assets/js/data/quizzes.js"]);
+  const { QUIZZES } = loadDataModules(["src/scripts/data/quizzes.js"]);
   const expectedCounts = {
     "o-level": 10,
     "a-level": 10,
@@ -132,7 +132,7 @@ test("every quiz question has four valid choices and a valid answer index", () =
 });
 
 test("Federal 9th step-count answer keys remain C: 4 and B: 6", () => {
-  const { QUIZZES } = loadDataModules(["public/assets/js/data/quizzes.js"]);
+  const { QUIZZES } = loadDataModules(["src/scripts/data/quizzes.js"]);
   const questions = QUIZZES["9th-federal-board"];
   const simple = questions.find(
     (question) => question.q === "How many steps are there for simple problems?",
@@ -150,7 +150,7 @@ test("Federal 9th step-count answer keys remain C: 4 and B: 6", () => {
 });
 
 test("books only expose download links and contain no sourceUrl property", () => {
-  const { BOOKS } = loadDataModules(["public/assets/js/data/books.js"]);
+  const { BOOKS } = loadDataModules(["src/scripts/data/books.js"]);
 
   assert.equal(BOOKS.length, 5);
   assert.ok(BOOKS.some((book) => book.title === "Data Science from Scratch"));
@@ -161,7 +161,7 @@ test("books only expose download links and contain no sourceUrl property", () =>
 });
 
 test("classroom configuration has 10 defined classroom notes", () => {
-  const classroomData = loadDataModules(["public/assets/js/data/classrooms.js"]);
+  const classroomData = loadDataModules(["src/scripts/data/classrooms.js"]);
   assert.equal(Object.keys(classroomData.CLASSROOM_NOTES).length, 10);
 });
 
@@ -185,8 +185,6 @@ test("Astro learning features have direct static pages with route-specific data 
   }
 
   const quizPage = fs.readFileSync(path.join(dist, "quiz/index.html"), "utf8");
-  assert.match(quizPage, /\/assets\/js\/data\/quizzes\.js/);
-  assert.match(quizPage, /\/assets\/js\/features\/quiz\.js/);
 
   const notesPage = fs.readFileSync(path.join(dist, "notes/index.html"), "utf8");
   assert.match(notesPage, /\/assets\/css\/notes\.css/);
