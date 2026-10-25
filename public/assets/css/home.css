@@ -607,7 +607,7 @@ body {
 .book-cover {
   position: relative;
   display: flex;
-  min-height: 230px;
+  min-height: 225px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
@@ -692,7 +692,7 @@ body {
 }
 .book-card-body {
   display: flex;
-  min-height: 235px;
+  min-height: 180px;
   flex-direction: column;
   padding: 1.25rem;
 }
