@@ -375,7 +375,7 @@ body {
   border-bottom: 0;
 }
 .glossary-row:hover {
-  background: #3b444d;
+  background: #f3f8ff;
 }
 .glossary-term {
   margin: 0;
@@ -2245,4 +2245,10 @@ html[data-bs-theme="dark"],
 [data-theme="dark"] .quiz-student-card label,
 [data-bs-theme="dark"] .quiz-student-card label {
   color: var(--text-muted);
+}
+
+
+[data-theme="dark"] .glossary-row:hover,
+[data-bs-theme="dark"] .glossary-row:hover {
+  background: #27303b;
 }
