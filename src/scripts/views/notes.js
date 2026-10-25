@@ -4,7 +4,7 @@ globalThis.NotesView = {
     return `
       <div class="notes-app">
       
-        <section class="layout container-fluid">
+        <section class="layout container">
           <aside class="sidebar" id="sidebar">
             <div class="sidebar-top">
               <div><span class="sidebar-badge" id="sidebar-level-badge">O Level</span></div>
@@ -42,7 +42,7 @@ globalThis.NotesView = {
   },
 
   renderPdfUnavailable() {
-    return '<div class="topic-unavailable"><p><i class="topic-unavailable-icon" aria-hidden="true"></i>PDF not available yet, Please check back soon for the study notes.</p></div>';
+    return '<div class=""><p><i></i>PDF not available yet, Please check back soon for the study notes.</p></div>';
   },
 
   renderPdfViewer(url, title) {
