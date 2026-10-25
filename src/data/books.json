@@ -4,14 +4,15 @@
     "C++",
     "Data Science",
     "Python",
-    "Algorithms"
+    "Algorithms",
+    "Recommended"
   ],
   "books": [
     {
       "title": "Think C++",
       "author": "Allen B. Downey",
       "categories": [
-        "C++"
+        "C++", "Recommended"
       ],
       "description": "A free introduction to programming with C++, written for students learning computer science.",
       "coverLabel": "C++",

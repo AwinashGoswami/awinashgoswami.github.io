@@ -664,7 +664,7 @@ body {
 }
 .book-card-body {
   display: flex;
-  min-height: 180px;
+  min-height: 140px;
   flex-direction: column;
   padding: 1.25rem;
 }
