@@ -22,6 +22,13 @@ const { activeNav = '' } = Astro.props;
           <li class="nav-item"><a class={`nav-link ${activeNav === 'books' ? 'active' : ''}`} href="/books" data-navpage="books"><i class="bi bi-book me-1"></i>Books</a></li>
           <li class="nav-item"><a class={`nav-link ${activeNav === 'blog' ? 'active' : ''}`} href="/blog" data-navpage="blog"><i class="bi bi-journal-text me-1"></i>Blog</a></li>
           <li class="nav-item"><a class={`nav-link ${activeNav === 'glossary' ? 'active' : ''}`} href="/glossary" data-navpage="glossary"><i class="bi bi-bookmarks me-1"></i>Glossary</a></li>
+          <li class="nav-item">
+            <button type="button" id="theme-toggle" class="nav-link theme-toggle" data-theme-toggle aria-label="Toggle dark mode" aria-pressed="false">
+              <i class="bi bi-moon-stars theme-icon-moon" aria-hidden="true"></i>
+              <i class="bi bi-sun theme-icon-sun" aria-hidden="true" hidden></i>
+              <span class="visually-hidden">Toggle dark mode</span>
+            </button>
+          </li>
         </ul>
       </div>
     </div>
