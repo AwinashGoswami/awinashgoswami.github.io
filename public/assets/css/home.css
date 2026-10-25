@@ -2242,3 +2242,14 @@ html[data-bs-theme="dark"],
 [data-bs-theme="dark"] .glossary-row:hover {
   background: #27303b;
 }
+
+[data-theme="dark"] .rounded-pill,
+[data-bs-theme="dark"] .rounded-pill {
+  background: #27303b !important;
+  color:white !important;
+}
+
+[data-theme="dark"] .rounded-pill h2,
+[data-bs-theme="dark"] .rounded-pill h2{
+  color:var(--bs-heading-color) !important;
+}
