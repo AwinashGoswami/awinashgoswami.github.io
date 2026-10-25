@@ -12,7 +12,7 @@
       "title": "Think C++",
       "author": "Allen B. Downey",
       "categories": [
-        "C++", "Recommended"
+        "C++"
       ],
       "description": "A free introduction to programming with C++, written for students learning computer science.",
       "coverLabel": "C++",
@@ -59,7 +59,8 @@
       "author": "Joel Grus",
       "categories": [
         "Data Science",
-        "Python"
+        "Python",
+        "Recommended"
       ],
       "description": "Learn the fundamental ideas behind data science by implementing core algorithms and techniques from scratch in Python.",
       "coverLabel": "DATA SCIENCE",
@@ -70,7 +71,7 @@
       "title": "How to Program, 7th Edition",
       "author": "Paul Deitel and Harvey Deitel",
       "categories": [
-        "C++"
+        "C++",  "Recommended"
       ],
       "description": "A comprehensive introduction to C++ programming, covering fundamentals and advanced topics.",
       "coverLabel": "C++",

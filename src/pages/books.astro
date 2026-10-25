@@ -58,6 +58,9 @@ const { categories, books } = bookData;
             aria-label={`Open ${book.title} PDF`}
           >
             <div class={`book-cover book-cover--${book.coverTheme}`} role="img" aria-label={`Illustrated cover for ${book.title}`}>
+              {book.categories.includes('Recommended') && (
+                <span class="book-cover-badge" aria-label="Recommended">Recommended</span>
+              )}
               <span class="book-cover-mark" aria-hidden="true"><i class="bi bi-book-half"></i></span>
               <span class="book-cover-label">{book.coverLabel}</span>
               <span class="book-cover-title">{book.title}</span>

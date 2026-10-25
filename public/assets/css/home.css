@@ -662,6 +662,24 @@ body {
   font-size: 0.8rem;
   font-weight: 500;
 }
+.book-cover-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px 0px 50px 999px;
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  box-shadow: 0 4px 10px rgba(22, 163, 74, 0.35);
+  white-space: nowrap;
+}
 .book-card-body {
   display: flex;
   min-height: 140px;
