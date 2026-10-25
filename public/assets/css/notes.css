@@ -822,3 +822,12 @@ html[data-bs-theme="dark"],
   color: var(--text-mid);
 }
 
+[data-theme="dark"] .topic-unavailable,
+[data-bs-theme="dark"] .topic-unavailable {
+  color: black;
+}
+
+[data-theme="dark"] #topic-content,
+[data-bs-theme="dark"] #topic-content {
+  background-color: black;
+}
