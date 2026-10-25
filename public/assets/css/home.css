@@ -375,7 +375,7 @@ body {
   border-bottom: 0;
 }
 .glossary-row:hover {
-  background: #3b444d;
+  background: #eef5fd;
 }
 .glossary-term {
   margin: 0;
@@ -604,7 +604,7 @@ body {
 .book-cover {
   position: relative;
   display: flex;
-  min-height: 230px;
+  min-height: 220px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
@@ -689,7 +689,7 @@ body {
 }
 .book-card-body {
   display: flex;
-  min-height: 235px;
+  min-height: 185px;
   flex-direction: column;
   padding: 1.25rem;
 }
@@ -2210,3 +2210,13 @@ html[data-bs-theme="dark"],
   color: var(--text-dark);
 }
 
+[data-theme="dark"] .glossary-row:hover,
+[data-bs-theme="dark"] .glossary-row:hover {
+  background-color: var(--bg);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .dev-credits,
+[data-bs-theme="dark"] .dev-credits {
+  color: white;
+}
