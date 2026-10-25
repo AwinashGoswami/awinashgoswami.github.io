@@ -72,7 +72,6 @@ test("course data contains notes only; quizzes and books are separate modules", 
   const context = loadDataModules([
     "src/scripts/data/site-data.js",
     "src/scripts/data/quizzes.js",
-    "src/scripts/data/books.js",
   ]);
 
   assert.equal(Object.keys(context.CATEGORIES).length, 11);
@@ -81,8 +80,12 @@ test("course data contains notes only; quizzes and books are separate modules", 
     assert.ok(Array.isArray(category.notes));
   }
   assert.equal(Object.keys(context.QUIZZES).length, 11);
-  assert.ok(Array.isArray(context.BOOKS));
-  assert.ok(context.BOOKS.length > 0);
+
+  const booksData = JSON.parse(
+    fs.readFileSync(path.join(root, "src/data/books.json"), "utf8"),
+  );
+  assert.ok(Array.isArray(booksData.books));
+  assert.ok(booksData.books.length > 0);
 
   const siteDataSource = fs.readFileSync(
     path.join(root, "src/scripts/data/site-data.js"),
@@ -150,13 +153,26 @@ test("Federal 9th step-count answer keys remain C: 4 and B: 6", () => {
 });
 
 test("books only expose download links and contain no sourceUrl property", () => {
-  const { BOOKS } = loadDataModules(["src/scripts/data/books.js"]);
+  const booksData = JSON.parse(
+    fs.readFileSync(path.join(root, "src/data/books.json"), "utf8"),
+  );
+  const BOOKS = booksData.books;
+  const categories = booksData.categories;
 
-  assert.equal(BOOKS.length, 5);
+  assert.ok(BOOKS.length > 0);
   assert.ok(BOOKS.some((book) => book.title === "Data Science from Scratch"));
+  assert.ok(Array.isArray(categories) && categories.includes("All"));
+  assert.equal(new Set(BOOKS.map((book) => book.title)).size, BOOKS.length);
+
   for (const book of BOOKS) {
+    assert.equal(typeof book.title, "string");
+    assert.equal(typeof book.author, "string");
+    assert.ok(Array.isArray(book.categories) && book.categories.length > 0);
     assert.match(book.actionUrl, /^https:\/\//);
     assert.equal(Object.hasOwn(book, "sourceUrl"), false);
+    for (const category of book.categories) {
+      assert.ok(categories.includes(category), `unknown category: ${category}`);
+    }
   }
 });
 

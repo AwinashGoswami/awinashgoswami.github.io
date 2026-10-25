@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-import { categories, books } from '../data/books.js';
+import bookData from '../data/books.json';
+
+const { categories, books } = bookData;
 ---
 
 <BaseLayout

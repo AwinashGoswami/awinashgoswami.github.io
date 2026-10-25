@@ -8,7 +8,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "node --test"
+    "test": "node --test",
+    "test:data": "node --test --test-name-pattern=\"course data|quiz question|Federal 9th|books only|classroom configuration\" tests/site-architecture.test.js",
+    "test:smoke": "node --test --test-name-pattern=\"Astro|static pages|assets\""
   },
   "dependencies": {
     "astro": "^7.4.2"
