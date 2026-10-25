@@ -57,7 +57,6 @@ const { categories, books } = bookData;
             role="link"
             aria-label={`Open ${book.title} PDF`}
           >
-            <span class="book-external-link" aria-hidden="true"><i class="bi bi-box-arrow-up-right"></i></span>
             <div class={`book-cover book-cover--${book.coverTheme}`} role="img" aria-label={`Illustrated cover for ${book.title}`}>
               <span class="book-cover-mark" aria-hidden="true"><i class="bi bi-book-half"></i></span>
               <span class="book-cover-label">{book.coverLabel}</span>
