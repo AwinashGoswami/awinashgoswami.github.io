@@ -750,6 +750,7 @@
   }
   .topic-panel {
     padding: 1.25rem;
+    margin-top: 1rem;
   }
 }
 
@@ -860,14 +861,8 @@ html[data-bs-theme="dark"],
 
 [data-theme="dark"] .dev-credits,
 [data-bs-theme="dark"] .dev-credits {
-  color:white;
+  color: white;
 }
-
-[data-theme="dark"] form .quiz-student-card h3,
-[data-bs-theme="dark"] form .quiz-student-card > h3 {
-  color:white;
-}
-
 
 #topic-content {
   text-align: center;
