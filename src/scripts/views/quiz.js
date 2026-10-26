@@ -6,9 +6,9 @@ globalThis.QuizView = {
 
   renderPauseButton(isPaused) {
     if (isPaused) {
-      return '<i class="bi bi-play-fill me-1"></i><span>Resume Quiz</span>';
+      return '<i class="bi bi-play-fill me-1"></i><span>Resume</span>';
     }
-    return '<i class="bi bi-pause-fill me-1"></i><span>Pause Quiz</span>';
+    return '<i class="bi bi-pause-fill me-1"></i><span>Pause</span>';
   },
 
   renderCompletionStatus(isStopped) {
@@ -59,11 +59,13 @@ globalThis.QuizView = {
               <div id="quiz-options"></div>
               <div class="quiz-feedback" id="quiz-feedback"></div>
               <div class="quiz-action-row">
-                <button class="btn-quiz-restart" id="quiz-restart" type="button"><i class="bi bi-arrow-counterclockwise"></i><span>Restart Quiz</span></button>
-                <div class="quiz-action-main">
-                  <button class="btn-quiz-pause" id="quiz-pause" type="button" aria-pressed="false"><i class="bi bi-pause-fill me-1"></i><span>Pause Quiz</span></button>
-                  <button class="btn-quiz-stop" id="quiz-stop" type="button"><i class="bi bi-stop-circle me-1"></i>Stop Quiz</button>
-                  <button class="btn-next" id="quiz-next" style="display:none;">Next Question <i class="bi bi-arrow-right ms-1"></i></button>
+                <div class="quiz-action-controls">
+                  <button class="btn-quiz-restart" id="quiz-restart" type="button"><i class="bi bi-arrow-counterclockwise"></i><span>Restart</span></button>
+                  <button class="btn-quiz-pause" id="quiz-pause" type="button" aria-pressed="false"><i class="bi bi-pause-fill me-1"></i><span>Pause</span></button>
+                  <button class="btn-quiz-stop" id="quiz-stop" type="button"><i class="bi bi-stop-circle me-1"></i>Stop</button>
+                </div>
+                <div class="quiz-action-next">
+                  <button class="btn-next" id="quiz-next" style="display:none;">Next<i class="bi bi-arrow-right ms-1"></i></button>
                 </div>
               </div>
             </div>

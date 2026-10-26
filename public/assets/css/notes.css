@@ -199,6 +199,35 @@
   gap: 1rem;
   align-items: flex-start;
   margin-bottom: 1.2rem;
+  justify-content: center;
+}
+
+.sidebar-badge-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sidebar-download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+  width: 100%;
+  cursor: pointer;
+  transition:
+    background 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease;
 }
 
 .sidebar-badge {
@@ -210,6 +239,12 @@
   padding: 0.45rem 0.9rem;
   border-radius: 999px;
   margin-bottom: 0.65rem;
+}
+
+.sidebar-download-btn:hover {
+  background: var(--primary-lighter);
+  border-color: var(--primary);
+  color: var(--primary-dark);
 }
 
 .sidebar-heading {

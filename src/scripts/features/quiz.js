@@ -740,7 +740,93 @@
     openQuizStopConfirm();
   });
 
-  $(document).on("click", "#quiz-restart", restartQuizForStudent);
+  let quizRestartConfirmOpen = false;
+
+  function ensureQuizRestartConfirmModal() {
+    let backdrop = document.getElementById("quiz-restart-confirm");
+    if (backdrop) return backdrop;
+
+    backdrop = document.createElement("div");
+    backdrop.id = "quiz-restart-confirm";
+    backdrop.className = "quiz-confirm-backdrop";
+    backdrop.setAttribute("role", "dialog");
+    backdrop.setAttribute("aria-modal", "true");
+    backdrop.setAttribute("aria-labelledby", "quiz-restart-confirm-title");
+    backdrop.innerHTML = `
+      <div class="quiz-confirm-dialog" role="document">
+        <div class="quiz-confirm-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+        <h3 class="quiz-confirm-title" id="quiz-restart-confirm-title">Restart this quiz?</h3>
+        <p class="quiz-confirm-message">Your progress will be reset and you will start over.</p>
+        <div class="quiz-confirm-actions">
+          <button type="button" class="quiz-confirm-btn quiz-confirm-cancel" data-quiz-restart-action="cancel">Keep going</button>
+          <button type="button" class="quiz-confirm-btn quiz-confirm-stop" data-quiz-restart-action="confirm">Restart quiz</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(backdrop);
+
+    backdrop.addEventListener("click", function (event) {
+      if (event.target === backdrop) closeQuizRestartConfirm(false);
+    });
+    backdrop
+      .querySelector('[data-quiz-restart-action="cancel"]')
+      .addEventListener("click", function () {
+        closeQuizRestartConfirm(false);
+      });
+    backdrop
+      .querySelector('[data-quiz-restart-action="confirm"]')
+      .addEventListener("click", function () {
+        closeQuizRestartConfirm(true);
+      });
+
+    document.addEventListener("keydown", function (event) {
+      if (!quizRestartConfirmOpen) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeQuizRestartConfirm(false);
+      }
+    });
+
+    return backdrop;
+  }
+
+  function openQuizRestartConfirm() {
+    if (quizRestartConfirmOpen) return;
+    const backdrop = ensureQuizRestartConfirmModal();
+    quizRestartConfirmOpen = true;
+
+    if (quizTimerId) {
+      clearInterval(quizTimerId);
+      quizTimerId = null;
+      backdrop.dataset.timerWasRunning = "true";
+    } else {
+      backdrop.dataset.timerWasRunning = "false";
+    }
+
+    backdrop.classList.add("is-open");
+    const confirmButton = backdrop.querySelector(
+      '[data-quiz-restart-action="confirm"]',
+    );
+    if (confirmButton) confirmButton.focus();
+  }
+
+  function closeQuizRestartConfirm(confirmed) {
+    if (!quizRestartConfirmOpen) return;
+    const backdrop = document.getElementById("quiz-restart-confirm");
+    quizRestartConfirmOpen = false;
+    if (backdrop) {
+      backdrop.classList.remove("is-open");
+      if (backdrop.dataset.timerWasRunning === "true" && !confirmed && !quizPaused) {
+        startQuizTimer();
+      }
+      delete backdrop.dataset.timerWasRunning;
+    }
+    if (confirmed) restartQuizForStudent();
+  }
+
+  $(document).on("click", "#quiz-restart", function () {
+    openQuizRestartConfirm();
+  });
 
   function finishQuiz(status) {
     if ($("#quiz-result").is(":visible")) return;

@@ -11,6 +11,7 @@ globalThis.NotesView = {
               <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
             </div>
             <div class="sidebar-scroll" id="sidebar-list"></div>
+             <button class="sidebar-download-btn" id="sidebar-download-all" type="button" title="Download All" aria-label="Download All">Download All</button>
           </aside>
           <section class="content-area">
             <div class="content-control">

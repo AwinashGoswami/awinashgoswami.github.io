@@ -1489,11 +1489,16 @@ body {
   gap: 0.7rem;
   margin-top: 0.8rem;
 }
-.quiz-action-main {
+.quiz-action-controls {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.6rem;
+}
+
+.quiz-action-next {
+  display: flex;
+  align-items: center;
   margin-left: auto;
 }
 .btn-quiz-restart,
@@ -1561,13 +1566,23 @@ body {
 @media (max-width: 480px) {
   .quiz-action-row {
     align-items: stretch;
+    flex-direction: column;
   }
-  .quiz-action-main {
+  .quiz-action-controls {
+    width: 100%;
+    margin-left: 0;
+    flex-wrap: wrap;
+  }
+  .quiz-action-controls > button {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .quiz-action-next {
     width: 100%;
     margin-left: 0;
   }
-  .quiz-action-main > button {
-    flex: 1;
+  .quiz-action-next .btn-next {
+    width: 100%;
   }
   .btn-quiz-restart {
     width: 100%;

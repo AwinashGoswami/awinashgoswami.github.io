@@ -8,6 +8,7 @@ let currentTopicList = [];
 let sidebar;
 let sidebarList;
 let sidebarBadge;
+let sidebarDownloadAll;
 let contentTitle;
 let topicContent;
 let prevButton;
@@ -39,6 +40,7 @@ function initNotesPage(level) {
   sidebar = document.getElementById("sidebar");
   sidebarList = document.getElementById("sidebar-list");
   sidebarBadge = document.getElementById("sidebar-level-badge");
+  sidebarDownloadAll = document.getElementById("sidebar-download-all");
   contentTitle = document.getElementById("content-title");
   topicContent = document.getElementById("topic-content");
   prevButton = document.getElementById("prev-topic");
@@ -59,6 +61,10 @@ function attachSidebarControls() {
       sidebar.classList.add("open");
       overlay.classList.add("active");
     });
+  }
+
+  if (sidebarDownloadAll) {
+    sidebarDownloadAll.addEventListener("click", downloadAllSidebarPdfs);
   }
 
   if (closeSidebar) {
@@ -266,6 +272,197 @@ function resolveTopicPdfUrl(topicData) {
   }
 
   return "";
+}
+
+async function downloadAllSidebarPdfs() {
+  const downloads = [];
+  const seen = new Set();
+  currentTopicList.forEach((topic) => {
+    const topicData = currentNotes[topic] || {};
+    const pdfUrl = resolveTopicPdfUrl(topicData);
+    if (!pdfUrl) return;
+    const absoluteUrl = toAbsolutePdfUrl(pdfUrl);
+    if (!absoluteUrl || seen.has(absoluteUrl)) return;
+    seen.add(absoluteUrl);
+    downloads.push({
+      url: absoluteUrl,
+      name: getDownloadFileName(absoluteUrl, topicData.title || topic),
+    });
+  });
+
+  if (!downloads.length) return;
+
+  const usedNames = new Set();
+  downloads.forEach((item) => {
+    let name = item.name;
+    if (usedNames.has(name)) {
+      const base = name.replace(/\.pdf$/i, "");
+      let index = 2;
+      while (usedNames.has(`${base} (${index}).pdf`)) {
+        index += 1;
+      }
+      name = `${base} (${index}).pdf`;
+    }
+    usedNames.add(name);
+    item.name = name;
+  });
+
+  const files = [];
+  for (const item of downloads) {
+    try {
+      const response = await fetch(item.url, { cache: "no-store" });
+      if (!response.ok) continue;
+      const buffer = await response.arrayBuffer();
+      files.push({ name: item.name, data: buffer });
+    } catch (error) {
+      console.error("Failed to fetch PDF for zip:", item.url, error);
+    }
+  }
+
+  if (!files.length) return;
+
+  const zipBlob = createZipArchive(files);
+  const link = document.createElement("a");
+  const objectUrl = URL.createObjectURL(zipBlob);
+  link.href = objectUrl;
+  link.download = getZipFileName();
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+}
+
+function getDownloadFileName(url, fallbackTitle) {
+  let fileName = "";
+  try {
+    const parsedUrl = new URL(url);
+    fileName = decodeURIComponent(parsedUrl.pathname.split("/").pop() || "");
+  } catch (error) {
+    fileName = (url || "").split("/").pop() || "";
+  }
+  if (!fileName.toLowerCase().endsWith(".pdf")) {
+    fileName = `${(fallbackTitle || "note").replace(/[^a-z0-9]+/gi, "-")}.pdf`;
+  }
+  return fileName || "note.pdf";
+}
+
+function getZipFileName() {
+  const label = sidebarBadge ? sidebarBadge.textContent.trim() : "notes";
+  const safeLabel = label.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "");
+  return `${safeLabel || "notes"}-all.zip`;
+}
+
+function createZipArchive(files) {
+  const encoder = new TextEncoder();
+  const fileEntries = [];
+  let offset = 0;
+  const localParts = [];
+
+  files.forEach((file) => {
+    const nameBytes = encoder.encode(file.name);
+    const dataBytes = new Uint8Array(file.data);
+    const crc = crc32(dataBytes);
+    const header = new Uint8Array(30 + nameBytes.length);
+    const view = new DataView(header.buffer);
+
+    view.setUint32(0, 0x04034b50, true);
+    view.setUint16(4, 20, true);
+    view.setUint16(6, 0, true);
+    view.setUint16(8, 0, true);
+    view.setUint16(10, 0, true);
+    view.setUint16(12, 0, true);
+    view.setUint32(14, crc, true);
+    view.setUint32(18, dataBytes.length, true);
+    view.setUint32(22, dataBytes.length, true);
+    view.setUint16(26, nameBytes.length, true);
+    view.setUint16(28, 0, true);
+    header.set(nameBytes, 30);
+
+    localParts.push(header, dataBytes);
+    fileEntries.push({
+      nameBytes,
+      crc,
+      size: dataBytes.length,
+      offset,
+    });
+    offset += header.length + dataBytes.length;
+  });
+
+  const centralParts = [];
+  let centralSize = 0;
+  fileEntries.forEach((entry) => {
+    const header = new Uint8Array(46 + entry.nameBytes.length);
+    const view = new DataView(header.buffer);
+    view.setUint32(0, 0x02014b50, true);
+    view.setUint16(4, 20, true);
+    view.setUint16(6, 20, true);
+    view.setUint16(8, 0, true);
+    view.setUint16(10, 0, true);
+    view.setUint16(12, 0, true);
+    view.setUint16(14, 0, true);
+    view.setUint32(16, entry.crc, true);
+    view.setUint32(20, entry.size, true);
+    view.setUint32(24, entry.size, true);
+    view.setUint16(28, entry.nameBytes.length, true);
+    view.setUint16(30, 0, true);
+    view.setUint16(32, 0, true);
+    view.setUint16(34, 0, true);
+    view.setUint16(36, 0, true);
+    view.setUint32(38, 0, true);
+    view.setUint32(42, entry.offset, true);
+    header.set(entry.nameBytes, 46);
+    centralParts.push(header);
+    centralSize += header.length;
+  });
+
+  const endHeader = new Uint8Array(22);
+  const endView = new DataView(endHeader.buffer);
+  endView.setUint32(0, 0x06054b50, true);
+  endView.setUint16(4, 0, true);
+  endView.setUint16(6, 0, true);
+  endView.setUint16(8, files.length, true);
+  endView.setUint16(10, files.length, true);
+  endView.setUint32(12, centralSize, true);
+  endView.setUint32(16, offset, true);
+  endView.setUint16(20, 0, true);
+
+  const totalSize =
+    localParts.reduce((sum, part) => sum + part.length, 0) +
+    centralParts.reduce((sum, part) => sum + part.length, 0) +
+    endHeader.length;
+  const output = new Uint8Array(totalSize);
+  let cursor = 0;
+  localParts.forEach((part) => {
+    output.set(part, cursor);
+    cursor += part.length;
+  });
+  centralParts.forEach((part) => {
+    output.set(part, cursor);
+    cursor += part.length;
+  });
+  output.set(endHeader, cursor);
+
+  return new Blob([output], { type: "application/zip" });
+}
+
+const CRC32_TABLE = (() => {
+  const table = new Uint32Array(256);
+  for (let i = 0; i < 256; i += 1) {
+    let crc = i;
+    for (let j = 0; j < 8; j += 1) {
+      crc = crc & 1 ? 0xedb88320 ^ (crc >>> 1) : crc >>> 1;
+    }
+    table[i] = crc >>> 0;
+  }
+  return table;
+})();
+
+function crc32(bytes) {
+  let crc = 0xffffffff;
+  for (let i = 0; i < bytes.length; i += 1) {
+    crc = CRC32_TABLE[(crc ^ bytes[i]) & 0xff] ^ (crc >>> 8);
+  }
+  return (crc ^ 0xffffffff) >>> 0;
 }
 
 function isMobileDevice() {
