@@ -77,6 +77,19 @@
       "coverLabel": "C++",
       "coverTheme": "rose",
       "actionUrl": "https://koracademy.com/sites/default/files/inline-files/C-How-to-Program-7th-Edition.pdf"
+    },
+     {
+      "title": "Linux Basics for Hackers",
+      "author": "Brian W. Kernighan",
+      "categories": [
+        "Linux",
+        "Security",
+        "Recommended"
+      ],
+      "description": "Learn the fundamentals of Linux and security through hands-on exercises and real-world scenarios.",
+      "coverLabel": "LINUX",
+      "coverTheme": "teal",
+      "actionUrl": "https://kea.nu/files/textbooks/humblesec/linuxbasicsforhackers.pdf"
     }
   ]
 }
