@@ -13,6 +13,6 @@
     "test:smoke": "node --test --test-name-pattern=\"Astro|static pages|assets\""
   },
   "dependencies": {
-    "astro": "^7.4.2"
+    "astro": "^7.4.12"
   }
 }
